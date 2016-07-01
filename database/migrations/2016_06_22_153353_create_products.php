@@ -23,10 +23,12 @@ class CreateProducts extends Migration
             $table->string('formulacion');
             $table->string('concentracion');
             $table->string('presentacion');
+            $table->string('unidad');
             $table->string('empaque');
             $table->float('precio_comercial');
             $table->float('precio_por_medida');
             $table->dateTime('ultima_actualizacion');
+            $table->timestamps();
         });
 
     }

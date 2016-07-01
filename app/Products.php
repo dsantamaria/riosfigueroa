@@ -11,7 +11,8 @@ class Products extends Model
     public $timestamps = true;
 
     protected $fillable = ['nombre_producto', 'ingrediente_activo', 'formulacion', 'concentracion', 'presentacion',
-        'empaque', 'precio_comercial', 'precio_por_medida', 'ultima_actualizacion', 'categoria_id', 'proveedor_id'];
+        'unidad', 'empaque', 'precio_comercial', 'precio_por_medida', 'ultima_actualizacion', 'categoria_id',
+        'proveedor_id'];
 
     public function proveedores()
     {
