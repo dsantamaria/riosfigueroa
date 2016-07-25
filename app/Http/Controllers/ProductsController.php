@@ -19,9 +19,30 @@ class ProductsController extends Controller
         $this->middleware('auth');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $products = Products::All();
+        if ($request->all())
+        {
+            $search_data = array();
+            $products = new Products();
+
+            if ($request->has('nombre_producto'))
+            {
+                $search_data['nombre_producto'] = $request->get('nombre_producto');
+            }
+            if ($request->has('concentracion'))
+            {
+                $search_data['concentracion'] = $request->get('concentracion');
+            }
+            if ($request->has('presentacion'))
+            {
+                $search_data['presentacion'] = $request->get('presentacion');
+            }
+            $products = Products::searchByFields($search_data);
+        }
+        else{
+            $products = Products::All();
+        }
 
         return view('products.index')->withProducts($products);
     }

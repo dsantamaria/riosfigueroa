@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Products extends Model
 {
@@ -22,5 +23,25 @@ class Products extends Model
     public function categoria()
     {
         return $this->belongsTo('App\Categoria', 'categoria_id');
+    }
+
+    public static function searchByFields($search_data = array())
+    {
+        $products = null;
+        $query = self::select('*');
+
+        if (!empty($search_data))
+        {
+            print_r($search_data);
+            foreach ($search_data as $field => $value)
+            {
+                $query->where($field, 'LIKE', '%' . $value . '%');
+            }
+            $products = $query->get();
+        }
+        //DB::enableQueryLog();
+        //dd(DB::getQueryLog());
+        return $products;
+
     }
 }

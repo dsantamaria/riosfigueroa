@@ -28,21 +28,23 @@
                                 </thead>
 
                                 <tbody>
-                                    @foreach($products as $product)
-                                        <tr role="row">
-                                            <td>{{$product->nombre_producto}}</td>
-                                            <td>{{$product->proveedor_id}}</td>
-                                            <td>{{$product->categoria_id}}</td>
-                                            <td>{{$product->ingrediente_activo}}</td>
-                                            <td>{{$product->formulacion}}</td>
-                                            <td>{{$product->concentracion}}</td>
-                                            <td>{{$product->presentacion}}</td>
-                                            <td>{{$product->empaque}}</td>
-                                            <td>{{$product->precio_comercial}}</td>
-                                            <td>{{$product->precio_por_medida}}</td>
-                                            <td>{{$product->ultima_actualizacion}}</td>
-                                        </tr>
-                                    @endforeach
+                                    @if($products)
+                                        @foreach($products as $product)
+                                            <tr role="row">
+                                                <td>{{$product->nombre_producto}}</td>
+                                                <td>{{$product->proveedor_id}}</td>
+                                                <td>{{$product->categoria_id}}</td>
+                                                <td>{{$product->ingrediente_activo}}</td>
+                                                <td>{{$product->formulacion}}</td>
+                                                <td>{{$product->concentracion}}</td>
+                                                <td>{{$product->presentacion}}</td>
+                                                <td>{{$product->empaque}}</td>
+                                                <td>{{$product->precio_comercial}}</td>
+                                                <td>{{$product->precio_por_medida}}</td>
+                                                <td>{{$product->ultima_actualizacion}}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
