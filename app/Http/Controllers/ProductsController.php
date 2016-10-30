@@ -25,7 +25,12 @@ class ProductsController extends Controller
         {
             $search_data = array();
             $products = new Products();
-
+//BUSCAR POR INGREDIENTE ACTIVO
+//proveedor
+// cambiar buscar por filtrar
+//agregar un modulo de busqueda sobre la lista de resultados
+//columnas nombre producto compania ingrediente activo presentacion y precio por medida(el mas reciente)
+//agregar campo estado del producto (descontinuado = sustituto, activo, eliminado)
             if ($request->has('nombre_producto'))
             {
                 $search_data['nombre_producto'] = $request->get('nombre_producto');
