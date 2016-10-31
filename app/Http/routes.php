@@ -14,7 +14,7 @@
 
 Route::auth();
 
-
+//Route::get('/', 'ProductsController@searchProducts');
 Route::get('products/import', ['as' => 'lista_precios.import', 'uses' => 'ProductsController@import']);
 Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
 //Route::post('products', ['as' => 'products.index', 'uses' => 'ProductsController@index']);
