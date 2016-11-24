@@ -32,7 +32,6 @@ class Products extends Model
 
         if (!empty($search_data))
         {
-            print_r($search_data);
             foreach ($search_data as $field => $value)
             {
                 $query->where($field, 'LIKE', '%' . $value . '%');

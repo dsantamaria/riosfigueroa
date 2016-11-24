@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use League\Flysystem\Exception;
 
 class Categorias extends Model
 {

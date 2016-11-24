@@ -25,15 +25,17 @@ class ProductsController extends Controller
         {
             $search_data = array();
             $products = new Products();
-//BUSCAR POR INGREDIENTE ACTIVO
 //proveedor
-// cambiar buscar por filtrar
-//agregar un modulo de busqueda sobre la lista de resultados
 //columnas nombre producto compania ingrediente activo presentacion y precio por medida(el mas reciente)
-//agregar campo estado del producto (descontinuado = sustituto, activo, eliminado)
+//agregar c ampo estado
+// del producto (descontinuado = sustituto, activo, eliminado)
             if ($request->has('nombre_producto'))
             {
                 $search_data['nombre_producto'] = $request->get('nombre_producto');
+            }
+            if ($request->has('ingrediente_activo'))
+            {
+                $search_data['ingrediente_activo'] = $request->get('ingrediente_activo');
             }
             if ($request->has('concentracion'))
             {
@@ -70,7 +72,7 @@ class ProductsController extends Controller
             \Session::flash('error', $e->getMessage());
             return redirect(route('products.index'));
         }
-
+        set_time_limit(600);
         if ($file_contents) {
             $data = array();
             $total_count = $file_contents->count();
@@ -100,6 +102,7 @@ class ProductsController extends Controller
                     $products_error[] = ['nombre_producto_error' => $row[3], 'id_fila_error' => $row[0],
                         'error_msg' => $e->getMessage()];
                     $error_count++;
+                    //dd($row[2] . "----" . $row[1] . "-----" . $row[3]);
                 }
             }
         }
