@@ -14,18 +14,15 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Ingrediente Activo</label>
+                    <label class="col-md-3 control-label">Nombre Empresa</label>
                     <div class="col-md-8">
-                        {!! Form::text('ingrediente_activo', '',  array('id' => 'ingrediente_activo', 'class' => 'form-control')) !!}
+                            {!! Form::text('nombre_empresa', '',  array('id' => 'nombre_empresa', 'class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Concentración</label>
-                    <div class="col-md-4">
-                        <div class="input-group" id="concentracion">
-                            {!! Form::text('concentracion', '',  array('id' => 'concentracion', 'class' => 'form-control')) !!}
-                            <span class="input-group-addon">%</span>
-                        </div>
+                    <label class="col-md-3 control-label">Ingrediente Activo</label>
+                    <div class="col-md-8">
+                        {!! Form::text('ingrediente_activo', '',  array('id' => 'ingrediente_activo', 'class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">

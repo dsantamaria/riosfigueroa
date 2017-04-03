@@ -14,16 +14,19 @@
 
 Route::auth();
 
-//Route::get('/', 'ProductsController@searchProducts');
-Route::get('products/import', ['as' => 'lista_precios.import', 'uses' => 'ProductsController@import']);
-Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
+Route::group(['middleware' => 'auth'], function () {
+    Route::get('/', 'HomeController@index');
+    Route::get('products/import', ['as' => 'lista_precios.import', 'uses' => 'ProductsController@import']);
+    Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
 //Route::post('products', ['as' => 'products.index', 'uses' => 'ProductsController@index']);
-Route::resource('products', 'ProductsController');
+    Route::resource('products', 'ProductsController');
 //post form import products
-Route::post('/products/process_import', ['as' => 'lista_precios.process', 'uses' => 'ProductsController@processImport']);
+    Route::post('/products/process_import', ['as' => 'lista_precios.process', 'uses' => 'ProductsController@processImport']);
 
-Route::resource('proveedores', 'ProveedoresController');
+    Route::resource('proveedores', 'ProveedoresController');
 
+});
+\DB::connection("mysql")->enableQueryLog();
 
 
 //Route::get('/home', 'HomeController@index');

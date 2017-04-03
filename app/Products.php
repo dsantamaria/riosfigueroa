@@ -34,12 +34,16 @@ class Products extends Model
         {
             foreach ($search_data as $field => $value)
             {
-                $query->where($field, 'LIKE', '%' . $value . '%');
+                if($field == 'proveedor_id')
+                {
+                    $query->whereIn('proveedor_id', $value);
+                }
+                else
+                    $query->where($field, 'LIKE', '%' . $value . '%');
             }
             $products = $query->get();
         }
-        //DB::enableQueryLog();
-        //dd(DB::getQueryLog());
+
         return $products;
 
     }

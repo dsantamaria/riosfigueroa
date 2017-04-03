@@ -28,7 +28,7 @@
                                         @foreach($products as $product)
                                             <tr role="row">
                                                 <td>{{$product->nombre_producto}}</td>
-                                                <td>{{$product->proveedor_id}}</td>
+                                                <td>{{$product->proveedores->nombre_proveedor}}</td>
                                                 <td>{{$product->ingrediente_activo}}</td>
                                                 <td>{{$product->presentacion}}</td>
                                                 <td>{{$product->precio_comercial}}</td>

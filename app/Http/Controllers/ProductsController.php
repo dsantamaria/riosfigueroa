@@ -25,10 +25,7 @@ class ProductsController extends Controller
         {
             $search_data = array();
             $products = new Products();
-//proveedor
-//columnas nombre producto compania ingrediente activo presentacion y precio por medida(el mas reciente)
-//agregar c ampo estado
-// del producto (descontinuado = sustituto, activo, eliminado)
+
             if ($request->has('nombre_producto'))
             {
                 $search_data['nombre_producto'] = $request->get('nombre_producto');
@@ -37,9 +34,9 @@ class ProductsController extends Controller
             {
                 $search_data['ingrediente_activo'] = $request->get('ingrediente_activo');
             }
-            if ($request->has('concentracion'))
+            if ($request->has('nombre_empresa'))
             {
-                $search_data['concentracion'] = $request->get('concentracion');
+                $search_data['proveedor_id'] = Proveedores::getProveedorArrayByName($request->get('nombre_empresa'));
             }
             if ($request->has('presentacion'))
             {
@@ -78,8 +75,8 @@ class ProductsController extends Controller
             $total_count = $file_contents->count();
             foreach($file_contents as $row)
             {
-                $proveedorObj = Proveedores::getOrCreateProveedorByName($row[1]);
-                $categoriaObj = Categorias::getOrCreateCategoriaByName($row[2]);
+                $proveedorObj = (!is_null($row[1])) ? Proveedores::getOrCreateProveedorByName($row[1]) : null;
+                $categoriaObj = (!is_null($row[2])) ? Categorias::getOrCreateCategoriaByName($row[2]): null;
 
                 $data['proveedor_id']           = $proveedorObj ? $proveedorObj->id : null;
                 $data['categoria_id']           = $categoriaObj ? $categoriaObj->id : null;
