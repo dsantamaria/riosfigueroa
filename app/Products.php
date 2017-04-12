@@ -13,7 +13,7 @@ class Products extends Model
 
     protected $fillable = ['nombre_producto', 'ingrediente_activo', 'formulacion', 'concentracion', 'presentacion',
         'unidad', 'empaque', 'precio_comercial', 'precio_por_medida', 'ultima_actualizacion', 'categoria_id',
-        'proveedor_id'];
+        'proveedor_id', 'impuesto'];
 
     public function proveedores()
     {

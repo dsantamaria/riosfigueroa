@@ -19,6 +19,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Presentacion</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">Precio Comercial</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">Precio por Medida</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">IEPS</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">Ultima actualización</th>
                                 </tr>
                                 </thead>
@@ -33,6 +34,7 @@
                                                 <td>{{$product->presentacion}}</td>
                                                 <td>{{$product->precio_comercial}}</td>
                                                 <td>{{$product->precio_por_medida}}</td>
+                                                <td>{{$product->impuesto}}</td>
                                                 <td>{{$product->ultima_actualizacion}}</td>
                                             </tr>
                                         @endforeach

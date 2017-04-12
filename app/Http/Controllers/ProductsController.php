@@ -89,7 +89,8 @@ class ProductsController extends Controller
                 $data['empaque']                = $row[9];
                 $data['precio_comercial']       = $row[10];
                 $data['precio_por_medida']      = $row[11];
-                $data['ultima_actualizacion']   = $row[12];
+                $data['impuesto']               = $row[12];
+                $data['ultima_actualizacion']   = $row[13];
 
                 try {
                     $newProduct = Products::firstOrCreate($data);
