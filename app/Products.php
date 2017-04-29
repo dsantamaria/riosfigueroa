@@ -11,8 +11,7 @@ class Products extends Model
 
     public $timestamps = true;
 
-    protected $fillable = ['nombre_producto', 'ingrediente_activo', 'formulacion', 'concentracion', 'presentacion',
-        'unidad', 'empaque', 'precio_comercial', 'precio_por_medida', 'ultima_actualizacion', 'categoria_id',
+    protected $fillable = ['nombre_producto', 'tipo_producto','ingrediente_activo', 'formulacion', 'concentracion', 'presentacion', 'unidad', 'empaque', 'precio_comercial', 'precio_por_medida', 'ultima_actualizacion', 'categoria_id',
         'proveedor_id', 'impuesto'];
 
     public function proveedores()
@@ -37,14 +36,24 @@ class Products extends Model
                 if($field == 'proveedor_id')
                 {
                     $query->whereIn('proveedor_id', $value);
+                }elseif ($field == 'ingrediente_activo') {
+                    $query->where($field, 'LIKE', '%' . $value . '%')->orderBy('ingrediente_activo', 'asc');
                 }
-                else
+                else{
                     $query->where($field, 'LIKE', '%' . $value . '%');
+                }
+                    
             }
+            
             $products = $query->get();
+                
         }
 
         return $products;
 
+    }
+
+    public static function findByCategory($category = null){
+        
     }
 }

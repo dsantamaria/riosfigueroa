@@ -8,13 +8,13 @@
                 {!! Form::open(['method'=>'get','route'=>'products.index',
                 'class'=>'form-horizontal','role'=>'search'])  !!}
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Nombre de Producto</label>
+                    <label class="col-md-3 control-label">Nombre del producto</label>
                     <div class="col-md-8">
                         {!! Form::text('nombre_producto', '',  array('id' => 'nombre_producto', 'class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Nombre Empresa</label>
+                    <label class="col-md-3 control-label">Nombre de la Empresa</label>
                     <div class="col-md-8">
                             {!! Form::text('nombre_empresa', '',  array('id' => 'nombre_empresa', 'class' => 'form-control')) !!}
                     </div>
@@ -23,12 +23,6 @@
                     <label class="col-md-3 control-label">Ingrediente Activo</label>
                     <div class="col-md-8">
                         {!! Form::text('ingrediente_activo', '',  array('id' => 'ingrediente_activo', 'class' => 'form-control')) !!}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-md-3 control-label">Presentación</label>
-                    <div class="col-md-4">
-                        {!! Form::text('presentacion', '',  array('id' => 'presentacion', 'class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="hr-dashed"></div>

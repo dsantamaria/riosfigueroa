@@ -81,6 +81,7 @@ class ProductsController extends Controller
                 $data['proveedor_id']           = $proveedorObj ? $proveedorObj->id : null;
                 $data['categoria_id']           = $categoriaObj ? $categoriaObj->id : null;
                 $data['nombre_producto']        = $row[3];
+                $data['tipo_producto']          = $row[2];
                 $data['ingrediente_activo']     = $row[4];
                 $data['formulacion']            = $row[5];
                 $data['concentracion']          = $row[6];

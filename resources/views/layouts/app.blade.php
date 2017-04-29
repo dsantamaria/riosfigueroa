@@ -38,7 +38,7 @@
                             </ul>
                         </li>
                         <li><a href="{{ route('products.index') }}"><i class="fa fa-th-list"></i>Categorias de Productos</a></li>
-                        <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-industry"></i>Proveedores</a></li>
+                        <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-industry"></i>Empresas Comercializadoras</a></li>
                     </ul>
                 </nav>
             @endif

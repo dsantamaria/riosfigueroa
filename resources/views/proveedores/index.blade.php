@@ -2,7 +2,7 @@
 @section('content')
     <div class="col-md-12">
 
-        <h2 class="page-title">Listado de Proveedores</h2>
+        <h2 class="page-title">Listado de Empresas Comercializadoras</h2>
 
         <div class="panel panel-default">
             <div class="panel-heading">Table by DataTables plugin</div>
@@ -16,7 +16,6 @@
                                     <th class="sorting_asc" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nombre</th>
                                 </tr>
                                 </thead>
-
                                 <tbody>
                                     @foreach($proveedores as $proveedor)
                                         <tr role="row">
