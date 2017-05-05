@@ -19,9 +19,9 @@ class Products extends Model
         return $this->belongsTo('App\Proveedores', 'proveedor_id');
     }
 
-    public function categoria()
+    public function categorias()
     {
-        return $this->belongsTo('App\Categoria', 'categoria_id');
+        return $this->belongsTo('App\Categorias', 'categoria_id');
     }
 
     public static function searchByFields($search_data = array())
@@ -36,7 +36,8 @@ class Products extends Model
                 if($field == 'proveedor_id')
                 {
                     $query->whereIn('proveedor_id', $value);
-                }elseif ($field == 'ingrediente_activo') {
+                }
+                elseif ($field == 'ingrediente_activo') {
                     $query->where($field, 'LIKE', '%' . $value . '%')->orderBy('ingrediente_activo', 'asc');
                 }
                 else{
@@ -53,7 +54,14 @@ class Products extends Model
 
     }
 
-    public static function findByCategory($category = null){
+    public static function getIndividualInfo($id)
+    {
+        $product = self::where('id', $id)->first();
+        return $product;
+    }
+
+    public static function findByCategory($category = null)
+    {
         
     }
 }

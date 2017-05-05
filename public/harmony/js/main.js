@@ -58,4 +58,35 @@
         // you can configure `msgErrorClass` and `msgInvalidFileExtension` as well
 	});
 
+    $('.more-info-product').on('click', function(){
+        var id = $(this).attr('id');
+        var next = $(this).next();
+        if(next.hasClass('provitional-row')){
+            next.remove();
+            return;
+        }
+        var host = "http://"+window.location.hostname+':8000';
+        $.ajax({
+            type: "GET",
+            url: '/productInfo/'+ id,
+            success: function( data ) {         
+                var modalInfo = '<div class="row">'+
+                                    '<div class="col-sm-6">'+
+                                        '<p><strong>Tipo de Producto:</strong> '+data['response'][1]+'</p>'+
+                                        '<p><strong>Concentracion:</strong> '+data['response'][0]['concentracion']+'</p>'+
+                                        '<p><strong>Empaque:</strong> '+data['response'][0]['empaque']+'</p>'+
+                                    '</div>'+
+                                    '<div class="col-sm-6">'+
+                                        '<p><strong>Formulacion:</strong> '+data['response'][0]['formulacion']+'</p>'+
+                                        '<p><strong>Unidad:</strong> '+data['response'][0]['unidad']+'</p>'+
+                                    '</div>'+
+                                '</div>';
+                var modalTitle = data['response'][0]['nombre_producto'];
+                $('.modal-title').html(modalTitle);
+                $('#modal-extra-info .modal-body').html(modalInfo);
+                $('#modal-extra-info').modal('show');
+            }
+        });
+    })
+
  });

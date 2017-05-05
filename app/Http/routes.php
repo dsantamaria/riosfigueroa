@@ -24,6 +24,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/products/process_import', ['as' => 'lista_precios.process', 'uses' => 'ProductsController@processImport']);
 
     Route::resource('proveedores', 'ProveedoresController');
+    Route::get('productInfo/{id}', ['as' => 'productInfo', 'uses' => 'ProductsController@productInfo']);
 
 });
 \DB::connection("mysql")->enableQueryLog();

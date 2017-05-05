@@ -13,7 +13,10 @@ class Categorias extends Model
 
     protected $fillable = ['nombre_categoria'];
 
-
+    public function products()
+    {
+        return $this->hasMany('App\Products');
+    }
 
     public static function getOrCreateCategoriaByName($nombre_categoria)
     {
