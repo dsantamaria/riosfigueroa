@@ -124,8 +124,7 @@ class ProductsController extends Controller
     public function productInfo($data)
     {
         $info = Products::getIndividualInfo($data);
-        $category = $info->categorias->nombre_categoria;
-        return response()->json(['response' => [$info, $category]]);
+        return response()->json(['response' => $info]);
     }
 
     public function searchCategories()

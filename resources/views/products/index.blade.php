@@ -19,8 +19,8 @@
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Ingrediente(s) Activo(s)</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Concentración</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Unidad de Medida</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">Precio por Unidad</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">Precio/K o L</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">Precio por Unidad*</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">Precio*/K o L</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">IEPS</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Start date: activate to sort column ascending">Ultima actualización</th>
                                 </tr>
@@ -30,7 +30,7 @@
                                     @if($products)
                                         @foreach($products as $product)
                                             <tr role="row" id="{{$product->id}}" class="more-info-product">
-                                                <td>{{$product->proveedores->nombre_proveedor}}</td>
+                                                <td class="cursor">{{$product->proveedores->nombre_proveedor}}</td>
                                                 <td>{{$product->nombre_producto}}</td>
                                                 <td>{{$product->presentacion}}</td>
                                                 <td>{{$product->ingrediente_activo}}</td>
@@ -51,16 +51,5 @@
             </div>
         </div>
     </div>
-    <!-- modal-dialog -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal-extra-info">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body"></div>
-            </div>
-        </div>
-    </div><!-- /modal-dialog -->
+    @include('partials.modal')
 @stop

@@ -18,8 +18,8 @@
                                 </thead>
                                 <tbody>
                                     @foreach($proveedores as $proveedor)
-                                        <tr role="row">
-                                            <td>{{$proveedor->nombre_proveedor}}</td>
+                                        <tr role="row" id="{{$proveedor->id}}" class="all-products-proveedor">
+                                            <td class="cursor">{{$proveedor->nombre_proveedor}}</td>
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -30,4 +30,5 @@
             </div>
         </div>
     </div>
+    @include('partials.modal')
 @stop

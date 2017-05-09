@@ -56,9 +56,14 @@ class Products extends Model
 
     public static function getIndividualInfo($id)
     {
-        $product = self::where('id', $id)->first();
+        $product = self::where('id', $id)->with('categorias')->get();
         return $product;
     }
+
+    public static function getProductsProveedor($id){
+        $products = self::where('proveedor_id', $id)->with('categorias', 'proveedores')->get();
+        return $products;
+    } 
 
     public static function findByCategory($category = null)
     {
