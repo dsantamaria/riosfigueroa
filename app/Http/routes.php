@@ -27,6 +27,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('proveedorProducts/{id}', ['as' => 'proveedorProducts', 'uses' => 'ProveedoresController@proveedorProducts']);
     Route::get('productInfo/{id}', ['as' => 'productInfo', 'uses' => 'ProductsController@productInfo']);
 
+    Route::get('uploadImage', ['as'=>'uploadImage', 'uses'=>'ImagesController@uploadImage']);
+    Route::post('saveImage',['as'=>'saveImage','uses'=>'ImagesController@saveImage']);
+
 });
 \DB::connection("mysql")->enableQueryLog();
 

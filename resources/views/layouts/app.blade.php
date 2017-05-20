@@ -20,6 +20,11 @@
     <body>
         <div class="brand clearfix">
             <a href="#" class="logo">Sistema de Manejo de Precios</a>
+            @if (Auth::check())
+                <ul class="ts-profile-nav">
+                    <li><a href="{{ url('/logout') }}">Cerrar sesión</a></li>
+                </ul>
+            @endif
         </div>
         <div class="ts-main-content">
             @if (Auth::check())

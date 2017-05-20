@@ -58,6 +58,15 @@
         // you can configure `msgErrorClass` and `msgInvalidFileExtension` as well
 	});
 
+    $("#input-image").fileinput({
+        showPreview: false,
+        allowedFileExtensions: ["jpg", "png", "jpeg"],
+        elErrorContainer: "#errorBlock2",
+        uploadAsync: false,
+        msgInvalidFileExtension: "Archivo invalido, solo son validos archivos con extension JPG, PNG, JPEG",
+        showUpload: false
+    });
+
     $('.more-info-product').on('click', function(){
         var id = $(this).attr('id');
         $.ajax({
