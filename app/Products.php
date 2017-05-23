@@ -37,6 +37,9 @@ class Products extends Model
                 {
                     $query->whereIn('proveedor_id', $value);
                 }
+                elseif($field == 'categoria_id' && $value == 'otros'){
+                    $query->whereNotIn('categoria_id', [2,3,7]);
+                }
                 elseif ($field == 'ingrediente_activo') {
                     $query->where($field, 'LIKE', '%' . $value . '%')->orderBy('ingrediente_activo', 'asc');
                 }

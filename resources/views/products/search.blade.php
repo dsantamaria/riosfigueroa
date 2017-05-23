@@ -2,7 +2,7 @@
 @section('content')
 
     <div class="col-md-8 col-md-offset-2">
-        <div class="panel panel-primary">
+        <div class="panel panel-primary" style="overflow: visible;">
             <div class="panel-heading">Filtrar Productos</div>
             <div class="panel-body">
                 {!! Form::open(['method'=>'get','route'=>'products.index',
@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Ingrediente Activo</label>
                     <div class="col-md-8">
-                        {!! Form::text('ingrediente_activo', '',  array('id' => 'ingrediente_activo', 'class' => 'form-control')) !!}
+                        {!! Form::select('categoria', ['2' => 'Insecticidas', '3' => 'Herbicidas', '7' => 'Fungicidas', 'otros' => 'Otros'], null, array('class' => 'selectpicker', 'placeholder' => 'Elige una categoria...')) !!}
                     </div>
                 </div>
                 <div class="hr-dashed"></div>

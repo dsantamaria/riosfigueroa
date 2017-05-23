@@ -42,6 +42,10 @@ class ProductsController extends Controller
             {
                 $search_data['presentacion'] = $request->get('presentacion');
             }
+            if($request->has('categoria'))
+            {
+                $search_data['categoria_id'] = $request->get('categoria');;
+            }
             $products = Products::searchByFields($search_data);
         }
         else{
