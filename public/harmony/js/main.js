@@ -128,4 +128,8 @@
         });
     })
 
+    $('.modal-analisis').click(function(){
+       $('#modal-analisis').modal('show');
+    })
+
  });

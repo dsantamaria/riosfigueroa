@@ -136,4 +136,9 @@ class ProductsController extends Controller
         return view('products.categories');
     }
 
+    public function analisisProducts()
+    {
+        return view('products.analisis');
+    }
+
 }
