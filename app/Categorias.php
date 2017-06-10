@@ -24,4 +24,9 @@ class Categorias extends Model
 
         return $query->firstOrCreate(['nombre_categoria' => $nombre_categoria]);
     }
+
+    public static function getCategoriasByName(array $nombre_categorias){
+        $query = self::select('id', 'nombre_categoria')->whereIn('nombre_categoria', $nombre_categorias)->get();
+    return $query;
+    }
 }

@@ -18,7 +18,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/', 'HomeController@index');
     Route::get('products/import', ['as' => 'lista_precios.import', 'uses' => 'ProductsController@import']);
     Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
-    Route::get('products/analisis', ['as' => 'products.analisis', 'uses' => 'ProductsController@analisisProducts']);
+    Route::get('products/analisis/{analisis}', ['as' => 'products.analisis', 'uses' => 'ProductsController@analisisProducts']);
+
+
 //Route::post('products', ['as' => 'products.index', 'uses' => 'ProductsController@index']);
     Route::resource('products', 'ProductsController');
 //post form import products

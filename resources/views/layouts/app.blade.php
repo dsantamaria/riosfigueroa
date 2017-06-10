@@ -39,16 +39,18 @@
                             <ul>
                                 <li><a href="{{ route('products.search') }}">Buscador de Productos</a></li>
                                 <li><a href="{{ route('products.index') }}">Listado Productos</a></li>
-                                <li><a href="{{ route('lista_precios.import') }}">Importar Lista de Precios</a></li>
+                                @can('admin-role')
+                                    <li><a href="{{ route('lista_precios.import') }}">Importar Lista de Precios</a></li>
+                                    <li><a href="{{ route('uploadImage') }}">Subir Imagen</a></li>
+                                @endcan
                             </ul>
                         </li>
                         <li>
                             <a href="#" class="parent"><i class="fa fa-codepen"></i>Análisis por Categoría</a>
                             <ul>
-                                <li><a href="{{ route('products.analisis') }}">Insecticidas</a></li>
-                                <li><a href="{{ route('products.analisis') }}">Herbicidas</a></li>
-                                <li><a href="{{ route('products.analisis') }}">Fungicidas</a></li>
-                                <li><a href="{{ route('products.analisis') }}">Otros</a></li>
+                                <li><a href="{{ route('products.analisis' , ['analisis' => 'insecticidas']) }}">Insecticidas</a></li>
+                                <li><a href="{{ route('products.analisis' , ['analisis' => 'herbicidas']) }}">Herbicidas</a></li>
+                                <li><a href="{{ route('products.analisis' , ['analisis' => 'fungicidas']) }}">Fungicidas</a></li>
                             </ul>
                         </li>
                         <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-industry"></i>Empresas Comercializadoras</a></li>
@@ -62,6 +64,14 @@
                             <div class="alert alert-dismissible alert-success">
                                 <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
                                 <strong>{{Session::get('success')}}</strong>
+                            </div>
+                        </div>
+                    @endif
+                    @if (Session::has('warning'))
+                        <div class="row">
+                            <div class="alert alert-dismissible alert-warning">
+                                <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
+                                <strong>{{Session::get('warning')}}</strong>
                             </div>
                         </div>
                     @endif

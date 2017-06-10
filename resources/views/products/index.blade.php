@@ -39,7 +39,7 @@
                                                 <td>{{$product->precio_comercial}}</td>
                                                 <td>{{$product->precio_por_medida}}</td>
                                                 <td>{{$product->impuesto}}</td>
-                                                <td>{{$product->ultima_actualizacion}}</td>
+                                                <td>{{ date('d-m-Y', strtotime($product->ultima_actualizacion)) }}</td>
                                             </tr>
                                         @endforeach
                                     @endif

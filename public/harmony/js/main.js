@@ -67,7 +67,7 @@
         showUpload: false
     });
 
-    $('.more-info-product').on('click', function(){
+    $('body').on('click', '.more-info-product', function(){
         var id = $(this).attr('id');
         $.ajax({
             type: "GET",
@@ -93,7 +93,7 @@
         });
     })
 
-    $('.all-products-proveedor').on('click', function(){
+     $('body').on('click', '.all-products-proveedor', function(){
         var id = $(this).attr('id');
         $.ajax({
             type: "GET",

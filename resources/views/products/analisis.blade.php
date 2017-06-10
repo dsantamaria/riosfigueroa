@@ -23,7 +23,7 @@
                                 <tbody>
                                     <tr role="row" id="t" class="modal-analisis">
                                         <td class="cursor"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></td>     
-                                        <td>Abamectina</td>
+                                        <td>{{ $analisis['titulo'] }}</td>
                                         <td>Agregar descripcion</td>
                                         <td>24 de mayo de 2017</td>
                                     </tr>
@@ -35,17 +35,16 @@
             </div>
         </div>
     </div>
-    <div class="modal fade" tabindex="-1" role="dialog" id="modal-analisis">
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal-analisis" style="padding-right: 20px">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 850">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title">Análisis de imagen: Abamectina</h3>
+                <h3 class="modal-title">Análisis de imagen: {{ $analisis['titulo'] }}</h3>
             </div>
             <div class="modal-body" style="text-align: center;">
-                {!! Html::image('imgDemo.png', 'alt') !!}
+                {!! Html::image($analisis['img'], 'alt', array( 'width' => 830, 'height' => 510 )) !!}
             </div>
-            <p style="padding: 5px; text-align: center">Texto descriptivo</p>
         </div>
     </div>
 </div>

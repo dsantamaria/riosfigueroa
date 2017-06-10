@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <label class="col-md-3 control-label">Ingrediente Activo</label>
                     <div class="col-md-8">
-                        {!! Form::select('categoria', ['2' => 'Insecticidas', '3' => 'Herbicidas', '7' => 'Fungicidas', 'otros' => 'Otros'], null, array('class' => 'selectpicker', 'placeholder' => 'Elige una categoria...')) !!}
+                        {!! Form::text('ingrediente_activo', '',  array('id' => 'ingrediente_activo', 'class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="hr-dashed"></div>

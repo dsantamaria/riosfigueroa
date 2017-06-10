@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Proveedores;
 use App\Categorias;
 use App\Products;
+use Gate;
 use Excel;
 
 use App\Http\Requests;
@@ -57,11 +58,18 @@ class ProductsController extends Controller
 
     public function import()
     {
+        if (Gate::denies('admin-role')) {
+            return redirect()->action('HomeController@index')->with('warning','No estas autorizado');
+        }
         return view('products.import');
     }
 
     public function processImport()
     {
+        if (Gate::denies('admin-role')) {
+            return redirect()->action('HomeController@index')->with('warning','No estas autorizado');
+        }
+
         $products_error = array();
         $new_products_count = 0;
         $error_count = 0;
@@ -95,7 +103,7 @@ class ProductsController extends Controller
                 $data['precio_comercial']       = $row[10];
                 $data['precio_por_medida']      = $row[11];
                 $data['impuesto']               = $row[12];
-                $data['ultima_actualizacion']   = $row[13];
+                $data['ultima_actualizacion']   = $this->convertToDate($row[13]);
 
                 try {
                     $newProduct = Products::firstOrCreate($data);
@@ -122,6 +130,9 @@ class ProductsController extends Controller
 
     public function searchProducts()
     {
+        #$categorias = Categorias::getCategoriasByName(['herbicida', 'fungicida', 'Insecticida']);
+        #return view('products.search')->with('categorias', $categorias);
+
         return view('products.search');
     }
 
@@ -136,9 +147,45 @@ class ProductsController extends Controller
         return view('products.categories');
     }
 
-    public function analisisProducts()
+    public function analisisProducts($analisis)
     {
-        return view('products.analisis');
+        print_r($analisis);
+        switch ($analisis) {
+            case 'insecticidas':
+                $arr['titulo'] = 'Abamectina';
+                $arr['img'] = 'abamectina.jpg';
+                print_r($arr);
+
+                break;
+            case 'herbicidas':
+                $arr['titulo'] = 'Paraquat';
+                $arr['img'] = 'paraquat.jpg';
+                print_r($arr);
+                break;
+            case 'fungicidas':
+                $arr['titulo'] = 'Azoxystrobin';
+                $arr['img'] = 'azoxystrobin.jpg';
+                print_r($arr);
+                break;
+            default:
+                $arr = array();
+                break;
+        }
+
+
+        return view('products.analisis', ['analisis' => $arr]);
+    }
+
+    public function convertToDate($dateString){
+        if(!$dateString) return;
+        try {
+            $arr = explode('/', $dateString);
+            if(strlen($arr[2]) === 2) $arr[2] = "20".$arr[2];
+            $dateInTime = strtotime($arr[0].'-'.$arr[1].'-'.$arr[2]);
+            return date('Y-m-d', $dateInTime);
+        } catch (Exception $e) {
+            return '0000-00-00';
+        }
     }
 
 }
