@@ -17,7 +17,7 @@
         {!! Html::style('harmony/css/style.css') !!}
     </head>
 
-    <body>
+    <body oncopy='return false' oncut='return false'>
         <div class="brand clearfix">
             <a href="#" class="logo">Sistema de Manejo de Precios</a>
             @if (Auth::check())
