@@ -749,3 +749,7 @@ li {
 .cursor{
  cursor: pointer;
 }
+
+img{
+  pointer-events: none;
+}
