@@ -58,19 +58,12 @@ class ProductsController extends Controller
 
     public function import()
     {
-        if (Gate::denies('admin-role')) {
-            return redirect()->action('HomeController@index')->with('warning','No estas autorizado');
-        }
         return view('products.import');
     }
 
     public function processImport()
     {
-        if (Gate::denies('admin-role')) {
-            return redirect()->action('HomeController@index')->with('warning','No estas autorizado');
-        }
-
-        $products_error = array();
+       $products_error = array();
         $new_products_count = 0;
         $error_count = 0;
         $exists_count = 0;

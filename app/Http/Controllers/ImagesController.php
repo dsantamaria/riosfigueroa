@@ -16,17 +16,10 @@ class ImagesController extends Controller
     }
 
 	public function uploadImage(){
-        if (Gate::denies('admin-role')) {
-            return redirect()->action('HomeController@index')->with('warning','No estas autorizado');
-        }
 		return view('Images.uploadImage');
 	}
 
 	public function saveImage(Request $request){
-        if (Gate::denies('admin-role')) {
-            return redirect()->action('HomeController@index')->with('warning','No estas autorizado');
-        }
-
 		$this->validate($request, [
             'input-image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
         ]);
