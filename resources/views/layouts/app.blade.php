@@ -25,7 +25,7 @@ BODY {display:none;visibility:hidden;}
             <a href="#" class="logo">Sistema de Manejo de Precios</a>
             @if (Auth::check())
                 <ul class="ts-profile-nav">
-                    <li><a href="{{ url('/logout') }}">Cerrar sesión</a></li>
+                    <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
                 </ul>
             @endif
         </div>
@@ -62,8 +62,8 @@ BODY {display:none;visibility:hidden;}
                             <li>
                                 <a href="#" class="parent"><i class="fa fa-desktop"></i>Administrador</a>
                                 <ul>
-                                    <li><a href="{{ route('sendSubscription') }}">Enviar suscripcion</a></li>
-                                    <li><a href="{{ route('listActiveUsers') }}">Habilitacion</a></li>
+                                    <li><a href="{{ route('sendSubscription') }}">Suscribir usuarios</a></li>
+                                    <li><a href="{{ route('listActiveUsers') }}">Gestión de usuarios</a></li>
                                 </ul>
                             </li>
                         @endcan

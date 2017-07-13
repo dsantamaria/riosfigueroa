@@ -13,7 +13,7 @@
     
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-primary" style="overflow: visible;">
-            <div class="panel-heading">Agregar suscriptores</div>
+            <div class="panel-heading">Solicitud de suscripción</div>
             <div class="panel-body">
                 {!! Form::open(['method'=>'post','route'=>'sendSubscriptionEmail',
                 'class'=>'form-horizontal'])  !!}

@@ -28,7 +28,7 @@ class SubscribersController extends Controller
 
     	Company_subscriber::save_company_subscriber($request);
 
-    	return back()->with('success','subscrito con exito, se le enviara un email con mas informacion');
+    	return back()->with('success','Suscripción exitosa.');
     }
 
     public function sendSubscription(){
@@ -70,7 +70,7 @@ class SubscribersController extends Controller
     		//envio del email
     		$url = url('/registerPending?tok='.$token);
 	        Mail::queue('emails.subscriber', ['url' => $url], function ($m) use ($email) {
-	            $m->from('riosfigueroa@app.com', 'Rios figueroa');
+	            $m->from('suscripciones@riosfigueroa.net', 'Rios figueroa');
 	            $m->to($email)->subject('Completa la suscripcion!');
 	        });
     	}catch(\Exception $e){
@@ -109,14 +109,14 @@ class SubscribersController extends Controller
 	    	$user_update->password = bcrypt($request['password']);
 	    	if($user_update->save()){
 	  			$pending_user->delete();
-	    		return redirect('login')->with('success', 'Cambios efectuados con exito, le llegara un correo en el momento que su cuenta sea activada');
+	    		return redirect('login')->with('success', 'Gracias por completar el proceso. Le informaremos una vez su usuario sea dado de alta.');
 	    	}
     	}
     	return redirect('login')->with('warning', 'Ocurrio un error');
     }
 
     public function list_active_user(){
-    	$users = User::where([['password', '!=', ''], ['email', '!=', 'admin@admin.com']])->get();
+    	$users = User::where([['email', '!=', 'super@super.com'], ['email', '!=', 'admin@admin.com'], ['password', '!=', '']])->get();
     	return view('subscribers.list_active_user')->with('users', $users);
     }
 

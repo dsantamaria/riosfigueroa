@@ -138,7 +138,7 @@
         var user_email = $(this).closest('tr').find('#email').html();
         var row_state = $(this).closest('tr').find('#state');
         var state = $(this).attr('state');
-        var message_state = state === '1' ? 'Habilitado' : 'Deshabilitado';
+        var message_state = state === '1' ? 'Activo' : 'Inactivo';
         $.ajax({
             type: "GET",
             url: '/activateUser/'+ id +'/'+ state,
@@ -159,7 +159,7 @@
                         '<div class="row">'+
                             '<div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">'+
                                 '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
-                                '<strong>Ocurrio un error al intentar habilitar/deshabilitar al usuario '+ user_email +
+                                '<strong>Ocurrio un error al intentar activar/desactivar al usuario '+ user_email +
                             '</div>'+
                         '</div>'
                     ).fadeIn(1000);
