@@ -753,3 +753,34 @@ li {
 img{
   pointer-events: none;
 }
+
+.actions-btn{
+  height: 34px;
+  width: 34px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 3px;
+  cursor: pointer;
+  color: white;
+}
+ 
+.actions-btn:hover{
+  opacity: 0.8;
+}
+ 
+.action-delete{
+  background-color: #a70707;
+}
+.action-active{
+  background-color: #0b690e;
+}
+.action-desactive{
+  background-color: #988d07;
+}
+ 
+.table-td-actions{
+  display: flex;
+  justify-content: center;
+}

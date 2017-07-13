@@ -32,15 +32,15 @@
                                                     @else Inactivo
                                                     @endif 
                                                 </td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        @if($user->active === 1) <button class="active-user btn btn-danger" id="{{ $user->id }}" state="0">Desactivar</button>
-                                                        @else <button class="active-user btn btn-success" id="{{ $user->id }}" state="1">&nbsp Activar &nbsp</button>
-                                                        @endif
-                                                    </span>
-                                                    <span>
-                                                        <button class="delete-user btn btn-warning" id="{{ $user->id }}"">&nbsp Delete &nbsp</button>
-                                                    </span>
+                                                <td class="table-td-actions">
+                                                    @if($user->active === 1) <div class="actions-btn active-user action-desactive" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Desactivar"><i class="fa fa-times" aria-hidden="true"></i></div>
+                                                    @else <div class="actions-btn active-user action-active" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Activar"><i class="fa fa-check" aria-hidden="true"></i></div>
+                                                    @endif
+
+                                                    <div class="actions-btn delete-user action-delete" id="{{ $user->id }}" data_toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+ 
+ 
+ 
                                                 </td>
                                         @endforeach
                                     @endif

@@ -131,7 +131,7 @@
     $('.modal-analisis').click(function(){
        $('#modal-analisis').modal('show');
     })
-
+    /*
     $('body').on('click', '.active-user', function(){
         var element = $(this);
         var id = $(this).attr('id');
@@ -154,6 +154,42 @@
                     ).fadeIn(1000);
                     row_state.text(message_state);
                     state === '0' ? element.html('&nbsp; Activar &nbsp;').removeClass('btn-danger').addClass('btn-success').attr('state', 1) : element.text('Desactivar').removeClass('btn-success').addClass('btn-danger').attr('state', 0);
+                }else{
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Ocurrio un error al intentar activar/desactivar al usuario '+ user_email +
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                }
+            }
+        });
+    });*/
+
+    $('body').on('click', '.active-user', function(){
+        var element = $(this);
+        var id = $(this).attr('id');
+        var user_email = $(this).closest('tr').find('#email').html();
+        var row_state = $(this).closest('tr').find('#state');
+        var state = $(this).attr('state');
+        var message_state = state === '1' ? 'Activo' : 'Inactivo';
+        $.ajax({
+            type: "GET",
+            url: '/activateUser/'+ id +'/'+ state,
+            success: function( data ) {
+                if(data['response'] === 1){
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Usuario '+ user_email + ' '+ message_state +' con exito</strong>'+
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                    row_state.text(message_state);
+                    state === '0' ? element.removeClass('action-desactive').addClass('action-active').attr('state', 1).find('i').removeClass('fa-times').addClass('fa-check') : element.removeClass('action-active').addClass('action-desactive').attr('state', 0).find('i').removeClass('fa-check').addClass('fa-times');
                 }else{
                     $('#messages').html(
                         '<div class="row">'+
