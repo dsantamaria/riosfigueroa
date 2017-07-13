@@ -153,7 +153,7 @@
                         '</div>'
                     ).fadeIn(1000);
                     row_state.text(message_state);
-                    state === '0' ? element.text('Activar').removeClass('btn-danger').addClass('btn-success').attr('state', 1) : element.text('Desactivar').removeClass('btn-success').addClass('btn-danger').attr('state', 0);
+                    state === '0' ? element.html('&nbsp; Activar &nbsp;').removeClass('btn-danger').addClass('btn-success').attr('state', 1) : element.text('Desactivar').removeClass('btn-success').addClass('btn-danger').attr('state', 0);
                 }else{
                     $('#messages').html(
                         '<div class="row">'+

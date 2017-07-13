@@ -15,6 +15,9 @@
         {!! Html::style('harmony/css/fileinput.min.css') !!}
         {!! Html::style('harmony/css/awesome-bootstrap-checkbox.css') !!}
         {!! Html::style('harmony/css/style.css') !!}
+        <style type="text/css" media="print">
+BODY {display:none;visibility:hidden;}
+</style>
     </head>
 
     <body oncopy='return false' oncut='return false'>

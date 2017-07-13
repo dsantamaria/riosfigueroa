@@ -87,12 +87,12 @@ class SubscribersController extends Controller
     	if($user_token){
     		$date_valid = Carbon::now()->diffInDays($user_token['updated_at']);
     		if($date_valid >= 3){
-    			return redirect('subscriberForm')->with('warning', 'Este enlace ya expiro');
+    			return redirect('login')->with('warning', 'Este enlace ya expiro');
     		}
     		$email = $user_token->user->email;
         	return view('subscribers.update_user')->with('email', $email)->with('token', $user_token['token']);
     	}
-    	return redirect('subscriberForm')->with('warning', 'Direccion invalida');
+    	return redirect('login')->with('warning', 'Direccion invalida');
     }
 
     public function update_subscriber(Request $request){
@@ -109,14 +109,14 @@ class SubscribersController extends Controller
 	    	$user_update->password = bcrypt($request['password']);
 	    	if($user_update->save()){
 	  			$pending_user->delete();
-	    		return redirect('subscriberForm')->with('success', 'Cambios efectuados con exito, le llegara un correo en el momento que su cuenta sea activada');
+	    		return redirect('login')->with('success', 'Cambios efectuados con exito, le llegara un correo en el momento que su cuenta sea activada');
 	    	}
     	}
-    	return redirect('subscriberForm')->with('warning', 'Ocurrio un error');
+    	return redirect('login')->with('warning', 'Ocurrio un error');
     }
 
     public function list_active_user(){
-    	$users = User::where('password', '!=', '')->get();
+    	$users = User::where([['password', '!=', ''], ['email', '!=', 'admin@admin.com']])->get();
     	return view('subscribers.list_active_user')->with('users', $users);
     }
 
