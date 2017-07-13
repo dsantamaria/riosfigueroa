@@ -19,7 +19,7 @@
  	});
 	 
 	 
-	 $('#zctb').DataTable( {
+	var table = $('#zctb').DataTable( {
          "language": {
              "sProcessing":     "Procesando...",
              "sLengthMenu":     "Mostrar _MENU_ registros",
@@ -155,6 +155,38 @@
                     row_state.text(message_state);
                     state === '0' ? element.html('&nbsp; Activar &nbsp;').removeClass('btn-danger').addClass('btn-success').attr('state', 1) : element.text('Desactivar').removeClass('btn-success').addClass('btn-danger').attr('state', 0);
                 }else{
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Ocurrio un error al intentar activar/desactivar al usuario '+ user_email +
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                }
+            }
+        });
+    });
+
+    $('body').on('click', '.delete-user', function(){
+        var id = $(this).attr('id');
+        var row = $(this).closest('tr');
+        var user_email = $(this).closest('tr').find('#email').html();
+        $.ajax({
+            type: "GET",
+            url: '/deleteUser/'+ id,
+            success: function( data ) {
+                if(data['response'] === 1){
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Usuario '+ user_email +' Elmininado con exito</strong>'+
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                    table.row(row).remove().draw();
+                 }else{
                     $('#messages').html(
                         '<div class="row">'+
                             '<div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">'+

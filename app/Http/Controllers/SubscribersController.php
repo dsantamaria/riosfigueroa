@@ -126,15 +126,13 @@ class SubscribersController extends Controller
             return response()->json(['response' => 1]);
         }
         return response()->json(['response' => 0]);
-        /*
-    	$user = User::where('id', $id)->update(['active' => $state]);
-        $state_message = $state === '1' ? 'habilitado' : 'deshabilitado';
-    	if($user){
-            return back()->with('success', 'Usuario '. $email .' '. $state_message .' con exito');
-    	}
-        return back()->with('warning', 'Ocurrio un error al intentar habilitar al usuario '. $email);
-        <a href="/activateUser/{{ $user->id }}/{{ $user->email }}/0" class="btn btn-danger">Desactivar</a>
-        <a href="/activateUser/{{ $user->id }}/{{ $user->email }}/1" class="btn btn-success">&nbsp Activar &nbsp</a>
-        */
+    }
+
+    public function delete_user($id){
+        $user = User::where('id', $id)->delete();
+        if($user){
+            return response()->json(['response' => 1]);
+        }
+        return response()->json(['response' => 0]);
     }
 }

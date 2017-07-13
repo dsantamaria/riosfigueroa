@@ -17,7 +17,7 @@
                                     <th class="sorting_asc" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Nombre</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Email</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Estado</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Accion</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Acciones</th>
                                 </tr>
                                 </thead>
 
@@ -33,9 +33,14 @@
                                                     @endif 
                                                 </td>
                                                 <td class="text-center">
-                                                    @if($user->active === 1) <button class="active-user btn btn-danger" id="{{ $user->id }}" state="0">Desactivar</button>
-                                                    @else <button class="active-user btn btn-success" id="{{ $user->id }}" state="1">&nbsp Activar &nbsp</button>
-                                                    @endif
+                                                    <span>
+                                                        @if($user->active === 1) <button class="active-user btn btn-danger" id="{{ $user->id }}" state="0">Desactivar</button>
+                                                        @else <button class="active-user btn btn-success" id="{{ $user->id }}" state="1">&nbsp Activar &nbsp</button>
+                                                        @endif
+                                                    </span>
+                                                    <span>
+                                                        <button class="delete-user btn btn-warning" id="{{ $user->id }}"">&nbsp Delete &nbsp</button>
+                                                    </span>
                                                 </td>
                                         @endforeach
                                     @endif

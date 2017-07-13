@@ -36,6 +36,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('sendSubscriptionEmail', ['as' => 'sendSubscriptionEmail', 'uses' => 'SubscribersController@sendSubscriptionEmail'])->middleware('admin');
     Route::get('listActiveUsers', ['as' => 'listActiveUsers', 'uses' => 'SubscribersController@list_active_user'])->middleware('admin');
     Route::get('activateUser/{id}/{state}', ['as'=>'activateUser', 'uses'=>'SubscribersController@activate_user'])->middleware('admin');
+    Route::get('deleteUser/{id}', ['as'=>'deleteUser', 'uses'=>'SubscribersController@delete_user'])->middleware('admin');
 
 });
 
