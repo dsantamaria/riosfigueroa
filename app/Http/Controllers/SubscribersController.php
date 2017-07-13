@@ -116,7 +116,7 @@ class SubscribersController extends Controller
     }
 
     public function list_active_user(){
-    	$users = User::where([['email', '!=', 'super@super.com'], ['email', '!=', 'admin@admin.com']])->get();
+    	$users = User::where([['email', '!=', 'super@super.com'], ['email', '!=', 'admin@admin.com'], ['password', '!=', '']])->get();
     	return view('subscribers.list_active_user')->with('users', $users);
     }
 

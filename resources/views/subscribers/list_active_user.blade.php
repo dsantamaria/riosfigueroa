@@ -33,7 +33,7 @@
                                                     @endif 
                                                 </td>
                                                 <td class="text-center">
-                                                    @if($user->active === 0) <button class="active-user btn btn-danger" id="{{ $user->id }}" state="0">Desactivar</button>
+                                                    @if($user->active === 1) <button class="active-user btn 1tn-danger" id="{{ $user->id }}" state="0">Desactivar</button>
                                                     @else <button class="active-user btn btn-success" id="{{ $user->id }}" state="1">&nbsp Activar &nbsp</button>
                                                     @endif
                                                 </td>
