@@ -55,7 +55,8 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'info@riosfigueroa.net', 'name' => 'Rios Figueroa'],
+
 
     /*
     |--------------------------------------------------------------------------

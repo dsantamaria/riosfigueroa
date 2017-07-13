@@ -28,6 +28,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_users');
     }
 
+    public function pending_subscriber(){
+        return $this->hasOne('App\Pending_subscriber');
+    }
+
     public function hasAccess(array $permissions) {
         foreach ($this->roles as $role) {
             if($role->hasAccess($permissions)){

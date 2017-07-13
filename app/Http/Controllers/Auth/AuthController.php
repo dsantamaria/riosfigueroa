@@ -8,7 +8,7 @@ use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
-
+use Illuminate\Http\Request;
 class AuthController extends Controller
 {
     /*
@@ -76,5 +76,14 @@ class AuthController extends Controller
         $defaultRole = Role::where('slug', 'user')->pluck('id');
         $user->roles()->attach($defaultRole[0]);
         return $user;
+    }
+
+    public function authenticated(Request $request, User $user){
+        if(!$user->active){
+            $this->logout();
+            $request->session()->flush();
+            return redirect('/login')->with('warning', 'El usuario aun no esta activo');
+        }
+        return redirect('/');
     }
 }

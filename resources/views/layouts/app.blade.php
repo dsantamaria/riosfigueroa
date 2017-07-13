@@ -22,7 +22,7 @@
             <a href="#" class="logo">Sistema de Manejo de Precios</a>
             @if (Auth::check())
                 <ul class="ts-profile-nav">
-                    <li><a href="{{ url('/logout') }}">Cerrar sesión</a></li>
+                    <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
                 </ul>
             @endif
         </div>
@@ -54,6 +54,16 @@
                             </ul>
                         </li>
                         <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-industry"></i>Empresas Comercializadoras</a></li>
+
+                        @can('admin-role')
+                            <li>
+                                <a href="#" class="parent"><i class="fa fa-desktop"></i>Administrador</a>
+                                <ul>
+                                    <li><a href="{{ route('sendSubscription') }}">Suscribir usuarios</a></li>
+                                    <li><a href="{{ route('listActiveUsers') }}">Gestión de usuarios</a></li>
+                                </ul>
+                            </li>
+                        @endcan
                     </ul>
                 </nav>
             @endif
@@ -61,7 +71,7 @@
                 <div class="container-fluid">
                     @if (Session::has('success'))
                         <div class="row">
-                            <div class="alert alert-dismissible alert-success">
+                            <div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">
                                 <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
                                 <strong>{{Session::get('success')}}</strong>
                             </div>
@@ -69,7 +79,7 @@
                     @endif
                     @if (Session::has('warning'))
                         <div class="row">
-                            <div class="alert alert-dismissible alert-warning">
+                            <div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">
                                 <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
                                 <strong>{{Session::get('warning')}}</strong>
                             </div>
