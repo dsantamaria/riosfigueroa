@@ -69,7 +69,7 @@ return [
     |
     */
 
-    'encryption' => env('MAIL_ENCRYPTION', 'tls'),
+    'encryption' => env('MAIL_ENCRYPTION', 'ssl'),
 
     /*
     |--------------------------------------------------------------------------
@@ -108,6 +108,7 @@ return [
     |
     */
 
-    'sendmail' => '/usr/sbin/sendmail -bs',
+    'sendmail' => '/usr/sbin/sendmail -t',
+    'pretend' => false,
 
 ];
