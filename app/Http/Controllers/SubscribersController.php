@@ -68,6 +68,11 @@ class SubscribersController extends Controller
                 DB::table('pending_subscribers')->insert(
                     ['token' => $token, 'user_id' => $user_id, 'created_at' => $current_time, 'updated_at' => $current_time] 
                 );
+
+                //se asigna el role de usuario '3'
+                DB::table('role_users')->insert(
+                    ['role_id' => 3, 'user_id' => $user_id,]
+                );
             }
 
     		DB::commit();

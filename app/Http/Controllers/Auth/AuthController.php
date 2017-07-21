@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
+use Auth;
 class AuthController extends Controller
 {
     /*
@@ -84,6 +85,15 @@ class AuthController extends Controller
             $request->session()->flush();
             return redirect('/login')->with('warning', 'El usuario aun no esta activo');
         }
+
+        $previous_session = $user->session_id;
+
+        if($previous_session){
+            \Session::getHandler()->destroy($previous_session);
+        }
+
+        Auth::user()->session_id = \Session::getId();
+        Auth::user()->save();
         return redirect('/');
     }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Mail;
 use App\Http\Requests;
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -15,7 +16,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['errorCountry']]);
     }
 
     /**
@@ -26,5 +27,10 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+    public function errorCountry(){
+        if(Auth::check()) Auth::logout();
+        return view('errors.403_6')->with('warning', 'wrong country');
     }
 }

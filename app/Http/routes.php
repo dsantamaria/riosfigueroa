@@ -13,7 +13,7 @@
 
 Route::auth();
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'country']], function () {
     Route::get('/', 'HomeController@index');
     Route::get('products/import', ['as' => 'lista_precios.import', 'uses' => 'ProductsController@import'])->middleware('admin');
     Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
@@ -40,13 +40,14 @@ Route::group(['middleware' => 'auth'], function () {
 
 });
 
-Route::group(['middleware' => 'guest'], function () {
+Route::group(['middleware' => ['guest', 'country']], function () {
     Route::get('subscriberForm', ['as'=>'subscriberForm', 'uses'=>'SubscribersController@subscriber_form']);
     Route::post('saveSubscriberForm', ['as'=> 'saveSubscriberForm', 'uses' => 'SubscribersController@saveSubscriberForm']);
     Route::get('registerPending', ['as' => 'registerPending', 'uses' => 'SubscribersController@showRegistrationFormPending']);
     Route::post('update_subscriber', ['as' => 'update_subscriber', 'uses' => 'SubscribersController@update_subscriber']);
 });
 
+Route::get('errorCountry', ['as' => 'errorCountry', 'uses' => 'HomeController@errorCountry']);
 
 \DB::connection("mysql")->enableQueryLog();
 
