@@ -38,10 +38,8 @@
                                                     @endif
 
                                                     <div class="actions-btn delete-user action-delete" id="{{ $user->id }}" data_toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
- 
- 
- 
                                                 </td>
+                                            </tr>
                                         @endforeach
                                     @endif
                                 </tbody>
