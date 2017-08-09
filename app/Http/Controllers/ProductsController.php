@@ -7,6 +7,9 @@ use App\Categorias;
 use App\Products;
 use Gate;
 use Excel;
+use Carbon\Carbon;
+use DB;
+use PDO;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -63,7 +66,8 @@ class ProductsController extends Controller
 
     public function processImport()
     {
-       $products_error = array();
+        $this->exportProductsToCvs(); //backup old products
+        $products_error = array();
         $new_products_count = 0;
         $error_count = 0;
         $exists_count = 0;
@@ -169,8 +173,29 @@ class ProductsController extends Controller
         return view('products.analisis', ['analisis' => $arr]);
     }
 
+    public function exportProductsToCvs(){
+        $current_time = Carbon::now();
+        $name = $current_time->year .'-'. $current_time->month .'-'. $current_time->day .' '. $current_time->hour .':'. $current_time->minute .':'. $current_time->second;
+        
+        DB::setFetchMode(PDO::FETCH_ASSOC); //to return an array in the DB::query
+        $current_products = DB::table('products')
+                                ->join('proveedores', 'products.proveedor_id', '=', 'proveedores.id')
+                                ->select(['products.id', 'proveedores.nombre_proveedor', 'products.tipo_producto', 'products.nombre_producto', 'products.ingrediente_activo', 'products.formulacion', 'products.concentracion', 'products.presentacion', 'products.unidad', 'products.empaque', 'products.precio_comercial', 'products.precio_por_medida', 'products.impuesto', 'products.ultima_actualizacion', 'created_at', 'updated_at'])
+                                ->get();
+        DB::setFetchMode(PDO::FETCH_ASSOC);
+
+        if($current_products != []){
+            Excel::create($name, function($excel) use($current_products) {
+                $excel->sheet('first', function($sheet) use($current_products){
+                    $sheet->fromArray($current_products);
+                });
+            })->store('csv', storage_path('app/products_backup'));
+        }
+    }
+
     public function convertToDate($dateString){
-        if(!$dateString) return;
+        if(!$dateString || $dateString == "ultima_actualizacion") return;
+        if(preg_match('/[0-9]{4}+[-]+[0-9]{2}+[-][0-9]{2}/', $dateString)) return $dateString;
         try {
             $arr = explode('/', $dateString);
             if(strlen($arr[2]) === 2) $arr[2] = "20".$arr[2];
