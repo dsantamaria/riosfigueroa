@@ -785,6 +785,18 @@ img{
   justify-content: center;
 }
 
+#list-products{
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+.list-products-left{
+  margin-right: auto;
+}
+.list-products-cancel{
+  margin-left: 5px;
+}
+
 body, div{
  -webkit-touch-callout: none;
  -webkit-user-select: none;

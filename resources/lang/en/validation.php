@@ -96,6 +96,15 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'data.*.name' => [
+            'required' => 'nameMissing'
+        ],
+        'data.*.ingredents' => [
+            'required' => 'ingMissing'
+        ],
+        'data.*.price' => [
+            'required' => 'priceMissing',
+        ],
     ],
 
     /*

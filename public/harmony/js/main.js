@@ -67,6 +67,86 @@
         showUpload: false
     });
 
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////// Edicion de productos en la tabla //////////////////////////////////
+
+    $('body').on('click', '.edit-products', function(e){
+        $('.more-info-product').addClass('more-info-product-1').removeClass('more-info-product');
+        $('.edit-cell').attr('contenteditable', 'true').css('color', 'red');
+        $('.save-products, .cancel-products').removeClass('hidden');
+        $(this).addClass('hidden');
+        $('#zctb thead').css('pointer-events', 'none');
+        $('.pagination').css('display', 'none');
+        $('#zctb_length').find('select').attr('disabled', 'disabled');
+        $('#zctb_filter').find('input').attr('disabled', 'disabled');
+    })
+
+    $('.save-products').click(function(){
+        $('.more-info-product-1').addClass('more-info-product').removeClass('more-info-product-1');
+        $('.edit-cell').attr('contenteditable', 'false').css('color', 'black');
+        $('.cancel-products').addClass('hidden');
+        $(this).addClass('hidden');
+        $('.edit-products').removeClass('hidden');
+        $('#zctb thead').css('pointer-events', '');
+        $('.pagination').css('display', 'inline-block');
+        $('#zctb_length').find('select').removeAttr('disabled');
+        $('#zctb_filter').find('input').removeAttr('disabled', 'disabled');
+
+        var info = {};
+        $('.more-info-product').each(function(){
+            var priceUni = $(this).find('.price-product-uni').text().includes('$') || $(this).find('.price-product-uni').text().length == 0 ? $(this).find('.price-product-uni').text() : '$' + $(this).find('.price-product-uni').text();
+            var priceMed = $(this).find('.price-product-med').text().includes('$') || $(this).find('.price-product-med').text().length == 0 ? $(this).find('.price-product-med').text() : '$' + $(this).find('.price-product-med').text();
+            info[$(this).attr('id')] = {'name': $(this).find('.name-product').text(), 'ingredents': $(this).find('.ing-product').text(), 'priceUni': priceUni, 'priceMed' : priceMed};
+        })
+
+        $.ajax({
+            type: 'POST',
+            url: '/updateProducts',
+            dataType: 'json',
+            success: function( data ) { 
+                if(data['error']){
+                    var nameError = data['response']['nameError'] ? 'All Products names are required \n' : '';
+                    var ingError = data['response']['ingError'] ? 'All Ingredents names are required \n' : '';
+                    var priceError = data['response']['priceError'] ? 'All Products prices are required' : '';
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-danger col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                  '<div><strong>'+ nameError +'</strong></div>'+
+                                  '<div><strong>'+ ingError +'</strong></div>'+
+                                  '<div><strong>'+ priceError +'</strong></div>'+
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                }else{
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>'+data['response']+'</strong>'+
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                }
+            },
+            data: {data: info},
+        })
+
+    })
+
+    $('.cancel-products').click(function(){
+        location.reload();
+    });
+
+    var allow_key_values = [8,37,39,48,49,50,51,52,53,54,55,56,57,188,190,96,97,98,99,100,101,102,103,104,105,110];
+    $('.price-product-uni').keydown(function(e){
+        if(allow_key_values.includes(e.keyCode)) return;
+        else e.preventDefault();
+    });
+
+    ///////////////////////////////////////// Fin Edicion de productos en la tabla ///////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     $('body').on('click', '.more-info-product', function(){
         var id = $(this).attr('id');
         $.ajax({

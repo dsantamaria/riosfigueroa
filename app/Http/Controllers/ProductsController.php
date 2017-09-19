@@ -10,6 +10,8 @@ use Excel;
 use Carbon\Carbon;
 use DB;
 use PDO;
+use Validator;
+use Schema;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -66,7 +68,6 @@ class ProductsController extends Controller
 
     public function processImport()
     {
-        $this->exportProductsToCvs(); //backup old products
         $products_error = array();
         $new_products_count = 0;
         $error_count = 0;
@@ -79,7 +80,15 @@ class ProductsController extends Controller
             return redirect(route('products.index'));
         }
         set_time_limit(600);
-        if ($file_contents) {
+        if ($file_contents) { 
+            try {
+                $this->exportProductsToCvs(); //backup old products
+                $this->exportProductsToNewTable(); //backup old products
+                DB::table('products')->delete(); // delete old products
+            } catch (Exception $e) {
+                return back()->with('warning','Ocurrio un error, por favor intente de nuevo');
+            }
+
             $data = array();
             $total_count = $file_contents->count();
             foreach($file_contents as $row)
@@ -175,14 +184,14 @@ class ProductsController extends Controller
 
     public function exportProductsToCvs(){
         $current_time = Carbon::now();
-        $name = $current_time->year .'-'. $current_time->month .'-'. $current_time->day .' '. $current_time->hour .':'. $current_time->minute .':'. $current_time->second;
+        $name = 'backup_products_'.$current_time->year .'_'. $current_time->month .'_'. $current_time->day .'_'. $current_time->hour .'_'. $current_time->minute .'_'. $current_time->second;
         
         DB::setFetchMode(PDO::FETCH_ASSOC); //to return an array in the DB::query
         $current_products = DB::table('products')
                                 ->join('proveedores', 'products.proveedor_id', '=', 'proveedores.id')
                                 ->select(['products.id', 'proveedores.nombre_proveedor', 'products.tipo_producto', 'products.nombre_producto', 'products.ingrediente_activo', 'products.formulacion', 'products.concentracion', 'products.presentacion', 'products.unidad', 'products.empaque', 'products.precio_comercial', 'products.precio_por_medida', 'products.impuesto', 'products.ultima_actualizacion', 'created_at', 'updated_at'])
                                 ->get();
-        DB::setFetchMode(PDO::FETCH_ASSOC);
+        DB::setFetchMode(PDO::FETCH_CLASS);
 
         if($current_products != []){
             Excel::create($name, function($excel) use($current_products) {
@@ -193,16 +202,94 @@ class ProductsController extends Controller
         }
     }
 
+    public function exportProductsToNewTable(){
+        $current_time = Carbon::now();
+        $table_name = 'backup_products_'.$current_time->year .'_'. $current_time->month .'_'. $current_time->day .'_'. $current_time->hour .'_'. $current_time->minute .'_'. $current_time->second;
+        Schema::connection('mysql')->create($table_name, function($table) {
+            $table->increments('id');
+            $table->integer('proveedor_id')->unsigned();
+            $table->foreign('proveedor_id')->references('id')->on('proveedores');
+            $table->integer('categoria_id')->unsigned();
+            $table->foreign('categoria_id')->references('id')->on('categorias');
+            $table->string('nombre_producto');
+            $table->string('tipo_producto');
+            $table->string('ingrediente_activo');
+            $table->string('formulacion');
+            $table->string('concentracion');
+            $table->string('presentacion');
+            $table->string('unidad');
+            $table->string('empaque');
+            $table->string('precio_comercial');
+            $table->string('precio_por_medida');
+            $table->string('impuesto');
+            $table->date('ultima_actualizacion');
+            $table->timestamps();
+        });
+
+        DB::select('INSERT into '.$table_name.' SELECT * FROM products');
+    }
+
     public function convertToDate($dateString){
         if(!$dateString || $dateString == "ultima_actualizacion") return;
         if(preg_match('/[0-9]{4}+[-]+[0-9]{2}+[-][0-9]{2}/', $dateString)) return $dateString;
         try {
             $arr = explode('/', $dateString);
-            if(strlen($arr[2]) === 2) $arr[2] = "20".$arr[2];
+            if(strlen($arr[2]) == 2) $arr[2] = "20".$arr[2];
             $dateInTime = strtotime($arr[0].'-'.$arr[1].'-'.$arr[2]);
             return date('Y-m-d', $dateInTime);
         } catch (Exception $e) {
             return '0000-00-00';
+        }
+    }
+
+    public function updateProducts(Request $request){
+        //Custom validation messages in resources/lang/en 
+        $validator = Validator::make($request->all(), [
+            'data.*.name' => 'required',
+            'data.*.ingredents' => 'required',
+            'data.*.priceUni' => 'required',
+            'data.*.priceMed' => 'required',
+        ]);
+
+        $data = ['nameError' => 0, 'ingError' => 0, 'priceError' => 0];
+
+        //Error messages are set in the main.js file
+        if($validator->fails()){
+            foreach ($validator->errors()->all() as $error) {
+                if($error == 'nameMissing') $data['nameError'] = 1;
+                else if($error == 'ingMissing') $data['ingError'] = 1;
+                else $data['priceError'] = 1;
+            }
+            return response()->json(['response' => $data, 'error' => 1]);
+        }else{
+            //Updating the products values in the DB
+            foreach ($request['data'] as $id => $row) {
+                $name = strtoupper($row['name']);
+                $ingredents = ucfirst($row['ingredents']);
+
+                //remove de comma and $ sign and convert to float
+                $price_commercial_converted = (float)substr(str_replace(',', '', $row['priceUni']), 1);
+                $price_med_converted = (float)substr(str_replace(',', '', $row['priceMed']), 1);
+
+                //set the number of decimals
+                $decimals_commercial = strlen(substr(strrchr($price_commercial_converted, '.'), 1));
+                $decimals_commercial = $decimals_commercial > 2 ? $decimals_commercial : 2;
+
+                $decimals_med = strlen(substr(strrchr($price_med_converted, '.'), 1));
+                $decimals_med = $decimals_med > 2 ? $decimals_med : 2;
+
+                //add the decimal point and comma
+                $price_commercial = number_format($price_commercial_converted, $decimals_commercial, '.', ',');
+                $price_med = number_format($price_med_converted, $decimals_med, '.', ',');
+
+                Products::where('id', $id)->update([
+                    'nombre_producto' => $name,
+                    'ingrediente_activo' => $ingredents,
+                    'precio_comercial' => '$'.$price_commercial,
+                    'precio_por_medida' => '$'.$price_med,
+                ]);
+            }
+            return response()->json(['response' => 'Actualizacion completada', 'error' => 0]);  
         }
     }
 

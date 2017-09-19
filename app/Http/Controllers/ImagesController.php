@@ -21,7 +21,7 @@ class ImagesController extends Controller
 
 	public function saveImage(Request $request){
 		$this->validate($request, [
-            'input-image' => 'required|image|mimes:jpeg,png,jpg,svg|max:2048',
+          'input-image' => 'required|image|max:2048',
         ]);
 
         $image = $request->file('input-image');
@@ -32,8 +32,9 @@ class ImagesController extends Controller
         $destinationPath = storage_path('app/'.$folder_name);
 
         if(!Storage::exists($folder_name)) Storage::makeDirectory($folder_name);
-
+        
         $img = Image::make($image->getRealPath());
+
         $img->save($destinationPath.'/'.$input['imagename']);
 
         return back()->with('success','Image Upload successful');

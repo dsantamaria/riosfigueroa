@@ -52,7 +52,7 @@ class SubscribersController extends Controller
     	try{
             if($user->count() > 0){
                 //si el usuario existe y no esta activo se reenvia/actualiza el token, sino se aborta el proceso ya que esta activo 
-                if ($user[0]['active'] === 0 ){
+                if ($user[0]['active'] == 0 ){
                     DB::table('pending_subscribers')->where('user_id', $user[0]['id'])->update(['token' => $token, 'updated_at' => $current_time]);
                 }
                 else{

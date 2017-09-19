@@ -4,8 +4,17 @@
 
         <h2 class="page-title">Listado de Productos</h2>
 
+        <div id="messages" class="col-xs-12" style="display: none"></div>
+
         <div class="panel panel-primary">
-            <div class="panel-heading">Listado de Productos</div>
+            <div class="panel-heading" id="list-products">
+                <div class="list-products-left">Listado de Productos</div> 
+                @can('admin-role')
+                    <div class="btn btn-warning btn-sm edit-products">Editar Tabla</div>
+                    <div class="btn btn-success btn-sm hidden save-products">Salvar</div>
+                    <div class="btn btn-danger btn-sm hidden cancel-products list-products-cancel">Cancelar</div>
+                @endcan
+            </div>
             <div class="panel-body">
                 <div id="zctb_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                     <div class="row">
@@ -31,13 +40,13 @@
                                         @foreach($products as $product)
                                             <tr role="row" id="{{$product->id}}" class="more-info-product">
                                                 <td class="cursor">{{$product->proveedores->nombre_proveedor}}</td>
-                                                <td>{{$product->nombre_producto}}</td>
+                                                <td class="edit-cell name-product">{{$product->nombre_producto}}</td>
                                                 <td>{{$product->presentacion}}</td>
-                                                <td>{{$product->ingrediente_activo}}</td>
-                                                <td>{{$product->concentracion}}</td>
+                                                <td class="edit-cell ing-product">{{$product->ingrediente_activo}}</td>
+                                                <td>{{$product->concentracion}}</tpriceMedd>
                                                 <td>{{$product->unidad}}</td>
-                                                <td>{{$product->precio_comercial}}</td>
-                                                <td>{{$product->precio_por_medida}}</td>
+                                                <td class="edit-cell price-product-uni">{{$product->precio_comercial}}</td>
+                                                <td class="edit-cell price-product-med">{{$product->precio_por_medida}}</td>
                                                 <td>{{$product->impuesto}}</td>
                                                 <td>{{ date('d-m-Y', strtotime($product->ultima_actualizacion)) }}</td>
                                             </tr>
