@@ -226,7 +226,7 @@ class ProductsController extends Controller
             $table->timestamps();
         });
 
-        DB::select('INSERT into '.$table_name.' SELECT * FROM products');
+        DB::insert('INSERT into '.$table_name.' SELECT * FROM products');
     }
 
     public function convertToDate($dateString){
