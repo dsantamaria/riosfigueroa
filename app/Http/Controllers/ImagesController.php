@@ -21,7 +21,7 @@ class ImagesController extends Controller
 
 	public function saveImage(Request $request){
 		$this->validate($request, [
-          'input-image' => 'required|image|max:2048',
+          'input-image' => 'required|image|max:8192',
         ]);
 
         $image = $request->file('input-image');
