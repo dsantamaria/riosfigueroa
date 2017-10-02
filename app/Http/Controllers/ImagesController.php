@@ -37,7 +37,10 @@ class ImagesController extends Controller
      
         $destinationPath = public_path($folder_name);
 
-        if(!File::exists($folder_name)) File::makeDirectory($folder_name);
+        if(!File::exists($folder_name)) {
+            if(!File::exists('project_images')) File::makeDirectory('project_images');
+            File::makeDirectory($folder_name);
+        }
         
         $img = Image::make($image->getRealPath());
 
