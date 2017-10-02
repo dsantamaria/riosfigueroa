@@ -18,6 +18,11 @@ class Categorias extends Model
         return $this->hasMany('App\Products');
     }
 
+    public function analysis_category_images()
+    {
+        return $this->hasMany('App\Products');
+    }
+
     public static function getOrCreateCategoriaByName($nombre_categoria)
     {
         $query = self::select('id')->where('nombre_categoria', 'LIKE', $nombre_categoria);

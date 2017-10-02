@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Proveedores;
 use App\Categorias;
 use App\Products;
+use App\Analysis_category_image;
 use Gate;
 use Excel;
 use Carbon\Carbon;
@@ -155,31 +156,21 @@ class ProductsController extends Controller
 
     public function analisisProducts($analisis)
     {
-        print_r($analisis);
         switch ($analisis) {
             case 'insecticidas':
-                $arr['titulo'] = 'Abamectina';
-                $arr['img'] = 'abamectina.jpg';
-                print_r($arr);
-
+                $categoria = Categorias::where('nombre_categoria', 'Insecticida')->first();
                 break;
             case 'herbicidas':
-                $arr['titulo'] = 'Paraquat';
-                $arr['img'] = 'paraquat.jpg';
-                print_r($arr);
+                $categoria = Categorias::where('nombre_categoria', 'Herbicida')->first();
                 break;
             case 'fungicidas':
-                $arr['titulo'] = 'Azoxystrobin';
-                $arr['img'] = 'azoxystrobin.jpg';
-                print_r($arr);
+                $categoria = Categorias::where('nombre_categoria', 'Fungicida')->first();
                 break;
             default:
-                $arr = array();
-                break;
+                $categoria = Categorias::where('nombre_categoria', 'Insecticida')->first();
         }
-
-
-        return view('products.analisis', ['analisis' => $arr]);
+        $category_images = Analysis_category_image::where('categoria_id', $categoria['id'])->get();
+        return view('products.analisis')->with('category_images', $category_images);
     }
 
     public function exportProductsToCvs(){

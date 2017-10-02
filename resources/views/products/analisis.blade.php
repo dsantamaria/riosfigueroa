@@ -15,18 +15,22 @@
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Imagen</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Titulo</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Descripción</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 600px">Descripción</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Fecha de carga</th>
                                 </tr>
                                 </thead>
 
                                 <tbody>
-                                    <tr role="row" id="t" class="modal-analisis">
-                                        <td class="cursor"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></td>     
-                                        <td>{{ $analisis['titulo'] }}</td>
-                                        <td>Agregar descripcion</td>
-                                        <td>24 de mayo de 2017</td>
-                                    </tr>
+                                    @if($category_images)
+                                        @foreach($category_images as $image)
+                                            <tr role="row" id="{{ $image->id }}">
+                                                <td class="more-info-analysis cursor" path="{{ $image->path }}"><i class="fa fa-file-image-o fa-2x" aria-hidden="true"></i></td>
+                                                <td>{{ $image->title }}</td>
+                                                <td>{{ $image->description }}</td>
+                                                <td>{{ date('d-m-Y', strtotime( $image->created_at )) }}</td>
+                                            </tr>
+                                        @endforeach
+                                    @endif
                                 </tbody>
                             </table>
                         </div>
@@ -36,16 +40,14 @@
         </div>
     </div>
     <div class="modal fade" tabindex="-1" role="dialog" id="modal-analisis" style="padding-right: 20px">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="width: 850">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h3 class="modal-title">Análisis de imagen: {{ $analisis['titulo'] }}</h3>
-            </div>
-            <div class="modal-body" style="text-align: center;">
-                {!! Html::image($analisis['img'], 'alt', array( 'width' => 830, 'height' => 510 )) !!}
+        <div class="modal-dialog" role="document" style="width: 850px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title"></h3>
+                </div>
+                <div class="modal-body" style="text-align: center;"></div>
             </div>
         </div>
     </div>
-</div>
 @stop

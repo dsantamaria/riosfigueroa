@@ -315,4 +315,13 @@
             }
         });
     });
+
+    $('body').on('click', '.more-info-analysis', function(){
+
+        var img = '<img class=" img-responsive" src="'+$(this).attr('path')+'" width="820px" height="530px">';
+        var modalTitle = 'Análisis de imagen:';
+        $('.modal-title').html(modalTitle);
+        $('#modal-analisis .modal-body').html(img);
+        $('#modal-analisis').modal('show');
+    })
  });
