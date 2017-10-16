@@ -316,6 +316,36 @@
         });
     });
 
+    $('body').on('click', '.delete-image', function(){
+        var id = $(this).attr('id');
+        var row = $(this).closest('tr');
+        $.ajax({
+            type: "GET",
+            url: '/deleteImage/'+ id,
+            success: function( data ) {
+                if(data['response'] === 1){
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Imagen eliminada con exito</strong>'+
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                    table.row(row).remove().draw();
+                 }else{
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Ocurrio un error al intentar eliminar la imagen</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                }
+            }
+        });
+    });
+
     $('body').on('click', '.more-info-analysis', function(){
 
         var img = '<img class=" img-responsive" src="'+$(this).attr('path')+'" width="820px" height="530px">';

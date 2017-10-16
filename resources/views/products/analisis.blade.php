@@ -1,9 +1,8 @@
 @extends('layouts.app')
 @section('content')
     <div class="col-md-12">
-
         <h2 class="page-title">Listado de Imagenes</h2>
-
+        <div id="messages" class="col-xs-12" style="display: none"></div>
         <div class="panel panel-primary">
             <div class="panel-heading">Listado de Imagenes</div>
             <div class="panel-body">
@@ -17,6 +16,7 @@
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Titulo</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 600px">Descripción</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Fecha de carga</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Eliminar</th>
                                 </tr>
                                 </thead>
 
@@ -28,6 +28,9 @@
                                                 <td>{{ $image->title }}</td>
                                                 <td>{{ $image->description }}</td>
                                                 <td>{{ date('d-m-Y', strtotime( $image->created_at )) }}</td>
+                                                <td class="table-td-actions">
+                                                    <div class="action-delete actions-btn delete-image" id="{{ $image->id }}" data_toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                                                </td>
                                             </tr>
                                         @endforeach
                                     @endif

@@ -37,7 +37,8 @@ Route::group(['middleware' => ['auth', 'country']], function () {
     Route::get('listActiveUsers', ['as' => 'listActiveUsers', 'uses' => 'SubscribersController@list_active_user'])->middleware('admin');
     Route::get('activateUser/{id}/{state}', ['as'=>'activateUser', 'uses'=>'SubscribersController@activate_user'])->middleware('admin');
     Route::get('deleteUser/{id}', ['as'=>'deleteUser', 'uses'=>'SubscribersController@delete_user'])->middleware('admin');
-    Route::post('updateProducts', ['as' => 'updateProducts', 'uses' => 'ProductsController@updateProducts'])->middleware('admin');;
+    Route::post('updateProducts', ['as' => 'updateProducts', 'uses' => 'ProductsController@updateProducts'])->middleware('admin');
+    Route::get('deleteImage/{id}', ['as'=>'deleteImage', 'uses'=>'ImagesController@delete_image'])->middleware('admin');
 });
 
 Route::group(['middleware' => ['guest', 'country']], function () {

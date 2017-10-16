@@ -7,6 +7,7 @@ use App\Http\Requests;
 use Image;
 use File;
 use Gate;
+use Log;
 use App\Categorias;
 use App\Analysis_category_image;
 
@@ -55,4 +56,15 @@ class ImagesController extends Controller
 
         return back()->with('success','Image Upload successful');
 	}
+
+    public function delete_image($id){
+        $image = Analysis_category_image::where('id', $id)->first();
+        $path = substr($image->path, 1);
+        if(File::exists($path)){
+            File::delete($path);
+            $image->delete();
+            return response()->json(['response' => 1]);
+        }
+        return response()->json(['response' => 0]);
+    }
 }
