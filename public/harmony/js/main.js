@@ -458,7 +458,7 @@
         }
     });
 
-    $('#form-graph-analisis').click(function(){
+    $('#update').click(function(){
         var a = Math.random() * 100;
         var b = Math.random() * 100;
         var c = Math.random() * 100; 

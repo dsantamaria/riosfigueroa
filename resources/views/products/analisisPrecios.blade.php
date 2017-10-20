@@ -68,7 +68,7 @@
             <div class="hr-dashed"></div>
             <div class="row">
                 <div class="col-md-12 text-center">
-                    <button type="submit" class="btn btn-primary">Analizar</button>
+                    <button type="submit" class="btn btn-primary" id="update">Analizar</button>
                 </div>
             </div>
         {!! Form::close() !!}
