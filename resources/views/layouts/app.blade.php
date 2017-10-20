@@ -19,7 +19,7 @@
 
     <body oncopy='return false' oncut='return false' class="hidden-print">
         <div class="brand clearfix">
-            <a href="#" class="logo">Sistema de Manejo de Precios</a>
+            <a href="/" class="logo">Sistema de Manejo de Precios</a>
             @if (Auth::check())
                 <ul class="ts-profile-nav">
                     <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
@@ -51,6 +51,7 @@
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'insecticidas']) }}">Insecticidas</a></li>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'herbicidas']) }}">Herbicidas</a></li>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'fungicidas']) }}">Fungicidas</a></li>
+                                <li><a href="{{ route('analisisPrecios') }}">Analisis de Precios</a></li>
                             </ul>
                         </li>
                         <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-industry"></i>Empresas Comercializadoras</a></li>
@@ -97,7 +98,7 @@
         {!! Html::script('harmony/js/bootstrap.min.js') !!}
         {!! Html::script('harmony/js/jquery.dataTables.min.js') !!}
         {!! Html::script('harmony/js/dataTables.bootstrap.min.js') !!}
-        {!! Html::script('harmony/js/Chart.min.js') !!}
+        {!! Html::script('harmony/js/Chart.bundle.min.js') !!}
         {!! Html::script('harmony/js/fileinput.js') !!}
         {!! Html::script('harmony/js/chartData.js') !!}
         {!! Html::script('harmony/js/main.js') !!}

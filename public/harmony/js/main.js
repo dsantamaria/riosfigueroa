@@ -354,4 +354,168 @@
         $('#modal-analisis .modal-body').html(img);
         $('#modal-analisis').modal('show');
     })
+
+    //##############################################################################################################
+    //########################################### Incio Graficas ###################################################
+    //##############################################################################################################
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Test',
+                backgroundColor: 'rgba(255, 255, 255, 0)',
+                borderColor: 'rgba(12, 82, 0, 0.5)',
+                lineTension: 0,
+                pointBackgroundColor: 'rgba(12, 82, 0, 1)',
+                pointRadius: 5,
+                data: [],
+            }]
+        },
+
+        // Configuration options go here
+        options: {
+            tooltips: {
+                enabled: false,
+                mode: 'index',
+                position: 'nearest',
+                yPadding: 10,
+                xPadding: 10,
+                custom: function(tooltip) {
+                    // Tooltip Element
+                    var tooltipEl = document.getElementById('chartjs-tooltip');
+
+                    // Create element on first render
+                    if (!tooltipEl) {
+                        tooltipEl = document.createElement('div');
+                        tooltipEl.id = 'chartjs-tooltip';
+                        tooltipEl.innerHTML = "<table></table>"
+                        this._chart.canvas.parentNode.appendChild(tooltipEl);
+                    }
+
+                    // Hide if no tooltip
+                    if (tooltip.opacity === 0) {
+                        tooltipEl.style.opacity = 0;
+                        return;
+                    }
+
+                    // Set caret Position
+                    tooltipEl.classList.remove('above', 'below', 'no-transform');
+                    if (tooltip.yAlign) {
+                        tooltipEl.classList.add(tooltip.yAlign);
+                    } else {
+                        tooltipEl.classList.add('no-transform');
+                    }
+
+                    function getBody(bodyItem) {
+                        return bodyItem.lines;
+                    }
+
+                    // Set Text
+                    if (tooltip.body) {
+                        var titleLines = tooltip.title || [];
+                        var bodyLines = tooltip.body.map(getBody);
+
+                        var innerHtml = '<thead>';
+                        innerHtml += '</thead><tbody>';
+
+                        bodyLines.forEach(function(body, i) {
+                            var indexBody = body[0].indexOf(':');
+                            bodyX = body[0].substr(indexBody + 1);
+                            var colors = tooltip.labelColors[i];
+                            var style = 'background:' + colors.backgroundColor;
+                            style += '; border-color:' + colors.borderColor;
+                            style += '; border-width: 2px';
+                            var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                            innerHtml += '<tr><td>' + span + '<strong>Precio K/L:</strong><span style="color: #57bd64;"> ' + bodyX + '</span></td></tr>';
+                            innerHtml += '<tr><td>' + span + '<strong>Update:</strong> <span style="color: #57bd64;"> ' + titleLines[0] + '</span></td></tr>';
+                        });
+                        innerHtml += '</tbody>';
+
+                        var tableRoot = tooltipEl.querySelector('table');
+                        tableRoot.innerHTML = innerHtml;
+                    }
+
+                    // `this` will be the overall tooltip
+                    var positionY = this._chart.canvas.offsetTop;
+                    var positionX = this._chart.canvas.offsetLeft;
+
+                    // Display, position, and set styles for font
+                    tooltipEl.style.opacity = 1;
+                    tooltipEl.style.left = positionX + tooltip.caretX + 'px';
+                    tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+                    tooltipEl.style.fontFamily = tooltip._fontFamily;
+                    tooltipEl.style.fontSize = tooltip.fontSize;
+                    tooltipEl.style.fontStyle = tooltip._fontStyle;
+                    tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+                }
+            }
+        }
+    });
+
+    $('#form-graph-analisis').click(function(){
+        var a = Math.random() * 100;
+        var b = Math.random() * 100;
+        var c = Math.random() * 100; 
+        var d = Math.random() * 100;
+        var e = Math.random() * 100; 
+        var f = Math.random() * 100; 
+        addData(chart, ["January", "February", "March", "April", "May", "June", ''], [a, b, c, d, e, f]);
+    })
+
+    function addData(chart, label, data) {
+        chart.data.labels = label;
+        chart.data.datasets.forEach((dataset) => {
+            dataset.data = data;
+        });
+        chart.update();
+    }
+
+    $('#analisisCategorias').change(function(){
+        console.log('change products e ingredientes');
+    })
+
+    $('#analisisTipo').change(function(){
+        if($(this).val() == 'producto'){
+            $('#analisisProducto').fadeIn(1000);
+            $('#analisisIngrediente').fadeOut(1);
+        }else{
+            $('#analisisProducto').fadeOut(1);
+            $('#analisisIngrediente').fadeIn(1000);
+        }
+    })
+
+    $('#analisisTiempo').change(function(){
+         if($(this).val() == 0){
+            $('.analisisRango').fadeOut(1);
+        }else{
+            $('.analisisRango').fadeIn(1000);
+        }
+    })
+
+    $('#analisisInicio').change(function(){
+        var dateIn = $(this).val();
+        var dateOut = $('#analisisFin').val();
+        if(dateIn != null && dateOut != null)  Date.parse(dateIn) >= Date.parse(dateOut) ? $(this).closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : $(this).closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
+    })
+
+    $('#analisisFin').change(function(){
+      var dateIn = $('#analisisInicio').val()
+      var dateOut = $(this).val() 
+      if(dateIn != null && dateOut != null)  Date.parse(dateIn) >= Date.parse(dateOut) ? $(this).closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : $(this).closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
+    });
+
+    $('#form-graph-analisis').submit(function(e){
+        e.preventDefault();
+        if($(this).find('.has-error').length > 0) e.preventDefault();
+    })
+    //##############################################################################################################
+    //########################################### Fin Graficas #####################################################
+    //############################################################################################################## 
+
  });

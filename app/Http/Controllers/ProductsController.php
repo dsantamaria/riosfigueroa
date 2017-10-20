@@ -284,4 +284,8 @@ class ProductsController extends Controller
         }
     }
 
+    public function analisisPrecios(){
+        return view('products.analisisPrecios');
+    }
+
 }
