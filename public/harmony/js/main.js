@@ -48,15 +48,15 @@
 	 
 	 
 	 $("#input-1").fileinput({
-		showPreview: false,
-		allowedFileExtensions: ["csv"],
-		elErrorContainer: "#errorBlock1",
-	    uploadAsync: false,
-	    msgInvalidFileExtension: "Archivo invalido, solo son validos archivos con extension CSV",
-	    showUpload: false
-	    //uploadUrl: "http://local.riosfigueroa/products/process_import"
+        showPreview: false,
+        allowedFileExtensions: ["csv", "xlsx"],
+        elErrorContainer: "#errorBlock1",
+        uploadAsync: false,
+        msgInvalidFileExtension: "Archivo invalido, solo son validos archivos con extension CSV, XLSX",
+        showUpload: false
+        //uploadUrl: "http://local.riosfigueroa/products/process_import"
         // you can configure `msgErrorClass` and `msgInvalidFileExtension` as well
-	});
+    });
 
     $("#input-image").fileinput({
         showPreview: false,
@@ -355,167 +355,357 @@
         $('#modal-analisis').modal('show');
     })
 
-    //##############################################################################################################
-    //########################################### Incio Graficas ###################################################
-    //##############################################################################################################
-    var ctx = document.getElementById('myChart').getContext('2d');
+    //###############################################################################################################
+    //##################################### Incio Graficas Analisis Importacionjes ##################################
+    //###############################################################################################################
+    if(document.getElementById('chartAnalisisHistorico') !== null){
+        var ctx = document.getElementById('chartAnalisisHistorico').getContext('2d');
+        var tons = {'T1': 1, 'T2': 2, 'T3': 3, 'T4': 4};
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'horizontalBar',
 
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-
-        // The data for our dataset
-        data: {
-            labels: [],
-            datasets: [{
-                label: 'Test',
-                backgroundColor: 'rgba(255, 255, 255, 0)',
-                borderColor: 'rgba(12, 82, 0, 0.5)',
-                lineTension: 0,
-                pointBackgroundColor: 'rgba(12, 82, 0, 1)',
-                pointRadius: 5,
-                data: [],
-            }]
-        },
-
-        // Configuration options go here
-        options: {
-            tooltips: {
-                enabled: false,
-                mode: 'index',
-                position: 'nearest',
-                yPadding: 10,
-                xPadding: 10,
-                custom: function(tooltip) {
-                    // Tooltip Element
-                    var tooltipEl = document.getElementById('chartjs-tooltip');
-
-                    // Create element on first render
-                    if (!tooltipEl) {
-                        tooltipEl = document.createElement('div');
-                        tooltipEl.id = 'chartjs-tooltip';
-                        tooltipEl.innerHTML = "<table></table>"
-                        this._chart.canvas.parentNode.appendChild(tooltipEl);
+            // The data for our dataset
+            data: {
+                labels: ['T1', 'T2', 'T3', 'T4'],
+                datasets: [{
+                    label: 'Test',
+                    backgroundColor: ['rgba(20, 82, 9, 0.5)', 'rgba(9, 61, 125, 0.5)', 'rgba(165, 173, 39, 0.5)', 'rgba(171, 11, 11, 0.5)'],
+                    borderColor: ['rgba(20, 82, 9, 1)', 'rgba(9, 61, 125, 1)', 'rgba(165, 173, 39, 1)', 'rgba(171, 11, 11, 1)'],
+                    data: [6.22, 5.01, 2, 99.08, 0],
+                    barThickness: 2,
+                    xAxisID: 0
+                }]
+            },
+            options: {
+                elements: {
+                    rectangle: {
+                        borderWidth: 2,
                     }
+                },
+                scales: {
+                    xAxes: [{
+                        gridLines: {
+                            offsetGridLines: true,
+                        },
+                        //stacked: true,
+                        display: false,
+                    }],
+                    yAxes: [{
+                        //stacked: true
+                    }]
+                },
+                legend: {
+                    display: false,
+                },
+                responsive: true,
+                tooltips: {
+                    enabled: false,
+                    mode: 'index',
+                    position: 'nearest',
+                    yPadding: 10,
+                    xPadding: 10,
+                    custom: function(tooltip) {
+                        // Tooltip Element
+                        var tooltipEl = document.getElementById('chartjs-tooltip');
 
-                    // Hide if no tooltip
-                    if (tooltip.opacity === 0) {
-                        tooltipEl.style.opacity = 0;
-                        return;
+                        // Create element on first render
+                        if (!tooltipEl) {
+                            tooltipEl = document.createElement('div');
+                            tooltipEl.id = 'chartjs-tooltip';
+                            tooltipEl.innerHTML = "<table></table>"
+                            this._chart.canvas.parentNode.appendChild(tooltipEl);
+                        }
+
+                        // Hide if no tooltip
+                        if (tooltip.opacity === 0) {
+                            tooltipEl.style.opacity = 0;
+                            return;
+                        }
+
+                        // Set caret Position
+                        tooltipEl.classList.remove('above', 'below', 'no-transform');
+                        if (tooltip.yAlign) {
+                            tooltipEl.classList.add(tooltip.yAlign);
+                        } else {
+                            tooltipEl.classList.add('no-transform');
+                        }
+
+                        function getBody(bodyItem) {
+                            return bodyItem.lines;
+                        }
+
+                        // Set Text
+                        if (tooltip.body) {
+                            var bodyLines = tooltip.body.map(getBody);
+
+                            var innerHtml = '<thead>';
+                            innerHtml += '</thead><tbody>';
+                            bodyLines.forEach(function(body, i) {
+                                var indexBody = body[0].indexOf(':');
+                                var titleLines = tooltip.title || [];
+                                bodyX = body[0].substr(indexBody + 1);
+                                var colors = tooltip.labelColors[i];
+                                var style = 'background:' + colors.backgroundColor;
+                                style += '; border-color:' + colors.borderColor;
+                                style += '; border-width: 2px';
+                                var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                                innerHtml += '<tr><td>' + span + '<strong>Tonelada:</strong> <span style="color: #57bd64;"> ' + tons[titleLines[0]] + '</span></td></tr>';
+                            });
+                            innerHtml += '</tbody>';
+
+                            var tableRoot = tooltipEl.querySelector('table');
+                            tableRoot.innerHTML = innerHtml;
+                        }
+
+                        // `this` will be the overall tooltip
+                        var positionY = this._chart.canvas.offsetTop;
+                        var positionX = this._chart.canvas.offsetLeft;
+
+                        // Display, position, and set styles for font
+                        tooltipEl.style.opacity = 1;
+                        tooltipEl.style.left = positionX + tooltip.caretX + 'px';
+                        tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+                        tooltipEl.style.fontFamily = tooltip._fontFamily;
+                        tooltipEl.style.fontSize = tooltip.fontSize;
+                        tooltipEl.style.fontStyle = tooltip._fontStyle;
+                        tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
                     }
-
-                    // Set caret Position
-                    tooltipEl.classList.remove('above', 'below', 'no-transform');
-                    if (tooltip.yAlign) {
-                        tooltipEl.classList.add(tooltip.yAlign);
-                    } else {
-                        tooltipEl.classList.add('no-transform');
-                    }
-
-                    function getBody(bodyItem) {
-                        return bodyItem.lines;
-                    }
-
-                    // Set Text
-                    if (tooltip.body) {
-                        var titleLines = tooltip.title || [];
-                        var bodyLines = tooltip.body.map(getBody);
-
-                        var innerHtml = '<thead>';
-                        innerHtml += '</thead><tbody>';
-
-                        bodyLines.forEach(function(body, i) {
-                            var indexBody = body[0].indexOf(':');
-                            bodyX = body[0].substr(indexBody + 1);
-                            var colors = tooltip.labelColors[i];
-                            var style = 'background:' + colors.backgroundColor;
-                            style += '; border-color:' + colors.borderColor;
-                            style += '; border-width: 2px';
-                            var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
-                            innerHtml += '<tr><td>' + span + '<strong>Precio K/L:</strong><span style="color: #57bd64;"> ' + bodyX + '</span></td></tr>';
-                            innerHtml += '<tr><td>' + span + '<strong>Update:</strong> <span style="color: #57bd64;"> ' + titleLines[0] + '</span></td></tr>';
-                        });
-                        innerHtml += '</tbody>';
-
-                        var tableRoot = tooltipEl.querySelector('table');
-                        tableRoot.innerHTML = innerHtml;
-                    }
-
-                    // `this` will be the overall tooltip
-                    var positionY = this._chart.canvas.offsetTop;
-                    var positionX = this._chart.canvas.offsetLeft;
-
-                    // Display, position, and set styles for font
-                    tooltipEl.style.opacity = 1;
-                    tooltipEl.style.left = positionX + tooltip.caretX + 'px';
-                    tooltipEl.style.top = positionY + tooltip.caretY + 'px';
-                    tooltipEl.style.fontFamily = tooltip._fontFamily;
-                    tooltipEl.style.fontSize = tooltip.fontSize;
-                    tooltipEl.style.fontStyle = tooltip._fontStyle;
-                    tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
                 }
             }
-        }
-    });
 
-    $('#update').click(function(){
-        var a = Math.random() * 100;
-        var b = Math.random() * 100;
-        var c = Math.random() * 100; 
-        var d = Math.random() * 100;
-        var e = Math.random() * 100; 
-        var f = Math.random() * 100; 
-        addData(chart, ["January", "February", "March", "April", "May", "June", ''], [a, b, c, d, e, f]);
-    })
-
-    function addData(chart, label, data) {
-        chart.data.labels = label;
-        chart.data.datasets.forEach((dataset) => {
-            dataset.data = data;
+            // Configuration options go here
         });
-        chart.update();
+        Chart.plugins.register({
+            afterDraw: function(chart, easing) {
+                // To only draw at the end of animation, check for easing === 1
+                var ctx = chart.ctx;
+
+                chart.data.datasets.forEach(function (dataset, i) {
+                    var meta = chart.getDatasetMeta(i);
+                    if (!meta.hidden) {
+                        meta.data.forEach(function(element, index) {
+                            // Draw the text in black, with the specified font
+                            ctx.fillStyle = 'rgb(0, 0, 0)';
+
+                            var fontSize = 16;
+                            var fontStyle = 'normal';
+                            var fontFamily = 'Helvetica Neue';
+                            ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+                            // Just naively convert to string for now
+                            var dataString = '$' + dataset.data[index].toString();
+
+                            // Make sure alignment settings are correct
+                            ctx.textAlign = 'center';
+                            ctx.textBaseline = 'middle';
+
+                            var padding = 0;
+                            var position = element.tooltipPosition();
+                            var positionX = dataset.data[index] < 6 ?  position.x + (10 + (dataString.length*2)):  position.x - (10 + (dataString.length*4));
+                            ctx.fillText(dataString, positionX, position.y - (fontSize / 2) - padding + 5);
+                        });
+                    }
+                });
+            }
+        });
+        $('#update').click(function(){
+            var a = Math.round(Math.random() * 100);
+            var b = Math.round(Math.random() * 100);
+            var c = Math.round(Math.random() * 100); 
+            var d = Math.round(Math.random() * 100);
+            addData(chart, ["T1", "T2", "T3", "T4"], [a, b, c, d, 0]);
+            tons = {'T1': a*2, 'T2': b*2, 'T3': c*2, 'T4': d*2};
+        });
+        function addData(chart, label, data) {
+            chart.data.labels = label;
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data = data;
+            });
+            chart.update();
+        }
+        $('#form-graph-analisis').submit(function(e){
+            e.preventDefault();
+        })
     }
-
-    $('#analisisCategorias').change(function(){
-        console.log('change products e ingredientes');
-    })
-
-    $('#analisisTipo').change(function(){
-        if($(this).val() == 'producto'){
-            $('#analisisProducto').fadeIn(1000);
-            $('#analisisIngrediente').fadeOut(1);
-        }else{
-            $('#analisisProducto').fadeOut(1);
-            $('#analisisIngrediente').fadeIn(1000);
-        }
-    })
-
-    $('#analisisTiempo').change(function(){
-         if($(this).val() == 0){
-            $('.analisisRango').fadeOut(1);
-        }else{
-            $('.analisisRango').fadeIn(1000);
-        }
-    })
-
-    $('#analisisInicio').change(function(){
-        var dateIn = $(this).val();
-        var dateOut = $('#analisisFin').val();
-        if(dateIn != null && dateOut != null)  Date.parse(dateIn) >= Date.parse(dateOut) ? $(this).closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : $(this).closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
-    })
-
-    $('#analisisFin').change(function(){
-      var dateIn = $('#analisisInicio').val()
-      var dateOut = $(this).val() 
-      if(dateIn != null && dateOut != null)  Date.parse(dateIn) >= Date.parse(dateOut) ? $(this).closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : $(this).closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
-    });
-
-    $('#form-graph-analisis').submit(function(e){
-        e.preventDefault();
-        if($(this).find('.has-error').length > 0) e.preventDefault();
-    })
     //##############################################################################################################
     //########################################### Fin Graficas #####################################################
     //############################################################################################################## 
 
+    //##############################################################################################################
+    //##################################### Incio Graficas Analisis Precios ########################################
+    //##############################################################################################################
+    if(document.getElementById('chartAnalisisCategoria') !== null){
+        var ctx = document.getElementById('chartAnalisisCategoria').getContext('2d');
+        var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Historico de Precios',
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
+                    borderColor: 'rgba(12, 82, 0, 0.5)',
+                    lineTension: 0,
+                    pointBackgroundColor: 'rgba(12, 82, 0, 1)',
+                    pointRadius: 5,
+                    data: [],
+                }]
+            },
+
+            // Configuration options go here
+            options: {
+                tooltips: {
+                    enabled: false,
+                    mode: 'index',
+                    position: 'nearest',
+                    yPadding: 10,
+                    xPadding: 10,
+                    custom: function(tooltip) {
+                        // Tooltip Element
+                        var tooltipEl = document.getElementById('chartjs-tooltip');
+
+                        // Create element on first render
+                        if (!tooltipEl) {
+                            tooltipEl = document.createElement('div');
+                            tooltipEl.id = 'chartjs-tooltip';
+                            tooltipEl.innerHTML = "<table></table>"
+                            this._chart.canvas.parentNode.appendChild(tooltipEl);
+                        }
+
+                        // Hide if no tooltip
+                        if (tooltip.opacity === 0) {
+                            tooltipEl.style.opacity = 0;
+                            return;
+                        }
+
+                        // Set caret Position
+                        tooltipEl.classList.remove('above', 'below', 'no-transform');
+                        if (tooltip.yAlign) {
+                            tooltipEl.classList.add(tooltip.yAlign);
+                        } else {
+                            tooltipEl.classList.add('no-transform');
+                        }
+
+                        function getBody(bodyItem) {
+                            return bodyItem.lines;
+                        }
+
+                        // Set Text
+                        if (tooltip.body) {
+                            var titleLines = tooltip.title || [];
+                            var bodyLines = tooltip.body.map(getBody);
+
+                            var innerHtml = '<thead>';
+                            innerHtml += '</thead><tbody>';
+
+                            bodyLines.forEach(function(body, i) {
+                                var indexBody = body[0].indexOf(':');
+                                bodyX = body[0].substr(indexBody + 1);
+                                var colors = tooltip.labelColors[i];
+                                var style = 'background:' + colors.backgroundColor;
+                                style += '; border-color:' + colors.borderColor;
+                                style += '; border-width: 2px';
+                                var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                                innerHtml += '<tr><td>' + span + '<strong>Precio K/L:</strong><span style="color: #57bd64;"> ' + bodyX + '</span></td></tr>';
+                                innerHtml += '<tr><td>' + span + '<strong>Update:</strong> <span style="color: #57bd64;"> ' + titleLines[0] + '</span></td></tr>';
+                            });
+                            innerHtml += '</tbody>';
+
+                            var tableRoot = tooltipEl.querySelector('table');
+                            tableRoot.innerHTML = innerHtml;
+                        }
+
+                        // `this` will be the overall tooltip
+                        var positionY = this._chart.canvas.offsetTop;
+                        var positionX = this._chart.canvas.offsetLeft;
+
+                        // Display, position, and set styles for font
+                        tooltipEl.style.opacity = 1;
+                        tooltipEl.style.left = positionX + tooltip.caretX + 'px';
+                        tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+                        tooltipEl.style.fontFamily = tooltip._fontFamily;
+                        tooltipEl.style.fontSize = tooltip.fontSize;
+                        tooltipEl.style.fontStyle = tooltip._fontStyle;
+                        tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
+                    }
+                }
+            }
+        });
+
+        function addData(chart, label, data) {
+            chart.data.labels = label;
+            chart.data.datasets.forEach((dataset) => {
+                dataset.data = data;
+            });
+            chart.update();
+        }
+
+        $('#analisisCategorias').change(function(){
+            company =  $('#analisisCompany').val();
+            if(company != 'empty'){
+               $('#analisisCompany').trigger('change');
+            }
+        })
+
+        $('#analisisTipo').change(function(){
+            if($(this).val() == 'producto'){
+                $('#analisisProducto').fadeIn(1000);
+                $('#analisisIngrediente').fadeOut(1);
+            }else{
+                $('#analisisProducto').fadeOut(1);
+                $('#analisisIngrediente').fadeIn(1000);
+            }
+        })
+
+        $('#analisisCompany').change(function(){
+            var company_id = $(this).val();
+            var category_name = $('#analisisCategorias').val();
+            var product_select = $('#analisisProductoSelect');
+            var ingrediente_select = $('#analisisIngredienteSelect');
+            product_select.empty();
+            ingrediente_select.empty();
+            product_select.append($('<option></option>').attr('value', 'empty').text(''));
+            ingrediente_select.append($('<option></option>').attr('value', 'empty').text(''));
+            $.ajax({
+                type: "GET",
+                url: '/getProducts/'+ category_name +'/'+ company_id,
+                success: function( data ) {
+                    data['products'].forEach(function(e){
+                        product_select.append($('<option></option>').attr('value', e).text(e));
+                    });
+                    data['ingredients'].forEach(function(e){
+                        ingrediente_select.append($('<option></option>').attr('value', e).text(e));
+                    });
+                }
+            });
+        })
+
+        $('#update-graphic-precio').click(function(e){
+            e.preventDefault();
+            var category_id = 2;
+            var analisis_especifico = $('#analisisEspecifico').val();
+            var tipo_analisis = $('#analisisTipo').val();
+            var producto_ingrediente = tipo_analisis == "producto" ? $('#analisisProductoSelect') : $('#analisisIngredienteSelect');
+            var compania = $('#analisisCompany');
+            var tiempo = $('#analisisTiempo').val();
+            producto_ingrediente.val() == 'empty' ? producto_ingrediente.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : producto_ingrediente.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
+            compania.val() == 'empty' ? compania.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : compania.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
+            if(producto_ingrediente.val() == 'empty' || compania.val() == 'empty') return;
+            $.ajax({
+                type: "GET",
+                url: '/updateAnalysisPrice/'+ category_id +'/'+ analisis_especifico +'/'+ tipo_analisis +'/'+ producto_ingrediente.val() +'/'+ compania.val() +'/'+ tiempo,
+                success: function( data ) {
+                    if(data['dates'] != []){
+                        addData(chart, data['dates'], data['values']);
+                    }
+                }
+            });
+        });
+    }
+    //##############################################################################################################
+    //##################################### Fin Graficas Analisis Precios ##########################################
+    //############################################################################################################## 
  });

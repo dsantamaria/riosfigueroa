@@ -18,9 +18,14 @@ class Categorias extends Model
         return $this->hasMany('App\Products');
     }
 
+    public function analysis_prices_product()
+    {
+        return $this->hasMany('App\Analysis_prices_product');
+    }
+
     public function analysis_category_images()
     {
-        return $this->hasMany('App\Products');
+        return $this->hasMany('App\Analysis_category_images');
     }
 
     public static function getOrCreateCategoriaByName($nombre_categoria)

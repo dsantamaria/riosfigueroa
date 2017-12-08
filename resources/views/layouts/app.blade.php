@@ -52,7 +52,13 @@
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'herbicidas']) }}">Herbicidas</a></li>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'fungicidas']) }}">Fungicidas</a></li>
                                 <li><a href="{{ route('analisisPrecios') }}">Analisis de Precios</a></li>
+                                @can('admin-role')
+                                    <li><a href="{{ route('import_products_analysis_category') }}">Importar Lista de Precios</a></li>
+                                @endcan
                             </ul>
+                        </li>
+                        <li>
+                            <a href="{{ route('analisisHistorico') }}"><i class="fa fa-codepen"></i>Análisis Histórico</a>
                         </li>
                         <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-industry"></i>Empresas Comercializadoras</a></li>
 

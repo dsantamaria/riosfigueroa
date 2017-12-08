@@ -18,12 +18,14 @@ Route::group(['middleware' => ['auth', 'country']], function () {
     Route::get('products/import', ['as' => 'lista_precios.import', 'uses' => 'ProductsController@import'])->middleware('admin');
     Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
     Route::get('products/analisis/{analisis}', ['as' => 'products.analisis', 'uses' => 'ProductsController@analisisProducts']);
-
+    Route::get('products/import_products_analysis_category', ['as' => 'import_products_analysis_category', 'uses' => 'ProductsController@importProductsAnalysisCategory'])->middleware('admin');
 
 //Route::post('products', ['as' => 'products.index', 'uses' => 'ProductsController@index']);
     Route::resource('products', 'ProductsController');
 //post form import products
     Route::post('/products/process_import', ['as' => 'lista_precios.process', 'uses' => 'ProductsController@processImport'])->middleware('admin');
+    Route::post('/products/process_import_products_analysis_category', ['as' => 'process_import_products_analysis_category', 'uses' => 'ProductsController@processImportProductsAnalysisCategory'])->middleware('admin');
+
 
     Route::resource('proveedores', 'ProveedoresController');
     Route::get('proveedorProducts/{id}', ['as' => 'proveedorProducts', 'uses' => 'ProveedoresController@proveedorProducts']);
@@ -40,6 +42,9 @@ Route::group(['middleware' => ['auth', 'country']], function () {
     Route::post('updateProducts', ['as' => 'updateProducts', 'uses' => 'ProductsController@updateProducts'])->middleware('admin');
     Route::get('deleteImage/{id}', ['as'=>'deleteImage', 'uses'=>'ImagesController@delete_image'])->middleware('admin');
     Route::get('analisisPrecios', ['as'=>'analisisPrecios', 'uses'=>'ProductsController@analisisPrecios'])->middleware('admin');
+    Route::get('analisisHistorico', ['as'=>'analisisHistorico', 'uses'=>'ProductsController@analisisHistorico'])->middleware('admin');
+    Route::get('updateAnalysisPrice/{category_id}/{analisis_especifico}/{tipo_analisis}/{producto_ingrediente}/{compania}/{tiempo}', ['as' => 'updateAnalysisPrice', 'uses' => 'GraphicsController@updateAnalysisPrice'])->middleware('admin');
+    Route::get('getProducts/{category_name}/{company_id}', ['as' => 'getProducts', 'uses' => 'GraphicsController@getProducts'])->middleware('admin');
 });
 
 Route::group(['middleware' => ['guest', 'country']], function () {

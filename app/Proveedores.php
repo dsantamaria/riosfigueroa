@@ -18,6 +18,11 @@ class Proveedores extends Model
         return $this->hasMany('App\Products');
     }
 
+    public function analysis_prices_product()
+    {
+        return $this->hasMany('App\Analysis_prices_product');
+    }
+
     public static function getOrCreateProveedorByName($nombre_proveedor)
     {
         $query = self::select('id')->where('nombre_proveedor', 'LIKE', $nombre_proveedor);

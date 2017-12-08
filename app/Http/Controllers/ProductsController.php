@@ -6,6 +6,8 @@ use App\Proveedores;
 use App\Categorias;
 use App\Products;
 use App\Analysis_category_image;
+use App\Analysis_category_price;
+use App\Analysis_prices_product;
 use Gate;
 use Excel;
 use Carbon\Carbon;
@@ -13,6 +15,7 @@ use DB;
 use PDO;
 use Validator;
 use Schema;
+use Log;
 
 use App\Http\Requests;
 use Illuminate\Http\Request;
@@ -111,7 +114,6 @@ class ProductsController extends Controller
                 $data['precio_por_medida']      = $row[11];
                 $data['impuesto']               = $row[12];
                 $data['ultima_actualizacion']   = $this->convertToDate($row[13]);
-
                 try {
                     $newProduct = Products::firstOrCreate($data);
                     ($newProduct->wasRecentlyCreated == 1) ? $new_products_count++ : $exists_count++;
@@ -285,7 +287,82 @@ class ProductsController extends Controller
     }
 
     public function analisisPrecios(){
-        return view('products.analisisPrecios');
+        $proveedores = Proveedores::orderBy('nombre_proveedor', 'asc')->pluck('nombre_proveedor', 'id')->all();
+        $proveedores_names = array('empty' => '', 'todas' => 'Todas') + $proveedores;
+        return view('products.analisisPrecios', ['proveedores_names' => $proveedores_names]);
     }
 
+    public function analisisHistorico(){
+        return view('products.analisisHistorico');
+    }
+
+    public function importProductsAnalysisCategory()
+    {
+        return view('products.importProductsAnalysisCategory');
+    }
+
+    public function processImportProductsAnalysisCategory(Request $request){
+        $products_error = array();
+        $new_products_count = 0;
+        $error_count = 0;
+        $exists_count = 0;
+        $total_count = 0;
+        try {
+            $file_contents = Excel::load(Input::file('input-1'))->get();
+            $find_acp = Analysis_category_price::where('date_list', $request['fecha_lista'])->first();
+            if($find_acp){
+                Analysis_category_price::destroy($find_acp->id);
+            }
+            $new_acp = Analysis_category_price::create(['date_list' => $request['fecha_lista']]);            
+        } catch (\Exception $e) {
+            \Session::flash('warning', $e->getMessage());
+            return redirect(route('import_products_analisys_category'));
+        }
+        set_time_limit(600);
+        if ($file_contents) { 
+            $data = array();
+            $total_count = $file_contents->count();
+            foreach($file_contents as $row)
+            {
+                $proveedorObj = (!is_null($row[1])) ? Proveedores::getOrCreateProveedorByName($row[1]) : null;
+                $categoriaObj = (!is_null($row[2])) ? Categorias::getOrCreateCategoriaByName($row[2]): null;
+
+                $data['proveedor_id']           = $proveedorObj ? $proveedorObj->id : null;
+                $data['categoria_id']           = $categoriaObj ? $categoriaObj->id : null;
+                $data['nombre_producto']        = trim($row[3]);
+                $data['tipo_producto']          = trim($row[2]);
+                $data['ingrediente_activo']     = $row[4] == "" ? '-' : trim($row[4]);
+                $data['formulacion']            = $row[5] == "" ? '-' : trim($row[5]);
+                $data['concentracion']          = $row[6] == "" ? '0%' : trim($row[6]);
+                $data['presentacion']           = $row[7] == "" ? '-' : trim($row[7]);
+                $data['unidad']                 = $row[8] == "" ? '-' : trim($row[8]);
+                $data['empaque']                = $row[9] == "" ? '-' : trim($row[9]);
+                $data['precio_comercial']       = $row[10] == "" ? 0 : $row[10];
+                $data['precio_por_medida']      = $row[11] == "" ? 0 : $row[11];
+                $data['impuesto']               = $row[12] == "" ? '0%' : $row[12];
+                $data['ultima_actualizacion']   = $this->convertToDate($row[13]);
+                $data['analysis_category_price_id']   = $new_acp->id;
+                try {
+                    $newProduct = Analysis_prices_product::firstOrCreate($data);
+                    unset($data['analysis_category_price_id']);
+                    ($newProduct->wasRecentlyCreated == 1) ? $new_products_count++ : $exists_count++;
+                }
+                catch (\Exception $e) {
+                    $products_error[] = ['nombre_producto_error' => $row[3], 'id_fila_error' => $row[0],
+                        'error_msg' => $e->getMessage()];
+                    $error_count++;
+                    //dd($row[2] . "----" . $row[1] . "-----" . $row[3]);
+                }
+            }
+        }
+
+        \Session::Flash('success', 'Archivo importado correctamente.');
+
+        return view('products.postimport',
+            ['total_count'=> $total_count,
+                'exists_count' => $exists_count,
+                'new_products_count' => $new_products_count,
+                'products_error' => $products_error,
+                'error_count' => $error_count]);
+    }
 }
