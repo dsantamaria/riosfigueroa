@@ -14,36 +14,47 @@
 Route::auth();
 
 Route::group(['middleware' => ['auth', 'country']], function () {
+    //************************* ProductsController ******************//
     Route::get('/', 'HomeController@index');
     Route::get('products/import', ['as' => 'lista_precios.import', 'uses' => 'ProductsController@import'])->middleware('admin');
     Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
     Route::get('products/analisis/{analisis}', ['as' => 'products.analisis', 'uses' => 'ProductsController@analisisProducts']);
     Route::get('products/import_products_analysis_category', ['as' => 'import_products_analysis_category', 'uses' => 'ProductsController@importProductsAnalysisCategory'])->middleware('admin');
 
-//Route::post('products', ['as' => 'products.index', 'uses' => 'ProductsController@index']);
     Route::resource('products', 'ProductsController');
-//post form import products
+    Route::get('productInfo/{id}', ['as' => 'productInfo', 'uses' => 'ProductsController@productInfo']);
+    Route::get('analisisPrecios', ['as'=>'analisisPrecios', 'uses'=>'ProductsController@analisisPrecios'])->middleware('admin');
+    Route::get('analisisHistorico', ['as'=>'analisisHistorico', 'uses'=>'ProductsController@analisisHistorico'])->middleware('admin');
+    Route::get('gestionListasAnalisisPrecios', ['as'=>'gestionListasAnalisisPrecios', 'uses'=>'ProductsController@gestionListasAnalisisPrecios'])->middleware('admin');
+    Route::get('deleteListCategory/{id}', ['as'=>'deleteListCategory', 'uses'=>'ProductsController@deleteListCategory'])->middleware('admin');
+    
+    //post form import products
     Route::post('/products/process_import', ['as' => 'lista_precios.process', 'uses' => 'ProductsController@processImport'])->middleware('admin');
     Route::post('/products/process_import_products_analysis_category', ['as' => 'process_import_products_analysis_category', 'uses' => 'ProductsController@processImportProductsAnalysisCategory'])->middleware('admin');
+    Route::post('updateProducts', ['as' => 'updateProducts', 'uses' => 'ProductsController@updateProducts'])->middleware('admin');
+    
 
-
+    //************************* ProveedoresController ******************//
     Route::resource('proveedores', 'ProveedoresController');
     Route::get('proveedorProducts/{id}', ['as' => 'proveedorProducts', 'uses' => 'ProveedoresController@proveedorProducts']);
-    Route::get('productInfo/{id}', ['as' => 'productInfo', 'uses' => 'ProductsController@productInfo']);
+    
 
+    //************************* ImagesController ******************//
     Route::get('uploadImage', ['as'=>'uploadImage', 'uses'=>'ImagesController@uploadImage'])->middleware('admin');
+    Route::get('deleteImage/{id}', ['as'=>'deleteImage', 'uses'=>'ImagesController@delete_image'])->middleware('admin');
     Route::post('saveImage',['as'=>'saveImage','uses'=>'ImagesController@saveImage'])->middleware('admin');
 
+
+    //************************* SubscriberController ******************//
     Route::get('sendSubscription', ['as'=>'sendSubscription', 'uses'=>'SubscribersController@sendSubscription'])->middleware('admin');
-    Route::post('sendSubscriptionEmail', ['as' => 'sendSubscriptionEmail', 'uses' => 'SubscribersController@sendSubscriptionEmail'])->middleware('admin');
     Route::get('listActiveUsers', ['as' => 'listActiveUsers', 'uses' => 'SubscribersController@list_active_user'])->middleware('admin');
     Route::get('activateUser/{id}/{state}', ['as'=>'activateUser', 'uses'=>'SubscribersController@activate_user'])->middleware('admin');
     Route::get('deleteUser/{id}', ['as'=>'deleteUser', 'uses'=>'SubscribersController@delete_user'])->middleware('admin');
-    Route::post('updateProducts', ['as' => 'updateProducts', 'uses' => 'ProductsController@updateProducts'])->middleware('admin');
-    Route::get('deleteImage/{id}', ['as'=>'deleteImage', 'uses'=>'ImagesController@delete_image'])->middleware('admin');
-    Route::get('analisisPrecios', ['as'=>'analisisPrecios', 'uses'=>'ProductsController@analisisPrecios'])->middleware('admin');
-    Route::get('analisisHistorico', ['as'=>'analisisHistorico', 'uses'=>'ProductsController@analisisHistorico'])->middleware('admin');
-    Route::get('updateAnalysisPrice/{category_id}/{analisis_especifico}/{tipo_analisis}/{producto_ingrediente}/{compania}/{tiempo}', ['as' => 'updateAnalysisPrice', 'uses' => 'GraphicsController@updateAnalysisPrice'])->middleware('admin');
+    Route::post('sendSubscriptionEmail', ['as' => 'sendSubscriptionEmail', 'uses' => 'SubscribersController@sendSubscriptionEmail'])->middleware('admin');
+    
+    
+    //************************* GraphicsController ******************//
+    Route::get('updateAnalysisPrice/{category_id}/{analisis_especifico}/{tipo_analisis}/{producto_ingrediente}/{compania}/{tiempo}/{producto_ingrediente2}/{compania2}', ['as' => 'updateAnalysisPrice', 'uses' => 'GraphicsController@updateAnalysisPrice'])->middleware('admin');
     Route::get('getProducts/{category_name}/{company_id}', ['as' => 'getProducts', 'uses' => 'GraphicsController@getProducts'])->middleware('admin');
 });
 
@@ -55,6 +66,7 @@ Route::group(['middleware' => ['guest', 'country']], function () {
 });
 
 Route::get('errorCountry', ['as' => 'errorCountry', 'uses' => 'HomeController@errorCountry']);
+
 
 \DB::connection("mysql")->enableQueryLog();
 

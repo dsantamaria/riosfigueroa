@@ -365,4 +365,15 @@ class ProductsController extends Controller
                 'products_error' => $products_error,
                 'error_count' => $error_count]);
     }
+
+    public function gestionListasAnalisisPrecios(){
+        $listas = Analysis_category_price::orderBy('date_list', 'asc')->get();
+        return view('products.gestionListasAnalisisPrecios')->with('listas', $listas);
+    }
+
+    public function deleteListCategory($id){
+        $lista = Analysis_category_price::where('id', $id)->delete();
+        if($lista) return response()->json(['response' => 1]);
+        return response()->json(['response' => 0]);       
+    }
 }

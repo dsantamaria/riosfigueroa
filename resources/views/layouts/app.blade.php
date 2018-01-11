@@ -68,6 +68,7 @@
                                 <ul>
                                     <li><a href="{{ route('sendSubscription') }}">Suscribir usuarios</a></li>
                                     <li><a href="{{ route('listActiveUsers') }}">Gestión de usuarios</a></li>
+                                    <li><a href="{{ route('gestionListasAnalisisPrecios') }}">Gestión de listas categoria</a></li>
                                 </ul>
                             </li>
                         @endcan

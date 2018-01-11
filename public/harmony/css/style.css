@@ -844,3 +844,13 @@ canvas{
   height: 10px;
   margin-right: 10px;
 }
+
+#analisisCategorias, #analisisCompany, #analisisProductoSelect, #analisisIngredienteSelect{
+  color: rgba(12, 82, 0, 1);
+  border-color: rgba(12, 82, 0, 0.5);
+}
+
+#analisisCategorias2, #analisisCompany2, #analisisProductoSelect2, #analisisIngredienteSelect2{
+  color: rgba(4, 20, 80, 1);
+  border-color: rgba(4, 20, 80, 0.5);
+}

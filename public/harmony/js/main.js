@@ -42,7 +42,10 @@
              "oAria": {
                  "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
                  "sSortDescending": ": Activar para ordenar la columna de manera descendente"
-             }
+             },
+             "columns":[
+                {"name": "first", "order" : false}
+            ]
          }
      } );
 	 
@@ -536,6 +539,7 @@
     //##################################### Incio Graficas Analisis Precios ########################################
     //##############################################################################################################
     if(document.getElementById('chartAnalisisCategoria') !== null){
+        var tooltip_option = 1;
         var ctx = document.getElementById('chartAnalisisCategoria').getContext('2d');
         var chart = new Chart(ctx, {
             // The type of chart we want to create
@@ -557,6 +561,7 @@
 
             // Configuration options go here
             options: {
+                spanGaps: true,
                 tooltips: {
                     enabled: false,
                     mode: 'index',
@@ -598,21 +603,40 @@
                             var titleLines = tooltip.title || [];
                             var bodyLines = tooltip.body.map(getBody);
 
-                            var innerHtml = '<thead>';
-                            innerHtml += '</thead><tbody>';
+                            if(tooltip_option == 1){
+                               var innerHtml = '<caption style="text-align: center">Precio K/L</caption><thead>';
+                                innerHtml += '</thead><tbody>';
 
-                            bodyLines.forEach(function(body, i) {
-                                var indexBody = body[0].indexOf(':');
-                                bodyX = body[0].substr(indexBody + 1);
-                                var colors = tooltip.labelColors[i];
-                                var style = 'background:' + colors.backgroundColor;
-                                style += '; border-color:' + colors.borderColor;
-                                style += '; border-width: 2px';
-                                var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
-                                innerHtml += '<tr><td>' + span + '<strong>Precio K/L:</strong><span style="color: #57bd64;"> ' + bodyX + '</span></td></tr>';
-                                innerHtml += '<tr><td>' + span + '<strong>Update:</strong> <span style="color: #57bd64;"> ' + titleLines[0] + '</span></td></tr>';
-                            });
-                            innerHtml += '</tbody>';
+                                bodyLines.forEach(function(body, i) {
+                                    var indexBody = body[0].indexOf(':');
+                                    bodyX = body[0].substr(indexBody + 1);
+                                    bodyTitle = body[0].substr(0, indexBody);
+                                    var colors = tooltip.labelColors[i];
+                                    var style = 'background:' + colors.backgroundColor;
+                                    style += '; border-color:' + colors.borderColor;
+                                    style += '; border-width: 2px';
+                                    var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                                    innerHtml += '<tr><td>' + span + '<strong>'+ bodyTitle +':</strong><span style="color: #57bd64;"> ' + bodyX + '</span></td></tr>';
+                                });
+                                innerHtml += '<tr><td style="text-align: center"><strong>Update:</strong> <span style="color: #57bd64;"> ' + titleLines[0] + '</span></td></tr>';
+                                innerHtml += '</tbody>'; 
+                            }else if(tooltip_option == 0){
+                                var innerHtml = '<thead>';
+                                innerHtml += '</thead><tbody>';
+
+                                bodyLines.forEach(function(body, i) {
+                                    var indexBody = body[0].indexOf(':');
+                                    bodyX = body[0].substr(indexBody + 1);
+                                    var colors = tooltip.labelColors[i];
+                                    var style = 'background:' + colors.backgroundColor;
+                                    style += '; border-color:' + colors.borderColor;
+                                    style += '; border-width: 2px';
+                                    var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
+                                    innerHtml += '<tr><td>' + span + '<strong>Precio K/L:</strong><span style="color: #57bd64;"> ' + bodyX + '</span></td></tr>';
+                                    innerHtml += '<tr><td>' + span + '<strong>Update:</strong> <span style="color: #57bd64;"> ' + titleLines[0] + '</span></td></tr>';
+                                });
+                                innerHtml += '</tbody>'; 
+                            }
 
                             var tableRoot = tooltipEl.querySelector('table');
                             tableRoot.innerHTML = innerHtml;
@@ -636,10 +660,48 @@
         });
 
         function addData(chart, label, data) {
+            tipo_analisis = $('#analisisEspecifico').val();
             chart.data.labels = label;
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data = data;
-            });
+            chart.data.datasets = [];
+
+            title2 = $('#analisisEspecifico').val() == 5 ? $('#analisisProductoSelect2').val() : $('#analisisIngredienteSelect2').val();
+
+            if(tipo_analisis < 5){
+                var data1 = {
+                    label: 'Historico de Precios',
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
+                    borderColor: 'rgba(12, 82, 0, 0.5)',
+                    lineTension: 0,
+                    pointBackgroundColor: 'rgba(12, 82, 0, 1)',
+                    pointRadius: 5,
+                    data: data[0],
+                }
+                chart.data.datasets.push(data1);
+                tooltip_option = 0;
+            }else if(tipo_analisis == 5 || tipo_analisis == 6){
+                var data1 = {
+                    label: $('#analisisProductoSelect').val(),
+                    backgroundColor: 'rgba(255, 255, 255, 0)',
+                    borderColor: 'rgba(12, 82, 0, 0.5)',
+                    lineTension: 0,
+                    pointBackgroundColor: 'rgba(12, 82, 0, 1)',
+                    pointRadius: 5,
+                    data: data[0],
+                }
+
+                var data2 = {
+                    label: title2,
+                    backgroundColor: 'rgba(155, 155, 155, 0)',
+                    borderColor: 'rgba(4, 20, 80, 0.5)',
+                    lineTension: 0,
+                    pointBackgroundColor: 'rgba(4, 20, 80, 1)',
+                    pointRadius: 5,
+                    data: data[1],
+                }
+                tooltip_option = 1;
+                chart.data.datasets.push(data1);
+                chart.data.datasets.push(data2);
+            }
             chart.update();
         }
 
@@ -647,6 +709,13 @@
             company =  $('#analisisCompany').val();
             if(company != 'empty'){
                $('#analisisCompany').trigger('change');
+            }
+        })
+
+        $('#analisisCategorias2').change(function(){
+            company =  $('#analisisCompany2').val();
+            if(company != 'empty'){
+               $('#analisisCompany2').trigger('change');
             }
         })
 
@@ -683,23 +752,79 @@
             });
         })
 
+        $('#analisisCompany2').change(function(){
+            var company_id = $(this).val();
+            var category_name = $('#analisisCategorias2').val();
+            var product_select = $('#analisisProductoSelect2');
+            var ingrediente_select = $('#analisisIngredienteSelect2');
+            ingrediente_select.empty();
+            product_select.empty();
+            product_select.append($('<option></option>').attr('value', 'empty').text(''));
+            ingrediente_select.append($('<option></option>').attr('value', 'empty').text(''));
+            $.ajax({
+                type: "GET",
+                url: '/getProducts/'+ category_name +'/'+ company_id,
+                success: function( data ) {
+                    data['products'].forEach(function(e){
+                        product_select.append($('<option></option>').attr('value', e).text(e));
+                    });
+                    data['ingredients'].forEach(function(e){
+                        ingrediente_select.append($('<option></option>').attr('value', e).text(e));
+                    });
+                }
+            });
+        })
+
+        $('#analisisEspecifico').change(function(){
+            var analisis = $(this).val();
+            if(analisis == 5){
+                $('#analisisCompanyG2, #analisisProducto2, #analisisProducto, #categoria2').fadeIn();
+                $('#analisisTipo').val('producto');
+                $('#analisisTipoG, #analisisIngrediente, #analisisIngrediente2').fadeOut();
+            }else if(analisis == 6){
+                $('#analisisCompanyG2, #analisisProducto, #analisisIngrediente2, #categoria2').fadeIn();
+                $('#analisisTipo').val('producto');
+                $('#analisisTipoG, #analisisIngrediente, #analisisProducto2').fadeOut();
+            }else{
+                $('#analisisCompanyG2, #analisisProducto2, #categoria2, #analisisIngrediente2').fadeOut();
+                $('#analisisTipoG').fadeIn();
+            }
+        })
+
         $('#update-graphic-precio').click(function(e){
             e.preventDefault();
             var category_id = 2;
             var analisis_especifico = $('#analisisEspecifico').val();
             var tipo_analisis = $('#analisisTipo').val();
             var producto_ingrediente = tipo_analisis == "producto" ? $('#analisisProductoSelect') : $('#analisisIngredienteSelect');
+            var producto_ingrediente2 = analisis_especifico == 5 ? $('#analisisProductoSelect2') : $('#analisisIngredienteSelect2'); 
             var compania = $('#analisisCompany');
+            var compania2 = $('#analisisCompany2');
+
             var tiempo = $('#analisisTiempo').val();
+            
             producto_ingrediente.val() == 'empty' ? producto_ingrediente.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : producto_ingrediente.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
             compania.val() == 'empty' ? compania.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : compania.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
+            
+            if(analisis_especifico == 5 || analisis_especifico == 6){
+                producto_ingrediente2.val() == 'empty' ? producto_ingrediente2.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : producto_ingrediente2.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
+                compania2.val() == 'empty' ? compania2.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : compania2.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
+                if(producto_ingrediente2.val() == 'empty' || compania2.val() == 'empty') return;
+            }
+
             if(producto_ingrediente.val() == 'empty' || compania.val() == 'empty') return;
             $.ajax({
                 type: "GET",
-                url: '/updateAnalysisPrice/'+ category_id +'/'+ analisis_especifico +'/'+ tipo_analisis +'/'+ producto_ingrediente.val() +'/'+ compania.val() +'/'+ tiempo,
+                url: '/updateAnalysisPrice/'+ category_id +'/'+ analisis_especifico +'/'+ tipo_analisis +'/'+ producto_ingrediente.val() +'/'+ compania.val() +'/'+ tiempo +'/'+ producto_ingrediente2.val() +'/'+ compania2.val(),
                 success: function( data ) {
+                    data['values'] = data['values'].map(function(e){
+                        return e == 'NaN' ? NaN : e;
+                    })
+                    data['values2'] = data['values2'].map(function(e){
+                        return e == 'NaN' ? NaN : e;
+                    })
                     if(data['dates'] != []){
-                        addData(chart, data['dates'], data['values']);
+                        addData(chart, data['dates'], [data['values'], data['values2']],);
                     }
                 }
             });
@@ -708,4 +833,36 @@
     //##############################################################################################################
     //##################################### Fin Graficas Analisis Precios ##########################################
     //############################################################################################################## 
+
+    $('body').on('click', '.delete-list-category', function(){
+        var id = $(this).attr('id');
+        var row = $(this).closest('tr');
+        $.ajax({
+            type: "GET",
+            url: '/deleteListCategory/'+ id,
+            success: function( data ) {
+                if(data['response'] === 1){
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Lista eliminada con Exito</strong>'+
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                    table.row(row).remove().draw();
+                 }else{
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Ocurrio un error al borrar la list' +
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                }
+            }
+        });
+    });
+
  });
