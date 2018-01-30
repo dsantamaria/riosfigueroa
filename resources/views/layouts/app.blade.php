@@ -32,17 +32,11 @@
                     <ul class="ts-sidebar-menu">
                         <li class="ts-label">Dashboard</li>
                         <li>
-                            <div class="more">
-
-                            </div>
+                            <div class="more"></div>
                             <a href="#" class="parent"><i class="fa fa-codepen"></i>Productos</a>
                             <ul>
                                 <li><a href="{{ route('products.search') }}">Buscador de Productos</a></li>
                                 <li><a href="{{ route('products.index') }}">Listado Productos</a></li>
-                                @can('admin-role')
-                                    <li><a href="{{ route('lista_precios.import') }}">Importar Lista de Precios</a></li>
-                                    <li><a href="{{ route('uploadImage') }}">Subir Imagen</a></li>
-                                @endcan
                             </ul>
                         </li>
                         <li>
@@ -51,14 +45,14 @@
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'insecticidas']) }}">Insecticidas</a></li>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'herbicidas']) }}">Herbicidas</a></li>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'fungicidas']) }}">Fungicidas</a></li>
-                                <li><a href="{{ route('analisisPrecios') }}">Analisis de Precios</a></li>
-                                @can('admin-role')
-                                    <li><a href="{{ route('import_products_analysis_category') }}">Importar Lista de Precios</a></li>
-                                @endcan
                             </ul>
                         </li>
                         <li>
-                            <a href="{{ route('analisisHistorico') }}"><i class="fa fa-codepen"></i>Análisis Histórico</a>
+                            <a href="#" class="parent"><i class="fa fa-codepen"></i>Análisis Histórico</a>
+                            <ul>
+                                <li><a href="{{ route('analisisPrecios') }}">Análisis de Precios</a></li>
+                                <li><a href="{{ route('analisisHistorico') }}"></i>Análisis de Importaciones</a></li>
+                            </ul>
                         </li>
                         <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-industry"></i>Empresas Comercializadoras</a></li>
 
@@ -66,9 +60,14 @@
                             <li>
                                 <a href="#" class="parent"><i class="fa fa-desktop"></i>Administrador</a>
                                 <ul>
-                                    <li><a href="{{ route('sendSubscription') }}">Suscribir usuarios</a></li>
-                                    <li><a href="{{ route('listActiveUsers') }}">Gestión de usuarios</a></li>
-                                    <li><a href="{{ route('gestionListasAnalisisPrecios') }}">Gestión de listas categoria</a></li>
+                                    <li><a href="{{ route('sendSubscription') }}">Suscribir Usuarios</a></li>
+                                    <li><a href="{{ route('listActiveUsers') }}">Gestión de Usuarios</a></li>
+                                    <li><a href="{{ route('lista_precios.import') }}">Importar Lista de Precios</a></li>
+                                    <li><a href="{{ route('import_products_analysis_category') }}">Importar Archivos para Análisis de Precios</a></li>
+                                    <li><a href="{{ route('gestionListasAnalisisPrecios') }}">Gestión de Listas para Análisis de Precios</a></li>
+                                    <li><a href="{{ route('import_analysis_historic_lists') }}">Importar Archivos para Análisis de Importaciones</a></li>
+                                    <li><a href="{{ route('gestionListasAnalisisHistoricos') }}">Gestión de Listas para Análisis de Importaciones</a></li>
+                                    <li><a href="{{ route('uploadImage') }}">Subir Imagen</a></li>
                                 </ul>
                             </li>
                         @endcan

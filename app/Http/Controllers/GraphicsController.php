@@ -6,6 +6,8 @@ use App\Proveedores;
 use App\Products;
 use App\Analysis_category_price;
 use App\Analysis_prices_product;
+use App\Analysis_import_list;
+use App\Analysis_import_ingredient;
 use Carbon\Carbon;
 use Log;
 
@@ -113,7 +115,7 @@ class GraphicsController extends Controller
 				array_unshift($valor,  $precio_final);
 				$cont++;
 			}else array_unshift($valor,  'NaN');
-			array_unshift($fechas, date('d-m-Y', strtotime($fechas_producto->date_list)));
+			array_unshift($fechas, date('m-d-Y', strtotime($fechas_producto->date_list)));
 			if($cont == 10) break;
 			
 		}
@@ -216,5 +218,37 @@ class GraphicsController extends Controller
 				break;
 		} 
 		return $data_array;
+    }
+
+    public function updateAnalysisHistoric($ingrediente_id, $year){
+    	$ingredient_data = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->get();
+    	
+    	$volumen_total = 0;
+    	$precio_total = 0;
+    	$volumen_mes = [];
+    	$array_precio_prom = [];
+
+    	foreach ($ingredient_data as $key => $row) {
+    		if($row->amount != 0.00) array_push($volumen_mes, round($row->amount/1000, 2));
+    		$volumen_total = $volumen_total + $row->amount;
+
+    		if($row->price != 0.00) array_push($array_precio_prom, $row->price);
+    		$precio_total = $precio_total + $row->price;
+    	}
+
+    	$precio_total_prom = $precio_total != 0 ? round($precio_total/count($array_precio_prom), 2) : 0;
+    	$volumen_total = $volumen_total != 0 ? round($volumen_total/1000, 2) : 0;
+
+    	return response()->json(array('volumen_mes' => $volumen_mes, 'volumen_total' => $volumen_total, 'precio_prom_mes' => $array_precio_prom, 'precio_total_prom' => $precio_total_prom, 'trimestres' => count($array_precio_prom)));
+    }
+
+    public function getIngredientes($categoria_id){
+    	$ingredient_data = Analysis_import_ingredient::where('categoria_id', $categoria_id)->orderBy('ingrediente_activo', 'asc')->pluck('ingrediente_activo', 'id')->all();
+    	return response()->json(array('ingredientes' => $ingredient_data));
+    }
+
+    public function getYears($ingrediente_id){
+    	$years = Analysis_import_list::where('analysis_import_ingredient_id', $ingrediente_id)->orderBy('year', 'asc')->pluck('year')->unique()->values()->all();
+    	return response()->json(array('years' => $years));
     }
 }

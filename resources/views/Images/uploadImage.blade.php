@@ -26,7 +26,7 @@
 			                    </div>
 			                </div>
 							<div class="form-group">
-			                    <label class="col-md-3 control-label">Categoria</label>
+			                    <label class="col-md-3 control-label">Categoría</label>
 			                    <div class="col-md-8">
 			                        {{ Form::select('categorias', $categorias, null, ['class' => 'form-control']) }}
 			                    </div>
@@ -38,7 +38,7 @@
 			                    </div>
 			                </div>
 			                <div class="form-group">
-			                    <label class="col-md-3 control-label">Descripcion</label>
+			                    <label class="col-md-3 control-label">Descripción</label>
 			                    <div class="col-md-8">
 			                         {!! Form::textarea('description', '',  array('class' => 'form-control')) !!}
 			                    </div>

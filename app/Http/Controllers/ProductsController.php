@@ -8,6 +8,8 @@ use App\Products;
 use App\Analysis_category_image;
 use App\Analysis_category_price;
 use App\Analysis_prices_product;
+use App\Analysis_import_list;
+use App\Analysis_import_ingredient;
 use Gate;
 use Excel;
 use Carbon\Carbon;
@@ -287,13 +289,17 @@ class ProductsController extends Controller
     }
 
     public function analisisPrecios(){
+        $product_name = Analysis_prices_product::where('tipo_producto', 'Insecticida')
+                                                ->orderBy('nombre_producto', 'asc')->pluck('nombre_producto', 'nombre_producto')->all();
+        $ingredient_name = Analysis_prices_product::where('tipo_producto', 'Insecticida')
+                                                ->where('ingrediente_activo', '!=', '-')
+                                                ->orderBy('ingrediente_activo', 'asc')->pluck('ingrediente_activo', 'ingrediente_activo')->all();
         $proveedores = Proveedores::orderBy('nombre_proveedor', 'asc')->pluck('nombre_proveedor', 'id')->all();
-        $proveedores_names = array('empty' => '', 'todas' => 'Todas') + $proveedores;
-        return view('products.analisisPrecios', ['proveedores_names' => $proveedores_names]);
-    }
 
-    public function analisisHistorico(){
-        return view('products.analisisHistorico');
+        $product_name = array('empty' => '') + $product_name;
+        $ingredient_name = array('empty' => '') + $ingredient_name;
+        $proveedores_name = array('todas' => 'Todas') + $proveedores;
+        return view('products.analisisPrecios', ['ingredientes' => $ingredient_name, 'products' => $product_name, 'proveedores_name' => $proveedores_name]);
     }
 
     public function importProductsAnalysisCategory()
@@ -329,9 +335,9 @@ class ProductsController extends Controller
 
                 $data['proveedor_id']           = $proveedorObj ? $proveedorObj->id : null;
                 $data['categoria_id']           = $categoriaObj ? $categoriaObj->id : null;
-                $data['nombre_producto']        = trim($row[3]);
+                $data['nombre_producto']        = ucfirst(strtolower(trim($row[3])));
                 $data['tipo_producto']          = trim($row[2]);
-                $data['ingrediente_activo']     = $row[4] == "" ? '-' : trim($row[4]);
+                $data['ingrediente_activo']     = $row[4] == "" ? '-' : ucfirst(strtolower(trim($row[4])));
                 $data['formulacion']            = $row[5] == "" ? '-' : trim($row[5]);
                 $data['concentracion']          = $row[6] == "" ? '0%' : trim($row[6]);
                 $data['presentacion']           = $row[7] == "" ? '-' : trim($row[7]);
@@ -373,6 +379,87 @@ class ProductsController extends Controller
 
     public function deleteListCategory($id){
         $lista = Analysis_category_price::where('id', $id)->delete();
+        if($lista) return response()->json(['response' => 1]);
+        return response()->json(['response' => 0]);       
+    }
+
+    public function analisisHistorico(){
+        $categorias = Categorias::whereIn('nombre_categoria', ['Insecticida', 'Fungicida', 'Herbicida'])->orderBy('nombre_categoria', 'asc')->get()->pluck('nombre_categoria', 'id');
+        $ingredientes = Analysis_import_ingredient::where('categoria_id', $categorias->keys()[0])->orderBy('ingrediente_activo', 'asc')->get()->pluck('ingrediente_activo', 'id');
+        $ingredientes->prepend('', 'empty');
+        return view('products.analisisHistorico', ['categorias' => $categorias, 'ingredientes' => $ingredientes]);
+    }
+
+    public function importAnalysisHistoricLists()
+    {
+        $categorias = Categorias::whereIn('nombre_categoria', ['Insecticida', 'Fungicida', 'Herbicida'])->orderBy('nombre_categoria', 'asc')->get()->pluck('nombre_categoria', 'id');
+        $ingredients = Analysis_import_ingredient::orderBy('ingrediente_activo', 'asc')->get()->pluck('ingrediente_activo', 'id');
+        return view('products.importAnalysisHistoricLists', ['ingredients' => $ingredients, 'categorias' => $categorias]);
+    }
+
+    public function processImportAnalysisHistoricList(Request $request){
+        if($request->has('check_ingrediente')){
+            $nuevo_ingrediente = Analysis_import_ingredient::firstOrCreate(['ingrediente_activo' => $request['nombre_ingrediente'], 'categoria_id' => $request['categoria_id']]);
+            $ingrediente_id = $nuevo_ingrediente->id;
+        }else $ingrediente_id = $request['ingredient_id'];
+
+        try {
+            $find_ail = Analysis_import_list::where(['year' => $request['year'], 'analysis_import_ingredient_id' => $ingrediente_id])->first();
+            if($find_ail){
+                Analysis_import_list::where(['year' => $request['year'], 'analysis_import_ingredient_id' => $ingrediente_id])->delete();
+            }          
+        } catch (\Exception $e) {
+            \Session::flash('warning', 'Ocurrio un error en la carga, intente de nuevo.');
+            return redirect(route('import_analysis_historic_lists'));
+        }
+
+        $error_count = 0;
+        $count = 0;
+        $file_contents = Excel::load(Input::file('input-1'))->get();
+        set_time_limit(600);
+        if ($file_contents) { 
+            $data = array();
+            $total_count = $file_contents->count();
+            for ($i=5; $i < 9; $i++) { 
+                $data['analysis_import_ingredient_id']  = $ingrediente_id;
+                $data['year']                           = $request['year'];
+                $data['trimestre']                      = $file_contents[$i][6] == "" ?  0  : trim($file_contents[$i][6]);
+                $data['price']                          = $file_contents[$i][7] == "" ?  0  : trim($file_contents[$i][7]);
+                $data['amount']                         = $file_contents[$i][8] == "" ?  0  : trim($file_contents[$i][8]);
+                try {
+                    $newProduct = Analysis_import_list::firstOrCreate($data);
+                    $count++;
+                }
+                catch (\Exception $e) {
+                    $error_count++;
+                }
+            }
+        }
+
+        \Session::Flash('success', 'Registros agregados de forma exitosa.');
+        return redirect(route('import_analysis_historic_lists'));
+    }
+
+    public function gestionListasAnalisisHistoricos(){
+        $listas = Analysis_import_ingredient::orderBy('ingrediente_activo', 'asc')
+                                            ->with(['Analysis_import_list' => function($query){
+                                                $query->orderBy('year', 'asc');
+                                            }])->get();
+        $array_ingredientes = [];
+        $array_years = [];
+        foreach ($listas as $key => $row) {
+            $ingrediente = [];
+            if(!$row->analysis_import_list->isEmpty()){
+                $years = $row->analysis_import_list->pluck('year')->unique()->values()->toArray();
+                $ingrediente[$row->id] = $row->ingrediente_activo;
+                $array_ingredientes[$key] = [$years, $ingrediente];
+            }
+        }
+        return view('products.gestionListasAnalisisHistoricos')->with('array_ingredientes', $array_ingredientes);
+    }
+
+     public function deleteListHistoric($ingrediente_id, $year){
+        $lista = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->delete();
         if($lista) return response()->json(['response' => 1]);
         return response()->json(['response' => 0]);       
     }

@@ -5,7 +5,7 @@
         <h2 class="page-title">Listado de Empresas Comercializadoras</h2>
 
         <div class="panel panel-default">
-            <div class="panel-heading">Table by DataTables plugin</div>
+            <div class="panel-heading">Listado de Empresas Comercializadoras</div>
             <div class="panel-body">
                 <div id="zctb_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                     <div class="row">

@@ -846,11 +846,19 @@ canvas{
 }
 
 #analisisCategorias, #analisisCompany, #analisisProductoSelect, #analisisIngredienteSelect{
-  color: rgba(12, 82, 0, 1);
-  border-color: rgba(12, 82, 0, 0.5);
+  color: rgba(255, 37, 37, 1);
+  border-color: rgba(255, 37, 37, 0.5);
 }
 
 #analisisCategorias2, #analisisCompany2, #analisisProductoSelect2, #analisisIngredienteSelect2{
-  color: rgba(4, 20, 80, 1);
-  border-color: rgba(4, 20, 80, 0.5);
+  color: rgba(25, 31, 210, 1);
+  border-color: rgba(25, 31, 210, 0.5);
+}
+
+.form-horizontal .padd-top-4 {
+  padding-top: 4px;
+}
+
+.padd-left-44{
+  padding-left: 44px;
 }

@@ -361,6 +361,12 @@
     //###############################################################################################################
     //##################################### Incio Graficas Analisis Importacionjes ##################################
     //###############################################################################################################
+    var Toneladas_trimestre = [];
+    var formatter = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD',
+        minimunFractionDigits: 2,
+    });
     if(document.getElementById('chartAnalisisHistorico') !== null){
         var ctx = document.getElementById('chartAnalisisHistorico').getContext('2d');
         var tons = {'T1': 1, 'T2': 2, 'T3': 3, 'T4': 4};
@@ -373,29 +379,50 @@
                 labels: ['T1', 'T2', 'T3', 'T4'],
                 datasets: [{
                     label: 'Test',
-                    backgroundColor: ['rgba(20, 82, 9, 0.5)', 'rgba(9, 61, 125, 0.5)', 'rgba(165, 173, 39, 0.5)', 'rgba(171, 11, 11, 0.5)'],
-                    borderColor: ['rgba(20, 82, 9, 1)', 'rgba(9, 61, 125, 1)', 'rgba(165, 173, 39, 1)', 'rgba(171, 11, 11, 1)'],
-                    data: [6.22, 5.01, 2, 99.08, 0],
-                    barThickness: 2,
+                    backgroundColor: ['rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)'],
+                    borderColor: ['rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)'],
+                    data: [],
+                    xAxisID: 0
+                },
+                {
+                    label: 'Test',
+                    backgroundColor: ['rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)'],
+                    borderColor: ['rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)'],
+                    data: [],
+                    xAxisID: 0
+                },
+                {
+                    label: 'Test',
+                    backgroundColor: ['rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)'],
+                    borderColor: ['rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)'],
+                    data: [],
+                    xAxisID: 0
+                },
+                {
+                    label: 'Test',
+                    backgroundColor: ['rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)'],
+                    borderColor: ['rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)'],
+                    data: [],
                     xAxisID: 0
                 }]
             },
             options: {
                 elements: {
                     rectangle: {
-                        borderWidth: 2,
-                    }
+                        borderWidth: 1.5,
+                    },
                 },
                 scales: {
                     xAxes: [{
                         gridLines: {
                             offsetGridLines: true,
                         },
-                        //stacked: true,
+                        stacked: true,
                         display: false,
                     }],
                     yAxes: [{
-                        //stacked: true
+                        stacked: true,
+                        barThickness: 40,
                     }]
                 },
                 legend: {
@@ -404,77 +431,7 @@
                 responsive: true,
                 tooltips: {
                     enabled: false,
-                    mode: 'index',
-                    position: 'nearest',
-                    yPadding: 10,
-                    xPadding: 10,
-                    custom: function(tooltip) {
-                        // Tooltip Element
-                        var tooltipEl = document.getElementById('chartjs-tooltip');
-
-                        // Create element on first render
-                        if (!tooltipEl) {
-                            tooltipEl = document.createElement('div');
-                            tooltipEl.id = 'chartjs-tooltip';
-                            tooltipEl.innerHTML = "<table></table>"
-                            this._chart.canvas.parentNode.appendChild(tooltipEl);
-                        }
-
-                        // Hide if no tooltip
-                        if (tooltip.opacity === 0) {
-                            tooltipEl.style.opacity = 0;
-                            return;
-                        }
-
-                        // Set caret Position
-                        tooltipEl.classList.remove('above', 'below', 'no-transform');
-                        if (tooltip.yAlign) {
-                            tooltipEl.classList.add(tooltip.yAlign);
-                        } else {
-                            tooltipEl.classList.add('no-transform');
-                        }
-
-                        function getBody(bodyItem) {
-                            return bodyItem.lines;
-                        }
-
-                        // Set Text
-                        if (tooltip.body) {
-                            var bodyLines = tooltip.body.map(getBody);
-
-                            var innerHtml = '<thead>';
-                            innerHtml += '</thead><tbody>';
-                            bodyLines.forEach(function(body, i) {
-                                var indexBody = body[0].indexOf(':');
-                                var titleLines = tooltip.title || [];
-                                bodyX = body[0].substr(indexBody + 1);
-                                var colors = tooltip.labelColors[i];
-                                var style = 'background:' + colors.backgroundColor;
-                                style += '; border-color:' + colors.borderColor;
-                                style += '; border-width: 2px';
-                                var span = '<span class="chartjs-tooltip-key" style="' + style + '"></span>';
-                                innerHtml += '<tr><td>' + span + '<strong>Tonelada:</strong> <span style="color: #57bd64;"> ' + tons[titleLines[0]] + '</span></td></tr>';
-                            });
-                            innerHtml += '</tbody>';
-
-                            var tableRoot = tooltipEl.querySelector('table');
-                            tableRoot.innerHTML = innerHtml;
-                        }
-
-                        // `this` will be the overall tooltip
-                        var positionY = this._chart.canvas.offsetTop;
-                        var positionX = this._chart.canvas.offsetLeft;
-
-                        // Display, position, and set styles for font
-                        tooltipEl.style.opacity = 1;
-                        tooltipEl.style.left = positionX + tooltip.caretX + 'px';
-                        tooltipEl.style.top = positionY + tooltip.caretY + 'px';
-                        tooltipEl.style.fontFamily = tooltip._fontFamily;
-                        tooltipEl.style.fontSize = tooltip.fontSize;
-                        tooltipEl.style.fontStyle = tooltip._fontStyle;
-                        tooltipEl.style.padding = tooltip.yPadding + 'px ' + tooltip.xPadding + 'px';
-                    }
-                }
+                },
             }
 
             // Configuration options go here
@@ -486,50 +443,119 @@
 
                 chart.data.datasets.forEach(function (dataset, i) {
                     var meta = chart.getDatasetMeta(i);
+                    var control_flow = true;
                     if (!meta.hidden) {
                         meta.data.forEach(function(element, index) {
                             // Draw the text in black, with the specified font
-                            ctx.fillStyle = 'rgb(0, 0, 0)';
+                            if(dataset.data[index] != 0 && control_flow){
+                                control_flow = false;
+                                
 
-                            var fontSize = 16;
-                            var fontStyle = 'normal';
-                            var fontFamily = 'Helvetica Neue';
-                            ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                                var fontSize = 15;
+                                var fontStyle = 'bold';
+                                var fontFamily = 'Roboto';
+                                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
 
-                            // Just naively convert to string for now
-                            var dataString = '$' + dataset.data[index].toString();
+                                // Just naively convert to string for now
+                                var precioPromedio = formatter.format( dataset.data[index]);
+                                var ton_tri = formatter.format(Toneladas_trimestre[i]).replace('$', '') + ' Tons';
 
-                            // Make sure alignment settings are correct
-                            ctx.textAlign = 'center';
-                            ctx.textBaseline = 'middle';
-
-                            var padding = 0;
-                            var position = element.tooltipPosition();
-                            var positionX = dataset.data[index] < 6 ?  position.x + (10 + (dataString.length*2)):  position.x - (10 + (dataString.length*4));
-                            ctx.fillText(dataString, positionX, position.y - (fontSize / 2) - padding + 5);
+                                // Make sure alignment settings are correct
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                var padding = 0;
+                                var position = element.tooltipPosition();
+                                var positionX = dataset.data[index] < 1 ? position.x + (10 + (precioPromedio.length*2)):  position.x - (10 + (precioPromedio.length*4));
+                                var positionX1 = Math.round(element._view.x/12.4) <= ton_tri.length ? 75 : position.x - (ton_tri.length*4);
+                                ctx.fillStyle = 'rgb(255,255,255)';
+                                ctx.fillText(precioPromedio, positionX, position.y - (fontSize / 3) - padding + 5);
+                                ctx.fillStyle = 'rgb(0, 0, 0)';
+                                ctx.fillText(ton_tri, positionX1, position.y + 33 - (fontSize / 2) - padding + 5);
+                            }
                         });
                     }
                 });
             }
         });
-        $('#update').click(function(){
-            var a = Math.round(Math.random() * 100);
-            var b = Math.round(Math.random() * 100);
-            var c = Math.round(Math.random() * 100); 
-            var d = Math.round(Math.random() * 100);
-            addData(chart, ["T1", "T2", "T3", "T4"], [a, b, c, d, 0]);
-            tons = {'T1': a*2, 'T2': b*2, 'T3': c*2, 'T4': d*2};
-        });
-        function addData(chart, label, data) {
-            chart.data.labels = label;
-            chart.data.datasets.forEach((dataset) => {
-                dataset.data = data;
+
+        function addData(chart, precio_prom_mes, volumen_mes, trimestres) {
+            chart.data.datasets.forEach(function(datasets){
+                datasets.data = [];
+            })
+
+            console.log(precio_prom_mes, trimestres);
+
+            t1 = [];
+            t2 = [0];
+            t3 = [0,0];
+            t4 = [0,0,0];
+
+            precio_prom_mes.forEach(function(value, key){
+                if(key == 0 ) t1 = Array(trimestres).fill(value);
+                else if(key == 1) t2 = t2.concat(Array(trimestres-1).fill(value));
+                else if(key == 2) t3 = t3.concat(Array(trimestres-2).fill(value));
+                else t4 = t4.concat(Array(trimestres-3).fill(value));
             });
+
+            chart.data.datasets[0].data = t1;
+            chart.data.datasets[1].data = t2;
+            chart.data.datasets[2].data = t3;
+            chart.data.datasets[3].data = t4;
+            Toneladas_trimestre = volumen_mes;
             chart.update();
         }
-        $('#form-graph-analisis').submit(function(e){
-            e.preventDefault();
+
+        $('#analisisCategoriasHistorico').change(function(e){
+            var categoria_id = $(this).val();
+            var ingrediente_select = $('#selectAnalisisIngredienteHistorico');
+            ingrediente_select.empty();
+            $('#selectAnalisisYearHistorico').empty();
+            $.ajax({
+                type: "GET",
+                url: '/getIngredientes/'+ categoria_id,
+                success: function( data ) {
+                    if(data['years'] != []) ingrediente_select.append($('<option></option>').attr('value', 'empty').text(''));
+                    Object.keys(data['ingredientes']).forEach(function(key){
+                        ingrediente_select.append($('<option></option>').attr('value', key).text(data['ingredientes'][key]));
+                    });
+                }
+            });
         })
+
+        $('#selectAnalisisIngredienteHistorico').change(function(e){
+            var year_select = $('#selectAnalisisYearHistorico');
+            var ingrediente_select = $('#selectAnalisisIngredienteHistorico').val();
+            year_select.empty();
+            $.ajax({
+                type: "GET",
+                url: '/getYears/'+ ingrediente_select,
+                success: function( data ) {
+                    if(data['years'] != []) year_select.append($('<option></option>').attr('value', 'empty').text(''));
+                    data['years'].forEach(function(e){
+                        year_select.append($('<option></option>').attr('value', e).text(e));
+                    });
+                }
+            });
+        })
+
+        $('#update-graphic-historic').click(function(e){
+            e.preventDefault();
+            var ingrediente = $('#selectAnalisisIngredienteHistorico');
+            var year = $('#selectAnalisisYearHistorico');
+            ingrediente.val() == 'empty' ? ingrediente.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : ingrediente.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
+            year.val() == 'empty' ? year.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : year.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
+            if(ingrediente.val() != 'empty' && year.val() != 'empty'){
+                $.ajax({
+                    type: "GET",
+                    url: '/updateAnalysisHistoric/'+ ingrediente.val() + '/' + year.val(),
+                    success: function( data ) {
+                        addData(chart, data['precio_prom_mes'], data['volumen_mes'], data['trimestres']);
+                        $('#importaciones_precio_total').text(formatter.format(data['precio_total_prom']).replace('$', ''));
+                        $('#importaciones_volumen_total').text(formatter.format(data['volumen_total']).replace('$', ''));
+                    }
+                });
+            }
+        });
     }
     //##############################################################################################################
     //########################################### Fin Graficas #####################################################
@@ -562,12 +588,28 @@
             // Configuration options go here
             options: {
                 spanGaps: true,
+                scales: {
+                    xAxes: [{
+                        //offset: true,
+                    }],
+                    yAxes: [{
+                        ticks: {
+                            callback: function(value, index, values){
+                                //var format_number = formatter.format(value);
+                                //var i = format_number.indexOf('.');
+                                //return format_number.substring(0, i);
+                                return formatter.format(value);
+                            }
+                        }
+                    }]
+                },
                 tooltips: {
                     enabled: false,
                     mode: 'index',
                     position: 'nearest',
                     yPadding: 10,
                     xPadding: 10,
+                    intersect: false,
                     custom: function(tooltip) {
                         // Tooltip Element
                         var tooltipEl = document.getElementById('chartjs-tooltip');
@@ -609,7 +651,7 @@
 
                                 bodyLines.forEach(function(body, i) {
                                     var indexBody = body[0].indexOf(':');
-                                    bodyX = body[0].substr(indexBody + 1);
+                                    bodyX = formatter.format(body[0].substr(indexBody + 1));
                                     bodyTitle = body[0].substr(0, indexBody);
                                     var colors = tooltip.labelColors[i];
                                     var style = 'background:' + colors.backgroundColor;
@@ -626,7 +668,7 @@
 
                                 bodyLines.forEach(function(body, i) {
                                     var indexBody = body[0].indexOf(':');
-                                    bodyX = body[0].substr(indexBody + 1);
+                                    bodyX = formatter.format(body[0].substr(indexBody + 1));
                                     var colors = tooltip.labelColors[i];
                                     var style = 'background:' + colors.backgroundColor;
                                     style += '; border-color:' + colors.borderColor;
@@ -647,9 +689,11 @@
                         var positionX = this._chart.canvas.offsetLeft;
 
                         // Display, position, and set styles for font
+                        tipo_analisis = $('#analisisEspecifico').val();
                         tooltipEl.style.opacity = 1;
                         tooltipEl.style.left = positionX + tooltip.caretX + 'px';
                         tooltipEl.style.top = positionY + tooltip.caretY + 'px';
+                        tooltipEl.style.width = tipo_analisis == 5 || tipo_analisis == 6 ? '200px': '170px';
                         tooltipEl.style.fontFamily = tooltip._fontFamily;
                         tooltipEl.style.fontSize = tooltip.fontSize;
                         tooltipEl.style.fontStyle = tooltip._fontStyle;
@@ -659,10 +703,64 @@
             }
         });
 
+        /*
+        Chart.plugins.register({
+            afterDraw: function(chart, easing) {
+                // To only draw at the end of animation, check for easing === 1
+                var ctx = chart.ctx;
+
+                var invert = true;
+                chart.data.datasets.forEach(function (dataset, i) {
+                    var meta = chart.getDatasetMeta(i);
+                    if (!meta.hidden) {
+                        meta.data.forEach(function(element, index) {
+                            // Draw the text in black, with the specified font
+                            if(dataset.data[index] != 0){
+                                var fontSize = 13;
+                                var fontStyle = 'bold';
+                                var fontFamily = 'Roboto';
+                                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+
+                                // Just naively convert to string for now
+                                var precioPromedio = formatter.format( dataset.data[index]) + ' K/L';
+
+                                // Make sure alignment settings are correct
+                                ctx.textAlign = 'center';
+                                ctx.textBaseline = 'middle';
+                                var padding = 0;
+                                var position = element.tooltipPosition();
+                                var positionX = position.x + (precioPromedio.length/2);
+                                var positionY = invert ? position.y + 20 : position.y - 20;
+                                ctx.fillStyle = 'rgba(0,0,0,0.4)';
+                                ctx.fillRect(position.x - precioPromedio.length * 4, positionY - 10, precioPromedio.length * 9, 20);
+                                ctx.fillStyle = 'rgba(12, 82, 0, 1)';
+                                ctx.fillText(precioPromedio, positionX, positionY - (fontSize / 3) - padding + 5);
+                                invert = !invert;
+                            }
+                        });
+                    }
+                });
+            }
+        });
+        */
+
         function addData(chart, label, data) {
             tipo_analisis = $('#analisisEspecifico').val();
             chart.data.labels = label;
             chart.data.datasets = [];
+
+            var min = 0;
+            var max = 0;
+            /*
+            data[0].forEach(function(value){
+                min = value < min ? value : min;
+                max = value > max ? value : max;
+            })
+
+            data[1].forEach(function(value){
+                min = value < min ? value : min;
+                max = value > max ? value : max;
+            })*/
 
             title2 = $('#analisisEspecifico').val() == 5 ? $('#analisisProductoSelect2').val() : $('#analisisIngredienteSelect2').val();
 
@@ -670,9 +768,9 @@
                 var data1 = {
                     label: 'Historico de Precios',
                     backgroundColor: 'rgba(255, 255, 255, 0)',
-                    borderColor: 'rgba(12, 82, 0, 0.5)',
+                    borderColor: 'rgba(255, 37, 37, 1)',
                     lineTension: 0,
-                    pointBackgroundColor: 'rgba(12, 82, 0, 1)',
+                    pointBackgroundColor: 'rgba(255, 37, 37, 1)',
                     pointRadius: 5,
                     data: data[0],
                 }
@@ -682,9 +780,9 @@
                 var data1 = {
                     label: $('#analisisProductoSelect').val(),
                     backgroundColor: 'rgba(255, 255, 255, 0)',
-                    borderColor: 'rgba(12, 82, 0, 0.5)',
+                    borderColor: 'rgba(255, 37, 37, 1)',
                     lineTension: 0,
-                    pointBackgroundColor: 'rgba(12, 82, 0, 1)',
+                    pointBackgroundColor: 'rgba(255, 37, 37, 1)',
                     pointRadius: 5,
                     data: data[0],
                 }
@@ -692,15 +790,17 @@
                 var data2 = {
                     label: title2,
                     backgroundColor: 'rgba(155, 155, 155, 0)',
-                    borderColor: 'rgba(4, 20, 80, 0.5)',
+                    borderColor: 'rgba(25, 31, 210, 1)',
                     lineTension: 0,
-                    pointBackgroundColor: 'rgba(4, 20, 80, 1)',
+                    pointBackgroundColor: 'rgba(25, 31, 210, 1)',
                     pointRadius: 5,
                     data: data[1],
                 }
                 tooltip_option = 1;
                 chart.data.datasets.push(data1);
                 chart.data.datasets.push(data2);
+                //chart.options.scales.yAxes[0].ticks.max = max + ((max - min) / 3);
+                //chart.options.scales.yAxes[0].ticks.min = min - 100;
             }
             chart.update();
         }
@@ -865,4 +965,45 @@
         });
     });
 
+    $('#historico_checkbox_ingrediente').change(function(){
+        if($(this).is(':checked')){
+            $('#historico_ingrediente_existente').attr('disabled', 'disabled');
+            $('#historico_ingrediente_nuevo, #historico_categoria_select').removeAttr('disabled');
+        }else{
+            $('#historico_ingrediente_existente').removeAttr('disabled');
+            $('#historico_ingrediente_nuevo, #historico_categoria_select').attr('disabled', 'disabled');
+        }
+    })
+
+    $('body').on('click', '.delete-list-historic', function(){
+        var ingrediente_id = $(this).attr('id');
+        var row = $(this).closest('tr');
+        var year = row.find('#historic-year').text();
+        $.ajax({
+            type: "GET",
+            url: '/deleteListHistoric/'+ ingrediente_id + '/' + year,
+            success: function( data ) {
+                if(data['response'] === 1){
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Lista eliminada con Exito</strong>'+
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                    table.row(row).remove().draw();
+                 }else{
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Ocurrio un error al borrar la list' +
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                }
+            }
+        });
+    });
  });

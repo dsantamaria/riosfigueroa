@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
     <div class="col-md-12">
-        <h2 class="page-title">Listado de Imagenes</h2>
+        <h2 class="page-title">Listado de Imágenes</h2>
         <div id="messages" class="col-xs-12" style="display: none"></div>
         <div class="panel panel-primary">
             <div class="panel-heading">Listado de Imagenes</div>
@@ -15,7 +15,7 @@
                                     <th class="sorting_asc" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Imagen</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Office: activate to sort column ascending">Titulo</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending" style="width: 600px">Descripción</th>
-                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Fecha de carga</th>
+                                    <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Fecha de Carga</th>
                                     <th class="sorting" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-label="Position: activate to sort column ascending">Eliminar</th>
                                 </tr>
                                 </thead>

@@ -20,17 +20,21 @@ Route::group(['middleware' => ['auth', 'country']], function () {
     Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
     Route::get('products/analisis/{analisis}', ['as' => 'products.analisis', 'uses' => 'ProductsController@analisisProducts']);
     Route::get('products/import_products_analysis_category', ['as' => 'import_products_analysis_category', 'uses' => 'ProductsController@importProductsAnalysisCategory'])->middleware('admin');
+    Route::get('products/import_analysis_historic_lists', ['as' => 'import_analysis_historic_lists', 'uses' => 'ProductsController@importAnalysisHistoricLists'])->middleware('admin');
 
     Route::resource('products', 'ProductsController');
     Route::get('productInfo/{id}', ['as' => 'productInfo', 'uses' => 'ProductsController@productInfo']);
-    Route::get('analisisPrecios', ['as'=>'analisisPrecios', 'uses'=>'ProductsController@analisisPrecios'])->middleware('admin');
-    Route::get('analisisHistorico', ['as'=>'analisisHistorico', 'uses'=>'ProductsController@analisisHistorico'])->middleware('admin');
+    Route::get('analisisPrecios', ['as'=>'analisisPrecios', 'uses'=>'ProductsController@analisisPrecios']);
+    Route::get('analisisHistorico', ['as'=>'analisisHistorico', 'uses'=>'ProductsController@analisisHistorico']);
     Route::get('gestionListasAnalisisPrecios', ['as'=>'gestionListasAnalisisPrecios', 'uses'=>'ProductsController@gestionListasAnalisisPrecios'])->middleware('admin');
+    Route::get('gestionListasAnalisisHistoricos', ['as'=>'gestionListasAnalisisHistoricos', 'uses'=>'ProductsController@gestionListasAnalisisHistoricos'])->middleware('admin');
     Route::get('deleteListCategory/{id}', ['as'=>'deleteListCategory', 'uses'=>'ProductsController@deleteListCategory'])->middleware('admin');
+    Route::get('deleteListHistoric/{ingrediente_id}/{year}', ['as'=>'deleteListHistoric', 'uses'=>'ProductsController@deleteListHistoric'])->middleware('admin');
     
     //post form import products
     Route::post('/products/process_import', ['as' => 'lista_precios.process', 'uses' => 'ProductsController@processImport'])->middleware('admin');
     Route::post('/products/process_import_products_analysis_category', ['as' => 'process_import_products_analysis_category', 'uses' => 'ProductsController@processImportProductsAnalysisCategory'])->middleware('admin');
+    Route::post('/products/process_import_analysis_historic_list', ['as' => 'process_import_analysis_historic_list', 'uses' => 'ProductsController@processImportAnalysisHistoricList'])->middleware('admin');
     Route::post('updateProducts', ['as' => 'updateProducts', 'uses' => 'ProductsController@updateProducts'])->middleware('admin');
     
 
@@ -54,8 +58,11 @@ Route::group(['middleware' => ['auth', 'country']], function () {
     
     
     //************************* GraphicsController ******************//
-    Route::get('updateAnalysisPrice/{category_id}/{analisis_especifico}/{tipo_analisis}/{producto_ingrediente}/{compania}/{tiempo}/{producto_ingrediente2}/{compania2}', ['as' => 'updateAnalysisPrice', 'uses' => 'GraphicsController@updateAnalysisPrice'])->middleware('admin');
-    Route::get('getProducts/{category_name}/{company_id}', ['as' => 'getProducts', 'uses' => 'GraphicsController@getProducts'])->middleware('admin');
+    Route::get('updateAnalysisPrice/{category_id}/{analisis_especifico}/{tipo_analisis}/{producto_ingrediente}/{compania}/{tiempo}/{producto_ingrediente2}/{compania2}', ['as' => 'updateAnalysisPrice', 'uses' => 'GraphicsController@updateAnalysisPrice']);
+    Route::get('updateAnalysisHistoric/{id}/{year}', ['as' => 'updateAnalysisHistoric', 'uses' => 'GraphicsController@updateAnalysisHistoric']);
+    Route::get('getProducts/{category_name}/{company_id}', ['as' => 'getProducts', 'uses' => 'GraphicsController@getProducts']);
+    Route::get('getIngredientes/{categoria_id}', ['as' => 'getIngredientes', 'uses' => 'GraphicsController@getIngredientes']);
+    Route::get('getYears/{ingrediente_id}', ['as' => 'getYears', 'uses' => 'GraphicsController@getYears']);
 });
 
 Route::group(['middleware' => ['guest', 'country']], function () {

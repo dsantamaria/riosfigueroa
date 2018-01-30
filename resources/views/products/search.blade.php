@@ -8,7 +8,7 @@
                 {!! Form::open(['method'=>'get','route'=>'products.index',
                 'class'=>'form-horizontal','role'=>'search'])  !!}
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Nombre del producto</label>
+                    <label class="col-md-3 control-label">Nombre del Producto</label>
                     <div class="col-md-8">
                         {!! Form::text('nombre_producto', '',  array('id' => 'nombre_producto', 'class' => 'form-control')) !!}
                     </div>

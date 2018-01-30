@@ -3,7 +3,7 @@
 
 <div class="col-md-12">
 
-    <h2 class="page-title">Importar Lista de Precios</h2>
+    <h2 class="page-title">Importar archivos para analisis de precios</h2>
 
         <div class="panel panel-default">
             <div class="panel-heading">Agregar archivo</div>
@@ -14,7 +14,7 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label">Archivo</label>
                         <div class="col-md-10">
-                            {!! Form::file('input-1', array('id'=>'input-1')) !!}
+                            {!! Form::file('input-1', array('id'=>'input-1', 'required' => 'required')) !!}
                         </div>
                     </div>
 
