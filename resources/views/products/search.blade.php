@@ -1,20 +1,20 @@
 @extends('layouts.app')
 @section('content')
 
-    <div class="col-md-8 col-md-offset-2">
+    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="panel panel-primary" style="overflow: visible;">
             <div class="panel-heading">Filtrar Productos</div>
             <div class="panel-body">
                 {!! Form::open(['method'=>'get','route'=>'products.index',
                 'class'=>'form-horizontal','role'=>'search'])  !!}
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Nombre del Producto</label>
+                    <label class="col-md-3 control-label label-name-product">Nombre del Producto</label>
                     <div class="col-md-8">
                         {!! Form::text('nombre_producto', '',  array('id' => 'nombre_producto', 'class' => 'form-control')) !!}
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-3 control-label">Nombre de la Empresa</label>
+                    <label class="col-md-3 control-label label-name-inter">Nombre de la Empresa</label>
                     <div class="col-md-8">
                             {!! Form::text('nombre_empresa', '',  array('id' => 'nombre_empresa', 'class' => 'form-control')) !!}
                     </div>

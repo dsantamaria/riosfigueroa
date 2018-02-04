@@ -45,7 +45,7 @@
              },
              "columns":[
                 {"name": "first", "order" : false}
-            ]
+            ],
          }
      } );
 	 

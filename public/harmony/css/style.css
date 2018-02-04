@@ -862,3 +862,35 @@ canvas{
 .padd-left-44{
   padding-left: 44px;
 }
+
+.brand .logo.fixlogo{
+  box-sizing: border-box;
+  padding: 20px;
+  float: left;
+  display: block;
+  width: auto;
+}
+
+.table-scroll{
+  display: block;
+  overflow-x: auto;
+}
+
+@media (min-width: 1200px) and (max-width: 1280px){
+  .form-horizontal .label-name-product{
+    padding-top: 4px;
+  }
+}
+
+@media (min-width: 1200px) and (max-width: 1332px){
+  .form-horizontal .label-name-inter{
+    padding-top: 4px;
+  }
+}
+
+@media (min-width: 992px) and (max-width: 1072px){
+  .form-horizontal .label-name-inter, .form-horizontal .label-name-product{
+    padding-top: 4px;
+  }
+}
+

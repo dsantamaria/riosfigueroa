@@ -19,13 +19,16 @@
 
     <body oncopy='return false' oncut='return false' class="hidden-print">
         <div class="brand clearfix">
-            <a href="/" class="logo">Sistema de Manejo de Precios</a>
+            <a href="/" class="logo fixlogo">Sistema de Manejo de Precios</a>
+            <span class="menu-btn">
+                <i class="fa fa-bars"></i>
+            </span>
             @if (Auth::check())
                 <ul class="ts-profile-nav">
                     <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>
                 </ul>
             @endif
-        </div>
+        </div> 
         <div class="ts-main-content">
             @if (Auth::check())
                 <nav class="ts-sidebar">
@@ -40,7 +43,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#" class="parent"><i class="fa fa-codepen"></i>Análisis por Categoría</a>
+                            <a href="#" class="parent"><i class="fa fa-pie-chart"></i>Análisis por Categoría</a>
                             <ul>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'insecticidas']) }}">Insecticidas</a></li>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'herbicidas']) }}">Herbicidas</a></li>
@@ -48,7 +51,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#" class="parent"><i class="fa fa-codepen"></i>Análisis Histórico</a>
+                            <a href="#" class="parent"><i class="fa fa-line-chart"></i>Análisis Histórico</a>
                             <ul>
                                 <li><a href="{{ route('analisisPrecios') }}">Análisis de Precios</a></li>
                                 <li><a href="{{ route('analisisHistorico') }}"></i>Análisis de Importaciones</a></li>
@@ -71,6 +74,11 @@
                                 </ul>
                             </li>
                         @endcan
+                        <ul class="ts-profile-nav">
+                            <li>
+                                <a href="{{ url('/logout') }}">Cerrar Sesión</a>
+                            </li>
+                        </ul>
                     </ul>
                 </nav>
             @endif

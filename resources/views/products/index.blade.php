@@ -19,7 +19,7 @@
                 <div id="zctb_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
                     <div class="row">
                         <div class="col-sm-12">
-                            <table id="zctb" class="display table table-striped table-bordered table-hover dataTable" cellspacing="0" width="100%" role="grid" aria-describedby="zctb_info">
+                            <table id="zctb" class="display table table-striped table-bordered table-hover dataTable table-scroll" cellspacing="0" width="100%" role="grid" aria-describedby="zctb_info">
                                 <thead>
                                 <tr role="row">
                                     <th class="sorting_asc" tabindex="0" aria-controls="zctb" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Name: activate to sort column descending">Compañía</th>

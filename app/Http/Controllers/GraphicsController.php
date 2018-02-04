@@ -112,10 +112,10 @@ class GraphicsController extends Controller
 						}else $precio_final = $precio_array[floor(count($precio_array)/2)];
 					}
 				}			
-				array_unshift($valor,  $precio_final);
+				array_push($valor,  $precio_final);
 				$cont++;
-			}else array_unshift($valor,  'NaN');
-			array_unshift($fechas, date('m-d-Y', strtotime($fechas_producto->date_list)));
+			}else array_push($valor,  'NaN');
+			array_push($fechas, date('m-d-Y', strtotime($fechas_producto->date_list)));
 			if($cont == 10) break;
 			
 		}
@@ -144,6 +144,9 @@ class GraphicsController extends Controller
     		}
     		if($cont == 10) break;
     	}
+    	$fechas = array_reverse($fechas);
+    	$valor1 = array_reverse($valor1);
+    	$valor2 = array_reverse($valor2);
     	return array($fechas, $valor1, $valor2);
     }
 
