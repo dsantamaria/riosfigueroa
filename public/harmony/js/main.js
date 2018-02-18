@@ -915,7 +915,7 @@
             if(producto_ingrediente.val() == 'empty' || compania.val() == 'empty') return;
             $.ajax({
                 type: "GET",
-                url: '/updateAnalysisPrice/'+ category_id +'/'+ analisis_especifico +'/'+ tipo_analisis +'/'+ encodeURIComponent(producto_ingrediente.val()) +'/'+ compania.val() +'/'+ tiempo +'/'+ producto_ingrediente2.val() +'/'+ compania2.val(),
+                url: '/updateAnalysisPrice/'+ category_id +'/'+ analisis_especifico +'/'+ tipo_analisis +'/'+ encodeURIComponent(producto_ingrediente.val()) +'/'+ compania.val() +'/'+ tiempo +'/'+ encodeURIComponent(producto_ingrediente2.val()) +'/'+ compania2.val(),
                 success: function( data ) {
                     data['values'] = data['values'].map(function(e){
                         return e == 'NaN' ? NaN : e;
