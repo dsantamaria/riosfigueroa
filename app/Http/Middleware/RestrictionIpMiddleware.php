@@ -23,7 +23,7 @@ class RestrictionIpMiddleware
             $client = new Client([
                 'base_uri' => 'https://freegeoip.net/json/'
             ]);
-            $request_ip = '201.167.64.179';//$request->ip(); //
+            $request_ip = /*'201.167.64.179';*/ $request->ip();
             $result = $client->request('GET', $request_ip)->getBody()->getContents();
             $country = json_decode($result, true)['country_name'];
 
