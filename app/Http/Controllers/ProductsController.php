@@ -80,7 +80,7 @@ class ProductsController extends Controller
         $exists_count = 0;
         $total_count = 0;
         try {
-            $file_contents = Excel::load(Input::file('input-1'))->noHeading()->get();
+            $file_contents = Excel::load(Input::file('input-1'), 'iso-8859-1')->noHeading()->get();
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
             return redirect(route('products.index'));
@@ -97,6 +97,7 @@ class ProductsController extends Controller
 
             $data = array();
             $total_count = $file_contents->count();
+            if(count($file_contents[1]) != 14) return back()->with('warning','Archivo con formato incorrect');
             foreach($file_contents as $row)
             {
                 $proveedorObj = (!is_null($row[1])) ? Proveedores::getOrCreateProveedorByName($row[1]) : null;
