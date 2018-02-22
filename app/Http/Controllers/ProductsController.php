@@ -104,17 +104,17 @@ class ProductsController extends Controller
 
                 $data['proveedor_id']           = $proveedorObj ? $proveedorObj->id : null;
                 $data['categoria_id']           = $categoriaObj ? $categoriaObj->id : null;
-                $data['nombre_producto']        = $row[3];
-                $data['tipo_producto']          = $row[2];
-                $data['ingrediente_activo']     = $row[4];
-                $data['formulacion']            = $row[5];
-                $data['concentracion']          = $row[6];
-                $data['presentacion']           = $row[7];
-                $data['unidad']                 = $row[8];
-                $data['empaque']                = $row[9];
-                $data['precio_comercial']       = $row[10];
-                $data['precio_por_medida']      = $row[11];
-                $data['impuesto']               = $row[12];
+                $data['nombre_producto']        = $row[3]  == "" ? '-' : $row[3];
+                $data['tipo_producto']          = $row[2]  == "" ? '-' : $row[2];
+                $data['ingrediente_activo']     = $row[4]  == "" ? '-' : $row[4];
+                $data['formulacion']            = $row[5]  == "" ? '-' : $row[5];
+                $data['concentracion']          = $row[6]  == "" ? '0%': $row[6];
+                $data['presentacion']           = $row[7]  == "" ? '-' : $row[7];
+                $data['unidad']                 = $row[8]  == "" ? '-' : $row[8];
+                $data['empaque']                = $row[9]  == "" ? '-' : $row[9];
+                $data['precio_comercial']       = $row[10] == "" ?  0  : $row[10];
+                $data['precio_por_medida']      = $row[11] == "" ?  0  : $row[11];
+                $data['impuesto']               = $row[12] == "" ? '0%': $row[12];
                 $data['ultima_actualizacion']   = $this->convertToDate($row[13]);
                 try {
                     $newProduct = Products::firstOrCreate($data);
@@ -128,7 +128,6 @@ class ProductsController extends Controller
                 }
             }
         }
-
         \Session::Flash('success', 'Archivo importado correctamente.');
 
         return view('products.postimport',
