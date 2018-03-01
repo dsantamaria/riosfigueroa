@@ -93,6 +93,7 @@ class ProductsController extends Controller
                 $this->exportProductsToCvs(); //backup old products
                 $this->exportProductsToNewTable(); //backup old products
                 DB::table('products')->delete(); // delete old products
+                DB::table('proveedores')->delete(); // delete old providers
             } catch (Exception $e) {
                 return back()->with('warning','Ocurrio un error, por favor intente de nuevo');
             }
@@ -106,7 +107,7 @@ class ProductsController extends Controller
             {
                 if($row[2] == 'Tipo de Producto') continue;
                 $proveedorObj = (!is_null($row[1])) ? Proveedores::getOrCreateProveedorByName($row[1]) : null;
-                $categoriaObj = (!is_null($row[2])) ? Categorias::getOrCreateCategoriaByName($row[2]): null;
+                $categoriaObj = (!is_null($row[2])) ? Categorias::getOrCreateCategoriaByName($row[2]): Categorias::getOrCreateCategoriaByName('Otros');
 
                 $data['proveedor_id']           = $proveedorObj ? $proveedorObj->id : null;
                 $data['categoria_id']           = $categoriaObj ? $categoriaObj->id : null;
@@ -208,9 +209,7 @@ class ProductsController extends Controller
         Schema::connection('mysql')->create($table_name, function($table) {
             $table->increments('id');
             $table->integer('proveedor_id')->unsigned();
-            $table->foreign('proveedor_id')->references('id')->on('proveedores');
             $table->integer('categoria_id')->unsigned();
-            $table->foreign('categoria_id')->references('id')->on('categorias');
             $table->string('nombre_producto');
             $table->string('tipo_producto');
             $table->string('ingrediente_activo');
@@ -337,7 +336,7 @@ class ProductsController extends Controller
             foreach($file_contents as $row)
             {
                 $proveedorObj = (!is_null($row[1])) ? Proveedores_historic::getOrCreateProveedorByName($row[1]) : null;
-                $categoriaObj = (!is_null($row[2])) ? Categoria_historic::getOrCreateCategoriaByName($row[2]): null;
+                $categoriaObj = (!is_null($row[2])) ? Categoria_historic::getOrCreateCategoriaByName($row[2]): Categoria_historic::getOrCreateCategoriaByName('Otros');
 
                 $data['proveedor_id']           = $proveedorObj ? $proveedorObj->id : null;
                 $data['categoria_id']           = $categoriaObj ? $categoriaObj->id : null;
