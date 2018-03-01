@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use App\Proveedores;
 use App\Categorias;
 use App\Products;
+use App\Categoria_historic;
+use App\Proveedores_historic;
 use App\Analysis_category_image;
 use App\Analysis_category_price;
-use App\Analysis_prices_product;
 use App\Analysis_import_list;
 use App\Analysis_import_ingredient;
+use App\Analysis_prices_product;
 use Gate;
 use Excel;
 use Carbon\Carbon;
@@ -97,9 +99,12 @@ class ProductsController extends Controller
 
             $data = array();
             $total_count = $file_contents->count();
-            if(count($file_contents[1]) != 14) return back()->with('warning','Archivo con formato incorrect');
+
+
+            if(count($file_contents[1]) < 14) return back()->with('warning','Archivo con formato incorrect');
             foreach($file_contents as $row)
             {
+                if($row[2] == 'Tipo de Producto') continue;
                 $proveedorObj = (!is_null($row[1])) ? Proveedores::getOrCreateProveedorByName($row[1]) : null;
                 $categoriaObj = (!is_null($row[2])) ? Categorias::getOrCreateCategoriaByName($row[2]): null;
 
@@ -122,7 +127,7 @@ class ProductsController extends Controller
                     ($newProduct->wasRecentlyCreated == 1) ? $new_products_count++ : $exists_count++;
                 }
                 catch (\Exception $e) {
-                    $products_error[] = ['nombre_producto_error' => $row[3], 'id_fila_error' => $row[0],
+                    $products_error[] = ['nombre_empresa_error' => $row[1],'nombre_categoria_error' => $row[2], 'nombre_producto_error' => $row[3], 'id_fila_error' => $row[0],
                         'error_msg' => $e->getMessage()];
                     $error_count++;
                     //dd($row[2] . "----" . $row[1] . "-----" . $row[3]);
@@ -229,6 +234,7 @@ class ProductsController extends Controller
         if(preg_match('/[0-9]{4}+[-]+[0-9]{2}+[-][0-9]{2}/', $dateString)) return $dateString;
         try {
             $arr = explode('/', $dateString);
+            if(count($arr) != 3) return '0000-00-00';
             if(strlen($arr[2]) == 2) $arr[2] = "20".$arr[2];
             $dateInTime = strtotime($arr[0].'-'.$arr[1].'-'.$arr[2]);
             return date('Y-m-d', $dateInTime);
@@ -294,7 +300,7 @@ class ProductsController extends Controller
         $ingredient_name = Analysis_prices_product::where('tipo_producto', 'Insecticida')
                                                 ->where('ingrediente_activo', '!=', '-')
                                                 ->orderBy('ingrediente_activo', 'asc')->pluck('ingrediente_activo', 'ingrediente_activo')->all();
-        $proveedores = Proveedores::orderBy('nombre_proveedor', 'asc')->pluck('nombre_proveedor', 'id')->all();
+        $proveedores = Proveedores_historic::orderBy('nombre_proveedor', 'asc')->pluck('nombre_proveedor', 'id')->all();
 
         $product_name = array('empty' => '') + $product_name;
         $ingredient_name = array('empty' => '') + $ingredient_name;
@@ -314,7 +320,7 @@ class ProductsController extends Controller
         $exists_count = 0;
         $total_count = 0;
         try {
-            $file_contents = Excel::load(Input::file('input-1'))->get();
+            $file_contents = Excel::load(Input::file('input-1'), 'iso-8859-1')->get();
             $find_acp = Analysis_category_price::where('date_list', $request['fecha_lista'])->first();
             if($find_acp){
                 Analysis_category_price::destroy($find_acp->id);
@@ -330,8 +336,8 @@ class ProductsController extends Controller
             $total_count = $file_contents->count();
             foreach($file_contents as $row)
             {
-                $proveedorObj = (!is_null($row[1])) ? Proveedores::getOrCreateProveedorByName($row[1]) : null;
-                $categoriaObj = (!is_null($row[2])) ? Categorias::getOrCreateCategoriaByName($row[2]): null;
+                $proveedorObj = (!is_null($row[1])) ? Proveedores_historic::getOrCreateProveedorByName($row[1]) : null;
+                $categoriaObj = (!is_null($row[2])) ? Categoria_historic::getOrCreateCategoriaByName($row[2]): null;
 
                 $data['proveedor_id']           = $proveedorObj ? $proveedorObj->id : null;
                 $data['categoria_id']           = $categoriaObj ? $categoriaObj->id : null;
@@ -354,10 +360,9 @@ class ProductsController extends Controller
                     ($newProduct->wasRecentlyCreated == 1) ? $new_products_count++ : $exists_count++;
                 }
                 catch (\Exception $e) {
-                    $products_error[] = ['nombre_producto_error' => $row[3], 'id_fila_error' => $row[0],
+                    $products_error[] = ['nombre_empresa_error' => $row[1],'nombre_categoria_error' => $row[2], 'nombre_producto_error' => $row[3], 'id_fila_error' => $row[0],
                         'error_msg' => $e->getMessage()];
                     $error_count++;
-                    //dd($row[2] . "----" . $row[1] . "-----" . $row[3]);
                 }
             }
         }

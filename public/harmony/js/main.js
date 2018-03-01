@@ -1006,4 +1006,8 @@
             }
         });
     });
+
+    $('#see-errors-import').click(function(){
+        $('#modal-extra-info').modal('show');
+    })
  });

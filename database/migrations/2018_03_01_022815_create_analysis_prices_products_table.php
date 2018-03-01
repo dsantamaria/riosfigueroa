@@ -15,9 +15,9 @@ class CreateAnalysisPricesProductsTable extends Migration
         Schema::create('analysis_prices_products', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('proveedor_id')->unsigned();
-            $table->foreign('proveedor_id')->references('id')->on('proveedores');
+            $table->foreign('proveedor_id')->references('id')->on('proveedores_historics');
             $table->integer('categoria_id')->unsigned();
-            $table->foreign('categoria_id')->references('id')->on('categorias');
+            $table->foreign('categoria_id')->references('id')->on('categoria_historics');
             $table->integer('analysis_category_price_id')->unsigned();
             $table->foreign('analysis_category_price_id')->references('id')->on('analysis_category_prices')->onDelete('cascade');
             $table->string('nombre_producto')->default('');;

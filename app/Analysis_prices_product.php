@@ -14,13 +14,13 @@ class Analysis_prices_product extends Model
         return $this->belongsTo('App\Analysis_category_price', 'analysis_category_price_id');
     }
 
-    public function proveedores()
+    public function proveedores_historic()
     {
-        return $this->belongsTo('App\Proveedores', 'proveedor_id');
+        return $this->belongsTo('App\Proveedores_historic', 'proveedor_id');
     }
 
-    public function categorias()
+    public function categoria_historic()
     {
-        return $this->belongsTo('App\Categorias', 'categoria_id');
+        return $this->belongsTo('App\Categoria_historic', 'categoria_id');
     }
 }
