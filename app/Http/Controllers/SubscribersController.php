@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Company_subscriber;
 use App\User;
+use App\Products;
 use App\Pending_subscriber;
+use App\Role;
 use Mail;
 use Carbon\Carbon;
 use Log;
@@ -126,6 +128,7 @@ class SubscribersController extends Controller
     }
 
     public function list_active_user(){
+
     	$users = User::where([['email', '!=', 'super@super.com'], ['email', '!=', 'admin@admin.com'], ['password', '!=', '']])->get();
     	return view('subscribers.list_active_user')->with('users', $users);
     }
@@ -144,5 +147,17 @@ class SubscribersController extends Controller
             return response()->json(['response' => 1]);
         }
         return response()->json(['response' => 0]);
+    }
+
+    public function global_access_user($id, $state){
+        //state 0 = desactivar acceso global
+        //state 1 = activar acceso global
+        $role = $state ? Role::where('permissions', 'user_out_mx')->get() : Role::where('permissions', 'default')->get();
+        try {
+            DB::table('role_users')->where('user_id', $id)->update(['role_id' => $role[0]->id]);
+            return response()->json(['response' => 1]);
+        } catch (Exception $e) {
+            return response()->json(['response' => 0]);
+        }
     }
 }

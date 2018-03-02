@@ -19,7 +19,8 @@ class RestrictionIpMiddleware
     public function handle($request, Closure $next)
     {
         //return $next($request);   
-        if (Gate::denies('admin-role')) {
+
+        if (Gate::denies('admin-role') && Gate::denies('special-role')) {
             $client = new Client([
                 'base_uri' => 'https://freegeoip.net/json/'
             ]);

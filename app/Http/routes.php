@@ -53,6 +53,7 @@ Route::group(['middleware' => ['auth', 'country']], function () {
     Route::get('sendSubscription', ['as'=>'sendSubscription', 'uses'=>'SubscribersController@sendSubscription'])->middleware('admin');
     Route::get('listActiveUsers', ['as' => 'listActiveUsers', 'uses' => 'SubscribersController@list_active_user'])->middleware('admin');
     Route::get('activateUser/{id}/{state}', ['as'=>'activateUser', 'uses'=>'SubscribersController@activate_user'])->middleware('admin');
+    Route::get('globalAccessUser/{id}/{state}', ['as'=>'globalAccessUser', 'uses'=>'SubscribersController@global_access_user'])->middleware('admin');
     Route::get('deleteUser/{id}', ['as'=>'deleteUser', 'uses'=>'SubscribersController@delete_user'])->middleware('admin');
     Route::post('sendSubscriptionEmail', ['as' => 'sendSubscriptionEmail', 'uses' => 'SubscribersController@sendSubscriptionEmail'])->middleware('admin');
     

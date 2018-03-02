@@ -32,6 +32,10 @@ class AuthServiceProvider extends ServiceProvider
             }
         });
 
+        $gate->define('special-role', function ($user) {
+           return $user->hasAccess(['user_out_mx']);
+        });
+
         $gate->define('user-role', function ($user) {
            return $user->hasAccess(['default']);
         });

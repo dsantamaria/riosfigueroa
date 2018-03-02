@@ -770,10 +770,10 @@ img{
   opacity: 0.8;
 }
  
-.action-delete{
+.action-delete, .desactive-global-user{
   background-color: #a70707;
 }
-.action-active{
+.action-active, .active-global-user{
   background-color: #0b690e;
 }
 .action-desactive{

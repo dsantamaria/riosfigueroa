@@ -255,7 +255,7 @@
         var element = $(this);
         var id = $(this).attr('id');
         var user_email = $(this).closest('tr').find('#email').html();
-        var row_state = $(this).closest('tr').find('#state');
+        var row_state_active = $(this).closest('tr').find('#state-active');
         var state = $(this).attr('state');
         var message_state = state === '1' ? 'Activo' : 'Inactivo';
         $.ajax({
@@ -271,7 +271,7 @@
                             '</div>'+
                         '</div>'
                     ).fadeIn(1000);
-                    row_state.text(message_state);
+                    row_state_active.text(message_state);
                     state === '0' ? element.removeClass('action-desactive').addClass('action-active').attr('state', 1).find('i').removeClass('fa-times').addClass('fa-check') : element.removeClass('action-active').addClass('action-desactive').attr('state', 0).find('i').removeClass('fa-check').addClass('fa-times');
                 }else{
                     $('#messages').html(
@@ -1010,4 +1010,40 @@
     $('#see-errors-import').click(function(){
         $('#modal-extra-info').modal('show');
     })
+
+    $('body').on('click', '.global-access', function(){
+        var element = $(this);
+        var id = $(this).attr('id');
+        var user_email = $(this).closest('tr').find('#email').html();
+        var row_state_access = $(this).closest('tr').find('#state-access');
+        var state = $(this).attr('state');
+        var message_state = state === '1' ? 'acceso global' : 'acceso solo en México';
+        $.ajax({
+            type: "GET",
+            url: '/globalAccessUser/'+ id +'/'+ state,
+            success: function( data ) {
+                if(data['response'] === 1){
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Usuario '+ user_email + ' '+ message_state +' otorgado con éxito</strong>'+
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                    row_state_access.text(' - '+ message_state);
+                    state === '1' ? element.removeClass('desactive-global-user').addClass('active-global-user').attr('state', 0).find('i').removeClass('fa-times').addClass('fa-check') : element.removeClass('active-global-user').addClass('desactive-global-user').attr('state', 1).find('i').removeClass('fa-check').addClass('fa-times');
+                }else{
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Ocurrio un error al intentar otorgar/remover acceso global al usuario '+ user_email +
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                }
+            }
+        });
+    });
  });
