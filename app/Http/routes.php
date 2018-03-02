@@ -66,7 +66,7 @@ Route::group(['middleware' => ['auth', 'country']], function () {
     Route::get('getYears/{ingrediente_id}', ['as' => 'getYears', 'uses' => 'GraphicsController@getYears']);
 });
 
-Route::group(['middleware' => ['guest', 'country']], function () {
+Route::group(['middleware' => ['guest']], function () {
     Route::get('subscriberForm', ['as'=>'subscriberForm', 'uses'=>'SubscribersController@subscriber_form']);
     Route::post('saveSubscriberForm', ['as'=> 'saveSubscriberForm', 'uses' => 'SubscribersController@saveSubscriberForm']);
     Route::get('registerPending', ['as' => 'registerPending', 'uses' => 'SubscribersController@showRegistrationFormPending']);
