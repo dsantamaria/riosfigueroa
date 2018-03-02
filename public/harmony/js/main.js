@@ -272,7 +272,7 @@
                         '</div>'
                     ).fadeIn(1000);
                     row_state_active.text(message_state);
-                    state === '0' ? element.removeClass('action-desactive').addClass('action-active').attr('state', 1).find('i').removeClass('fa-times').addClass('fa-check') : element.removeClass('action-active').addClass('action-desactive').attr('state', 0).find('i').removeClass('fa-check').addClass('fa-times');
+                    state === '0' ? element.removeClass('action-desactive').addClass('action-active').attr('state', 1).attr('title', 'activar').find('i').removeClass('fa-times').addClass('fa-check') : element.removeClass('action-active').addClass('action-desactive').attr('state', 0).attr('title', 'desactivar').find('i').removeClass('fa-check').addClass('fa-times');
                 }else{
                     $('#messages').html(
                         '<div class="row">'+
@@ -1032,7 +1032,7 @@
                         '</div>'
                     ).fadeIn(1000);
                     row_state_access.text(' - '+ message_state);
-                    state === '1' ? element.removeClass('desactive-global-user').addClass('active-global-user').attr('state', 0).find('i').removeClass('fa-times').addClass('fa-check') : element.removeClass('active-global-user').addClass('desactive-global-user').attr('state', 1).find('i').removeClass('fa-check').addClass('fa-times');
+                    state === '1' ? element.removeClass('desactive-global-user').addClass('active-global-user').attr('state', 0).attr('title', 'desactivar') : element.removeClass('active-global-user').addClass('desactive-global-user').attr('state', 1).attr('title', 'activar');
                 }else{
                     $('#messages').html(
                         '<div class="row">'+
