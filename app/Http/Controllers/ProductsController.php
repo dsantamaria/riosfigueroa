@@ -420,6 +420,10 @@ class ProductsController extends Controller
         $error_count = 0;
         $count = 0;
         $file_contents = Excel::load(Input::file('input-1'))->get();
+        if(count($file_contents) < 8 || count($file_contents[1]) < 8){
+            if($request->has('check_ingrediente')) Analysis_import_ingredient::where('id', $ingrediente_id)->delete();
+            return back()->with('warning','Archivo con formato incorrect');
+        }
         set_time_limit(600);
         if ($file_contents) { 
             $data = array();
@@ -464,7 +468,13 @@ class ProductsController extends Controller
 
      public function deleteListHistoric($ingrediente_id, $year){
         $lista = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->delete();
-        if($lista) return response()->json(['response' => 1]);
+        if($lista) {
+            $ingrediente = Analysis_import_list::where('analysis_import_ingredient_id', $ingrediente_id)->get();
+            if(count($ingrediente) == 0){
+                Analysis_import_ingredient::where('id', $ingrediente_id)->delete();
+            }
+            return response()->json(['response' => 1]);
+        }
         return response()->json(['response' => 0]);       
     }
 }

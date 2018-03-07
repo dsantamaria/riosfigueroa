@@ -230,12 +230,11 @@ class GraphicsController extends Controller
     	$precio_total = 0;
     	$volumen_mes = [];
     	$array_precio_prom = [];
-
     	foreach ($ingredient_data as $key => $row) {
-    		if($row->amount != 0.00) array_push($volumen_mes, round($row->amount/1000, 2));
+    		array_push($volumen_mes, round($row->amount/1000, 2));
     		$volumen_total = $volumen_total + $row->amount;
 
-    		if($row->price != 0.00) array_push($array_precio_prom, $row->price);
+    		array_push($array_precio_prom, $row->price);
     		$precio_total = $precio_total + $row->price;
     	}
 

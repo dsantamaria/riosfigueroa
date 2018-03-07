@@ -450,27 +450,46 @@
                             if(dataset.data[index] != 0 && control_flow){
                                 control_flow = false;
                                 
-
                                 var fontSize = 15;
                                 var fontStyle = 'bold';
                                 var fontFamily = 'Roboto';
                                 ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
-
-                                // Just naively convert to string for now
-                                var precioPromedio = formatter.format( dataset.data[index]);
-                                var ton_tri = formatter.format(Toneladas_trimestre[i]).replace('$', '') + ' Tons';
-
-                                // Make sure alignment settings are correct
                                 ctx.textAlign = 'center';
                                 ctx.textBaseline = 'middle';
                                 var padding = 0;
                                 var position = element.tooltipPosition();
-                                var positionX = dataset.data[index] < 1 ? position.x + (10 + (precioPromedio.length*2)):  position.x - (10 + (precioPromedio.length*4));
-                                var positionX1 = Math.round(element._view.x/12.4) <= ton_tri.length ? 75 : position.x - (ton_tri.length*4);
-                                ctx.fillStyle = 'rgb(255,255,255)';
-                                ctx.fillText(precioPromedio, positionX, position.y - (fontSize / 3) - padding + 5);
-                                ctx.fillStyle = 'rgb(0, 0, 0)';
-                                ctx.fillText(ton_tri, positionX1, position.y + 33 - (fontSize / 2) - padding + 5);
+
+                                if(dataset.data[index] != 'x'){
+                                    // Just naively convert to string for now
+                                    var precioPromedio = formatter.format( dataset.data[index]);
+                                    var ton_tri = formatter.format(Toneladas_trimestre[i]).replace('$', '') + ' Tons';
+
+                                    // Make sure alignment settings are correct
+                                    var positionX = element._model.x < precioPromedio.length * 16 ? element._model.x + (precioPromedio.length/2)*8 :  position.x - (precioPromedio.length/2)*9;
+                                    ctx.fillStyle = element._model.x < precioPromedio.length * 16 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
+                                    var positionX1 = Math.round(element._view.x/12.4) <= ton_tri.length ? 75 : position.x - (ton_tri.length*4);
+                                    ctx.fillText(precioPromedio, positionX, position.y - (fontSize / 3) - padding + 5);
+                                    ctx.fillStyle = 'rgb(0, 0, 0)';
+                                    ctx.fillText(ton_tri, positionX1, position.y + 33 - (fontSize / 2) - padding + 5);
+                                    
+                                }else{
+                                    // Make sure alignment settings are correct
+                                    fontSize = 18;
+                                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
+                                    var text = 'Sin Importaciones Registradas';
+                                    var positionX;
+                                    if(isNaN(meta.data[i]._model.x)){
+                                        for(var j=i; j>=0; j--){
+                                            if(!isNaN(chart.getDatasetMeta(j).data[j]._model.x)) {
+                                                positionX = meta.data[j]._model.x - (text.length/2)*8.62; 
+                                                break;
+                                            }
+                                            else positionX = 157
+                                        }
+                                    }else positionX = meta.data[j]._model.x - (text.length/2)*8.62;
+                                    ctx.fillStyle = dataset.backgroundColor[0];/*'rgb(100, 211, 255)'  'rgb(189, 149, 243)'*/;
+                                    ctx.fillText(text, positionX, position.y + 33 - (fontSize / 2) - padding + 5);
+                                }
                             }
                         });
                     }
@@ -491,6 +510,7 @@
             t4 = [0,0,0];
 
             precio_prom_mes.forEach(function(value, key){
+                value = value == 0 ? 'x' : value;
                 if(key == 0 ) t1 = Array(trimestres).fill(value);
                 else if(key == 1) t2 = t2.concat(Array(trimestres-1).fill(value));
                 else if(key == 2) t3 = t3.concat(Array(trimestres-2).fill(value));
