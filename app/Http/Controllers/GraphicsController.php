@@ -224,7 +224,7 @@ class GraphicsController extends Controller
     }
 
     public function updateAnalysisHistoric($ingrediente_id, $year){
-    	$ingredient_data = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->get();
+    	$ingredient_data = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->orderBy('trimestre')->get();
     	Log::debug($ingredient_data);
     	$volumen_total = 0;
     	$precio_total = 0;
