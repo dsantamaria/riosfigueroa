@@ -502,8 +502,6 @@
                 datasets.data = [];
             })
 
-            console.log(precio_prom_mes, trimestres);
-
             t1 = [];
             t2 = [0];
             t3 = [0,0];
