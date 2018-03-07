@@ -225,7 +225,7 @@ class GraphicsController extends Controller
 
     public function updateAnalysisHistoric($ingrediente_id, $year){
     	$ingredient_data = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->get();
-    	
+    	Log::debug($ingredient_data);
     	$volumen_total = 0;
     	$precio_total = 0;
     	$volumen_mes = [];
@@ -237,7 +237,8 @@ class GraphicsController extends Controller
     		array_push($array_precio_prom, $row->price);
     		$precio_total = $precio_total + $row->price;
     	}
-
+    	Log::debug($volumen_mes);
+    	Log::debug($array_precio_prom);
     	$precio_total_prom = $precio_total != 0 ? round($precio_total/count($array_precio_prom), 2) : 0;
     	$volumen_total = $volumen_total != 0 ? round($volumen_total/1000, 2) : 0;
 
