@@ -235,7 +235,7 @@ class GraphicsController extends Controller
     		$volumen_total = $volumen_total + $row->amount;
 
     		array_push($array_precio_prom, $row->price);
-    		if($row->price == 0.00) $prom++;
+    		if($row->price != 0.00) $prom++;
     		$precio_total = $precio_total + $row->price;
     	}
     	$precio_total_prom = $precio_total != 0 ? round($precio_total/$prom, 2) : 0;
