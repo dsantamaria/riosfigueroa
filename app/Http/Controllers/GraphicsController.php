@@ -229,14 +229,16 @@ class GraphicsController extends Controller
     	$precio_total = 0;
     	$volumen_mes = [];
     	$array_precio_prom = [];
+    	$prom = 0;
     	foreach ($ingredient_data as $key => $row) {
     		array_push($volumen_mes, round($row->amount/1000, 2));
     		$volumen_total = $volumen_total + $row->amount;
 
     		array_push($array_precio_prom, $row->price);
+    		if($row->price == 0.00) $prom++;
     		$precio_total = $precio_total + $row->price;
     	}
-    	$precio_total_prom = $precio_total != 0 ? round($precio_total/count($array_precio_prom), 2) : 0;
+    	$precio_total_prom = $precio_total != 0 ? round($precio_total/$prom, 2) : 0;
     	$volumen_total = $volumen_total != 0 ? round($volumen_total/1000, 2) : 0;
 
     	return response()->json(array('volumen_mes' => $volumen_mes, 'volumen_total' => $volumen_total, 'precio_prom_mes' => $array_precio_prom, 'precio_total_prom' => $precio_total_prom, 'trimestres' => count($array_precio_prom)));
