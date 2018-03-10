@@ -49,7 +49,7 @@
         </div>
         <div class="row">
             <div class="col-md-12 padd-left-44" style="font-size: 15px;font-weight: bold">Precio total promedio = <span id="importaciones_precio_total">0</span> USD/kg</div>
-            <div class="col-md-12 padd-left-44" style="font-size: 15px;font-weight: bold">Importación total en el año = <span id="importaciones_volumen_total">0</span> Tons</div>
+            <div class="col-md-12 padd-left-44" style="font-size: 15px;font-weight: bold">Importación total en el año = <span id="importaciones_volumen_total">0</span></div>
         </div>
     </div>
 </div>

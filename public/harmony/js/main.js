@@ -576,9 +576,10 @@
                     type: "GET",
                     url: '/updateAnalysisHistoric/'+ ingrediente.val() + '/' + year.val(),
                     success: function( data ) {
+                        var unidad = data['unit'] == 'kilogramo' ? ' Tons' : ' Litros';
                         addData(chart, data['precio_prom_mes'], data['volumen_mes'], data['trimestres'], data['unit']);
                         $('#importaciones_precio_total').text(formatter.format(data['precio_total_prom']).replace('$', ''));
-                        $('#importaciones_volumen_total').text(formatter.format(data['volumen_total']).replace('$', ''));
+                        $('#importaciones_volumen_total').text(formatter.format(data['volumen_total']).replace('$', '') + unidad);
                     }
                 });
             }
