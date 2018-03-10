@@ -894,3 +894,14 @@ canvas{
   }
 }
 
+@media (max-width: 1780px){
+  .form-horizontal #label-historico-ingrediente-existente{
+    padding-top: 4px;
+  }
+}
+
+@media (max-width: 1630px){
+  .form-horizontal #label-historico-ingrediente-nuevo{
+    padding-top: 4px;
+  }
+

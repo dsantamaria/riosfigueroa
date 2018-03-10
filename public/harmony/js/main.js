@@ -362,6 +362,7 @@
     //##################################### Incio Graficas Analisis Importacionjes ##################################
     //###############################################################################################################
     var Toneladas_trimestre = [];
+    var Unit = '';
     var formatter = new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -443,6 +444,7 @@
 
                 chart.data.datasets.forEach(function (dataset, i) {
                     var meta = chart.getDatasetMeta(i);
+
                     var control_flow = true;
                     if (!meta.hidden) {
                         meta.data.forEach(function(element, index) {
@@ -454,7 +456,6 @@
                                 var fontStyle = 'bold';
                                 var fontFamily = 'Roboto';
                                 ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
-                                ctx.textAlign = 'center';
                                 ctx.textBaseline = 'middle';
                                 var padding = 0;
                                 var position = element.tooltipPosition();
@@ -462,31 +463,38 @@
                                 if(dataset.data[index] != 'x'){
                                     // Just naively convert to string for now
                                     var precioPromedio = formatter.format( dataset.data[index]);
-                                    var ton_tri = formatter.format(Toneladas_trimestre[i]).replace('$', '') + ' Tons';
+                                    var unidad = Unit == 'kilogramo' ? 'Tons' : 'Litros';
+                                    var ton_tri = formatter.format(Toneladas_trimestre[i]).replace('$', '') + ' ' + unidad;
 
                                     // Make sure alignment settings are correct
-                                    var positionX = element._model.x < precioPromedio.length * 16 ? element._model.x + (precioPromedio.length/2)*8 :  position.x - (precioPromedio.length/2)*9;
-                                    ctx.fillStyle = element._model.x < precioPromedio.length * 16 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
-                                    var positionX1 = Math.round(element._view.x/12.4) <= ton_tri.length ? 75 : position.x - (ton_tri.length*4);
+                                    var positionX = (element._model.x-30)/8 <= precioPromedio.length + 1 ? position.x + 5 :  position.x - 5;
+                                    ctx.textAlign = (element._model.x-30)/8 <= precioPromedio.length + 1 ? 'left' : 'right';
+                                    ctx.fillStyle = (element._model.x-30)/8 <= precioPromedio.length + 1 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
                                     ctx.fillText(precioPromedio, positionX, position.y - (fontSize / 3) - padding + 5);
+
                                     ctx.fillStyle = 'rgb(0, 0, 0)';
+                                    var positionX1 = (element._model.x-30)/8  <= ton_tri.length ? 35 : position.x;
+                                    ctx.textAlign = (element._model.x-30)/8  <= ton_tri.length ? 'left' : 'right';
                                     ctx.fillText(ton_tri, positionX1, position.y + 33 - (fontSize / 2) - padding + 5);
                                     
                                 }else{
                                     // Make sure alignment settings are correct
-                                    fontSize = 18;
-                                    ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
                                     var text = 'Sin Importaciones Registradas';
                                     var positionX;
+                                    ctx.textAlign = 'right';
                                     if(isNaN(meta.data[i]._model.x)){
                                         for(var j=i; j>=0; j--){
                                             if(!isNaN(chart.getDatasetMeta(j).data[j]._model.x)) {
-                                                positionX = meta.data[j]._model.x - (text.length/2)*8.62; 
+                                                positionX = (meta.data[j]._model.x-30)/8 <= text.length ? 35 : meta.data[j]._model.x; 
+                                                ctx.textAlign = (meta.data[j]._model.x-30)/8  <= text.length ? 'left' : 'right'; 
                                                 break;
                                             }
-                                            else positionX = 157
+                                            else {
+                                                positionX = 35;
+                                                ctx.textAlign = 'left';
+                                            }
                                         }
-                                    }else positionX = meta.data[j]._model.x - (text.length/2)*8.62;
+                                    }else positionX = (meta.data[j]._model.x-30)/8  <= text.length ? 35 : meta.data[j]._model.x; 
                                     ctx.fillStyle = dataset.backgroundColor[0];/*'rgb(100, 211, 255)'  'rgb(189, 149, 243)'*/;
                                     ctx.fillText(text, positionX, position.y + 33 - (fontSize / 2) - padding + 5);
                                 }
@@ -497,7 +505,7 @@
             }
         });
 
-        function addData(chart, precio_prom_mes, volumen_mes, trimestres) {
+        function addData(chart, precio_prom_mes, volumen_mes, trimestres, unidad) {
             chart.data.datasets.forEach(function(datasets){
                 datasets.data = [];
             })
@@ -520,6 +528,7 @@
             chart.data.datasets[2].data = t3;
             chart.data.datasets[3].data = t4;
             Toneladas_trimestre = volumen_mes;
+            Unit = unidad;
             chart.update();
         }
 
@@ -567,7 +576,7 @@
                     type: "GET",
                     url: '/updateAnalysisHistoric/'+ ingrediente.val() + '/' + year.val(),
                     success: function( data ) {
-                        addData(chart, data['precio_prom_mes'], data['volumen_mes'], data['trimestres']);
+                        addData(chart, data['precio_prom_mes'], data['volumen_mes'], data['trimestres'], data['unit']);
                         $('#importaciones_precio_total').text(formatter.format(data['precio_total_prom']).replace('$', ''));
                         $('#importaciones_volumen_total').text(formatter.format(data['volumen_total']).replace('$', ''));
                     }

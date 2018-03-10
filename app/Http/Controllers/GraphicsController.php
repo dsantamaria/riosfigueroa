@@ -230,8 +230,10 @@ class GraphicsController extends Controller
     	$volumen_mes = [];
     	$array_precio_prom = [];
     	$prom = 0;
+    	$unit = 'kilogramo';
+    	if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'kilogramo' : 'Litro';
     	foreach ($ingredient_data as $key => $row) {
-    		array_push($volumen_mes, round($row->amount/1000, 2));
+    		$ingredient_data[0]->unit == 'kilogramo' ? array_push($volumen_mes, round($row->amount/1000, 2)) : array_push($volumen_mes, $row->amount);
     		$volumen_total = $volumen_total + $row->amount;
 
     		array_push($array_precio_prom, $row->price);
@@ -239,9 +241,9 @@ class GraphicsController extends Controller
     		$precio_total = $precio_total + $row->price;
     	}
     	$precio_total_prom = $precio_total != 0 ? round($precio_total/$prom, 2) : 0;
-    	$volumen_total = $volumen_total != 0 ? round($volumen_total/1000, 2) : 0;
+    	$volumen_total = $volumen_total != 0 ? $ingredient_data[0]->unit == 'kilogramo' ? round($volumen_total/1000, 2) : $volumen_total : 0;
 
-    	return response()->json(array('volumen_mes' => $volumen_mes, 'volumen_total' => $volumen_total, 'precio_prom_mes' => $array_precio_prom, 'precio_total_prom' => $precio_total_prom, 'trimestres' => count($array_precio_prom)));
+    	return response()->json(array('volumen_mes' => $volumen_mes, 'volumen_total' => $volumen_total, 'precio_prom_mes' => $array_precio_prom, 'precio_total_prom' => $precio_total_prom, 'trimestres' => count($array_precio_prom),'unit' => $unit));
     }
 
     public function getIngredientes($categoria_id){

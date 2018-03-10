@@ -434,11 +434,13 @@ class ProductsController extends Controller
                 $data['trimestre']                      = $file_contents[$i][6] == "" ?  0  : trim($file_contents[$i][6]);
                 $data['price']                          = $file_contents[$i][7] == "" ?  0  : trim($file_contents[$i][7]);
                 $data['amount']                         = $file_contents[$i][8] == "" ?  0  : trim($file_contents[$i][8]);
+                $data['unit']                           = $request['unit'];
                 try {
                     $newProduct = Analysis_import_list::firstOrCreate($data);
                     $count++;
                 }
                 catch (\Exception $e) {
+                    Log::debug($e);
                     $error_count++;
                 }
             }
