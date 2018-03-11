@@ -1,11 +1,10 @@
-ul{
+.unset-all ul{
 	padding-left: 40px;
 }
-ul, li{
+.unset-all ul, li{
 	margin: initial;
-	padding: 20;
 	list-style: inherit;
 }
-p{
+.unset-all p{
 	margin-bottom: 10px;
 }
