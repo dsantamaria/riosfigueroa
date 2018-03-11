@@ -64,6 +64,9 @@ Route::group(['middleware' => ['auth', 'country']], function () {
     Route::get('getProducts/{category_name}/{company_id}', ['as' => 'getProducts', 'uses' => 'GraphicsController@getProducts']);
     Route::get('getIngredientes/{categoria_id}', ['as' => 'getIngredientes', 'uses' => 'GraphicsController@getIngredientes']);
     Route::get('getYears/{ingrediente_id}', ['as' => 'getYears', 'uses' => 'GraphicsController@getYears']);
+
+    //************************* HomeController *********************//
+    Route::post('SaveCustomNotes', ['as' => 'SaveCustomNotes', 'uses' => 'HomeController@SaveCustomNotes']);
 });
 
 Route::group(['middleware' => ['guest']], function () {

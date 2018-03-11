@@ -1074,4 +1074,17 @@
             }
         });
     });
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////// Inicio Custom text are tinymce ////////////////////////////////////
+    tinymce.init({
+        selector: '#custom_notes',
+        plugins : 'advlist autolink link lists charmap print preview code textcolor colorpicker emoticons fullscreen',
+        toolbar:[
+            "undo, redo, bold, italic, underline, strikethrough, bullist, numlist, outdent, indent, alignleft, aligncenter, alignright, alignjustify, link, styleselect, fontselect, fontsizeselect",
+            "blockquote, removeformat, subscript, superscript forecolor backcolor code emoticons fullscreen",
+        ],
+      });
+    ///////////////////////////////////////// Fin Custom text are tinymce ///////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
  });

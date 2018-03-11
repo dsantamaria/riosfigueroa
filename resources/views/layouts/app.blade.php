@@ -117,6 +117,7 @@
         {!! Html::script('harmony/js/Chart.bundle.min.js') !!}
         {!! Html::script('harmony/js/fileinput.js') !!}
         {!! Html::script('harmony/js/chartData.js') !!}
+        {!! Html::script('harmony/js/tinymce/tinymce.min.js') !!}
         {!! Html::script('harmony/js/main.js') !!}
     </body>
 </html>
