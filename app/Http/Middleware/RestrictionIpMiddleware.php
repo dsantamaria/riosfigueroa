@@ -6,6 +6,7 @@ use Closure;
 use Gate;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
+use Auth;
 
 class RestrictionIpMiddleware
 {
@@ -17,15 +18,12 @@ class RestrictionIpMiddleware
      * @return mixed
      */
     public function handle($request, Closure $next)
-    {
-        //return $next($request);   
-
+    { 
         if (Gate::denies('admin-role') && Gate::denies('special-role')) {
-            $client = new Client([
-                'base_uri' => 'https://freegeoip.net/json/'
-            ]);
             $request_ip = /*'201.167.64.179';*/ $request->ip();
-            $result = $client->request('GET', $request_ip)->getBody()->getContents();
+            $url = 'http://api.ipstack.com/'.$request_ip;
+            $client = new Client();
+            $result = $client->request('GET', $url, ['query' => ['access_key' => '9dae0fb37b38452f57077727af8e1873']])->getBody()->getContents();
             $country = json_decode($result, true)['country_name'];
 
             if($country != 'Mexico'){

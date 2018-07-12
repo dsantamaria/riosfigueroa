@@ -13,9 +13,9 @@
 
 Route::auth();
 
-Route::group(['middleware' => ['auth', 'country']], function () {
+Route::group(['middleware' => ['auth']], function () {
     //************************* ProductsController ******************//
-    Route::get('/', 'HomeController@index');
+    Route::get('/', 'HomeController@index')->middleware('country');
     Route::get('products/import', ['as' => 'lista_precios.import', 'uses' => 'ProductsController@import'])->middleware('admin');
     Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
     Route::get('products/analisis/{analisis}', ['as' => 'products.analisis', 'uses' => 'ProductsController@analisisProducts']);
