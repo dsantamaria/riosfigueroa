@@ -480,23 +480,9 @@
                                 }else{
                                     // Make sure alignment settings are correct
                                     var text = 'Sin Importaciones Registradas';
-                                    var positionX;
-                                    ctx.textAlign = 'right';
-                                    if(isNaN(meta.data[i]._model.x)){
-                                        for(var j=i; j>=0; j--){
-                                            if(!isNaN(chart.getDatasetMeta(j).data[j]._model.x)) {
-                                                positionX = (meta.data[j]._model.x-30)/8 <= text.length ? 35 : meta.data[j]._model.x; 
-                                                ctx.textAlign = (meta.data[j]._model.x-30)/8  <= text.length ? 'left' : 'right'; 
-                                                break;
-                                            }
-                                            else {
-                                                positionX = 35;
-                                                ctx.textAlign = 'left';
-                                            }
-                                        }
-                                    }else positionX = (meta.data[j]._model.x-30)/8  <= text.length ? 35 : meta.data[j]._model.x; 
+                                    ctx.textAlign = 'left';
                                     ctx.fillStyle = dataset.backgroundColor[0];/*'rgb(100, 211, 255)'  'rgb(189, 149, 243)'*/;
-                                    ctx.fillText(text, positionX, position.y + 33 - (fontSize / 2) - padding + 5);
+                                    ctx.fillText(text, 35, position.y);
                                 }
                             }
                         });
@@ -510,19 +496,36 @@
                 datasets.data = [];
             })
 
-            t1 = [];
-            t2 = [0];
-            t3 = [0,0];
-            t4 = [0,0,0];
+           t1 = [0,0,0,0];
+            t2 = [0,0,0,0];
+            t3 = [0,0,0,0];
+            t4 = [0,0,0,0];;
 
             precio_prom_mes.forEach(function(value, key){
-                value = value == 0 ? 'x' : value;
-                if(key == 0 ) t1 = Array(trimestres).fill(value);
-                else if(key == 1) t2 = t2.concat(Array(trimestres-1).fill(value));
-                else if(key == 2) t3 = t3.concat(Array(trimestres-2).fill(value));
-                else t4 = t4.concat(Array(trimestres-3).fill(value));
-            });
-
+                if(value != 0){
+                    if(key == 0 ) t1[0] = value;
+                    if(key == 1){
+                        t1[1] = t1[0] == 'x' ? 0 : t1[0];
+                        t2[1] = value;
+                    }
+                    if(key == 2){
+                        t1[2] = t1[0] == 'x' ? 0 : t1[0];
+                        t2[2] = t2[1] == 'x' ? 0 : t2[1];
+                        t3[2] = value;
+                    }
+                    if(key == 3){
+                        t1[3] = t1[0] == 'x' ? 0 : t1[0];
+                        t2[3] = t2[1] == 'x' ? 0 : t2[1];
+                        t3[3] = t3[2] == 'x' ? 0 : t3[2];
+                        t4[3] = value;
+                    }
+                }else{
+                    if(key == 0 ) t1[0] = 'x';
+                    if(key == 1 ) t2[1] = 'x';
+                    if(key == 2 ) t3[2] = 'x';
+                    if(key == 3 ) t4[3] = 'x';
+                }
+            })
             chart.data.datasets[0].data = t1;
             chart.data.datasets[1].data = t2;
             chart.data.datasets[2].data = t3;
@@ -531,6 +534,7 @@
             Unit = unidad;
             chart.update();
         }
+
 
         $('#analisisCategoriasHistorico').change(function(e){
             var categoria_id = $(this).val();
