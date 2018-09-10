@@ -12,6 +12,6 @@ class VerifyCsrfToken extends BaseVerifier
      * @var array
      */
     protected $except = [
-        'updateProducts',  '/products/process_import_products_analysis_category', '/products/process_import',
+        'updateProducts',  '/products/process_import_products_analysis_category', '/products/process_import', 'update_subscriber'
     ];
 }
