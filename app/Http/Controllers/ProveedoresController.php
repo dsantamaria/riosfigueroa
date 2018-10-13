@@ -9,6 +9,12 @@ use App\Http\Requests;
 
 class ProveedoresController extends Controller
 {
+
+	public function __construct()
+    {
+        $this->middleware('saveRoute:proveedores', ['only' => ['index']]);
+    }
+
     public function index()
     {
         $proveedores = Proveedores::All();

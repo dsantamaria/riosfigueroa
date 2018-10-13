@@ -31,6 +31,7 @@ class ProductsController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->middleware('saveRoute:lista_productos', ['only' => ['index']]);
     }
 
     public function index(Request $request)

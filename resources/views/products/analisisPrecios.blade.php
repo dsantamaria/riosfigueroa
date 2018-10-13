@@ -10,7 +10,7 @@
                 <label class="col-lg-4 control-label padd-top-4">Análisis Especifico</label>
                 <div class="col-lg-8">
                     {{ Form::select('analisis_especifico', [
-                        'Analísis Simples'  =>  [0 => 'Promedio general', 1 => 'Precio mínimo registrado', 2 => 'Precio máximo registrado'], 'Analísis Complejos' => [4 => 'Mediana', 5 => 'Analísis Comparativo PE/PE', 6 => 'Analísis Comparativo PE/IA'],
+                        'Analísis Simples'  =>  [0 => 'Promedio general', 1 => 'Precio mínimo registrado', 2 => 'Precio máximo registrado'], 'Analísis Complejos' => [4 => 'Mediana', 7 => 'Analísis Cuartil', 5 => 'Analísis Comparativo PE/PE', 6 => 'Analísis Comparativo PE/IA'],
                         ], 0, ['class' => 'form-control', 'id' => 'analisisEspecifico']) }}
                 </div>
             </div>
@@ -80,7 +80,7 @@
                 </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="analisisTiempoGroup">
                 <label class="col-lg-4 control-label">Tiempo</label>
                 <div class="col-lg-8">
                     {{ Form::select('tiempo', [0 => 'Ultimas 10 actualizaciones', 1 => 'Todos lo años'], 0, ['class' => 'form-control', 'id' => 'analisisTiempo']) }}
@@ -94,9 +94,14 @@
             </div>
         {!! Form::close() !!}
     </div>
-    <div class="col-lg-9 col-md-12">
+    <div class="col-lg-9 col-md-12" style="height: 600px">
         <div class="chart-container" style="position: relative;">
             <canvas id="chartAnalisisCategoria"></canvas>
+        </div>
+        <div id="bar-cuartil" class="hide" style="width: 100%; height: 100%;"></div>
+        <div id="bar-more" class="hide">
+            <div>*Todos los precios fueron proyectados a 1L.</div>
+            <div>*Los precios son reales y vigentes en el mercado</div>
         </div>
     </div>
 </div>

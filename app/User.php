@@ -32,6 +32,11 @@ class User extends Authenticatable
         return $this->hasOne('App\Pending_subscriber');
     }
 
+    public function user_logins()
+    {
+        return $this->hasMany('App\User_login');
+    }
+
     public function hasAccess(array $permissions) {
         foreach ($this->roles as $role) {
             if($role->hasAccess($permissions)){

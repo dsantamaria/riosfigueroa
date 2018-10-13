@@ -779,6 +779,10 @@ img{
 .action-desactive{
   background-color: #988d07;
 }
+
+.action-resend{
+  background-color: #2196f3;
+}
  
 .table-td-actions{
   display: flex;
@@ -906,3 +910,44 @@ canvas{
   }
 }
 
+.parent-flex{
+  display: flex !important;
+}
+
+.parent-flex i{
+  padding-top: 3px;
+}
+
+#bar-more{
+  font-weight: bold;
+  display: none;
+  text-align: right;
+}
+
+#date-login{
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+#current-date-info p{
+  color: red;
+}
+
+#current-date-info li{
+  list-style: disc;
+}
+
+.user_activity_table td:not(:first-child){
+  text-align: center;
+}
+
+.user_activity_info_table td:not(:first-child){
+  text-align: center;
+}
+
+.go-back{
+  margin-bottom: 15px;
+}

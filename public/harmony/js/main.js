@@ -1,4 +1,6 @@
- $(document).ready(function () {
+var chartBar;
+
+$(document).ready(function () {
 	 
     $.ajaxSetup({
         headers: {
@@ -54,7 +56,66 @@
             ],
          }
      } );
-	 
+
+    var table_activity = $('.user_activity_table').DataTable( {
+        "searching": false,
+        "ordering": false,
+        "responsive": true,
+         "language": {
+             "sProcessing":     "Procesando...",
+             "sLengthMenu":     "Mostrar _MENU_ registros",
+             "sZeroRecords":    "No se encontraron resultados",
+             "sEmptyTable":     "Ningún dato disponible en esta tabla",
+             "sInfo":           "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+             "sInfoEmpty":      "Mostrando registros del 0 al 0 de un total de 0 registros",
+             "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+             "sInfoPostFix":    "",
+             "sSearch":         "false",
+             "sUrl":            "",
+             "sInfoThousands":  ",",
+             "sLoadingRecords": "Cargando...",
+             "oPaginate": {
+                 "sFirst":    "Primero",
+                 "sLast":     "Último",
+                 "sNext":     "Siguiente",
+                 "sPrevious": "Anterior"
+             },
+             "oAria": {
+                 "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+             },
+         }
+     } );
+
+    var user_table_activity = $('.user_activity_info_table').DataTable( {
+        "searching": false,
+        "ordering": false,
+        "responsive": true,
+        "language": {
+             "sProcessing":     "Procesando...",
+             "sLengthMenu":     "Mostrar _MENU_ registros",
+             "sZeroRecords":    "No se encontraron resultados",
+             "sEmptyTable":     "Ningún dato disponible en esta tabla",
+             "sInfo":           "",
+             "sInfoEmpty":      "",
+             "sInfoFiltered":   "(filtrado de un total de _MAX_ registros)",
+             "sInfoPostFix":    "",
+             "sSearch":         "false",
+             "sUrl":            "",
+             "sInfoThousands":  ",",
+             "sLoadingRecords": "Cargando...",
+             "oPaginate": {
+                 "sFirst":    "Primero",
+                 "sLast":     "Último",
+                 "sNext":     ">",
+                 "sPrevious": "<"
+             },
+             "oAria": {
+                 "sSortAscending":  ": Activar para ordenar la columna de manera ascendente",
+                 "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+             },
+         }
+     } );
 	 
 	 $("#input-1").fileinput({
         showPreview: false,
@@ -74,6 +135,52 @@
         uploadAsync: false,
         msgInvalidFileExtension: "Archivo invalido, solo son validos archivos con extension JPG, PNG, JPEG",
         showUpload: false
+    });
+    /*
+    $(window).on('unload', function(){
+        $.ajax({
+            type: 'GET',
+            url: '/updateTimer',
+        });
+    });*/
+    setInterval(function(){
+         $.ajax({
+            type: 'GET',
+            url: '/updateTimer',
+        });
+     }, 300000);
+
+    $('body').on('click', '.resend-request', function(){
+        let email = $(this).attr('email');
+        $.ajax({
+            type: 'POST',
+            data: {
+                'email': email,
+                'panel': true
+            },
+            url: '/sendSubscriptionEmail',
+            success: function(data){
+                if(data['success'] == undefined){
+                    $('.messages-resend').append(`
+                        <div class="row">
+                            <div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">
+                                <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
+                                <strong>Email enviado con exito a ${email}</strong>
+                            </div>
+                        </div>
+                    `)
+                }else{
+                    $('.messages-resend').append(`
+                        <div class="row">
+                            <div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">
+                                <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
+                                <strong>${data['error']}</strong>
+                            </div>
+                        </div>
+                    `)
+                }
+            }
+        });
     });
 
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -602,6 +709,59 @@
     //##############################################################################################################
     //##################################### Incio Graficas Analisis Precios ########################################
     //##############################################################################################################
+
+    //inicializacion de la grafica tipo bar para los cuartiles
+
+    AmCharts.ready(function () {
+    // PIE CHART
+        chartBar = new AmCharts.AmSerialChart();
+        chartBar.balloon = {
+            "fillAlpha": 1
+        };
+        chartBar.categoryField = "title",
+        chartBar.chartCursor = {
+            "oneBalloonOnly": true,
+        };
+        chartBar.chartScrollbar = {
+            "updateOnReleaseOnly": true,
+            "dragIconWidth": 25,
+            "dragIconHeight": 25,
+            "scrollbarHeight": 10,
+        };
+        
+        chartBar.creditsPosition = "top-right";
+        chartBar.dataProvider = [];
+        chartBar.fontFamily = "Roboto, Helvetica Neue, Helvetica, Arial, sans-serif";
+
+        chartBar.listeners = [{
+            "event": "dataUpdated",
+            "method": function(e){
+                e.chart.zoomToIndexes(0, 25);
+            }
+        }];
+        chartBar.mouseWheelScrollEnabled = true;
+
+        chartBar.rotate =  true;
+        chartBar.startAlpha = 0.8;
+        chartBar.startDuration = 0.5;
+        chartBar.startEffect = "easeOutSine";
+
+        chartBar.titles = [{
+            "text": "Analísis Cuartiles",
+            "size": 13,
+            "bold": false
+        }];
+
+        chartBar.type = "serial";
+        chartBar.valueAxes = [{
+            'includeAllValues': true,
+        }];
+
+        chartBar.zoomOutText = "";
+        
+        chartBar.write('bar-cuartil');
+    });
+
     if(document.getElementById('chartAnalisisCategoria') !== null){
         var tooltip_option = 1;
         var ctx = document.getElementById('chartAnalisisCategoria').getContext('2d');
@@ -872,13 +1032,15 @@
             var category_name = $('#analisisCategorias').val();
             var product_select = $('#analisisProductoSelect');
             var ingrediente_select = $('#analisisIngredienteSelect');
+            var analisis_especifico = $('#analisisEspecifico').val();
             product_select.empty();
             ingrediente_select.empty();
             product_select.append($('<option></option>').attr('value', 'empty').text(''));
             ingrediente_select.append($('<option></option>').attr('value', 'empty').text(''));
+            tmp_url = analisis_especifico != 7 ? '/getProducts/'+ category_name +'/'+ company_id : '/getIngredientsForCuartiles/'+ category_name +'/'+ company_id;
             $.ajax({
                 type: "GET",
-                url: '/getProducts/'+ category_name +'/'+ company_id,
+                url: tmp_url,
                 success: function( data ) {
                     data['products'].forEach(function(e){
                         product_select.append($('<option></option>').attr('value', e).text(e));
@@ -915,23 +1077,35 @@
 
         $('#analisisEspecifico').change(function(){
             var analisis = $(this).val();
+            $('#bar-cuartil, #bar-more').addClass('hide');
+            $('.chart-container, #analisisTiempoGroup').removeClass('hide');
+            $('#analisisTipo, #analisisCompany').attr('disabled', false);
             if(analisis == 5){
-                $('#analisisCompanyG2, #analisisProducto2, #analisisProducto, #categoria2').fadeIn();
+                $('#analisisCompanyG2, #analisisProducto2, #analisisProducto, #categoria2').removeClass('hide').fadeIn();
                 $('#analisisTipo').val('producto');
                 $('#analisisTipoG, #analisisIngrediente, #analisisIngrediente2').fadeOut();
             }else if(analisis == 6){
-                $('#analisisCompanyG2, #analisisProducto, #analisisIngrediente2, #categoria2').fadeIn();
+                $('#analisisCompanyG2, #analisisProducto, #analisisIngrediente2, #categoria2').removeClass('hide').fadeIn();
                 $('#analisisTipo').val('producto');
                 $('#analisisTipoG, #analisisIngrediente, #analisisProducto2').fadeOut();
+            }else if(analisis == 7){
+                chartBar.dataProvider = [{'value': 0, 'title': 'product'}];
+                chartBar.validateData();
+                chartBar.animateAgain();
+                $('#analisisCompanyG2, #analisisProducto2, #categoria2, #analisisIngrediente2, #analisisTiempoGroup, .chart-container').addClass('hide');
+                $('#bar-cuartil, #bar-more, #analisisTipoG').removeClass('hide').fadeIn();
+                $('#analisisTipo').val("ingrediente").attr('disabled', 'disabled').trigger('change');
+                $('#analisisCompany').attr('disabled', 'disabled');
             }else{
                 $('#analisisCompanyG2, #analisisProducto2, #categoria2, #analisisIngrediente2').fadeOut();
                 $('#analisisTipoG').fadeIn();
             }
+            $('#analisisCompany').val("todas").trigger('change');
         })
 
         $('#update-graphic-precio').click(function(e){
             e.preventDefault();
-            var category_id = 2;
+            var category_name = $('#analisisCategorias').val();
             var analisis_especifico = $('#analisisEspecifico').val();
             var tipo_analisis = $('#analisisTipo').val();
             var producto_ingrediente = tipo_analisis == "producto" ? $('#analisisProductoSelect') : $('#analisisIngredienteSelect');
@@ -953,7 +1127,7 @@
             if(producto_ingrediente.val() == 'empty' || compania.val() == 'empty') return;
             $.ajax({
                 type: "GET",
-                url: '/updateAnalysisPrice/'+ category_id +'/'+ analisis_especifico +'/'+ tipo_analisis +'/'+ encodeURIComponent(producto_ingrediente.val()) +'/'+ compania.val() +'/'+ tiempo +'/'+ encodeURIComponent(producto_ingrediente2.val()) +'/'+ compania2.val(),
+                url: '/updateAnalysisPrice/'+ category_name +'/'+ analisis_especifico +'/'+ tipo_analisis +'/'+ encodeURIComponent(producto_ingrediente.val()) +'/'+ compania.val() +'/'+ tiempo +'/'+ encodeURIComponent(producto_ingrediente2.val()) +'/'+ compania2.val(),
                 success: function( data ) {
                     data['values'] = data['values'].map(function(e){
                         return e == 'NaN' ? NaN : e;
@@ -961,8 +1135,58 @@
                     data['values2'] = data['values2'].map(function(e){
                         return e == 'NaN' ? NaN : e;
                     })
-                    if(data['dates'] != []){
+                    if(data['dates'].length > 0){
                         addData(chart, data['dates'], [data['values'], data['values2']],);
+                    }
+
+                    if(data['cuartiles'] != undefined){
+                        chartBar.addLegend({
+                            "fontSize": 12,
+                            "data": [
+                                {
+                                    "title": "Cuartil 1",
+                                    "color": data['colors'][0],
+                                },
+                                {
+                                    "title": "Cuartil 2",
+                                    "color": data['colors'][1],
+                                },
+                                {
+                                    "title": "Cuartil 3",
+                                    "color": data['colors'][2],
+                                },
+                                {
+                                    "title": "Cuartil 4",
+                                    "color": data['colors'][3],
+                                },
+                            ],
+                        });
+                        chartBar.graphs = [{
+                            "type": 'column',
+                            "title": "cuartil",
+                            "valueField": 'value',
+                            "fillAlphas": 0.8,
+                            "fillColorsField": "color",
+                            "labelText": "$[[value]] - [[companie]]",
+                            "labelOffset": 5,
+                            "fontSize": 12,
+                            "balloonText": "[[companie]]",
+                            "showAllValueLabels": false,
+                            "lineColor": data['colors'][3],
+                            "labelFunction": function(item, label){
+                                if(item.dataContext.title == ""){
+                                    item.alpha = 0;
+                                    item.serialDataItem.x = false;
+                                    return '';
+                                }
+                                return label;
+                                  
+                            }
+                        }];
+                        chartBar.dataProvider = data['cuartiles'] != false ? data['cuartiles'] : [{'value': 0, 'title': 'product'}];
+                        chartBar.validateData();
+                        chartBar.animateAgain();
+                        if(data['cuartiles'] == false) alert('No hay sufuciente data para realizar un Analísis Cuartil de este Ingrediente');
                     }
                 }
             });
@@ -1097,4 +1321,30 @@
       });
     ///////////////////////////////////////// Fin Custom text are tinymce ///////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    ///////////////////////////////////////////// Inicio User Activity //////////////////////////////////////////
+
+    $('body').on('click', '.date-in-info', function(){
+        let id = $(this).attr('id');
+        let date = $(this).text();
+        $('#current-date-info').empty();
+        $.ajax({
+            type: "GET",
+            url: '/getDateInfo/'+ id,
+            success: function( data ) {
+                if(data['date_routes'].length == 0) $('#current-date-info').append('<p>No se usaron herramientas en esta sesión</p>');
+                $('#date-login').text(date);
+                data['date_routes'].forEach(function(e){
+                    $('#current-date-info').append(`<li> ${e['route']['route']}</li>`);
+                });
+            }
+        });
+    });
+
+    ////////////////////////////////////////////// Fin User Activity ////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////////////////////////////////////////////
  });
+
+

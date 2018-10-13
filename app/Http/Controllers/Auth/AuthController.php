@@ -4,12 +4,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\User;
 use App\Role;
+use App\User_login;
 use Validator;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Auth;
+use Gate;
+use Log;
 class AuthController extends Controller
 {
     /*
@@ -84,6 +87,9 @@ class AuthController extends Controller
             $this->logout();
             $request->session()->flush();
             return redirect('/login')->with('warning', 'El usuario aun no esta activo');
+        }
+        if (Gate::denies('admin-role')){
+            User_login::save_login($user);
         }
 
         $previous_session = $user->session_id;

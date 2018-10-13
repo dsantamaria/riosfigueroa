@@ -16,11 +16,12 @@
         {!! Html::style('harmony/css/fileinput.min.css') !!}
         {!! Html::style('harmony/css/awesome-bootstrap-checkbox.css') !!}
         {!! Html::style('harmony/css/style.css') !!}
+        {!! Html::style('harmony/css/responsive.dataTable.min.css') !!}
     </head>
 
     <body oncopy='return false' oncut='return false' class="hidden-print">
         <div class="brand clearfix">
-            <a href="/" class="logo fixlogo">Sistema de Manejo de Precios</a>
+            <a href="/" class="logo fixlogo">Sistema de Información</a>
             <span class="menu-btn">
                 <i class="fa fa-bars"></i>
             </span>
@@ -44,7 +45,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#" class="parent"><i class="fa fa-pie-chart"></i>Análisis por Categoría</a>
+                            <a href="#" class="parent parent-flex"><i class="fa fa-pie-chart"></i><div>Análisis del Mercado Mexicano</div></a>
                             <ul>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'insecticidas']) }}">Insecticidas</a></li>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'herbicidas']) }}">Herbicidas</a></li>
@@ -71,7 +72,9 @@
                                     <li><a href="{{ route('gestionListasAnalisisPrecios') }}">Gestión de Listas para Análisis de Precios</a></li>
                                     <li><a href="{{ route('import_analysis_historic_lists') }}">Importar Archivos para Análisis de Importaciones</a></li>
                                     <li><a href="{{ route('gestionListasAnalisisHistoricos') }}">Gestión de Listas para Análisis de Importaciones</a></li>
+                                    <li><a href="{{ route('market_value') }}">Importar Archivos para Análisis del Valor del Mercado</a></li>
                                     <li><a href="{{ route('uploadImage') }}">Subir Imagen</a></li>
+                                    <li><a href="{{ route('user_activity.index') }}">Panel de Actividad por Usuario</a></li>
                                 </ul>
                             </li>
                         @endcan
@@ -113,10 +116,15 @@
         {!! Html::script('harmony/js/bootstrap.min.js') !!}
         {!! Html::script('harmony/js/jquery.dataTables.min.js') !!}
         {!! Html::script('harmony/js/dataTables.bootstrap.min.js') !!}
+        {!! Html::script('harmony/js/dataTable.responsive.min.js') !!}
         {!! Html::script('harmony/js/Chart.bundle.min.js') !!}
         {!! Html::script('harmony/js/fileinput.js') !!}
         {!! Html::script('harmony/js/chartData.js') !!}
         {!! Html::script('harmony/js/tinymce/tinymce.min.js') !!}
+        {!! Html::script('harmony/js/amchart/amcharts.js') !!}
+        {!! Html::script('harmony/js/amchart/serial.js') !!}
+        {!! Html::script('harmony/js/amchart/animate.min.js') !!}
+        {!! Html::script('harmony/js/amchart/responsive.min.js') !!}
         {!! Html::script('harmony/js/main.js') !!}
     </body>
 </html>

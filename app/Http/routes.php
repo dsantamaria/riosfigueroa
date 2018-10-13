@@ -17,7 +17,7 @@ Route::group(['middleware' => ['auth']], function () {
     //************************* ProductsController ******************//
     Route::get('/', 'HomeController@index')->middleware('country');
     Route::get('products/import', ['as' => 'lista_precios.import', 'uses' => 'ProductsController@import'])->middleware('admin');
-    Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts']);
+    Route::get('products/search', ['as' => 'products.search', 'uses' => 'ProductsController@searchProducts'])->middleware('saveRoute:buscar_productos');
     Route::get('products/analisis/{analisis}', ['as' => 'products.analisis', 'uses' => 'ProductsController@analisisProducts']);
     Route::get('products/import_products_analysis_category', ['as' => 'import_products_analysis_category', 'uses' => 'ProductsController@importProductsAnalysisCategory'])->middleware('admin');
     Route::get('products/import_analysis_historic_lists', ['as' => 'import_analysis_historic_lists', 'uses' => 'ProductsController@importAnalysisHistoricLists'])->middleware('admin');
@@ -59,14 +59,25 @@ Route::group(['middleware' => ['auth']], function () {
     
     
     //************************* GraphicsController ******************//
-    Route::get('updateAnalysisPrice/{category_id}/{analisis_especifico}/{tipo_analisis}/{producto_ingrediente}/{compania}/{tiempo}/{producto_ingrediente2}/{compania2}', ['as' => 'updateAnalysisPrice', 'uses' => 'GraphicsController@updateAnalysisPrice']);
-    Route::get('updateAnalysisHistoric/{id}/{year}', ['as' => 'updateAnalysisHistoric', 'uses' => 'GraphicsController@updateAnalysisHistoric']);
+    Route::get('updateAnalysisPrice/{category_id}/{analisis_especifico}/{tipo_analisis}/{producto_ingrediente}/{compania}/{tiempo}/{producto_ingrediente2}/{compania2}', ['as' => 'updateAnalysisPrice', 'uses' => 'GraphicsController@updateAnalysisPrice'])->middleware('saveRoute:precios');
+    Route::get('updateAnalysisHistoric/{id}/{year}', ['as' => 'updateAnalysisHistoric', 'uses' => 'GraphicsController@updateAnalysisHistoric'])->middleware('saveRoute:importaciones');
     Route::get('getProducts/{category_name}/{company_id}', ['as' => 'getProducts', 'uses' => 'GraphicsController@getProducts']);
+    Route::get('getIngredientsForCuartiles/{category_name}/{company_id}', ['as' => 'getIngredientsForCuartiles', 'uses' => 'GraphicsController@getIngredientsForCuartiles']);
     Route::get('getIngredientes/{categoria_id}', ['as' => 'getIngredientes', 'uses' => 'GraphicsController@getIngredientes']);
     Route::get('getYears/{ingrediente_id}', ['as' => 'getYears', 'uses' => 'GraphicsController@getYears']);
 
     //************************* HomeController *********************//
     Route::post('SaveCustomNotes', ['as' => 'SaveCustomNotes', 'uses' => 'HomeController@SaveCustomNotes']);
+
+
+    //************************* MarketValueController *********************//
+    Route::get('market_value', ['as' => 'market_value', 'uses' => 'MarketValueController@market_value'])->middleware('admin');
+    Route::post('market_import', ['as' => 'market_import', 'uses' => 'MarketValueController@market_import'])->middleware('admin');
+
+    //************************* UserActivityController *********************//
+    Route::get('user_activity/index', ['as' => 'user_activity.index', 'uses' => 'UserActivityController@index'])->middleware('admin');
+    Route::get('user_activity/userInfo/{id}', ['as' => 'user_activity.userInfo', 'uses' => 'UserActivityController@userInfo'])->middleware('admin');
+    Route::get('getDateInfo/{id}', ['as' => 'getDateInfo', 'uses' => 'UserActivityController@getDateInfo'])->middleware('admin');
 });
 
 Route::group(['middleware' => ['guest']], function () {
@@ -77,6 +88,7 @@ Route::group(['middleware' => ['guest']], function () {
 });
 
 Route::get('errorCountry', ['as' => 'errorCountry', 'uses' => 'HomeController@errorCountry']);
+Route::get('updateTimer', ['as' => 'updateTimer', 'uses' => 'UserActivityController@updateTimer']);
 
 
 \DB::connection("mysql")->enableQueryLog();

@@ -7,6 +7,7 @@ use Gate;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Client;
 use Auth;
+use App\User_login;
 
 class RestrictionIpMiddleware
 {
@@ -27,6 +28,7 @@ class RestrictionIpMiddleware
             $country = json_decode($result, true)['country_name'];
 
             if($country != 'Mexico'){
+                User_login::where('user_id', Auth::user()->id)->where('status', 'open')->delete();
                 return redirect()->action('HomeController@errorCountry');
             }
         }

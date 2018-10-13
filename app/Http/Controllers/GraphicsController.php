@@ -18,7 +18,7 @@ use App\Http\Requests;
 class GraphicsController extends Controller
 {
 
-	public function updateAnalysisPrice($category_id, $analisis_especifico, $tipo_analisis, $producto_ingrediente, $compania, $tiempo, $producto_ingrediente2, $compania2){
+	public function updateAnalysisPrice($category_name, $analisis_especifico, $tipo_analisis, $producto_ingrediente, $compania, $tiempo, $producto_ingrediente2, $compania2){
 
     	/******* $tiempo ********/
 		/* 	0 = Ultimas 10 actualizaciones
@@ -33,7 +33,18 @@ class GraphicsController extends Controller
 			4 = mediana
 			5 = analisis comparativo PE/PE
 			6 = analisis comparativo PE/IA
+			7 = analisis cuartiles
 		*/
+
+		if($analisis_especifico == 7){
+			$ing_cuartiles = Products::getIngredients($producto_ingrediente, 'ingrediente', $compania);
+			$precios = [];
+			foreach ($ing_cuartiles as $value) {
+				array_push($precios, $value->precio_por_medida);
+			}
+			$cuartiles = $this->analisisCuartil($ing_cuartiles, $precios, $category_name);
+			return response()->json(array('dates' => [], 'values' => [], 'values2' => [], 'cuartiles' => $cuartiles['array_merge'], 'colors' => $cuartiles['colors']));
+    	}
 
     	$fechas_productos = Analysis_category_price::getDatesAndProducts($producto_ingrediente, $tipo_analisis, $compania);
     	$fechas_productos_2 = [];
@@ -254,5 +265,139 @@ class GraphicsController extends Controller
     public function getYears($ingrediente_id){
     	$years = Analysis_import_list::where('analysis_import_ingredient_id', $ingrediente_id)->orderBy('year', 'asc')->pluck('year')->unique()->values()->all();
     	return response()->json(array('years' => $years));
+    }
+
+
+    public function getIngredientsForCuartiles($category_name, $company_id){
+    	$proveedor = $company_id == "todas" ? '%' : $company_id;
+    	if($category_name == "Otros"){
+    		$ingredient_name = Products::whereNotIn('tipo_producto', ['herbicida', 'insecticida', 'fungicida'])
+    												->where('proveedor_id', 'like', $proveedor)
+			    									->where('ingrediente_activo', '!=', '-')
+			    									->orderBy('ingrediente_activo', 'asc')->pluck('ingrediente_activo')->unique()->values()->all();
+    	}else{
+    		$ingredient_name = Products::where('tipo_producto', $category_name)
+    												->where('proveedor_id', 'like', $proveedor)
+			    									->where('ingrediente_activo', '!=', '-')
+			    									->orderBy('ingrediente_activo', 'asc')->pluck('ingrediente_activo')->unique()->values()->all();
+		}
+
+		$final_ingredients = [];
+		foreach ($ingredient_name as $value) {
+			$current_ingredient = Products::where('ingrediente_activo', '=', $value)->pluck('precio_por_medida')->unique()->values()->all();
+			if(count($current_ingredient) > 4) array_push($final_ingredients, $value);
+		}
+
+    	return response()->json(array('products' => [], 'ingredients' => $final_ingredients));
+    }
+
+    public function analisisCuartil($data_cuartil, $precios, $category_name){
+    	/*
+			all_data = [
+				[
+					'title' => 'cuartil 1',
+					'value' => 10,
+					'companie' => "c1"]
+				],
+				[
+					'cuartil' => 'cuartil 2',
+					'value' => 4,
+				]...
+			]
+    	*/
+
+		$total = count($precios);
+		if($total < 4) return false;
+		//calculo del primer valor cuartil
+		$q1 = (($total+1)/4)-1;
+		if(is_float($q1)){
+			$tmp = ($precios[floor($q1 + 1)] - $precios[floor($q1)])*($q1-floor($q1));
+			$first_cuartil = $tmp + $precios[floor($q1)];
+		}else{
+			$first_cuartil = $precios[$q1];
+		}
+
+		//calculo del segundo valor cuartil
+		$q2 = (($total+1)/2)-1;
+		if(is_float($q2)){
+			$tmp = $precios[floor($q2)] + $precios[floor($q2) + 1];
+			$second_cuartil = $tmp/2;
+		}else{
+			$second_cuartil = $precios[$q2];
+		}
+
+		//calculo del tercer valor cuartil
+		$q3 = ((3*($total+1))/4)-1;
+		if(is_float($q3)){
+			$tmp = ($precios[floor($q3 + 1)] - $precios[floor($q3)])*($q3-floor($q3));
+			$third_cuartil = $tmp + $precios[floor($q3)];
+		}else{
+			$third_cuartil = $precios[$q3];
+		}
+
+		//se separan los cuartiles para simplificar la creacion de la estructura
+		$first = [];
+		$second = [];
+		$third = [];
+		$four = [];
+
+		foreach ($precios as $key => $value) {
+			if($first_cuartil >= $value) array_push($first, $data_cuartil[$key]);
+			else if($second_cuartil >= $value) array_push($second, $data_cuartil[$key]);
+			else if($third_cuartil >= $value) array_push($third, $data_cuartil[$key]);
+			else array_push($four, $data_cuartil[$key]);
+		}
+
+		//se especifican los colores dependiendo del tipo de categoria
+		$color_1 = '';
+		$color_2 = '';
+		$color_3 = '';
+		$color_4 = '';
+
+		if($category_name == "Insecticida"){
+			$color_1 = '#fdd1c3';
+			$color_2 = '#ff7f58';
+			$color_3 = '#ff3c00';
+			$color_4 = '#b52c02';
+		}else if($category_name == "Herbicida"){
+			$color_1 = '#cfffd1';
+			$color_2 = '#66ff6c';
+			$color_3 = '#04b10b';
+			$color_4 = '#013503';
+		}else if($category_name == "Fungicida"){
+			$color_1 = '#faddff';
+			$color_2 = '#e886ff';
+			$color_3 = '#9e03b9';
+			$color_4 = '#440050';
+		}else{
+			$color_1 = '#fffad1';
+			$color_2 = '#f9df00';
+			$color_3 = '#ccb700';
+			$color_4 = '#716601';
+		}
+
+		//se arma la estructura final
+		$formatted_q1 = $this->set_cuartiles($first, $color_1);
+		$formatted_q2 = $this->set_cuartiles($second, $color_2);
+		$formatted_q3 = $this->set_cuartiles($third, $color_3);
+		$formatted_q4 = $this->set_cuartiles($four, $color_4);
+
+		$array_merge = array_merge($formatted_q1, $formatted_q2, $formatted_q3, $formatted_q4, array(['title' => '', 'value' => end($precios)*1.5, 'companie' => "", 'color' => '#ffffff']));
+
+		return array('array_merge' => $array_merge, 'colors' => array($color_1, $color_2, $color_3, $color_4));
+    }
+
+    public function set_cuartiles($cuartil, $color){
+    	$data = [];
+    	foreach($cuartil as $key => $value) {
+    		if($value->precio_por_medida == 0) continue;
+			$tmp = [];
+			$tmp['title'] = $value->nombre_producto;
+			$tmp['value'] = $value->precio_por_medida;
+			$tmp['companie'] = $value->proveedores->nombre_proveedor;
+			$tmp['color'] = $color;
+			array_push($data, $tmp);
+		}
+		return $data;
     }
 }

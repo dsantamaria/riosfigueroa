@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Log;
 
 class Products extends Model
 {
@@ -68,5 +69,18 @@ class Products extends Model
     public static function findByCategory($category = null)
     {
         
+    }
+
+    public static function getIngredients($producto_ingrediente, $tipo_analisis, $compania){
+        $proveedor = $compania == "todas" ? '%' : $compania; 
+        $fechas_productos = self::where('ingrediente_activo', '=', $producto_ingrediente)
+                                ->where('proveedor_id', 'like', $proveedor)->get();
+
+        $fechas_productos = $fechas_productos->map(function($item, $key){
+                                $item->precio_por_medida = intval($item->precio_por_medida);
+                                return $item;
+                            });
+
+        return $fechas_productos->sortBy('precio_por_medida')->values()->all();
     }
 }

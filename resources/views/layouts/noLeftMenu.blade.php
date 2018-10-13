@@ -20,7 +20,7 @@
 
     <body oncopy='return false' oncut='return false' class="hidden-print">
         <div class="brand clearfix">
-            <a href="#" class="logo">Sistema de Manejo de Precios</a>
+            <a href="#" class="logo">Sistema de Información</a>
             @if (Auth::check())
                 <ul class="ts-profile-nav">
                     <li><a href="{{ url('/logout') }}">Cerrar Sesión</a></li>

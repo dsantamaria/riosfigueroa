@@ -41,6 +41,8 @@ class SubscribersController extends Controller
     	$this->validate($request, [
     		'email' => 'required'
     	]);
+
+        $reques_from_subscriber_panel = isset($request['panel']);
     	
     	$email = $request['email'];
 
@@ -87,9 +89,10 @@ class SubscribersController extends Controller
 	        });
     	}catch(\Exception $e){
     		DB::rollback();
+            if($reques_from_subscriber_panel) return response()->json(array('error' => 'Ocurrio un error al enviar el email a '. $email . '. Por favor intente de nuevo'));
     		return back()->with('warning','Ocurrio un error al enviar el email a '. $email . '. Por favor intente de nuevo');
     	}
-
+        if($reques_from_subscriber_panel) return response()->json(array('success' => 'Email enviado con exito a '. $email));
         return back()->with('success','Email enviado con exito a '. $email);
     }
 
@@ -129,7 +132,7 @@ class SubscribersController extends Controller
 
     public function list_active_user(){
 
-    	$users = User::where([['email', '!=', 'super@super.com'], ['email', '!=', 'admin@admin.com'], ['password', '!=', '']])->get();
+    	$users = User::where([['email', '!=', 'super@super.com'], ['email', '!=', 'admin@admin.com']])->get();
     	return view('subscribers.list_active_user')->with('users', $users);
     }
 

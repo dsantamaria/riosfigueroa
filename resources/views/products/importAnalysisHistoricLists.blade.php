@@ -47,7 +47,7 @@
                         <div class="form-group">
                             <label class="col-md-2 control-label">Año</label>
                             <div class="col-md-10">
-                                {{ Form::select('year', [2016 => '2016', 2017 => '2017', 2018 => '2018', 2019 => '2019', 2020 => '2020', 2021 => '2021', 2022 => '2022', 2023 => '2023'], '2018', ['class' => 'form-control', 'required' => 'required']) }}
+                                {{ Form::select('year', [2015 => '2015', 2016 => '2016', 2017 => '2017', 2018 => '2018', 2019 => '2019', 2020 => '2020', 2021 => '2021', 2022 => '2022', 2023 => '2023'], '2018', ['class' => 'form-control', 'required' => 'required']) }}
                             </div>
                         </div>
 

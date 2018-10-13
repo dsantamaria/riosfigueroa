@@ -19,7 +19,8 @@ class Analysis_category_price extends Model
 
     	$fechas_productos = self::with(['analysis_prices_products' => function($query) use ($producto_ingrediente, $producto_ingrediente_analisis, $proveedor){
     		$query->where($producto_ingrediente_analisis, '=', $producto_ingrediente)
-		    	  ->where('proveedor_id', 'like', $proveedor);
+		    	  ->where('proveedor_id', 'like', $proveedor)
+                  ->orderBy('precio_por_medida', 'asc');
     	}])->orderBy('date_list', 'desc')->get();
 
     	return $fechas_productos;
