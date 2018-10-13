@@ -160,7 +160,7 @@ $(document).ready(function () {
             },
             url: '/sendSubscriptionEmail',
             success: function(data){
-                if(data['success'] == undefined){
+                if(data['success'] != undefined){
                     $('.messages-resend').append(`
                         <div class="row">
                             <div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">
