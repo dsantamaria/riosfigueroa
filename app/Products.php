@@ -77,7 +77,8 @@ class Products extends Model
                                 ->where('proveedor_id', 'like', $proveedor)->get();
 
         $fechas_productos = $fechas_productos->map(function($item, $key){
-                                $item->precio_por_medida = intval($item->precio_por_medida);
+                                $precio_por_medida = ltrim($item->precio_por_medida, '$');
+                                $item->precio_por_medida = intval($precio_por_medida);
                                 return $item;
                             });
 
