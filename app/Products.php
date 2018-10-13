@@ -78,7 +78,7 @@ class Products extends Model
 
         $fechas_productos = $fechas_productos->map(function($item, $key){
                                 $precio_por_medida = ltrim($item->precio_por_medida, '$');
-                                $item->precio_por_medida = intval($precio_por_medida);
+                                $item->precio_por_medida = floatval(str_replace(',', "", $precio_por_medida));
                                 return $item;
                             });
 
