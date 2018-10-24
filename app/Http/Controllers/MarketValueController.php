@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Input;
 use App\Http\Requests;
 use App\Market_value;
 use Excel;
+use DB;
 use Log;
 
 class MarketValueController extends Controller
@@ -21,6 +22,7 @@ class MarketValueController extends Controller
     {
         try {
             $file_contents = Excel::load(Input::file('input-1'), 'iso-8859-1')->noHeading()->get();
+            DB::table('market_values')->delete();
         } catch (\Exception $e) {
             \Session::flash('error', $e->getMessage());
             return redirect(route('products.index'));
@@ -30,11 +32,13 @@ class MarketValueController extends Controller
 
             $data = array();
             $errors = [];
+            $total = 0;
 
             foreach($file_contents as $key => $row)
             {	
             	if($key < 3) continue;
             	if($row[0] == null) break;
+                $total = $total + 1;
 
                 $data['year']             = $row[0]   == "" ? 0 : $row[0];
                 $data['pro_insecticida']  = $row[1]   == "" ? 0 : $row[1];
@@ -53,13 +57,58 @@ class MarketValueController extends Controller
                     $newProduct = Market_value::firstOrCreate($data);
                 }
                 catch (\Exception $e) {
-                    $errors = ['año' => $row[0], 'error_msg' => $e->getMessage()];
+                    $errors = ['year' => $row[0], 'error_msg' => $e->getMessage()];
                 }
             }
         }
         \Session::Flash('success', 'Archivo importado correctamente.');
+
+        return view('market.postImport',
+            [   'total_count'=> $total,
+                'error_count' => count($errors),
+                'errors' => $errors
+            ]);
         return;
 
         return view('products.postimport', ['errors'=> $errors]);
 	}
+
+    public function index(){
+        $years = Market_value::getYears();
+        return view('market.index')->with(['years' => $years]);
+    }
+
+    public function market_update(Request $request){
+        /*
+            Tipo de analisis
+            0 = mercado total
+            1 = mercado por sector
+            2 = mercado por asociacion
+            3 = analisis comparativo
+        */
+        $year = $request['year'];
+        $tipo_analisis = $request['tipo_analisis'];
+        $all_data = [];
+        $chartData = [];
+        switch ($tipo_analisis) {
+            case 0:
+                $chartData = Market_value::data_from_all_years();
+                $all_data['exchange'] = 0;
+                break;
+            case 1:
+                $all_data = Market_value::data_from_specific_year($year, $tipo_analisis);
+                $chartData = $all_data['all_data'];
+                break;
+            case 2:
+                $all_data = Market_value::data_from_specific_year($year, $tipo_analisis);
+                $chartData = $all_data['all_data'];
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        return response()->json(array('chartData' => $chartData, 'exchange' => $all_data['exchange']));
+    }
 }

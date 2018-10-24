@@ -47,6 +47,9 @@
                         <li>
                             <a href="#" class="parent parent-flex"><i class="fa fa-pie-chart"></i><div>Análisis del Mercado Mexicano</div></a>
                             <ul>
+                                @can('admin-role')
+                                    <li><a href="{{ route('market.index') }}">Análisis del Mercado</a></li>
+                                @endcan
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'insecticidas']) }}">Insecticidas</a></li>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'herbicidas']) }}">Herbicidas</a></li>
                                 <li><a href="{{ route('products.analisis' , ['analisis' => 'fungicidas']) }}">Fungicidas</a></li>
@@ -123,6 +126,7 @@
         {!! Html::script('harmony/js/tinymce/tinymce.min.js') !!}
         {!! Html::script('harmony/js/amchart/amcharts.js') !!}
         {!! Html::script('harmony/js/amchart/serial.js') !!}
+        {!! Html::script('harmony/js/amchart/pie.js') !!}
         {!! Html::script('harmony/js/amchart/animate.min.js') !!}
         {!! Html::script('harmony/js/amchart/responsive.min.js') !!}
         {!! Html::script('harmony/js/main.js') !!}
