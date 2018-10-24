@@ -1495,8 +1495,18 @@ $(document).ready(function () {
         e.preventDefault();
         let tipo_analisis = $('#market-analisys').val();
         let year = $('#market-year').val();
-        if(tipo_analisis == 1) chartMarketPie.titles = [{'text': "Mercado Por Asociación"}];
-        if(tipo_analisis == 2) chartMarketPie.titles = [{'text': "Mercado Por Sector"}];
+        chartMarketPie.drillLevels = [{
+          "title": "Mercado Total",
+          "data": []
+        }];
+        if(tipo_analisis == 1) {
+            chartMarketPie.titles = [{'text': "Mercado Por Asociación"}];
+            chartMarketPie.drillLevels[0].title = "Mercado Por Asociación";
+        }
+        if(tipo_analisis == 2) {
+            chartMarketPie.titles = [{'text': "Mercado Por Sector"}]
+            chartMarketPie.drillLevels[0].title = "Mercado Por Sector";
+        }
         $.ajax({
             type: "POST",
             url: '/market_update',
@@ -1546,10 +1556,7 @@ $(document).ready(function () {
                 }else{
                     chartMarketPie.dataProvider = data['chartData'];
                     // initialize step array
-                    chartMarketPie.drillLevels = [{
-                      "title": "Mercado Total",
-                      "data": data['chartData']
-                    }];
+                    chartMarketPie.drillLevels[0].data = data['chartData'];
 
                     marketTotal(data['chartData'], market_dolar_pesos);
                     $('#market-process-exchange, #market-current, #market-convert, #market-graph').removeClass('hidden');
