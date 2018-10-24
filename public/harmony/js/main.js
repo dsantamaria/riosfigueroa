@@ -1598,7 +1598,6 @@ $(document).ready(function () {
     $('#market-convert-2').click(function(e){
         let status = $(this).attr('status');
         let total = 0;
-        console.log(status);
         if(status == 'dol'){
             chartMarketSerial.graphs = [
                 {

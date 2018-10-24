@@ -35,35 +35,35 @@ class Market_value extends Model
     	if($analisis == 1){
     		$all_data[0] = array(
 	    			'title' => 'PROCCYT',
-	    			'value' => $data[0]['pro_total'],
+	    			'value' => (float)$data[0]['pro_total'],
 	    			'value_dolar' => (float)number_format(($data[0]['pro_total'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    			'legend_dolar' => number_format(($data[0]['pro_total'] / $data[0]['tipo_de_cambio']), 2),
 	    			'color' => $color_pro,
 	    			'data' => array(
 	    				array(
 	    					'title' => 'Insecticida',
-	    					'value' => $data[0]['pro_insecticida'],
+	    					'value' => (float)$data[0]['pro_insecticida'],
 	    					'value_dolar' => (float)number_format(($data[0]['pro_insecticida'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    					'legend_dolar' => number_format(($data[0]['pro_insecticida'] / $data[0]['tipo_de_cambio']), 2),
 	    					'color' => $color_ins,
 	    				),
 	    				array(
 	    					'title' => 'Herbicida',
-	    					'value' => $data[0]['pro_herbicida'],
+	    					'value' => (float)$data[0]['pro_herbicida'],
 	    					'value_dolar' => (float)number_format(($data[0]['pro_herbicida'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    					'legend_dolar' => number_format(($data[0]['pro_herbicida'] / $data[0]['tipo_de_cambio']), 2),
 	    					'color' => $color_her,
 	    				),
 	    				array(
 	    					'title' => 'Fungicida',
-	    					'value' => $data[0]['pro_fungicida'],
+	    					'value' => (float)$data[0]['pro_fungicida'],
 	    					'value_dolar' => (float)number_format(($data[0]['pro_fungicida'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    					'legend_dolar' => number_format(($data[0]['pro_fungicida'] / $data[0]['tipo_de_cambio']), 2),
 	    					'color' => $color_fun,
 	    				),
 	    				array(
 	    					'title' => 'Otros',
-	    					'value' => $data[0]['pro_otros'],
+	    					'value' => (float)$data[0]['pro_otros'],
 	    					'value_dolar' => (float)number_format(($data[0]['pro_otros'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    					'legend_dolar' => number_format(($data[0]['pro_otros'] / $data[0]['tipo_de_cambio']), 2),
 	    					'color' => $color_otr,
@@ -73,35 +73,35 @@ class Market_value extends Model
 
 	    	$all_data[1] = array(
 	    			'title' => 'UMFFAAC',
-	    			'value' => $data[0]['umf_total'],
+	    			'value' => (float)$data[0]['umf_total'],
 	    			'value_dolar' => (float)number_format(($data[0]['umf_total'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    			'legend_dolar' => number_format(($data[0]['umf_total'] / $data[0]['tipo_de_cambio']), 2),
 	    			'color' => $color_umf,
 	    			'data' => array(
 	    				array(
 	    					'title' => 'Insecticida',
-	    					'value' => $data[0]['umf_insecticida'],
+	    					'value' => (float)$data[0]['umf_insecticida'],
 	    					'value_dolar' => (float)number_format(($data[0]['umf_insecticida'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    					'legend_dolar' => number_format(($data[0]['umf_insecticida'] / $data[0]['tipo_de_cambio']), 2),
 	    					'color' => $color_ins,
 	    				),
 	    				array(
 	    					'title' => 'Herbicida',
-	    					'value' => $data[0]['umf_herbicida'],
+	    					'value' => (float)$data[0]['umf_herbicida'],
 	    					'value_dolar' => (float)number_format(($data[0]['umf_herbicida'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    					'legend_dolar' => number_format(($data[0]['umf_herbicida'] / $data[0]['tipo_de_cambio']), 2),
 	    					'color' => $color_her,
 	    				),
 	    				array(
 	    					'title' => 'Fungicida',
-	    					'value' => $data[0]['umf_fungicida'],
+	    					'value' => (float)$data[0]['umf_fungicida'],
 	    					'value_dolar' => (float)number_format(($data[0]['umf_fungicida'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    					'legend_dolar' => number_format(($data[0]['umf_fungicida'] / $data[0]['tipo_de_cambio']), 2),
 	    					'color' => $color_fun,
 	    				),
 	    				array(
 	    					'title' => 'Otros',
-	    					'value' => $data[0]['umf_otros'],
+	    					'value' => (float)$data[0]['umf_otros'],
 	    					'value_dolar' => (float)number_format(($data[0]['umf_otros'] / $data[0]['tipo_de_cambio']), 2, '.', ''),
 	    					'legend_dolar' => number_format(($data[0]['umf_otros'] / $data[0]['tipo_de_cambio']), 2),
 	    					'color' => $color_otr,
@@ -113,21 +113,21 @@ class Market_value extends Model
     	if($analisis == 2){
     		$all_data[0] = array(
 	    			'title' => 'Insecticida',
-	    			'value' => $data[0]['pro_insecticida'] +  $data[0]['umf_insecticida'],
+	    			'value' => (float)$data[0]['pro_insecticida'] +  $data[0]['umf_insecticida'],
 	    			'value_dolar' => (float)number_format(($data[0]['pro_insecticida'] + $data[0]['umf_insecticida'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    			'legend_dolar' => number_format(($data[0]['pro_insecticida'] + $data[0]['umf_insecticida'])/$data[0]['tipo_de_cambio'], 2),
 	    			'color' => $color_ins,
 	    			'data' => array(
 	    				array(
 	    					'title' => 'PROCCYT Insecticida',
-	    					'value' => $data[0]['pro_insecticida'],
+	    					'value' => (float)$data[0]['pro_insecticida'],
 	    					'value_dolar' => (float)number_format($data[0]['pro_insecticida']/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    					'legend_dolar' => number_format($data[0]['pro_insecticida']/$data[0]['tipo_de_cambio'], 2),
 	    					'color' => $color_pro,
 	    				),
 	    				array(
 	    					'title' => 'UMFFAAC Insecticida',
-	    					'value' => $data[0]['umf_insecticida'],
+	    					'value' => (float)$data[0]['umf_insecticida'],
 	    					'value_dolar' => (float)number_format($data[0]['umf_insecticida']/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    					'legend_dolar' => number_format($data[0]['umf_insecticida']/$data[0]['tipo_de_cambio'], 2),
 	    					'color' => $color_umf,
@@ -137,21 +137,21 @@ class Market_value extends Model
 
 	    	$all_data[1] = array(
 	    			'title' => 'Herbicida',
-	    			'value' => $data[0]['pro_herbicida'] +  $data[0]['umf_herbicida'],
+	    			'value' => (float)$data[0]['pro_herbicida'] +  $data[0]['umf_herbicida'],
 	    			'value_dolar' => (float)number_format(($data[0]['pro_herbicida'] + $data[0]['umf_herbicida'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    			'legend_dolar' => number_format(($data[0]['pro_herbicida'] + $data[0]['umf_herbicida'])/$data[0]['tipo_de_cambio'], 2),
 	    			'color' => $color_her,
 	    			'data' => array(
 	    				array(
 	    					'title' => 'PROCCYT Herbicida',
-	    					'value' => $data[0]['pro_herbicida'],
+	    					'value' => (float)$data[0]['pro_herbicida'],
 	    					'value_dolar' => (float)number_format($data[0]['pro_herbicida']/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    					'legend_dolar' => number_format($data[0]['pro_herbicida']/$data[0]['tipo_de_cambio'], 2),
 	    					'color' => $color_pro,
 	    				),
 	    				array(
 	    					'title' => 'UMFFAAC Herbicida',
-	    					'value' => $data[0]['umf_herbicida'],
+	    					'value' => (float)$data[0]['umf_herbicida'],
 	    					'value_dolar' => (float)number_format($data[0]['umf_herbicida']/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    					'legend_dolar' => number_format($data[0]['umf_herbicida']/$data[0]['tipo_de_cambio'], 2),
 	    					'color' => $color_umf,
@@ -160,21 +160,21 @@ class Market_value extends Model
 	    		);
 	    $all_data[2] = array(
 	    			'title' => 'Fungicida',
-	    			'value' => $data[0]['pro_fungicida'] +  $data[0]['umf_fungicida'],
+	    			'value' => (float)$data[0]['pro_fungicida'] +  $data[0]['umf_fungicida'],
 	    			'value_dolar' => (float)number_format(($data[0]['pro_fungicida'] + $data[0]['umf_fungicida'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    			'legend_dolar' => number_format(($data[0]['pro_fungicida'] + $data[0]['umf_fungicida'])/$data[0]['tipo_de_cambio'], 2),
 	    			'color' => $color_fun,
 	    			'data' => array(
 	    				array(
 	    					'title' => 'PROCCYT Fungicida',
-	    					'value' => $data[0]['pro_fungicida'],
+	    					'value' => (float)$data[0]['pro_fungicida'],
 	    					'value_dolar' => (float)number_format($data[0]['pro_fungicida']/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    					'legend_dolar' => number_format($data[0]['pro_fungicida']/$data[0]['tipo_de_cambio'], 2),
 	    					'color' => $color_pro,
 	    				),
 	    				array(
 	    					'title' => 'UMFFAAC Fungicida',
-	    					'value' => $data[0]['umf_fungicida'],
+	    					'value' => (float)$data[0]['umf_fungicida'],
 	    					'value_dolar' => (float)number_format($data[0]['umf_fungicida']/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    					'legend_dolar' => number_format($data[0]['umf_fungicida']/$data[0]['tipo_de_cambio'], 2),
 	    					'color' => $color_umf,
@@ -184,21 +184,21 @@ class Market_value extends Model
 
 	    	$all_data[3] = array(
 	    			'title' => 'Otros',
-	    			'value' => $data[0]['pro_otros'] +  $data[0]['umf_otros'],
+	    			'value' => (float)$data[0]['pro_otros'] +  $data[0]['umf_otros'],
 	    			'value_dolar' => (float)number_format(($data[0]['pro_otros'] + $data[0]['umf_otros'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    			'legend_dolar' => number_format(($data[0]['pro_otros'] + $data[0]['umf_otros'])/$data[0]['tipo_de_cambio'], 2),
 	    			'color' => $color_otr,
 	    			'data' => array(
 	    				array(
 	    					'title' => 'PROCCYT Otros',
-	    					'value' => $data[0]['pro_otros'],
+	    					'value' => (float)$data[0]['pro_otros'],
 	    					'value_dolar' => (float)number_format($data[0]['pro_otros']/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    					'legend_dolar' => number_format($data[0]['pro_otros']/$data[0]['tipo_de_cambio'], 2),
 	    					'color' => $color_pro,
 	    				),
 	    				array(
 	    					'title' => 'UMFFAAC Otros',
-	    					'value' => $data[0]['umf_otros'],
+	    					'value' => (float)$data[0]['umf_otros'],
 	    					'value_dolar' => (float)number_format($data[0]['umf_otros']/$data[0]['tipo_de_cambio'], 2, '.', ''),
 	    					'legend_dolar' => number_format($data[0]['umf_otros']/$data[0]['tipo_de_cambio'], 2),
 	    					'color' => $color_umf,
