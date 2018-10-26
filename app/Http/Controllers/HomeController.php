@@ -6,8 +6,10 @@ use Mail;
 use App\Http\Requests;
 use Illuminate\Http\Request;
 use App\Custom_note;
-use Log;
 use Auth;
+use Image;
+use File;
+use Log;
 
 class HomeController extends Controller
 {
@@ -46,5 +48,27 @@ class HomeController extends Controller
             Custom_note::where('position', 1)->update(['data_html' => $request['custom_notes']]);
         }
         return redirect('/')->with('custom_notes', $request['custom_notes']);
+    }
+
+    public function uploadImageHome(Request $request){
+        $this->validate($request, [
+          'file' => 'required|image',
+        ]);
+
+        $image = $request->file('file');
+        $input['imagename'] = time().'.'.$image->getClientOriginalExtension();
+
+        $folder_name = 'project_images';
+     
+        $destinationPath = public_path($folder_name);
+
+        if(!File::exists($folder_name)) {
+            File::makeDirectory($folder_name);
+        }
+        
+        $img = Image::make($image->getRealPath());
+
+        $img->save($destinationPath.'/'.$input['imagename']);
+        return response()->json(array('location' => 'project_images/'. $input['imagename']));
     }
 }

@@ -68,6 +68,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     //************************* HomeController *********************//
     Route::post('SaveCustomNotes', ['as' => 'SaveCustomNotes', 'uses' => 'HomeController@SaveCustomNotes']);
+    Route::post('uploadImageHome', ['as' => 'uploadImageHome', 'uses' => 'HomeController@uploadImageHome']);
 
 
     //************************* MarketValueController *********************//

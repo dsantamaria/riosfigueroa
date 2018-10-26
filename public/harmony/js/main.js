@@ -1315,11 +1315,39 @@ $(document).ready(function () {
     ///////////////////////////////////////// Inicio Custom text are tinymce ////////////////////////////////////
     tinymce.init({
         selector: '#custom_notes',
-        plugins : 'advlist autolink link lists charmap print preview code textcolor colorpicker emoticons fullscreen',
+        plugins : 'advlist autolink link lists charmap print preview code textcolor colorpicker emoticons fullscreen image',
+        menubar: "insert",
         toolbar:[
             "undo, redo, bold, italic, underline, strikethrough, bullist, numlist, outdent, indent, alignleft, aligncenter, alignright, alignjustify, link, styleselect, fontselect, fontsizeselect",
-            "blockquote, removeformat, subscript, superscript forecolor backcolor code emoticons fullscreen",
+            "blockquote, removeformat, subscript, superscript forecolor backcolor code emoticons fullscreen image",
         ],
+        images_upload_url: '/uploadImageHome',
+        images_upload_handler: function (blobInfo, success, failure) {
+            console.log(blobInfo);
+            var xhr, formData;
+            xhr = new XMLHttpRequest();
+            xhr.withCredentials = true;
+            xhr.open('POST', '/uploadImageHome');
+            xhr.onload = function() {
+              var json;
+
+              if (xhr.status != 200) {
+                failure('HTTP Error: ' + xhr.status);
+                return;
+              }
+              json = JSON.parse(xhr.responseText);
+
+              if (!json || typeof json.location != 'string') {
+                failure('Invalid JSON: ' + xhr.responseText);
+                return;
+              }
+              success(json.location);
+            };
+            formData = new FormData();
+           formData.append('file', blobInfo.blob(), blobInfo.filename());
+            xhr.send(formData);
+        }
+
       });
     ///////////////////////////////////////// Fin Custom text are tinymce ///////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////
