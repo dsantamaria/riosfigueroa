@@ -27,7 +27,7 @@
         <a href="#"> <i class="fa fa-arrow-circle-left"></i> Regresar al Mercado Total</a>
     </div>
     <div class="col-md-12" style="height: 600px">
-        <div class="" id="market-graph" style="width: 100%; height: 100%;"></div>
+        <div class="hidden" id="market-graph" style="width: 100%; height: 100%;"></div>
         <div id="market-graph-2" style="width: 100%; height: 100%;"></div>
         <input type="hidden" id="market-exchange">
     </div>
