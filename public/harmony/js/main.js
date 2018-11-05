@@ -1388,6 +1388,7 @@ $(document).ready(function () {
                 'align': 'center',
                 'bold': true,
                 'size': 20,
+                'text': "",
             }
         ];
         chartMarketPie.angle =15;
@@ -1409,7 +1410,7 @@ $(document).ready(function () {
             slice.labelColor = slice.color;
             return slice.dataContext.title;
         }
-        chartMarketPie.labelRadius = 35;
+        chartMarketPie.labelRadius = 30;
         chartMarketPie.legend = {
             'align': 'left',
             'markerType': 'circle',
