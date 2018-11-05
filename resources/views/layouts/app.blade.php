@@ -37,7 +37,6 @@
                     <ul class="ts-sidebar-menu">
                         <li class="ts-label">Dashboard</li>
                         <li>
-                            <div class="more"></div>
                             <a href="#" class="parent"><i class="fa fa-codepen"></i>Productos</a>
                             <ul>
                                 <li><a href="{{ route('products.search') }}">Buscador de Productos</a></li>
@@ -68,16 +67,31 @@
                             <li>
                                 <a href="#" class="parent"><i class="fa fa-desktop"></i>Administrador</a>
                                 <ul>
-                                    <li><a href="{{ route('sendSubscription') }}">Suscribir Usuarios</a></li>
-                                    <li><a href="{{ route('listActiveUsers') }}">Gestión de Usuarios</a></li>
-                                    <li><a href="{{ route('lista_precios.import') }}">Importar Lista de Precios</a></li>
-                                    <li><a href="{{ route('import_products_analysis_category') }}">Importar Archivos para Análisis de Precios</a></li>
-                                    <li><a href="{{ route('gestionListasAnalisisPrecios') }}">Gestión de Listas para Análisis de Precios</a></li>
-                                    <li><a href="{{ route('import_analysis_historic_lists') }}">Importar Archivos para Análisis de Importaciones</a></li>
-                                    <li><a href="{{ route('gestionListasAnalisisHistoricos') }}">Gestión de Listas para Análisis de Importaciones</a></li>
-                                    <li><a href="{{ route('market_value') }}">Importar Archivos para Análisis del Valor del Mercado</a></li>
+                                    <li class="second-level">
+                                        <a href="#" class="parent"><i class="fa fa-circle"></i>Usuarios</a>
+                                        <ul>
+                                            <li><a href="{{ route('sendSubscription') }}">Suscribir Usuarios</a></li>
+                                            <li><a href="{{ route('listActiveUsers') }}">Gestión de Usuarios</a></li>
+                                            <li><a href="{{ route('user_activity.index') }}">Panel de Actividad por Usuario</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="second-level">
+                                        <a href="#" class="parent"><i class="fa fa-circle"></i>Importaciones de Listas</a>
+                                        <ul>
+                                            <li><a href="{{ route('lista_precios.import') }}">Importar Lista de Precios</a></li>
+                                            <li><a href="{{ route('import_products_analysis_category') }}">Importar Archivos para Análisis de Precios</a></li>
+                                            <li><a href="{{ route('import_analysis_historic_lists') }}">Importar Archivos para Análisis de Importaciones</a></li>
+                                            <li><a href="{{ route('market_value') }}">Importar Archivos para Análisis del Valor del Mercado</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="second-level">
+                                        <a href="#" class="parent"><i class="fa fa-circle"></i>Gestión de Listas</a>
+                                        <ul>
+                                            <li><a href="{{ route('gestionListasAnalisisPrecios') }}">Gestión de Listas para Análisis de Precios</a></li>
+                                            <li><a href="{{ route('gestionListasAnalisisHistoricos') }}">Gestión de Listas para Análisis de Importaciones</a></li>
+                                        </ul>
+                                    </li>
                                     <li><a href="{{ route('uploadImage') }}">Subir Imagen</a></li>
-                                    <li><a href="{{ route('user_activity.index') }}">Panel de Actividad por Usuario</a></li>
                                 </ul>
                             </li>
                         @endcan

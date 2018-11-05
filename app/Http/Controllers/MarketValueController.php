@@ -79,35 +79,21 @@ class MarketValueController extends Controller
     }
 
     public function market_update(Request $request){
-        /*
-            Tipo de analisis
-            0 = mercado total
-            1 = mercado por sector
-            2 = mercado por asociacion
-            3 = analisis comparativo
-        */
+        $sector = $request['sector'];
+        $chartData = [];
+        $chartData = Market_value::data_from_all_years($sector);
+
+        return response()->json(array('chartData' => $chartData, 'title' => ucfirst($sector)));
+    }
+
+    public function market_year_update(Request $request){
         $year = $request['year'];
-        $tipo_analisis = $request['tipo_analisis'];
+        $sector = $request['sector'];
         $all_data = [];
         $chartData = [];
-        switch ($tipo_analisis) {
-            case 0:
-                $chartData = Market_value::data_from_all_years();
-                $all_data['exchange'] = 0;
-                break;
-            case 1:
-                $all_data = Market_value::data_from_specific_year($year, $tipo_analisis);
-                $chartData = $all_data['all_data'];
-                break;
-            case 2:
-                $all_data = Market_value::data_from_specific_year($year, $tipo_analisis);
-                $chartData = $all_data['all_data'];
-                break;
-            
-            default:
-                # code...
-                break;
-        }
+        
+        $all_data = Market_value::data_from_specific_year($year, $sector);
+        $chartData = $all_data['all_data'];
 
         return response()->json(array('chartData' => $chartData, 'exchange' => $all_data['exchange']));
     }

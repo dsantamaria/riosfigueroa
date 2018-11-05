@@ -967,10 +967,69 @@ canvas{
   font-weight: bold;
   margin-bottom: 0;
 }
-#market-graph{
+#market-graph, #market-graph-2{
   cursor: pointer;
 }
 
 #market-current{
   color: green;
+}
+
+.radio-market{
+  text-align: right;
+  margin-bottom: 10px;
+}
+#back-market{
+  text-align: left;
+  margin-bottom: 1px;
+}
+
+.radio-market label, #back-market button{
+  background-color: #3e454c;
+  color: white;
+  font-size: 15px;
+}
+
+.radio-market label:hover, #back-market button:hover{
+  opacity: 0.8;
+}
+
+#market-1.active{
+  background-color: #087b71;
+}
+#market-2.active{
+  background-color: #ff3c00;
+}
+#market-3.active{
+  background-color: #04b10b;
+}
+#market-4.active{
+  background-color: #9e03b9;
+}
+#market-5.active{
+  background-color: #ccb700;
+}
+#back-market button{
+  border-radius: 4px !important;
+}
+
+.second-level, .second-level ul{
+  padding-left: 10px;
+}
+
+
+
+
+
+
+
+
+
+.amcharts-graph-label-total{
+  font-weight: bold;
+}
+
+.amcharts-pie-label{
+  font-weight: bold;
+  font-size: 18px;
 }

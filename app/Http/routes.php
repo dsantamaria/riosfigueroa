@@ -75,6 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('market/index', ['as' => 'market.index', 'uses' => 'MarketValueController@index'])->middleware('admin');
     Route::get('market_value', ['as' => 'market_value', 'uses' => 'MarketValueController@market_value'])->middleware('admin');
     Route::post('market_update', ['as' => 'market_update', 'uses' => 'MarketValueController@market_update'])->middleware('admin');
+    Route::post('market_year_update', ['as' => 'market_year_update', 'uses' => 'MarketValueController@market_year_update'])->middleware('admin');
     Route::post('market_import', ['as' => 'market_import', 'uses' => 'MarketValueController@market_import'])->middleware('admin');
 
     //************************* UserActivityController *********************//
