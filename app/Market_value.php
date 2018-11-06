@@ -37,34 +37,42 @@ class Market_value extends Model
 		$all_data[0] = array(
     			'title' => 'Insecticida',
     			'value' => (float)$data[0][$sector.'_insecticida'],
+    			'value_label' => number_format((float)$data[0][$sector.'_insecticida'], 2),
     			'value_dolar' => (float)number_format($data[0][$sector.'_insecticida']/$data[0]['tipo_de_cambio'], 2, '.', ''),
     			'legend_dolar' => number_format($data[0][$sector.'_insecticida']/$data[0]['tipo_de_cambio'], 2),
     			'color' => $color_ins,
     			'total' => $total,
     			'total_dol' => $total/$data[0]['tipo_de_cambio'],
+    			'percent' => round(($data[0][$sector.'_insecticida']*100)/$total),
     		);
 
     	$all_data[1] = array(
     			'title' => 'Herbicida',
     			'value' => (float)$data[0][$sector.'_herbicida'],
+    			'value_label' => number_format((float)$data[0][$sector.'_herbicida'], 2),
     			'value_dolar' => (float)number_format(($data[0][$sector.'_herbicida'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
     			'legend_dolar' => number_format(($data[0][$sector.'_herbicida'])/$data[0]['tipo_de_cambio'], 2),
     			'color' => $color_her,
+    			'percent' => round(($data[0][$sector.'_herbicida']*100)/$total),
     		);
    		$all_data[2] = array(
     			'title' => 'Fungicida',
     			'value' => (float)$data[0][$sector.'_fungicida'],
+    			'value_label' => number_format((float)$data[0][$sector.'_fungicida'], 2),
     			'value_dolar' => (float)number_format(($data[0][$sector.'_fungicida'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
     			'legend_dolar' => number_format(($data[0][$sector.'_fungicida'])/$data[0]['tipo_de_cambio'], 2),
     			'color' => $color_fun,
+    			'percent' => round(($data[0][$sector.'_fungicida']*100)/$total),
     		);
 
     	$all_data[3] = array(
     			'title' => 'Otros',
     			'value' => (float)$data[0][$sector.'_otros'],
+    			'value_label' => number_format((float)$data[0][$sector.'_otros'], 2),
     			'value_dolar' => (float)number_format(($data[0][$sector.'_otros'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
     			'legend_dolar' => number_format(($data[0][$sector.'_otros'])/$data[0]['tipo_de_cambio'], 2),
     			'color' => $color_otr,
+    			'percent' => round(($data[0][$sector.'_otros']*100)/$total),
     		);
     	
     	$exchange = $data[0]['tipo_de_cambio'];

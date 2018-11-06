@@ -26,13 +26,14 @@
     <div class="col-md-12 hidden go-back" id="back-market">
         <a href="#"> <i class="fa fa-arrow-circle-left"></i> Regresar al Mercado Total</a>
     </div>
-    <div class="col-md-12" style="height: 600px">
+    <div class="col-md-12" style="height: 620px">
         <div class="hidden" id="market-graph" style="width: 100%; height: 100%;"></div>
         <div id="market-graph-2" style="width: 100%; height: 100%;"></div>
         <input type="hidden" id="market-exchange">
+        <div id="market-legend"></div>
     </div>
     <div class="col-md-12" id="market-others">
-        <div id="market-legend"></div>
+        <div id="market-legend-2"></div>
         <div id="market-process-exchange" class="hidden">
             <p id="market-dol">Precios reflejados es Pesos Mexicanos</p>
             <p id="market-current" class="hidden">Tasa de Cambio del año seleccionado $<span></span></p>

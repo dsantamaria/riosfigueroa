@@ -995,7 +995,7 @@ canvas{
 }
 
 #market-1.active{
-  background-color: #087b71;
+  background-color: #00bcd4;
 }
 #market-2.active{
   background-color: #ff3c00;
@@ -1011,6 +1011,13 @@ canvas{
 }
 #back-market button{
   border-radius: 4px !important;
+}
+
+#market-legend{
+  position: absolute;
+  top: 480px;
+  left: 10px;
+  width: 250px;
 }
 
 .second-level, .second-level ul{
@@ -1030,6 +1037,16 @@ canvas{
 }
 
 .amcharts-pie-label{
+  font-size: 20px;
+}
+
+.amcharts-pie-label tspan:nth-child(1){
   font-weight: bold;
-  font-size: 18px;
+  font-size: 30px;
+}
+.amcharts-pie-label tspan:nth-child(2){
+  font-size: 15px;
+}
+.amcharts-pie-label tspan:nth-child(3){
+  font-size: 15px;
 }
