@@ -1380,88 +1380,157 @@ $(document).ready(function () {
 
     AmCharts.ready(function () {
         chartMarketPie = new AmCharts.AmPieChart();
-
-        chartMarketPie.addClassNames = true;
-        chartMarketPie.allLabels = [
-            {
-                'y': "50%",
-                'align': 'center',
-                'bold': true,
-                'size': 20,
-                'text': "",
-            }
-        ];
-        chartMarketPie.angle =15;
-        chartMarketPie.backgroundAlpha = 0.1;
-        chartMarketPie.backgroundColor = "#000000";
-        chartMarketPie.balloon = {
-            "fillAlpha": 0.5
-        }
-        chartMarketPie.balloonText = "[[title]]<br><span style='font-size:14px'><b>$[[value]]</b> ([[percents]]%)</span>";
-        chartMarketPie.colorField = 'color';
-        chartMarketPie.dataProvider = [];
-        chartMarketPie.depth3D = 15;
-        chartMarketPie.fontFamily = "roboto";
-        chartMarketPie.fontSize = 15;
-        chartMarketPie.gradientRatio = [0.3, 0, -0.3];
-        chartMarketPie.innerRadius = "50%";
-        chartMarketPie.labelFunction = function(slice){
-            if(slice.dataContext.title == "Otros" || slice.dataContext.title == "Herbicida") slice.labelRadius = 50;
-            slice.labelColor = slice.color;
-            return "a";
-        }
-        chartMarketPie.labelRadius = 25;
-        chartMarketPie.legend = {
-            'align': 'left',
-            'markerType': 'circle',
-            'position': 'bottom',
-            'equalWidths': false,
-            'maxColumns': 1,
-            'labelText': '[[title]]',
-            'useMarkerColorForLabels': true,
-            'useMarkerColorForValues': true,
-            'valueText': '',
-            'divId': "market-legend",
-
-        };
-        chartMarketPie.maxLabelWidth = 95;
-        chartMarketPie.outlineAlpha = 0.5;
-        chartMarketPie.outlineColor = "#FFFFFF";
-        chartMarketPie.outlineThickness = 1;
-        chartMarketPie.radius = "35%";
-        chartMarketPie.responsive = { 
-            "enabled": true
-        };
-        chartMarketPie.startDuration = 0.5;
-        chartMarketPie.startEffect = "easeOutSine";
-        chartMarketPie.titles = [{
-            'text': "",
-            'size': 20,
-            'bold': true
-        }];
-        chartMarketPie.titleField = "title";
-        chartMarketPie.valueField = "value";
-        
+        chartPieConfig(chartMarketPie);
         chartMarketPie.write('market-graph');
 
         chartMarketPie.addListener("drawn", function (event) {
             let status = $('#market-convert').attr('status');
             $('.amcharts-pie-label').each(function(key, e){
-                let percent = event.chart.dataProvider[key].percent;
-                let sector = event.chart.dataProvider[key].title;
-                value = status == "pes" ? event.chart.dataProvider[key].legend_dolar : event.chart.dataProvider[key].value_label;
-                $(this).html('<tspan y="0" x="0">'+percent+'%</tspan><tspan y="17" x="0">'+sector+'</tspan><tspan y="33" x="0">$'+value+'</tspan>');
+                if(key < 4){
+                    let percent = event.chart.dataProvider[key].percent;
+                    let sector = event.chart.dataProvider[key].title;
+                    value = status == "pes" ? event.chart.dataProvider[key].legend_dolar : event.chart.dataProvider[key].value_label;
+                    $(this).html('<tspan y="0" x="0">'+percent+'%</tspan><tspan y="17" x="0">'+sector+'</tspan><tspan y="33" x="0">$'+value+'</tspan>');
+                }
             });
         });
+
+
+        chartMarketPie2 = new AmCharts.AmPieChart();
+        chartPieConfig(chartMarketPie2);
+        chartMarketPie2.write('market-graph-3');
+
+        chartMarketPie2.addListener("drawn", function (event) {
+            let status = $('#market-convert').attr('status');
+            let x = 0;
+            $('.amcharts-pie-label').each(function(key, e){
+                if(key > 3){
+                    let percent = event.chart.dataProvider[x].percent;
+                    let sector = event.chart.dataProvider[x].title;
+                    value = status == "pes" ? event.chart.dataProvider[x].legend_dolar : event.chart.dataProvider[x].value_label;
+                    $(this).html('<tspan y="0" x="0">'+percent+'%</tspan><tspan y="17" x="0">'+sector+'</tspan><tspan y="33" x="0">$'+value+'</tspan>');
+                    x = x + 1;
+                }
+            });
+        });
+
+       function chartPieConfig(chartObject){
+            chartObject.addClassNames = true;
+            chartObject.allLabels = [
+                {
+                    'y': "50%",
+                    'align': 'center',
+                    'bold': true,
+                    'size': 20,
+                    'text': "",
+                }
+            ];
+            chartObject.angle =15;
+            chartObject.backgroundAlpha = 0;
+            chartObject.backgroundColor = "#FFFFFF";
+            chartObject.balloon = {
+                "fillAlpha": 0.5
+            }
+            chartObject.balloonText = "[[title]]<br><span style='font-size:14px'><b>$[[value]]</b> ([[percents]]%)</span>";
+            chartObject.colorField = 'color';
+            chartObject.dataProvider = [];
+            chartObject.depth3D = 15;
+            chartObject.fontFamily = "roboto";
+            chartObject.fontSize = 15;
+            chartObject.gradientRatio = [0.3, 0, -0.3];
+            chartObject.innerRadius = "50%";
+            chartObject.labelFunction = function(slice){
+                if(slice.dataContext.title == "Otros" || slice.dataContext.title == "Herbicida") slice.labelRadius = 50;
+                slice.labelColor = slice.color;
+                return "a";
+            }
+            chartObject.labelRadius = 25;
+            chartObject.legend = {
+                'align': 'left',
+                'markerType': 'circle',
+                'position': 'bottom',
+                'equalWidths': false,
+                'maxColumns': 1,
+                'labelText': '[[title]]',
+                'useMarkerColorForLabels': true,
+                'useMarkerColorForValues': true,
+                'valueText': '',
+                'divId': "market-legend",
+
+            };
+            chartObject.maxLabelWidth = 95;
+            chartObject.outlineAlpha = 0.5;
+            chartObject.outlineColor = "#FFFFFF";
+            chartObject.outlineThickness = 1;
+            chartObject.radius = "35%";
+            chartObject.responsive = { 
+                "enabled": true
+            };
+            chartObject.startDuration = 0.5;
+            chartObject.startEffect = "easeOutSine";
+            chartObject.titles = [{
+                'text': "",
+                'size': 20,
+                'bold': true
+            }];
+            chartObject.titleField = "title";
+            chartObject.valueField = "value";
+       }
     });
 
+    $('.select-market select').change(function(){
+        let year = $(this).val();
+        let sector = "";
+        let title = "";
+        let pes_dol = "";
+        let status = $('#market-convert').attr('status');
+
+        pes_dol = status == 'dol' ? '' : '_dolar';
+
+        $('#market-graph').removeClass('col-sm-12').addClass('col-sm-6');
+        $('#market-graph-3, #market-current-2').removeClass('hidden');
+        if(chartMarketPie.titles[0].text.includes('UMFFAAC')){
+            sector = 'umf';
+            title = 'UMFFAAC';
+        }else{
+            sector = 'pro';
+            title = 'PROCCYT';
+        } 
+        $.ajax({
+            type: "POST",
+            url: '/market_year_update',
+            data: {
+                'year': year,
+                'sector': sector
+            },
+            success: function( data ) {
+                $('#market-current-2 span').text(data['exchange']);
+                $('#market-year-2').text(year);
+
+                chartMarketPie2.dataProvider = data['chartData'];
+                chartMarketPie2.allLabels[0].text = formatter_1.format(data['chartData'][0]['total'+pes_dol]); 
+                chartMarketPie2.titles[0].text = title + " " +year;
+                chartMarketPie2.radius = "25%";
+                chartMarketPie2.allLabels[0].size = 16;
+                chartMarketPie2.validateData();
+                chartMarketPie2.animateAgain();
+
+                if(chartMarketPie.radius != "25%"){
+                    chartMarketPie.radius = "25%";
+                    chartMarketPie.allLabels[0].size = 16;
+                    chartMarketPie.validateData();
+                    chartMarketPie.animateAgain();
+                }
+            }
+        })
+    })
 
     AmCharts.ready(function () {
         chartMarketSerial = new AmCharts.AmSerialChart();
 
         chartMarketSerial.addClassNames = true;
-        chartMarketSerial.backgroundAlpha = 0.1;
-        chartMarketSerial.backgroundColor = "#000000";
+        chartMarketSerial.backgroundAlpha = 0;
+        chartMarketSerial.backgroundColor = "#FFFFFF";
         chartMarketSerial.balloon = {
             "fillAlpha": 0.8,
             "fillColor": "#FFFFFF",
@@ -1505,13 +1574,18 @@ $(document).ready(function () {
         document.getElementById('market-1').click();
         chartMarketSerial.addListener("clickGraphItem", function (event) {
             let year = event.item.category;
+            let status = $('#market-convert').attr('status');
             let sector = "";
+            let pes_dol = "";
+
+            pes_dol = status == 'dol' ? '' : '_dolar';
+
             if(event.graph.title == 'UMFFAAC') sector = 'umf';
             else if(event.graph.title == 'PROCCYT') sector = 'pro';
 
             if(sector == 'umf' || sector == 'pro'){
-                $('#market-convert-2, #market-graph-2, #market-legend-2, .radio-market').addClass('hidden');
-                $('#market-graph, #market-current, #market-convert, #back-market, #market-legend').removeClass('hidden');
+                $('#market-graph-2, #market-legend-2, .radio-market').addClass('hidden');
+                $('#market-graph, #market-current, #back-market, #market-legend, .select-market').removeClass('hidden');
                 $.ajax({
                     type: "POST",
                     url: '/market_year_update',
@@ -1521,9 +1595,11 @@ $(document).ready(function () {
                     },
                     success: function( data ) {
                         $('#market-current span').text(data['exchange']);
+                        $('#market-year').text(year);
                         chartMarketPie.dataProvider = data['chartData'];
-                        chartMarketPie.allLabels[0].text = formatter_1.format(data['chartData'][0]['total']), 
+                        chartMarketPie.allLabels[0].text = formatter_1.format(data['chartData'][0]['total'+pes_dol]), 
                         chartMarketPie.titles[0].text = event.graph.title + " " + year;
+                        chartMarketPie.valueField = "value"+pes_dol;
                         chartMarketPie.validateData();
                         chartMarketPie.animateAgain()
                     }
@@ -1534,6 +1610,7 @@ $(document).ready(function () {
 
     $('.radio-market label').click(function(e){
         let sector = $(this).find('input').val();
+        let status = $('#market-convert').attr('status');
         $.ajax({
             type: "POST",
             url: '/market_update',
@@ -1541,14 +1618,12 @@ $(document).ready(function () {
                 'sector': sector
             },
             success: function( data ) {
-                $('#market-graph, #market-current, #market-convert, #market-legend').addClass('hidden');
-                $('#market-convert, #market-convert-2').attr('status', 'dol').text('Convertir a Dolares');
-                $('#market-process-exchange, #market-convert-2, #market-graph-2').removeClass('hidden');
+                $('#market-graph, #market-current, #market-legend').addClass('hidden');
+                $('#market-process-exchange, #market-graph-2').removeClass('hidden');
                 chartMarketSerial.dataProvider = data['chartData'];
                 chartMarketSerial.titles = [{'text': "Mercado "+data['title'] + " Mexicano", 'size': 20}];
-                chartMarketSerial.valueAxes[0].totalText = '$[[round_suma]]';
                 chartMarketSerial.startDuration = 1;
-                chartMarketSerialGraphs(sector, data['title']);
+                chartMarketSerialGraphs(sector, data['title'], status);
                 chartMarketSerial.validateData();
                 chartMarketSerial.animateAgain();
             }
@@ -1558,33 +1633,14 @@ $(document).ready(function () {
     $('#market-convert').click(function(e){
         let status = $(this).attr('status');
         let total = 0;
+        let total1 = 0;
         if(status == 'dol'){
-            chartMarketPie.valueField = "value_dolar";
-            //chartMarketPie.legend.valueText = '$[[legend_dolar]]';
-            total = chartMarketPie.dataProvider[0].total_dol;
-            pes_dol = "legend_dolar";
-            $(this).attr('status', 'pes');
-            $(this).text('Convertir a Pesos');
-            $('#market-dol').text('Precios Reflejados en Dolares USA');
-        }else{
-            chartMarketPie.valueField = "value";
-            //chartMarketPie.legend.valueText = '$[[value]]';
-            total = chartMarketPie.dataProvider[0].total;
-            pes_dol = "value_label";
-            $(this).attr('status', 'dol');
-            $(this).text('Convertir a Dolares');
-            $('#market-dol').text('Precios Reflejados en Pesos Mexicanos');
-        }
+            //pie
+            if( chartMarketPie.dataProvider.length > 0) chartMarketPie.valueField = "value_dolar";
+            if( chartMarketPie.dataProvider.length > 0) total = chartMarketPie.dataProvider[0].total_dolar;
+            if( chartMarketPie2.dataProvider.length > 0) total1 = chartMarketPie2.dataProvider[0].total_dolar;
 
-        chartMarketPie.allLabels[0].text = formatter_1.format(total);
-        chartMarketPie.validateData();
-        chartMarketPie.animateAgain();
-    })
-
-    $('#market-convert-2').click(function(e){
-        let status = $(this).attr('status');
-        let total = 0;
-        if(status == 'dol'){
+            //serial
             chartMarketSerial.graphs[0].valueField = 'pro_total_dol';
             chartMarketSerial.graphs[0].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon_dol]] <br> <b>PROCCYT:</b> $[[pro_total_ballon_dol]] <br> <b>Total:</b> $[[suma_dol]] <br> <b>Exchange:</b> $[[exchange]]';
             chartMarketSerial.graphs[1].valueField = 'umf_total_dol';
@@ -1595,6 +1651,12 @@ $(document).ready(function () {
             $(this).text('Convertir a Pesos');
             $('#market-dol').text('Precios Reflejados en Dolares USA');
         }else{
+            //pie
+            if( chartMarketPie.dataProvider.length > 0) chartMarketPie.valueField = "value";
+            if( chartMarketPie.dataProvider.length > 0) total = chartMarketPie.dataProvider[0].total;
+            if( chartMarketPie2.dataProvider.length > 0) total1 = chartMarketPie2.dataProvider[0].total;
+
+            //serial
             chartMarketSerial.graphs[0].valueField = 'pro_total';
             chartMarketSerial.graphs[0].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon]] <br> <b>PROCCYT:</b> $[[pro_total_ballon]] <br> <b>Total:</b> $[[suma]]';
             chartMarketSerial.graphs[1].valueField = 'umf_total';
@@ -1606,16 +1668,21 @@ $(document).ready(function () {
             $('#market-dol').text('Precios Reflejados en Pesos Mexicanos');
         }
 
-        chartMarketSerial.startDuration = 0.0000001;
+        chartMarketPie2.allLabels[0].text = formatter_1.format(total1)
+        chartMarketPie2.validateData();
+
+        chartMarketPie.allLabels[0].text = formatter_1.format(total);
+        chartMarketPie.validateData();
+
         chartMarketSerial.validateData();
-        chartMarketSerial.animateAgain();
     })
 
-    function chartMarketSerialGraphs(sector, title){
+    function chartMarketSerialGraphs(sector, title, status){
         let color_1 = "#00bcd4";
         let color_2 = "#ff9800";
         let title_1 = "PROCCYT";
         let title_2 = "UMFFAAC";
+        let pes_dol = "";
 
         if(sector != 'total'){
             title_1 = "PROCCYT "+title;
@@ -1636,31 +1703,46 @@ $(document).ready(function () {
             color_2 = '#a92800';
         }
 
+        pes_dol = status == 'dol' ? "" : '_dol';
+
         chartMarketSerial.graphs = [
             {
                 "type": "column",
                 "title": title_1,
                 "lineColor": color_1,
-                "valueField": "pro_total",
+                "valueField": "pro_total"+pes_dol,
                 "fillAlphas": 0.8,
                 "labelText": "[[pro_percent]]%",
-                "balloonText": "<b>"+title_2+":</b> $[[umf_total_ballon]] <br> <b>"+title_1+":</b> $[[pro_total_ballon]] <br> <b>Total:</b> $[[suma]]",
+                "balloonText": "<b>"+title_2+":</b> $[[umf_total_ballon"+pes_dol+"]] <br> <b>"+title_1+":</b> $[[pro_total_ballon"+pes_dol+"]] <br> <b>Total:</b> $[[suma"+pes_dol+"]]",
             },
             {
                 "type": "column",
                 "title": title_2,
                 "lineColor": color_2,
-                "valueField": "umf_total",
+                "valueField": "umf_total"+pes_dol,
                 "fillAlphas": 0.8,
                 "labelText": "[[umf_percent]]%",
-                "balloonText": "<b>"+title_2+":</b> $[[umf_total_ballon]] <br> <b>"+title_1+":</b> $[[pro_total_ballon]] <br> <b>Total:</b> $[[suma]]",
+                "balloonText": "<b>"+title_2+":</b> $[[umf_total_ballon"+pes_dol+"]] <br> <b>"+title_1+":</b> $[[pro_total_ballon"+pes_dol+"]] <br> <b>Total:</b> $[[suma"+pes_dol+"]]",
             },
         ];
     }
 
     $('#back-market').click(function(e){
-        $('#market-convert-2, #market-graph-2, .radio-market, #market-legend-2').removeClass('hidden');
-        $('#market-graph, #market-current, #market-convert, #back-market, #market-legend').addClass('hidden');
+        chartMarketPie2.dataProvider = [];
+        chartMarketPie2.validateData();
+        chartMarketPie2.animateAgain();
+
+        chartMarketPie.dataProvider = [];
+        chartMarketPie.allLabels[0].size = 20;
+        chartMarketPie.validateData();
+        chartMarketPie.animateAgain();
+
+        $('.select-market select').val("");
+
+        $('#market-graph').removeClass('col-sm-6').addClass('col-sm-12');
+        $('#market-graph-2, .radio-market, #market-legend-2').removeClass('hidden');
+        $('#market-graph, #market-current, #market-current-2, #back-market, #market-legend, #market-graph-3, .select-market').addClass('hidden');
+        chartMarketPie.radius = "35%";
     })
     
     ////////////////////////////////////////////// Fin Market Values ////////////////////////////////////////////

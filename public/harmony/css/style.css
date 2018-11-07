@@ -948,8 +948,8 @@ canvas{
   text-align: center;
 }
 
-.go-back{
-  margin-bottom: 15px;
+.no-padding{
+  padding: 0px;
 }
 
 #market-others div{
@@ -967,12 +967,21 @@ canvas{
   font-weight: bold;
   margin-bottom: 0;
 }
-#market-graph, #market-graph-2{
+#market-graph, #market-graph-2, #market-graph-3{
   cursor: pointer;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.main-market{
+  background-color: rgba(0,0,0,0.1);
 }
 
 #market-current{
   color: green;
+}
+#market-current-2{
+  color: blue;
 }
 
 .radio-market{
@@ -981,13 +990,22 @@ canvas{
 }
 #back-market{
   text-align: left;
-  margin-bottom: 1px;
+  margin-bottom: 10px;
 }
 
-.radio-market label, #back-market button{
+.select-market{
+  margin-bottom: 10px;
+}
+
+.radio-market label, #back-market button, .select-market select{
   background-color: #3e454c;
   color: white;
   font-size: 15px;
+}
+
+.select-market option{
+  background-color: white;
+  color: black;
 }
 
 .radio-market label:hover, #back-market button:hover{
@@ -1011,12 +1029,14 @@ canvas{
 }
 #back-market button{
   border-radius: 4px !important;
+  border-color: #3e454c;
+  height: 46px;
 }
 
 #market-legend{
   position: absolute;
   top: 480px;
-  left: 10px;
+  left: 0px;
   width: 250px;
 }
 
@@ -1024,7 +1044,11 @@ canvas{
   padding-left: 10px;
 }
 
-
+.first-market-option{
+  font-size: 16px;
+  font-weight: bold;
+  color: grey;
+}
 
 
 

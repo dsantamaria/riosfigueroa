@@ -4,7 +4,7 @@
 <div class="col-md-12">
 
     <h2 class="page-title">Análisis del Mercado</h2>
-    <div class="col-md-12 radio-market">
+    <div class="col-md-12 radio-market no-padding">
         <div class="btn-group" data-toggle="buttons">
             <label class="btn active" id="market-1">
                 <input type="radio" name="market" value="total" autocomplete="off" checked> Mercado Total 
@@ -23,22 +23,33 @@
             </label>
         </div>
     </div>
-    <div class="col-md-12 hidden go-back" id="back-market">
-        <a href="#"> <i class="fa fa-arrow-circle-left"></i> Regresar al Mercado Total</a>
+
+    <div class="col-md-4 hidden go-back no-padding" id="back-market">
+        <button> <i class="fa fa-arrow-circle-left"></i> Regresar al Mercado Total</button>
     </div>
-    <div class="col-md-12" style="height: 620px">
-        <div class="hidden" id="market-graph" style="width: 100%; height: 100%;"></div>
-        <div id="market-graph-2" style="width: 100%; height: 100%;"></div>
+
+    <div class="col-md-3 col-md-offset-5 select-market hidden no-padding">
+        <select class="form-control">
+            <option class="first-market-option" value="">Comparar Vs Año</option>
+            @foreach($years as $year)
+                <option value="{{ $year }}">{{ $year }}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="col-md-12 main-market" style="height: 620px">
+        <div class="hidden col-sm-12" id="market-graph" style="height: 100%;"></div>
+        <div class="hidden col-sm-6" id="market-graph-3" style="height: 100%;"></div>
+        <div class="col-sm-12" id="market-graph-2" style="height: 100%;"></div>
         <input type="hidden" id="market-exchange">
         <div id="market-legend"></div>
     </div>
-    <div class="col-md-12" id="market-others">
+    <div class="col-md-12 no-padding" id="market-others">
         <div id="market-legend-2"></div>
         <div id="market-process-exchange" class="hidden">
             <p id="market-dol">Precios reflejados es Pesos Mexicanos</p>
-            <p id="market-current" class="hidden">Tasa de Cambio del año seleccionado $<span></span></p>
-            <button id="market-convert" status="dol" class="hidden">Convertir a Dolares</button>
-            <button id="market-convert-2" status="dol" class="hidden">Convertir a Dolares</button>
+            <p id="market-current" class="hidden">Tasa del año <span id="market-year"></span>: $<span></span></p>
+            <p id="market-current-2" class="hidden">Tasa del año <span id="market-year-2"></span>: $<span></span></p>
+            <button id="market-convert" status="dol">Convertir a Dolares</button>
         </div>
     </div>
 </div>

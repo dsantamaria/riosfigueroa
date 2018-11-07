@@ -42,7 +42,7 @@ class Market_value extends Model
     			'legend_dolar' => number_format($data[0][$sector.'_insecticida']/$data[0]['tipo_de_cambio'], 2),
     			'color' => $color_ins,
     			'total' => $total,
-    			'total_dol' => $total/$data[0]['tipo_de_cambio'],
+    			'total_dolar' => $total/$data[0]['tipo_de_cambio'],
     			'percent' => round(($data[0][$sector.'_insecticida']*100)/$total),
     		);
 
