@@ -1728,14 +1728,12 @@ $(document).ready(function () {
     }
 
     $('#back-market').click(function(e){
-        chartMarketPie2.dataProvider = [];
+        chartMarketPie2.allLabels[0].text = " ";
         chartMarketPie2.validateData();
-        chartMarketPie2.animateAgain();
 
-        chartMarketPie.dataProvider = [];
+        chartMarketPie.allLabels[0].text = " ";
         chartMarketPie.allLabels[0].size = 20;
         chartMarketPie.validateData();
-        chartMarketPie.animateAgain();
 
         $('.select-market select').val("");
 
