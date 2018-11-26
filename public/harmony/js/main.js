@@ -1972,10 +1972,10 @@ $(document).ready(function () {
             if( chartMarketPie2.dataProvider.length > 0) total1 = chartMarketPie2.dataProvider[0].total_dolar;
 
             //serial
-            chartMarketSerial.graphs[0].valueField = 'projection_dol';
-            chartMarketSerial.graphs[1].valueField = 'pro_total_dol';
-            chartMarketSerial.graphs[1].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon_dol]] <br> <b>PROCCYT:</b> $[[pro_total_ballon_dol]] <br> <b>Total:</b> $[[suma_dol]] <br> <b>Exchange:</b> $[[exchange]]';
-            //chartMarketSerial.graphs[2].valueField = 'umf_total_dol';
+            //chartMarketSerial.graphs[0].valueField = 'projection_dol';
+            chartMarketSerial.graphs[0].valueField = 'pro_total_dol';
+            chartMarketSerial.graphs[0].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon_dol]] <br> <b>PROCCYT:</b> $[[pro_total_ballon_dol]] <br> <b>Total:</b> $[[suma_dol]] <br> <b>Exchange:</b> $[[exchange]]';
+            chartMarketSerial.graphs[1].valueField = 'umf_total_dol';
             //chartMarketSerial.graphs[2].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon_dol]] <br> <b>PROCCYT:</b> $[[pro_total_ballon_dol]] <br> <b>Total:</b> $[[suma_dol]] <br> <b>Exchange:</b> $[[exchange]]';
             chartMarketSerial.valueAxes[0].totalText = '[[round_suma_dol]]';
 
@@ -1997,10 +1997,10 @@ $(document).ready(function () {
             if( chartMarketPie2.dataProvider.length > 0) total1 = chartMarketPie2.dataProvider[0].total;
 
             //serial
-            chartMarketSerial.graphs[0].valueField = 'projection';
-            chartMarketSerial.graphs[1].valueField = 'pro_total';
-            chartMarketSerial.graphs[1].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon]] <br> <b>PROCCYT:</b> $[[pro_total_ballon]] <br> <b>Total:</b> $[[suma]]';
-            //chartMarketSerial.graphs[2].valueField = 'umf_total';
+            //chartMarketSerial.graphs[0].valueField = 'projection';
+            chartMarketSerial.graphs[0].valueField = 'pro_total';
+            chartMarketSerial.graphs[0].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon]] <br> <b>PROCCYT:</b> $[[pro_total_ballon]] <br> <b>Total:</b> $[[suma]]';
+            chartMarketSerial.graphs[1].valueField = 'umf_total';
             //chartMarketSerial.graphs[2].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon]] <br> <b>PROCCYT:</b> $[[pro_total_ballon]] <br> <b>Total:</b> $[[suma]]';
             chartMarketSerial.valueAxes[0].totalText = '[[round_suma]]';
 
