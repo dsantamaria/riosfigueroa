@@ -3,7 +3,7 @@
 @section('content')
 <div class="col-md-12">
     <h2 class="page-title">Análisis Histórico</h2>
-    <div class="col-md-offset-3 col-md-9 padd-left-44" style="font-size: 30px;">Análisis Trimestral de Importaciones</div>
+    <div class="col-md-offset-3 col-md-9 padd-left-44" style="font-size: 30px;">Análisis Trimestral de Importaciones</div>-
     <div class="col-md-3">
         {!! Form::open(['route' => 'saveImage','files' => true, 'class' => 'form-horizontal padd-30px', 'id' => 'form-graph-analisis-historic', 'method' => 'POST']) !!}
             <div class="form-group">
@@ -43,7 +43,7 @@
             </div>
         {!! Form::close() !!}
     </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
         <div class="chart-container" style="position: relative;">
             <canvas id="chartAnalisisHistorico"></canvas>
         </div>

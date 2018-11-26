@@ -24,18 +24,48 @@
         </div>
     </div>
 
-    <div class="col-md-4 hidden go-back no-padding" id="back-market">
-        <button> <i class="fa fa-arrow-circle-left"></i> Regresar al Mercado Total</button>
+    <div class="row">
+        <div class="col-md-12 hidden" id="market-nav">
+            <div class="col-md-4 go-back no-padding" id="back-market">
+                <button> <i class="fa fa-arrow-circle-left"></i> Regresar al Mercado Total</button>
+            </div>
+
+            <div class="col-md-8 no-padding">
+                <div class="checkbox checkbox-primary col-md-12 no-padding" id="market-vs">
+                    <input type="checkbox" id="market-checkbox">
+                    <label for="market-checkbox">Comparar Vs Valores Personalizados</label>
+                </div>
+
+                <div class="col-md-5 col-sm-offset-7 select-market no-padding">
+                    <select class="form-control">
+                        <option class="first-market-option" value="">Comparar Vs Año</option>
+                        @foreach($years as $year)
+                            <option value="{{ $year }}">{{ $year }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-12 no-padding hidden" id="vs-all">
+                    <div class="form-group col-md-2 col-md-offset-2" id="vs-insecticida">
+                        <input type="number" class="form-control" placeholder="Insecticida Usuario">
+                    </div>
+                    <div class="form-group col-md-2" id="vs-herbicida">
+                        <input type="number" class="form-control" placeholder="Herbicida Usuario">
+                    </div>
+                    <div class="form-group col-md-2" id="vs-fungicida">
+                        <input type="number" class="form-control" placeholder="Fungicida Usuario">
+                    </div>
+                    <div class="form-group col-md-2" id="vs-otros">
+                        <input type="number" class="form-control" placeholder="Otros Usuario">
+                    </div>
+                    <div class="form-group col-md-2" id="vs-total">
+                        <input type="number" class="form-control" placeholder="Usuario Total">
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="col-md-3 col-md-offset-5 select-market hidden no-padding">
-        <select class="form-control">
-            <option class="first-market-option" value="">Comparar Vs Año</option>
-            @foreach($years as $year)
-                <option value="{{ $year }}">{{ $year }}</option>
-            @endforeach
-        </select>
-    </div>
     <div class="col-md-12 main-market" style="height: 620px">
         <div class="hidden col-sm-12" id="market-graph" style="height: 100%;"></div>
         <div class="hidden col-sm-6" id="market-graph-3" style="height: 100%;"></div>

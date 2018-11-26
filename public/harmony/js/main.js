@@ -1,6 +1,11 @@
 var chartBar;
+var chartImport;
 var chartMarketPie;
 var chartMarketSerial;
+
+Array.prototype.clone = function(){
+    return this.slice(0)
+}
 
 $(document).ready(function () {
 	 
@@ -476,6 +481,7 @@ $(document).ready(function () {
     //###############################################################################################################
     //##################################### Incio Graficas Analisis Importacionjes ##################################
     //###############################################################################################################
+    
     var Toneladas_trimestre = [];
     var Unit = '';
     var formatter = new Intl.NumberFormat('en-US', {
@@ -483,6 +489,7 @@ $(document).ready(function () {
         currency: 'USD',
         minimunFractionDigits: 2,
     });
+    
     if(document.getElementById('chartAnalisisHistorico') !== null){
         var ctx = document.getElementById('chartAnalisisHistorico').getContext('2d');
         var tons = {'T1': 1, 'T2': 2, 'T3': 3, 'T4': 4};
@@ -596,7 +603,7 @@ $(document).ready(function () {
                                     // Make sure alignment settings are correct
                                     var text = 'Sin Importaciones Registradas';
                                     ctx.textAlign = 'left';
-                                    ctx.fillStyle = dataset.backgroundColor[0];/*'rgb(100, 211, 255)'  'rgb(189, 149, 243)'*/;
+                                    ctx.fillStyle = dataset.backgroundColor[0];
                                     ctx.fillText(text, 35, position.y);
                                 }
                             }
@@ -695,6 +702,7 @@ $(document).ready(function () {
                     type: "GET",
                     url: '/updateAnalysisHistoric/'+ ingrediente.val() + '/' + year.val(),
                     success: function( data ) {
+                        console.log(data);
                         var unidad = data['unit'] == 'kilogramo' ? ' Tons' : ' Litros';
                         addData(chart, data['precio_prom_mes'], data['volumen_mes'], data['trimestres'], data['unit']);
                         $('#importaciones_precio_total').text(formatter.format(data['precio_total_prom']).replace('$', ''));
@@ -703,7 +711,315 @@ $(document).ready(function () {
                 });
             }
         });
+        
     }
+
+
+    /*
+    AmCharts.ready(function () {
+        chartImport = new AmCharts.AmSerialChart();
+        chartImport.balloon = {
+            "fillAlpha": 1,
+            "enabled": false
+        };
+        chartImport.backgroundColor = "#000000";
+        chartImport.backgroundAlpha = 0.1;
+        /*chartImport.categoryAxis = {
+            "labelFunction": function(valueText, serialDataItem, categoryAxis){
+                return serialDataItem.dataContext.tri;
+            },
+            'fontSize': 14,
+            'boldLabels': true,
+        }
+        chartImport.categoryField = "title",
+        
+        chartImport.creditsPosition = "top-right";
+        chartImport.columnWidth = 0.5;
+        chartImport.dataProvider = [
+            {
+                'value': 5,
+                'label_t1': '5',
+                'title': 'T1',
+                'color':'#ffffff',
+                'volumen': 100,
+            },
+            {
+                'value2': 4,
+                'value': 5,
+                'label_t2': '4',
+                'title': 'T2',
+                'color':'#ffffff',
+                'volumen': 101,
+            },
+            {
+                'value3': 3,
+                'value': 5,
+                'value2': 4,
+                'label_t3': '3',
+                'title': 'T3',
+                'color':'#ffffff',
+                'volumen': 102,
+            },
+            {
+                'value4': 2,
+                'value': 5,
+                'value2': 4,
+                'value3': 3,
+                'label_t4': '2',
+                'title': 'T4',
+                'color':'#ffffff',
+                'volumen': 102,
+            },
+
+            
+            {
+                'value': 5,
+                'label_t1': '5',
+                'title': 'T1',
+                'color':'#ffffff',
+                'volumen': 100,
+            },
+            {
+                'value2': 4,
+                'value': 5,
+                'label_t2': '4',
+                'title': 'T2',
+                'color':'#ffffff',
+                'volumen': 101,
+            },
+            {
+                'value3': 3,
+                'value': 5,
+                'value2': 4,
+                'label_t3': '3',
+                'title': 'T3',
+                'color':'#ffffff',
+                'volumen': 102,
+            },
+            {
+                'value4': 2,
+                'value': 5,
+                'value2': 4,
+                'value3': 3,
+                'label_t4': '2',
+                'title': 'T4',
+                'color':'#ffffff',
+                'volumen': 102,
+            },
+        ];
+        chartImport.fontFamily = "Roboto, Helvetica Neue, Helvetica, Arial, sans-serif";
+        //chartImport.fontSize = 20;
+        chartImport.graphs = [
+            {
+                "type": 'column',
+                "valueField": 'value',
+                'fillAlphas': 1,
+                'lineColor': '#02881f',
+                'fontSize': 18,
+                'labelColorField': 'color',
+                'labelText': '[[label_t1]]',
+                'labelPosition': 'left'
+            },
+            {
+                "type": 'column',
+                "valueField": 'value2',
+                'fillAlphas': 1,
+                'lineColor': '#1c24d8',
+                'fontSize': 18,
+                'labelColorField': 'color',
+                'labelText': '[[label_t2]]',
+                'labelPosition': 'left'
+            },
+            {
+                "type": 'column',
+                "valueField": 'value3',
+                'fillAlphas': 1,
+                'lineColor': '#ff9800',
+                'fontSize': 18,
+                'labelColorField': 'color',
+                'labelText': '[[label_t3]]',
+                'labelPosition': 'left'
+            },
+            {
+                "type": 'column',
+                "valueField": 'value4',
+                'fillAlphas': 1,
+                'lineColor': '#fb1818',
+                'fontSize': 18,
+                'labelColorField': 'color',
+                'labelText': '[[label_t4]]',
+                'labelPosition': 'left'
+            },
+
+
+            {
+                "type": 'column',
+                "valueField": 'value',
+                'fillAlphas': 1,
+                'lineColor': '#02881f',
+                'fontSize': 18,
+                'labelColorField': 'color',
+                'labelText': '[[label_t1]]',
+                'labelPosition': 'left',
+                'newStack': true
+            },
+            {
+                "type": 'column',
+                "valueField": 'value2',
+                'fillAlphas': 1,
+                'lineColor': '#1c24d8',
+                'fontSize': 18,
+                'labelColorField': 'color',
+                'labelText': '[[label_t2]]',
+                'labelPosition': 'left'
+            },
+            {
+                "type": 'column',
+                "valueField": 'value3',
+                'fillAlphas': 1,
+                'lineColor': '#ff9800',
+                'fontSize': 18,
+                'labelColorField': 'color',
+                'labelText': '[[label_t3]]',
+                'labelPosition': 'left'
+            },
+            {
+                "type": 'column',
+                "valueField": 'value4',
+                'fillAlphas': 1,
+                'lineColor': '#fb1818',
+                'fontSize': 18,
+                'labelColorField': 'color',
+                'labelText': '[[label_t4]]',
+                'labelPosition': 'left'
+            },
+        ];
+
+        chartImport.listeners = [{
+            "event": "drawn",
+            //"method": downLabel,
+        }];
+
+        chartImport.rotate =  true;
+        chartImport.startAlpha = 0.8;
+        chartImport.startDuration = 0.5;
+        chartImport.startEffect = "easeOutSine";
+
+        chartImport.titles = [{
+            "text": "Analísis Trimestral de Importaciones",
+            'size': 20,
+            'bold': true
+        }];
+
+        chartImport.type = "serial";
+        chartImport.valueAxes = [{
+            "stackType": "regular",
+        }];
+        
+        chartImport.write('bar-import');
+
+        function downLabel(e){
+            let bars = e.chart.categoryAxis.chart.graphs;
+            console.log(bars);
+            if('columnWidth' in bars[1].lastDataItem){
+                console.log(bars[1].lastDataItem);
+                chartImport.clearLabels();
+                let t1_w = bars[0].lastDataItem.columnWidth;
+                let t2_w = bars[1].lastDataItem.columnWidth;
+                let t3_w = bars[2].lastDataItem.columnWidth;
+                let t4_w = bars[3].lastDataItem.columnWidth;
+                let vol_1 = bars[0].data[0].dataContext.volumen;
+                let vol_2 = bars[1].data[1].dataContext.volumen;
+                let vol_3 = bars[2].data[2].dataContext.volumen;
+                let vol_4 = bars[3].data[3].dataContext.volumen;
+                chartImport.addLabel(t1_w + 43, 153, vol_1, 'right', 16, '#000000', 0, 1, true);
+                chartImport.addLabel(t1_w + t2_w + 43, 279, vol_2, 'right', 16, '#000000', 0, 1, true);
+                chartImport.addLabel(t1_w + t2_w + t3_w + 43, 405, vol_3, 'right', 16, '#000000', 0, 1, true);
+                chartImport.addLabel(t1_w + t2_w + t3_w + t4_w + 43, 531, vol_4, 'right', 16, '#000000', 0, 1, true);
+            }
+        }
+    });*/
+
+    /*
+    $('#analisisCategoriasHistorico').change(function(e){
+        var categoria_id = $(this).val();
+        var ingrediente_select = $('#selectAnalisisIngredienteHistorico');
+        ingrediente_select.empty();
+        $('#selectAnalisisYearHistorico').empty();
+        $.ajax({
+            type: "GET",
+            url: '/getIngredientes/'+ categoria_id,
+            success: function( data ) {
+                if(data['years'] != []) ingrediente_select.append($('<option></option>').attr('value', 'empty').text('Lista de Ingrediente'));
+                Object.keys(data['ingredientes']).forEach(function(key){
+                    ingrediente_select.append($('<option></option>').attr('value', key).text(data['ingredientes'][key]));
+                });
+            }
+        });
+    })
+
+    $('#selectAnalisisIngredienteHistorico').change(function(e){
+        var year_select = $('#selectAnalisisYearHistorico, #selectAnalisisYearHistorico2');
+        var ingrediente_select = $('#selectAnalisisIngredienteHistorico').val();
+        year_select.empty();
+        $.ajax({
+            type: "GET",
+            url: '/getYears/'+ ingrediente_select,
+            success: function( data ) {
+                if(data['years'] != []) year_select.append($('<option>Ingredientes</option>').attr('value', 'empty').text('Año'));
+                data['years'].forEach(function(e){
+                    year_select.append($('<option></option>').attr('value', e).text(e));
+                });
+            }
+        });
+    });
+
+    $('#import-checkbox').change(function(){
+        let one_c = $('#form-graph-analisis-historic .form-group:nth-child(2)');
+        let sec_c = $('#form-graph-analisis-historic .form-group:nth-child(3)');
+        let thi_c = $('#form-graph-analisis-historic .form-group:nth-child(4)');
+        let fou_c = $('#vs-text-import');
+        let fiv_c = $('#form-graph-analisis-historic .form-group:last-child');
+        if($(this).prop('checked')){
+            one_c.addClass('col-md-offset-1 col-md-3').removeClass('col-md-4');
+            sec_c.addClass('col-md-3').removeClass('col-md-4');
+            thi_c.addClass('col-md-2').removeClass('col-md-4');
+            fou_c.removeClass('hidden');
+            fiv_c.removeClass('hidden');
+        }else{
+            one_c.removeClass('col-md-offset-1 col-md-3').addClass('col-md-4');
+            sec_c.removeClass('col-md-3').addClass('col-md-4');
+            thi_c.removeClass('col-md-2').addClass('col-md-4');
+            fou_c.addClass('hidden');
+            fiv_c.addClass('hidden');
+        }
+    })
+
+    $('#selectAnalisisYearHistorico').change(function(e){
+        e.preventDefault();
+        var ingrediente = $('#selectAnalisisIngredienteHistorico');
+        var year = $('#selectAnalisisYearHistorico');
+        if(year.val() != 'empty'){
+            $.ajax({
+                type: "GET",
+                url: '/updateAnalysisHistoric/'+ ingrediente.val() + '/' + year.val(),
+                success: function( data ) {
+                    chartImport.dataProvider = data['provider'];
+                    let unidad = data['unit'] == 'kilogramo' ? 'Kg' : 'Litros';
+                    $('#importaciones_precio_total').text(data['precio_total_prom']);
+                    $('#imp_kg_lt').text(unidad);
+                    $('#import-extras').removeClass('hidden');
+                    $('#importaciones_volumen_total').text(data['volumen_total']);
+                    chartImport.graphs[0]['labelPosition'] = data['provider'][0]['value']  == 0 ? 'right' : 'left';
+                    chartImport.graphs[1]['labelPosition'] = data['provider'][1]['value2'] == 0 ? 'right' : 'left';
+                    chartImport.graphs[2]['labelPosition'] = data['provider'][2]['value3'] == 0 ? 'right' : 'left';
+                    chartImport.graphs[3]['labelPosition'] = data['provider'][3]['value4'] == 0 ? 'right' : 'left';
+                    chartImport.validateData();
+                    chartImport.animateAgain();
+                }
+            });
+        }
+    })*/
     //##############################################################################################################
     //########################################### Fin Graficas #####################################################
     //############################################################################################################## 
@@ -1386,7 +1702,7 @@ $(document).ready(function () {
         chartMarketPie.addListener("drawn", function (event) {
             let status = $('#market-convert').attr('status');
             $('.amcharts-pie-label').each(function(key, e){
-                if(key < 4){
+                if(key < chartMarketPie.dataProvider.length){
                     let percent = event.chart.dataProvider[key].percent;
                     let sector = event.chart.dataProvider[key].title;
                     value = status == "pes" ? event.chart.dataProvider[key].legend_dolar : event.chart.dataProvider[key].value_label;
@@ -1404,7 +1720,7 @@ $(document).ready(function () {
             let status = $('#market-convert').attr('status');
             let x = 0;
             $('.amcharts-pie-label').each(function(key, e){
-                if(key > 3){
+                if(key > chartMarketPie.dataProvider.length - 1){
                     let percent = event.chart.dataProvider[x].percent;
                     let sector = event.chart.dataProvider[x].title;
                     value = status == "pes" ? event.chart.dataProvider[x].legend_dolar : event.chart.dataProvider[x].value_label;
@@ -1429,7 +1745,8 @@ $(document).ready(function () {
             chartObject.backgroundAlpha = 0;
             chartObject.backgroundColor = "#FFFFFF";
             chartObject.balloon = {
-                "fillAlpha": 0.5
+                "fillAlpha": 0.5,
+                'enabled': false
             }
             chartObject.balloonText = "[[title]]<br><span style='font-size:14px'><b>$[[value]]</b> ([[percents]]%)</span>";
             chartObject.colorField = 'color';
@@ -1440,8 +1757,18 @@ $(document).ready(function () {
             chartObject.gradientRatio = [0.3, 0, -0.3];
             chartObject.innerRadius = "50%";
             chartObject.labelFunction = function(slice){
-                if(slice.dataContext.title == "Otros" || slice.dataContext.title == "Herbicida") slice.labelRadius = 50;
+                slice.labelRadius = 25;
                 slice.labelColor = slice.color;
+                if(slice.dataContext.title.includes('Otros Usuario')){
+                    slice.labelColor = '#524802'; 
+                    slice.labelRadius = -50;
+                } 
+                if(slice.dataContext.title.includes('none')) slice.alpha = 0;
+                if(slice.dataContext.title.includes('Total Usuario')) {
+                    slice.labelColor = '#412aff';
+                    slice.labelRadius = -60;
+                }
+                if(slice.dataContext.title == "Otros" || slice.dataContext.title == "Herbicida") slice.labelRadius = 50;
                 return "a";
             }
             chartObject.labelRadius = 25;
@@ -1567,7 +1894,7 @@ $(document).ready(function () {
 
         chartMarketSerial.valueAxes = [{
             "stackType": "regular",
-            "totalText": "$[[round_suma]]",
+            "totalText": "[[round_suma]]",
         }];
 
         chartMarketSerial.write('market-graph-2');
@@ -1585,7 +1912,7 @@ $(document).ready(function () {
 
             if(sector == 'umf' || sector == 'pro'){
                 $('#market-graph-2, #market-legend-2, .radio-market').addClass('hidden');
-                $('#market-graph, #market-current, #back-market, #market-legend, .select-market').removeClass('hidden');
+                $('#market-graph, #market-current, #market-legend, #market-nav').removeClass('hidden');
                 $.ajax({
                     type: "POST",
                     url: '/market_year_update',
@@ -1594,6 +1921,7 @@ $(document).ready(function () {
                         'sector': sector
                     },
                     success: function( data ) {
+                        current_provider = data['chartData'];
                         $('#market-current span').text(data['exchange']);
                         $('#market-year').text(year);
                         chartMarketPie.dataProvider = data['chartData'];
@@ -1618,6 +1946,7 @@ $(document).ready(function () {
                 'sector': sector
             },
             success: function( data ) {
+                console.log(data);
                 $('#market-graph, #market-current, #market-legend').addClass('hidden');
                 $('#market-process-exchange, #market-graph-2').removeClass('hidden');
                 chartMarketSerial.dataProvider = data['chartData'];
@@ -1632,8 +1961,10 @@ $(document).ready(function () {
 
     $('#market-convert').click(function(e){
         let status = $(this).attr('status');
+        let exchange = parseFloat($('#market-current span:nth-child(2)').text());
         let total = 0;
         let total1 = 0;
+
         if(status == 'dol'){
             //pie
             if( chartMarketPie.dataProvider.length > 0) chartMarketPie.valueField = "value_dolar";
@@ -1641,11 +1972,20 @@ $(document).ready(function () {
             if( chartMarketPie2.dataProvider.length > 0) total1 = chartMarketPie2.dataProvider[0].total_dolar;
 
             //serial
-            chartMarketSerial.graphs[0].valueField = 'pro_total_dol';
-            chartMarketSerial.graphs[0].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon_dol]] <br> <b>PROCCYT:</b> $[[pro_total_ballon_dol]] <br> <b>Total:</b> $[[suma_dol]] <br> <b>Exchange:</b> $[[exchange]]';
-            chartMarketSerial.graphs[1].valueField = 'umf_total_dol';
+            chartMarketSerial.graphs[0].valueField = 'projection_dol';
+            chartMarketSerial.graphs[1].valueField = 'pro_total_dol';
             chartMarketSerial.graphs[1].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon_dol]] <br> <b>PROCCYT:</b> $[[pro_total_ballon_dol]] <br> <b>Total:</b> $[[suma_dol]] <br> <b>Exchange:</b> $[[exchange]]';
-            chartMarketSerial.valueAxes[0].totalText = '$[[round_suma_dol]]';
+            chartMarketSerial.graphs[2].valueField = 'umf_total_dol';
+            chartMarketSerial.graphs[2].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon_dol]] <br> <b>PROCCYT:</b> $[[pro_total_ballon_dol]] <br> <b>Total:</b> $[[suma_dol]] <br> <b>Exchange:</b> $[[exchange]]';
+            chartMarketSerial.valueAxes[0].totalText = '[[round_suma_dol]]';
+
+            //vs personalizados
+            if($('#market-checkbox').prop('checked')){
+                $('#vs-all input').each(function(){
+                    let val = $(this).val();
+                    if(val != '') $(this).val((val/exchange).toFixed(2));
+                })
+            }
 
             $(this).attr('status', 'pes');
             $(this).text('Convertir a Pesos');
@@ -1657,18 +1997,27 @@ $(document).ready(function () {
             if( chartMarketPie2.dataProvider.length > 0) total1 = chartMarketPie2.dataProvider[0].total;
 
             //serial
-            chartMarketSerial.graphs[0].valueField = 'pro_total';
-            chartMarketSerial.graphs[0].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon]] <br> <b>PROCCYT:</b> $[[pro_total_ballon]] <br> <b>Total:</b> $[[suma]]';
-            chartMarketSerial.graphs[1].valueField = 'umf_total';
+            chartMarketSerial.graphs[0].valueField = 'projection';
+            chartMarketSerial.graphs[1].valueField = 'pro_total';
             chartMarketSerial.graphs[1].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon]] <br> <b>PROCCYT:</b> $[[pro_total_ballon]] <br> <b>Total:</b> $[[suma]]';
-            chartMarketSerial.valueAxes[0].totalText = '$[[round_suma]]';
+            chartMarketSerial.graphs[2].valueField = 'umf_total';
+            chartMarketSerial.graphs[2].balloonText = '<b>UMFFAAC:</b> $[[umf_total_ballon]] <br> <b>PROCCYT:</b> $[[pro_total_ballon]] <br> <b>Total:</b> $[[suma]]';
+            chartMarketSerial.valueAxes[0].totalText = '[[round_suma]]';
+
+            //vs personalizados
+            if($('#market-checkbox').prop('checked')){
+                $('#vs-all input').each(function(){
+                    let val = $(this).val();
+                    if(val != '') $(this).val((val*exchange).toFixed(2));
+                })
+            }
 
             $(this).attr('status', 'dol');
             $(this).text('Convertir a Dolares');
             $('#market-dol').text('Precios Reflejados en Pesos Mexicanos');
         }
 
-        chartMarketPie2.allLabels[0].text = formatter_1.format(total1)
+        chartMarketPie2.allLabels[0].text = $('#market-checkbox').prop('checked') ? "" : formatter_1.format(total1);
         chartMarketPie2.validateData();
 
         chartMarketPie.allLabels[0].text = formatter_1.format(total);
@@ -1711,7 +2060,7 @@ $(document).ready(function () {
                 "title": title_1,
                 "lineColor": color_1,
                 "valueField": "pro_total"+pes_dol,
-                "fillAlphas": 0.8,
+                "fillAlphas": 0.65,
                 "labelText": "[[pro_percent]]%",
                 "balloonText": "<b>"+title_2+":</b> $[[umf_total_ballon"+pes_dol+"]] <br> <b>"+title_1+":</b> $[[pro_total_ballon"+pes_dol+"]] <br> <b>Total:</b> $[[suma"+pes_dol+"]]",
             },
@@ -1720,7 +2069,7 @@ $(document).ready(function () {
                 "title": title_2,
                 "lineColor": color_2,
                 "valueField": "umf_total"+pes_dol,
-                "fillAlphas": 0.8,
+                "fillAlphas": 0.65,
                 "labelText": "[[umf_percent]]%",
                 "balloonText": "<b>"+title_2+":</b> $[[umf_total_ballon"+pes_dol+"]] <br> <b>"+title_1+":</b> $[[pro_total_ballon"+pes_dol+"]] <br> <b>Total:</b> $[[suma"+pes_dol+"]]",
             },
@@ -1735,16 +2084,169 @@ $(document).ready(function () {
         chartMarketPie.allLabels[0].text = " ";
         chartMarketPie.dataProvider = [];
         chartMarketPie.allLabels[0].size = 20;
+        chartMarketPie2.titles[0].text = "";
+        chartMarketPie2.innerRadius = "50%";
+        chartMarketPie2.radius = 25;
+        chartMarketPie2.outlineAlpha = 0.5;
+        chartMarketPie2.depth3D = 15;
         chartMarketPie.validateData();
 
         $('.select-market select').val("");
 
+        $('#market-checkbox').prop('checked', false);
+
+        $('#vs-all input').val('');
+
         $('#market-graph').removeClass('col-sm-6').addClass('col-sm-12');
-        $('#market-graph-2, .radio-market, #market-legend-2').removeClass('hidden');
-        $('#market-graph, #market-current, #market-current-2, #back-market, #market-legend, #market-graph-3, .select-market').addClass('hidden');
+        $('#market-graph-2, .radio-market, #market-legend-2, .select-market').removeClass('hidden');
+        $('#market-graph, #market-current, #market-current-2, #market-nav, #market-legend, #market-graph-3, #vs-all').addClass('hidden');
+        $('#market-graph-3').addClass('col-sm-6').removeClass('col-sm-12 abosulte-market-3');
         chartMarketPie.radius = "35%";
     })
+
+    $('#market-checkbox').change(function(){
+
+        chartMarketPie2.allLabels[0].text = " ";
+        chartMarketPie2.dataProvider = [];
+        chartMarketPie2.titles[0].text = "";
+        chartMarketPie2.innerRadius = "50%";
+        chartMarketPie2.radius = 25;
+        chartMarketPie2.outlineAlpha = 0.5;
+        chartMarketPie2.depth3D = 15;
+        chartMarketPie2.validateData();
+
+        chartMarketPie.dataProvider = current_provider;
+        chartMarketPie.allLabels[0].size = 20;
+        chartMarketPie.radius = "35%";
+        chartMarketPie.validateData();
+
+        $('#market-legend').css('top', 480)
+
+        $('#market-graph').removeClass('col-sm-6').addClass('col-sm-12');
+        $('.select-market select').val("");
+        $('#market-current-2').addClass('hidden');
+
+        $('#vs-all input').each(function(){
+            $(this).val('')
+        })
+
+        if($(this).prop('checked')){
+            chartMarketPie2.innerRadius = "95%";
+            chartMarketPie2.radius = "27%";
+            chartMarketPie2.outlineAlpha = 0;
+            chartMarketPie2.depth3D = 0;
+            $('#market-graph-3').removeClass('hidden col-sm-6').addClass('col-sm-12 abosulte-market-3');
+            $('#vs-all').removeClass('hidden');
+            $('.select-market').addClass('hidden');
+        }else{
+            $('#market-graph-3').addClass('hidden col-sm-6').removeClass('col-sm-12 abosulte-market-3');
+            $('#vs-all').addClass('hidden');
+            $('.select-market').removeClass('hidden');
+        }
+    })
     
+    $('#vs-insecticida input, #vs-herbicida input, #vs-fungicida input, #vs-otros input').keyup(function(e){
+        let val_ins = parseFloat($('#vs-insecticida input').val());
+        let val_her = parseFloat($('#vs-herbicida input').val());
+        let val_fun = parseFloat($('#vs-fungicida input').val());
+        let val_otr = parseFloat($('#vs-otros input').val());
+        let new_provider = JSON.parse(JSON.stringify(current_provider));
+        let pos_gra = 1;
+        let legend_pos = 480;
+
+        if(!isNaN(val_ins)){
+            new_provider = user_values_market(new_provider, 0, pos_gra, val_ins, '#ff7042', 'Insecticida');
+            pos_gra = pos_gra + 1;
+            legend_pos = legend_pos - 35;
+        }
+        pos_gra = pos_gra + 1;
+
+        if(!isNaN(val_her)){
+            new_provider = user_values_market(new_provider, 1, pos_gra, val_her, '#64e669', 'Herbicida');
+            pos_gra = pos_gra + 1;
+            legend_pos = legend_pos - 35;
+        }
+        pos_gra = pos_gra + 1;
+
+        if(!isNaN(val_fun)){
+            new_provider = user_values_market(new_provider, 2, pos_gra, val_fun, '#bd5ada', 'Fungicida');
+            pos_gra = pos_gra + 1;
+            legend_pos = legend_pos - 35;
+        }
+        pos_gra = pos_gra + 1;
+
+        if(!isNaN(val_otr)){
+            new_provider = user_values_market(new_provider, 3, pos_gra, val_otr, '#e4d653', 'Otros');
+            legend_pos = legend_pos - 35;
+        }
+
+        $('#market-legend').css('top', legend_pos)
+        chartMarketPie.dataProvider = new_provider;
+        chartMarketPie.validateData();
+    });
+
+    $('#vs-total input').keyup(function(e){
+        let val_total = parseFloat($(this).val());
+        let exchange = parseFloat($('#market-current span:nth-child(2)').text());
+        let val_dol = parseFloat((val_total/exchange).toFixed(2));
+        let total = current_provider[0].total;
+        let total_dol = current_provider[0].total_dolar;
+
+        let percent = Math.round((val_total*100)/total);
+
+        let provider = [
+            {
+                'color': '#412aff',
+                'percent': percent,
+                'title': 'Total' + ' Usuario',
+                'value': val_total,
+                'value_dolar': val_dol,
+                'value_label': formatter_1.format(val_total).replace('$', ''),
+                'legend_dolar': formatter_1.format(val_dol).replace('$', '')
+            },
+            {
+                'color': 'rgba(255,255,255,0)',
+                'percent': 30,
+                'title': 'none',
+                'value': total - val_total,
+                'value_dolar': total_dol - val_dol,
+                'value_label': "",
+                'legend_dolar': ""
+            },
+
+        ];
+
+        chartMarketPie2.dataProvider = provider;
+        chartMarketPie2.validateData();
+        chartMarketPie.validateData();
+    });
+
+    function user_values_market(new_provider, pos, pos_gra, val, color, name){
+        let exchange = parseFloat($('#market-current span:nth-child(2)').text());
+        let status = $('#market-convert').attr('status');
+        let val_dol = parseFloat((val/exchange).toFixed(2));
+        let percent = Math.round((val*100)/current_provider[pos].value);
+        if(status == 'pes'){
+            val_dol = val;
+            val = parseFloat((val*exchange).toFixed(2));
+            percent = Math.round((val_dol*100)/current_provider[pos].value_dolar);
+        }
+        let test = {
+            'color': color,
+            'percent': percent,
+            'title': name + ' Usuario',
+            'value': val,
+            'value_dolar': val_dol,
+            'value_label': formatter_1.format(val).replace('$', ''),
+            'legend_dolar': formatter_1.format(val_dol).replace('$', '')
+        };
+        new_provider[pos_gra-1].value = current_provider[pos].value - val;
+        new_provider[pos_gra-1].value_dolar = current_provider[pos].value_dolar - val_dol;
+        new_provider.splice(pos_gra, 0, test);
+
+        return new_provider;
+    }
+
     ////////////////////////////////////////////// Fin Market Values ////////////////////////////////////////////
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////    
 
@@ -1753,5 +2255,5 @@ $(document).ready(function () {
 var formatter_1 = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
-    minimunFractionDigits: 2,
+    minimunFractionDigits: 1,
 });

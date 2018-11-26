@@ -235,7 +235,44 @@ class GraphicsController extends Controller
     }
 
     public function updateAnalysisHistoric($ingrediente_id, $year){
+    	
     	$ingredient_data = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->orderBy('trimestre')->get();
+    	/*
+    	$provider = [];
+    	$volumen_total = 0;
+    	$precios = [];
+
+    	$t1 = $ingredient_data[0]['price'];
+    	$t2 = $ingredient_data[1]['price'];
+    	$t3 = $ingredient_data[2]['price'];
+    	$t4 = $ingredient_data[3]['price'];
+
+    	if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'kilogramo' : 'Litro';
+
+    	$provider[0] = $t1 > 0 ? array('value' => $t1, 'label_t1' => '$'.number_format($t1, 2, '.', ''), 'tri' => 'T1', 'color' => '#ffffff') : 
+    							 array('value' => 0, 'label_t1' => 'Sin Importaciones Registradas', 'tri' => 'T1', 'color' => '#02881f');
+
+    	$provider[1] = $t2 > 0 ? array('value' => $t1, 'value2' => $t2, 'label_t2' => '$'.number_format($t2, 2, '.', ''), 'tri' => 'T2', 'color' => '#ffffff') : 
+    							 array('value2' => 0, 'label_t2' => 'Sin Importaciones Registradas', 'tri' => 'T2', 'color' => '#1c24d8');
+
+    	$provider[2] = $t3 > 0 ? array('value' => $t1, 'value2' => $t2, 'value3' => $t3, 'label_t3' => '$'.number_format($t3, 2, '.', ''), 'tri' => 'T3', 'color' => '#ffffff') : 
+    							 array('value3' => 0, 'label_t3' => 'Sin Importaciones Registradas', 'tri' => 'T3', 'color' => '#ff9800');
+
+    	$provider[3] = $t4 > 0 ? array('value' => $t1, 'value2' => $t2, 'value3' => $t3, 'value4' => $t4, 'label_t4' => '$'.number_format($t4, 2, '.', ''), 'tri' => 'T4', 'color' => '#ffffff') : 
+    							 array('value4' => 0, 'label_t4' => 'Sin Importaciones Registradas', 'tri' => 'T4','color' => '#fb1818');
+
+    	foreach ($ingredient_data as $key => $row) {
+    		$provider[$key]['volumen'] = $unit == 'kilogramo' ? number_format(($row->amount/1000), 2, '.', ',').' Tons' : number_format($row->amount, 2, '.', ',').' Litros';
+    		$volumen_total = $volumen_total + $row->amount;
+    		if($row->price != 0.00) array_push($precios, $row->price);
+    	}
+
+    	$precio_total_prom = round((array_sum($precios)/count($precios)), 2);
+    	$volumen_total = $unit == 'kilogramo' ? number_format(($volumen_total/1000), 2, '.', ',').' Tons' : number_format($volumen_total, 2, '.', ',').' Litros';
+
+    	return response()->json(array('provider' => $provider, 'volumen_total' => $volumen_total, 'precio_total_prom' => $precio_total_prom, 'unit' => $unit));
+    	*/
+    	
     	$volumen_total = 0;
     	$precio_total = 0;
     	$volumen_mes = [];
@@ -255,6 +292,7 @@ class GraphicsController extends Controller
     	$volumen_total = $volumen_total != 0 ? $ingredient_data[0]->unit == 'kilogramo' ? round($volumen_total/1000, 2) : $volumen_total : 0;
 
     	return response()->json(array('volumen_mes' => $volumen_mes, 'volumen_total' => $volumen_total, 'precio_prom_mes' => $array_precio_prom, 'precio_total_prom' => $precio_total_prom, 'trimestres' => count($array_precio_prom),'unit' => $unit));
+    	
     }
 
     public function getIngredientes($categoria_id){

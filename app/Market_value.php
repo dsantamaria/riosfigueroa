@@ -82,12 +82,16 @@ class Market_value extends Model
 
     public static function data_from_all_years($sector){
     	$data = self::all();
+
     	$all_data = [];
     	$round_suma = 0;
     	$suma = 0;
     	$pro = 'pro_'.$sector;
     	$umf = 'umf_'.$sector;
+        $projection = self::projection($pro, $umf, $data, false);
+        $projection_dol = self::projection($pro, $umf, $data, true);
 
+        /*yearly column chart*/
     	foreach ($data as $key => $value) {
 
     		if($sector == 'todos'){
@@ -116,21 +120,62 @@ class Market_value extends Model
     			'umf_total' 	       => $value[$umf],
     			'pro_total_ballon'     => number_format($value[$pro], 1),
     			'umf_total_ballon'     => number_format($value[$umf], 1),
-    			'pro_total_dol'        => (float)number_format(($value[$pro] / $value['tipo_de_cambio']), 1),
-    			'umf_total_dol' 	   => (float)number_format(($value[$umf] / $value['tipo_de_cambio']), 1),
+    			'pro_total_dol'        => $value[$pro] / $value['tipo_de_cambio'],
+    			'umf_total_dol' 	   => $value[$umf] / $value['tipo_de_cambio'],
     			'pro_total_ballon_dol' => number_format(($value[$pro] / $value['tipo_de_cambio']), 1),
     			'umf_total_ballon_dol' => number_format(($value[$umf] / $value['tipo_de_cambio']), 1),
     			'exchange'             => $value['tipo_de_cambio'],
     			'suma'		           => number_format(($suma), 1),
     			'suma_dol'		       => number_format(($suma_dol), 1),
-    			'round_suma'	       => $round_suma,
-    			'round_suma_dol'	   => $round_suma_dol,
+    			'round_suma'	       => '$'.$round_suma,
+    			'round_suma_dol'	   => '$'.$round_suma_dol,
+                'projection'           => $projection['a0'] + ($projection['a1'] * ($key +1)),
+                'projection_dol'       => $projection_dol['a0'] + ($projection_dol['a1'] * ($key +1)),
 
     			'pro_percent'		   => round(($value[$pro] * 100)/$suma),
     			'umf_percent'		   => round(($value[$umf] * 100)/$suma),
     		);
     	}
 
+        array_push($all_data, array(
+            'projection'     => $projection['a0'] + ($projection['a1'] * 11),
+            'projection_dol' => $projection_dol['a0'] + ($projection_dol['a1'] * 11),
+            'year'           => "",        
+        ));
+
     	return $all_data;
+    }
+
+    public static function projection($pro, $umf, $data, $dol){
+        $y = [];
+        $x = [];
+        $xy = [];
+        $x2 = [];
+        $y2 = [];
+        $n = 0;
+        $a0 = 0;
+        $a1 = 0;
+
+        /*projection chart*/
+        foreach ($data as $key => $value) {
+            $total = $dol ? $value[$pro]/$value['tipo_de_cambio'] + $value[$umf]/$value['tipo_de_cambio'] : $value[$pro] + $value[$umf];
+            array_push($x, $key + 1);
+            array_push($y, $total);
+            array_push($xy, ($key + 1) * ($total));
+            array_push($x2, ($key + 1)*($key + 1));
+            array_push($y2, ($total)*($total));
+            $n = $key + 1;
+        }
+        
+        $total_y = array_sum($y);
+        $total_x = array_sum($x);
+        $total_xy = array_sum($xy);
+        $total_x2 = array_sum($x2);
+        $total_y2 = array_sum($y2);
+
+        $a0 = (($total_y * $total_x2) - ($total_x*$total_xy))/(($n*$total_x2) - ($total_x * $total_x));
+        $a1 = (($n*$total_xy) - ($total_x*$total_y))/(($n*$total_x2) - ($total_x * $total_x));
+
+        return array('a0' => $a0, 'a1' => $a1);
     }
 }

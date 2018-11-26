@@ -867,6 +867,10 @@ canvas{
   padding-left: 44px;
 }
 
+.padd-left-55{
+  padding-left: 55px;
+}
+
 .brand .logo.fixlogo{
   box-sizing: border-box;
   padding: 20px;
@@ -991,6 +995,7 @@ canvas{
 #back-market{
   text-align: left;
   margin-bottom: 10px;
+  align-self: flex-end;
 }
 
 .select-market{
@@ -1050,10 +1055,109 @@ canvas{
   color: grey;
 }
 
+#market-vs{
+  margin-bottom: : 5px;
+  text-align: right;
+}
 
+#market-nav{
+  display: flex;
+}
 
+#vs-insecticida, #vs-herbicida, #vs-fungicida, #vs-otros, #vs-total{
+  margin-bottom: 10px;
+  padding-right: 0px;
+  padding-left: 5px;
+}
 
+#vs-insecticida input::placeholder{
+  color: #ff3c00;
+  opacity: 0.6;
+}
 
+#vs-insecticida input{
+  color: #ff3c00;
+  border-color: #ff3c00;
+}
+
+#vs-herbicida input::placeholder{
+  color: #04b10b;
+  opacity: 0.6;
+}
+
+#vs-herbicida input{
+  color: #04b10b;
+  border-color: #04b10b;
+}
+
+#vs-fungicida input::placeholder{
+  color: #9e03b9;
+  opacity: 0.6;
+}
+
+#vs-fungicida input{
+  color: #9e03b9;
+  border-color: #9e03b9;
+}
+
+#vs-otros input::placeholder{
+  color: #ccb700;
+  opacity: 0.6;
+}
+
+#vs-otros input{
+  color: #ccb700;
+  border-color: #ccb700;
+}
+
+#vs-total input{
+  color: #412aff;
+  border-color: #412aff;
+}
+
+.abosulte-market-3{
+  position: absolute;
+  left: 0;
+  top: 13px;
+}
+
+#projection{
+  z-index: 10000;
+}
+
+#form-graph-analisis-historic .form-group{
+  padding-left: 0px;
+  margin-bottom: 5px;
+}
+
+#selectAnalisisIngredienteHistorico option:first-child, #selectAnalisisYearHistorico option:first-child{
+  font-weight: bold;
+  font-size: 16px;
+} 
+/*
+#form-graph-analisis-historic select{
+  background-color: #3e454c;
+  color: white;
+  font-size: 15px;
+}
+
+#form-graph-analisis-historic option{
+  background-color: white;
+  color: black;
+}
+
+#import-vs{
+  margin-bottom: 0px;
+  text-align: right;
+}
+
+#vs-text-import{
+  font-size: 18px;
+  font-weight: bold;  
+  text-align: center;
+  padding-left: 0px;
+  padding-top: 10px;
+}*/
 
 
 .amcharts-graph-label-total{

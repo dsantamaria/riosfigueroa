@@ -391,7 +391,7 @@ class ProductsController extends Controller
     public function analisisHistorico(){
         $categorias = Categorias::whereIn('nombre_categoria', ['Insecticida', 'Fungicida', 'Herbicida'])->orderBy('nombre_categoria', 'asc')->get()->pluck('nombre_categoria', 'id');
         $ingredientes = Analysis_import_ingredient::where('categoria_id', $categorias->keys()[0])->orderBy('ingrediente_activo', 'asc')->get()->pluck('ingrediente_activo', 'id');
-        $ingredientes->prepend('', 'empty');
+        $ingredientes->prepend('Lista de Ingrediente', 'empty');
         return view('products.analisisHistorico', ['categorias' => $categorias, 'ingredientes' => $ingredientes]);
     }
 
