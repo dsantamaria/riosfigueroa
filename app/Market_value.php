@@ -136,12 +136,12 @@ class Market_value extends Model
     			'umf_percent'		   => round(($value[$umf] * 100)/$suma),
     		);
     	}
-
+        /*
         array_push($all_data, array(
             'projection'     => $projection['a0'] + ($projection['a1'] * 11),
             'projection_dol' => $projection_dol['a0'] + ($projection_dol['a1'] * 11),
             'year'           => "",        
-        ));
+        ));*/
 
     	return $all_data;
     }
