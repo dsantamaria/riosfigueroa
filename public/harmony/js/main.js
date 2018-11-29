@@ -2069,8 +2069,8 @@ $(document).ready(function () {
             $('#market-dol').text('Precios Reflejados en Pesos Mexicanos');
         }
 
-        $('#vs-insecticida, #vs-herbicida, #vs-fungicida, #vs-otros').tooltip('destroy');
-        
+        $('#vs-insecticida, #vs-herbicida, #vs-fungicida, #vs-otros, #vs-total').tooltip('destroy');
+
         chartMarketPie2.allLabels[0].text = $('#market-checkbox').prop('checked') ? "" : formatter_1.format(total1);
         chartMarketPie2.validateData();
 
@@ -2189,12 +2189,12 @@ $(document).ready(function () {
             chartMarketPie2.radius = "27%";
             chartMarketPie2.outlineAlpha = 0;
             chartMarketPie2.depth3D = 0;
-            $('#market-graph-3').removeClass('hidden col-sm-6').addClass('col-sm-12 abosulte-market-3');
             $('#vs-all').removeClass('hidden');
             $('.select-market, #vs-text-market').addClass('hidden');
             $('#market-checkbox-2').prop('checked', false).trigger('change');
+            $('#market-graph-3').removeClass('hidden col-sm-6').addClass('col-sm-12 abosulte-market-3');
         }else{
-            $('#vs-insecticida, #vs-herbicida, #vs-fungicida, #vs-otros').tooltip('destroy');
+            $('#vs-insecticida, #vs-herbicida, #vs-fungicida, #vs-otros, #vs-total').tooltip('destroy');
             $('#market-graph-3').addClass('hidden col-sm-6').removeClass('col-sm-12 abosulte-market-3');
             $('.select-market').removeClass('hidden');
             $('#vs-all, #market-second-select').addClass('hidden');
@@ -2230,6 +2230,7 @@ $(document).ready(function () {
         let pos_gra = 1;
         let legend_pos = 480;
         let status = $('#market-convert').attr('status');
+        $('#vs-total').tooltip('destroy');
 
         if(market_custom_validity($('#vs-insecticida input'), $('#vs-insecticida'), new_provider[0], val_ins, status)) return;
         if(market_custom_validity($('#vs-herbicida input'), $('#vs-herbicida'), new_provider[1], val_her, status)) return;
@@ -2274,6 +2275,25 @@ $(document).ready(function () {
         let val_dol = parseFloat((val_total/exchange).toFixed(2));
         let total = current_provider[0].total;
         let total_dol = current_provider[0].total_dolar;
+        let status = $('#market-convert').attr('status');  
+        $('#vs-insecticida, #vs-herbicida, #vs-fungicida, #vs-otros').tooltip('destroy');
+
+        if(status == 'pes'){
+            val_dol = val_total;
+            val_total = parseFloat((val_total*exchange).toFixed(2));
+        }
+
+        let provider_val = status == 'dol' ? total : total_dol;
+        let label = status == 'dol' ? current_provider[0]['total_label'] : current_provider[0]['total_dolar_label'];
+        if(val_total > provider_val){
+            let back_ins = $(this).val().slice(0, -1);
+            $(this).val(back_ins);
+            $('#vs-total').tooltip({'title': 'Valor Máximo: ' + label}).tooltip('show');
+            return true;
+        }else{
+            $('#vs-total').tooltip('destroy');
+        } 
+
 
         let percent = Math.round((val_total*100)/total);
 

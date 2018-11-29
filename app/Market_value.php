@@ -43,6 +43,8 @@ class Market_value extends Model
     			'color' => $color_ins,
     			'total' => $total,
     			'total_dolar' => $total/$data[0]['tipo_de_cambio'],
+                'total_label' => number_format($total, 2),
+                'total_dolar_label' => number_format($total/$data[0]['tipo_de_cambio'], 2),
     			'percent' => round(($data[0][$sector.'_insecticida']*100)/$total),
     		);
 
