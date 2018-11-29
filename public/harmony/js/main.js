@@ -2285,7 +2285,7 @@ $(document).ready(function () {
 
         let provider_val = status == 'dol' ? total : total_dol;
         let label = status == 'dol' ? current_provider[0]['total_label'] : current_provider[0]['total_dolar_label'];
-        if(val_total > provider_val){
+        if($(this).val() > provider_val){
             let back_ins = $(this).val().slice(0, -1);
             $(this).val(back_ins);
             $('#vs-total').tooltip({'title': 'Valor Máximo: ' + label}).tooltip('show');
