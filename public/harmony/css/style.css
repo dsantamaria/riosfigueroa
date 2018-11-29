@@ -999,7 +999,7 @@ canvas{
 }
 
 .select-market{
-  margin-bottom: 10px;
+  margin-bottom: 4px;
 }
 
 .radio-market label, #back-market button, .select-market select{
@@ -1158,6 +1158,21 @@ canvas{
   padding-left: 0px;
   padding-top: 10px;
 }*/
+
+#vs-text-market{
+  font-size: 18px;
+  font-weight: bold;  
+  text-align: center;
+  padding-top: 10px;
+}
+
+#market-checkbox-label{
+  margin-right: 30px;
+}
+
+
+
+
 
 
 .amcharts-graph-label-total{

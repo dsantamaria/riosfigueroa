@@ -1805,18 +1805,19 @@ $(document).ready(function () {
        }
     });
 
-    $('.select-market select').change(function(){
+    $('#market-second-select').change(function(){
         let year = $(this).val();
         let sector = "";
         let title = "";
         let pes_dol = "";
         let status = $('#market-convert').attr('status');
+        let association = $('#market-association').val();
 
         pes_dol = status == 'dol' ? '' : '_dolar';
 
         $('#market-graph').removeClass('col-sm-12').addClass('col-sm-6');
         $('#market-graph-3, #market-current-2').removeClass('hidden');
-        if(chartMarketPie.titles[0].text.includes('UMFFAAC')){
+        if(association == 'UMFFAAC'){
             sector = 'umf';
             title = 'UMFFAAC';
         }else{
@@ -1850,6 +1851,54 @@ $(document).ready(function () {
                 }
             }
         })
+    })
+
+    $('#market-first-select').change(function(){
+        let year = $(this).val();
+        let sector = "";
+        let title = "";
+        let pes_dol = "";
+        let status = $('#market-convert').attr('status');
+        let association = $('#market-association').val();
+
+        pes_dol = status == 'dol' ? '' : '_dolar';
+
+        if(association == 'UMFFAAC'){
+            sector = 'umf';
+            title = 'UMFFAAC';
+        }else{
+            sector = 'pro';
+            title = 'PROCCYT';
+        } 
+        $.ajax({
+            type: "POST",
+            url: '/market_year_update',
+            data: {
+                'year': year,
+                'sector': sector
+            },
+            success: function( data ) {
+                current_provider = data['chartData'];
+                $('#market-current span').text(data['exchange']);
+                $('#market-year').text(year);
+
+                chartMarketPie.dataProvider = data['chartData'];
+                chartMarketPie.allLabels[0].text = formatter_1.format(data['chartData'][0]['total'+pes_dol]); 
+                chartMarketPie.titles[0].text = title + " " +year;
+
+                if(chartMarketPie.radius != "25%"){
+                    //chartMarketPie.radius = "25%";
+                    //chartMarketPie.allLabels[0].size = 16;
+                }
+                chartMarketPie.validateData();
+                chartMarketPie.animateAgain();
+            }
+        })
+    })
+
+    $('#market-association').change(function(){
+        if($('#market-checkbox-2').prop('checked')) $('#market-second-select').trigger('change');
+        $('#market-first-select').trigger('change');
     })
 
     AmCharts.ready(function () {
@@ -1909,6 +1958,9 @@ $(document).ready(function () {
 
             if(event.graph.title == 'UMFFAAC') sector = 'umf';
             else if(event.graph.title == 'PROCCYT') sector = 'pro';
+
+            $('#market-association').val(event.graph.title);
+            $('#market-first-select').val(year);
 
             if(sector == 'umf' || sector == 'pro'){
                 $('#market-graph-2, #market-legend-2, .radio-market').addClass('hidden');
@@ -2017,6 +2069,8 @@ $(document).ready(function () {
             $('#market-dol').text('Precios Reflejados en Pesos Mexicanos');
         }
 
+        $('#vs-insecticida, #vs-herbicida, #vs-fungicida, #vs-otros').tooltip('destroy');
+        
         chartMarketPie2.allLabels[0].text = $('#market-checkbox').prop('checked') ? "" : formatter_1.format(total1);
         chartMarketPie2.validateData();
 
@@ -2093,19 +2147,19 @@ $(document).ready(function () {
 
         $('.select-market select').val("");
 
-        $('#market-checkbox').prop('checked', false);
+        $('#market-checkbox, #market-checkbox-2').prop('checked', false);
 
         $('#vs-all input').val('');
 
         $('#market-graph').removeClass('col-sm-6').addClass('col-sm-12');
         $('#market-graph-2, .radio-market, #market-legend-2, .select-market').removeClass('hidden');
-        $('#market-graph, #market-current, #market-current-2, #market-nav, #market-legend, #market-graph-3, #vs-all').addClass('hidden');
+        $('#market-graph, #market-current, #market-current-2, #market-nav, #market-legend, #market-graph-3, #vs-all, #vs-text-market, #market-second-select').addClass('hidden');
         $('#market-graph-3').addClass('col-sm-6').removeClass('col-sm-12 abosulte-market-3');
+        $('#market-offset').addClass('col-md-offset-5');
         chartMarketPie.radius = "35%";
     })
 
     $('#market-checkbox').change(function(){
-
         chartMarketPie2.allLabels[0].text = " ";
         chartMarketPie2.dataProvider = [];
         chartMarketPie2.titles[0].text = "";
@@ -2123,7 +2177,7 @@ $(document).ready(function () {
         $('#market-legend').css('top', 480)
 
         $('#market-graph').removeClass('col-sm-6').addClass('col-sm-12');
-        $('.select-market select').val("");
+        $('#market-second-select').val("");
         $('#market-current-2').addClass('hidden');
 
         $('#vs-all input').each(function(){
@@ -2137,13 +2191,35 @@ $(document).ready(function () {
             chartMarketPie2.depth3D = 0;
             $('#market-graph-3').removeClass('hidden col-sm-6').addClass('col-sm-12 abosulte-market-3');
             $('#vs-all').removeClass('hidden');
-            $('.select-market').addClass('hidden');
+            $('.select-market, #vs-text-market').addClass('hidden');
+            $('#market-checkbox-2').prop('checked', false).trigger('change');
         }else{
+            $('#vs-insecticida, #vs-herbicida, #vs-fungicida, #vs-otros').tooltip('destroy');
             $('#market-graph-3').addClass('hidden col-sm-6').removeClass('col-sm-12 abosulte-market-3');
-            $('#vs-all').addClass('hidden');
             $('.select-market').removeClass('hidden');
+            $('#vs-all, #market-second-select').addClass('hidden');
         }
     })
+
+    $('#market-checkbox-2').change(function(){
+        if($(this).prop('checked')){
+            $('#market-checkbox').prop('checked', false).trigger('change');
+            $('#vs-text-market, #market-second-select').removeClass('hidden');
+            $('#market-offset').removeClass('col-md-offset-5');
+        }else{
+            chartMarketPie.dataProvider = current_provider;
+            chartMarketPie.allLabels[0].size = 20;
+            chartMarketPie.radius = "35%";
+            chartMarketPie.validateData();
+
+            $('#market-offset').addClass('col-md-offset-5');
+            $('#market-current-2').addClass('hidden');
+            $('#vs-text-market, #market-second-select').addClass('hidden');
+            $('#market-graph').removeClass('col-sm-6').addClass('col-sm-12');
+            $('#market-graph-3').addClass('hidden col-sm-6').removeClass('col-sm-12 abosulte-market-3');
+        }
+    })
+
     
     $('#vs-insecticida input, #vs-herbicida input, #vs-fungicida input, #vs-otros input').keyup(function(e){
         let val_ins = parseFloat($('#vs-insecticida input').val());
@@ -2153,6 +2229,13 @@ $(document).ready(function () {
         let new_provider = JSON.parse(JSON.stringify(current_provider));
         let pos_gra = 1;
         let legend_pos = 480;
+        let status = $('#market-convert').attr('status');
+
+        if(market_custom_validity($('#vs-insecticida input'), $('#vs-insecticida'), new_provider[0], val_ins, status)) return;
+        if(market_custom_validity($('#vs-herbicida input'), $('#vs-herbicida'), new_provider[1], val_her, status)) return;
+        if(market_custom_validity($('#vs-fungicida input'), $('#vs-fungicida'), new_provider[2], val_fun, status)) return;
+        if(market_custom_validity($('#vs-otros input'),  $('#vs-otros'), new_provider[3], val_otr, status)) return;
+          
 
         if(!isNaN(val_ins)){
             new_provider = user_values_market(new_provider, 0, pos_gra, val_ins, '#ff7042', 'Insecticida');
@@ -2245,6 +2328,20 @@ $(document).ready(function () {
         new_provider.splice(pos_gra, 0, test);
 
         return new_provider;
+    }
+
+    function market_custom_validity(input, tol_div, provider, val, status){
+        let label = status == 'dol' ? provider['value_label'] : provider['legend_dolar'];
+        let provider_val = status == 'dol' ? provider['value'] : provider['value_dolar'];
+        if(val > provider_val){
+            let back_ins = input.val().slice(0, -1);
+            input.val(back_ins);
+            tol_div.tooltip({'title': 'Valor Máximo: ' + label}).tooltip('show');
+            return true;
+        }else{
+            tol_div.tooltip('destroy');
+            return false;
+        } 
     }
 
     ////////////////////////////////////////////// Fin Market Values ////////////////////////////////////////////

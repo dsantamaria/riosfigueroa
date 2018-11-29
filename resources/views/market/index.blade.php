@@ -33,12 +33,35 @@
             <div class="col-md-8 no-padding">
                 <div class="checkbox checkbox-primary col-md-12 no-padding" id="market-vs">
                     <input type="checkbox" id="market-checkbox">
-                    <label for="market-checkbox">Comparar Vs Valores Personalizados</label>
+                    <label for="market-checkbox" id="market-checkbox-label">Comparar Vs Valores Personalizados</label>
+
+                    <input type="checkbox" id="market-checkbox-2">
+                    <label for="market-checkbox-2">Comparar Vs Año</label>
                 </div>
 
-                <div class="col-md-5 col-sm-offset-7 select-market no-padding">
-                    <select class="form-control">
-                        <option class="first-market-option" value="">Comparar Vs Año</option>
+                <div class="col-md-3 col-md-offset-5 select-market" id="market-offset">
+                     <select class="form-control" id="market-association">
+                        <option value="UMFFAAC">UMFFAAC</option>
+                        <option value="PROCCYT">PROCCYT</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4 select-market no-padding">
+                    <select class="form-control" id="market-first-select">
+                        <option class="first-market-option" value="">Año</option>
+                        @foreach($years as $year)
+                            <option value="{{ $year }}">{{ $year }}</option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <div class="col-md-1 text-center hidden" id="vs-text-market">
+                    Vs
+                </div>
+
+                <div class="col-md-4 select-market no-padding hidden">
+                    <select class="form-control" id="market-second-select">
+                        <option class="first-market-option" value="">Año</option>
                         @foreach($years as $year)
                             <option value="{{ $year }}">{{ $year }}</option>
                         @endforeach
