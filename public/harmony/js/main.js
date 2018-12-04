@@ -2312,13 +2312,9 @@ $(document).ready(function () {
         let status = $('#market-convert').attr('status');  
         $('#vs-insecticida, #vs-herbicida, #vs-fungicida, #vs-otros').tooltip('destroy');
 
-        if(status == 'pes'){
-            val_dol = val_total;
-            val_total = parseFloat((val_total*exchange).toFixed(2));
-        }
-
         let provider_val = status == 'dol' ? total : total_dol;
         let label = status == 'dol' ? current_provider[0]['total_label'] : current_provider[0]['total_dolar_label'];
+        console.log(val_total, provider_val);
         if(val_total > provider_val){
             let back_ins = $(this).val().slice(0, -1);
             $(this).val(back_ins);
@@ -2328,7 +2324,11 @@ $(document).ready(function () {
             $('#vs-total').tooltip('destroy');
         } 
 
-
+        if(status == 'pes'){
+            val_dol = val_total;
+            val_total = parseFloat((val_total*exchange).toFixed(2));
+        }
+        
         let percent = Math.round((val_total*100)/total);
 
         let provider = [
