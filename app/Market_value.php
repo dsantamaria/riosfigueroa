@@ -32,49 +32,53 @@ class Market_value extends Model
     	$color_her = '#04b10b';
     	$color_fun = '#9e03b9';
     	$color_otr = '#ccb700';
-    	$total = $data[0][$sector.'_insecticida'] + $data[0][$sector.'_herbicida'] + $data[0][$sector.'_fungicida'] + $data[0][$sector.'_otros'];
+    	$value_insecticida = $sector == 'total' ? ($data[0]['umf_insecticida']+$data[0]['pro_insecticida']) : $data[0][$sector.'_insecticida'];
+        $value_herbicida = $sector == 'total' ? ($data[0]['umf_herbicida']+$data[0]['pro_herbicida']) : $data[0][$sector.'_herbicida'];
+        $value_fungicida = $sector == 'total' ? ($data[0]['umf_fungicida']+$data[0]['pro_fungicida']) : $data[0][$sector.'_fungicida'];
+        $value_otros = $sector == 'total' ? ($data[0]['umf_otros']+$data[0]['pro_otros']) : $data[0][$sector.'_otros'];
+        $total = $value_insecticida + $value_herbicida + $value_fungicida + $value_otros;
 
 		$all_data[0] = array(
     			'title' => 'Insecticida',
-    			'value' => (float)$data[0][$sector.'_insecticida'],
-    			'value_label' => number_format((float)$data[0][$sector.'_insecticida'], 2),
-    			'value_dolar' => (float)number_format($data[0][$sector.'_insecticida']/$data[0]['tipo_de_cambio'], 2, '.', ''),
-    			'legend_dolar' => number_format($data[0][$sector.'_insecticida']/$data[0]['tipo_de_cambio'], 2),
+    			'value' => (float)$value_insecticida,
+    			'value_label' => number_format((float)$value_insecticida, 2),
+    			'value_dolar' => (float)number_format($value_insecticida/$data[0]['tipo_de_cambio'], 2, '.', ''),
+    			'legend_dolar' => number_format($value_insecticida/$data[0]['tipo_de_cambio'], 2),
     			'color' => $color_ins,
     			'total' => $total,
     			'total_dolar' => $total/$data[0]['tipo_de_cambio'],
                 'total_label' => number_format($total, 2),
                 'total_dolar_label' => number_format($total/$data[0]['tipo_de_cambio'], 2),
-    			'percent' => round(($data[0][$sector.'_insecticida']*100)/$total),
+    			'percent' => round(($value_insecticida*100)/$total),
     		);
 
     	$all_data[1] = array(
     			'title' => 'Herbicida',
-    			'value' => (float)$data[0][$sector.'_herbicida'],
-    			'value_label' => number_format((float)$data[0][$sector.'_herbicida'], 2),
-    			'value_dolar' => (float)number_format(($data[0][$sector.'_herbicida'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
-    			'legend_dolar' => number_format(($data[0][$sector.'_herbicida'])/$data[0]['tipo_de_cambio'], 2),
+    			'value' => (float)$value_herbicida,
+    			'value_label' => number_format((float)$value_herbicida, 2),
+    			'value_dolar' => (float)number_format(($value_herbicida)/$data[0]['tipo_de_cambio'], 2, '.', ''),
+    			'legend_dolar' => number_format(($value_herbicida)/$data[0]['tipo_de_cambio'], 2),
     			'color' => $color_her,
-    			'percent' => round(($data[0][$sector.'_herbicida']*100)/$total),
+    			'percent' => round(($value_herbicida*100)/$total),
     		);
    		$all_data[2] = array(
     			'title' => 'Fungicida',
-    			'value' => (float)$data[0][$sector.'_fungicida'],
-    			'value_label' => number_format((float)$data[0][$sector.'_fungicida'], 2),
-    			'value_dolar' => (float)number_format(($data[0][$sector.'_fungicida'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
-    			'legend_dolar' => number_format(($data[0][$sector.'_fungicida'])/$data[0]['tipo_de_cambio'], 2),
+    			'value' => (float)$value_fungicida,
+    			'value_label' => number_format((float)$value_fungicida, 2),
+    			'value_dolar' => (float)number_format(($value_fungicida)/$data[0]['tipo_de_cambio'], 2, '.', ''),
+    			'legend_dolar' => number_format(($value_fungicida)/$data[0]['tipo_de_cambio'], 2),
     			'color' => $color_fun,
-    			'percent' => round(($data[0][$sector.'_fungicida']*100)/$total),
+    			'percent' => round(($value_fungicida*100)/$total),
     		);
 
     	$all_data[3] = array(
     			'title' => 'Otros',
-    			'value' => (float)$data[0][$sector.'_otros'],
-    			'value_label' => number_format((float)$data[0][$sector.'_otros'], 2),
-    			'value_dolar' => (float)number_format(($data[0][$sector.'_otros'])/$data[0]['tipo_de_cambio'], 2, '.', ''),
-    			'legend_dolar' => number_format(($data[0][$sector.'_otros'])/$data[0]['tipo_de_cambio'], 2),
+    			'value' => (float)$value_otros,
+    			'value_label' => number_format((float)$value_otros, 2),
+    			'value_dolar' => (float)number_format(($value_otros)/$data[0]['tipo_de_cambio'], 2, '.', ''),
+    			'legend_dolar' => number_format(($value_otros)/$data[0]['tipo_de_cambio'], 2),
     			'color' => $color_otr,
-    			'percent' => round(($data[0][$sector.'_otros']*100)/$total),
+    			'percent' => round(($value_otros*100)/$total),
     		);
     	
     	$exchange = $data[0]['tipo_de_cambio'];
@@ -149,11 +153,10 @@ class Market_value extends Model
     }
 
     public static function projection($pro, $umf, $data, $dol){
-        $y = [];
         $x = [];
-        $xy = [];
+        $log_y = [];
         $x2 = [];
-        $y2 = [];
+        $x_log_y = [];
         $n = 0;
         $a0 = 0;
         $a1 = 0;
@@ -162,22 +165,29 @@ class Market_value extends Model
         foreach ($data as $key => $value) {
             $total = $dol ? $value[$pro]/$value['tipo_de_cambio'] + $value[$umf]/$value['tipo_de_cambio'] : $value[$pro] + $value[$umf];
             array_push($x, $key + 1);
-            array_push($y, $total);
-            array_push($xy, ($key + 1) * ($total));
+            array_push($log_y, log10($total));
             array_push($x2, ($key + 1)*($key + 1));
-            array_push($y2, ($total)*($total));
+            array_push($x_log_y, ($key+1)*log10($total));
             $n = $key + 1;
         }
-        
-        $total_y = array_sum($y);
+
         $total_x = array_sum($x);
-        $total_xy = array_sum($xy);
+        $total_log_y = array_sum($log_y);
         $total_x2 = array_sum($x2);
-        $total_y2 = array_sum($y2);
+        $total_x_log_y = array_sum($x_log_y);
 
-        $a0 = (($total_y * $total_x2) - ($total_x*$total_xy))/(($n*$total_x2) - ($total_x * $total_x));
-        $a1 = (($n*$total_xy) - ($total_x*$total_y))/(($n*$total_x2) - ($total_x * $total_x));
+        $log_a = (($total_log_y * $total_x2) - ($total_x * $total_x_log_y)) / (($n * $total_x2) - ($total_x * $total_x));
+        $log_b = (($n * $total_x_log_y) - ($total_log_y * $total_x)) / (($n * $total_x2) - ($total_x * $total_x));
 
-        return array('a0' => $a0, 'a1' => $a1);
+
+        $del_a = pow(10, $log_a);
+        $del_b = pow(10, $log_b);
+
+        foreach ($data as $key => $value) {
+            $y = $del_a * pow($del_b, ($value[$pro] + $value[$umf]));
+            //Log::debug($y);
+        }
+
+        return array('a0' => 1, 'a1' => 2);
     }
 }

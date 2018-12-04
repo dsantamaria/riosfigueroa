@@ -43,6 +43,7 @@
                      <select class="form-control" id="market-association">
                         <option value="UMFFAAC">UMFFAAC</option>
                         <option value="PROCCYT">PROCCYT</option>
+                        <option value="total">TOTAL</option>
                     </select>
                 </div>
 
@@ -59,8 +60,8 @@
                     Vs
                 </div>
 
-                <div class="col-md-4 select-market no-padding hidden">
-                    <select class="form-control" id="market-second-select">
+                <div class="col-md-4 select-market no-padding">
+                    <select class="form-control  hidden" id="market-second-select">
                         <option class="first-market-option" value="">Año</option>
                         @foreach($years as $year)
                             <option value="{{ $year }}">{{ $year }}</option>
@@ -69,20 +70,27 @@
                 </div>
 
                 <div class="col-md-12 no-padding hidden" id="vs-all">
-                    <div class="form-group col-md-2 col-md-offset-2" id="vs-insecticida">
-                        <input type="number" class="form-control" placeholder="Insecticida Usuario">
+                    <div class="col-md-2 select-market-2">
+                         <select class="form-control" id="market-association-2">
+                            <option value="UMFFAAC">UMFFAAC</option>
+                            <option value="PROCCYT">PROCCYT</option>
+                            <option value="total">TOTAL</option>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-2" id="vs-insecticida">
+                        <input type="text" class="form-control" placeholder="Insecticida Usuario">
                     </div>
                     <div class="form-group col-md-2" id="vs-herbicida">
-                        <input type="number" class="form-control" placeholder="Herbicida Usuario">
+                        <input type="text" class="form-control" placeholder="Herbicida Usuario">
                     </div>
                     <div class="form-group col-md-2" id="vs-fungicida">
-                        <input type="number" class="form-control" placeholder="Fungicida Usuario">
+                        <input type="text" class="form-control" placeholder="Fungicida Usuario">
                     </div>
                     <div class="form-group col-md-2" id="vs-otros">
-                        <input type="number" class="form-control" placeholder="Otros Usuario">
+                        <input type="text" class="form-control" placeholder="Otros Usuario">
                     </div>
                     <div class="form-group col-md-2" id="vs-total">
-                        <input type="number" class="form-control" placeholder="Usuario Total">
+                        <input type="text" class="form-control" placeholder="Usuario Total">
                     </div>
                 </div>
             </div>

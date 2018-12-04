@@ -2,6 +2,7 @@ var chartBar;
 var chartImport;
 var chartMarketPie;
 var chartMarketSerial;
+var trigger_key = false;
 
 Array.prototype.clone = function(){
     return this.slice(0)
@@ -1820,10 +1821,13 @@ $(document).ready(function () {
         if(association == 'UMFFAAC'){
             sector = 'umf';
             title = 'UMFFAAC';
-        }else{
+        }else if(association == 'PROCCYT'){
             sector = 'pro';
             title = 'PROCCYT';
-        } 
+        }else{
+            sector = 'total';
+            title = 'Mercado Total';
+        }
         $.ajax({
             type: "POST",
             url: '/market_year_update',
@@ -1866,10 +1870,13 @@ $(document).ready(function () {
         if(association == 'UMFFAAC'){
             sector = 'umf';
             title = 'UMFFAAC';
-        }else{
+        }else if(association == 'PROCCYT'){
             sector = 'pro';
             title = 'PROCCYT';
-        } 
+        }else{
+            sector = 'total';
+            title = 'Mercado Total';
+        }  
         $.ajax({
             type: "POST",
             url: '/market_year_update',
@@ -1890,8 +1897,17 @@ $(document).ready(function () {
                     //chartMarketPie.radius = "25%";
                     //chartMarketPie.allLabels[0].size = 16;
                 }
+
                 chartMarketPie.validateData();
                 chartMarketPie.animateAgain();
+
+                if(trigger_key){
+                    $('#vs-insecticida input').trigger(
+                        $.Event('keyup', {keyCode: 48, which: 48})
+                    );
+                }
+
+                trigger_key = false;
             }
         })
     })
@@ -1899,7 +1915,15 @@ $(document).ready(function () {
     $('#market-association').change(function(){
         if($('#market-checkbox-2').prop('checked')) $('#market-second-select').trigger('change');
         $('#market-first-select').trigger('change');
+        $('#market-association-2').val($(this).val());
     })
+
+    $('#market-association-2').change(function(){
+        $('#market-association').val($(this).val());
+        $('#market-first-select').trigger('change');
+        trigger_key = true;
+    })
+
 
     AmCharts.ready(function () {
         chartMarketSerial = new AmCharts.AmSerialChart();
@@ -2034,8 +2058,9 @@ $(document).ready(function () {
             //vs personalizados
             if($('#market-checkbox').prop('checked')){
                 $('#vs-all input').each(function(){
-                    let val = $(this).val();
+                    let val = $(this).val().replace(/,/gi, '');
                     if(val != '') $(this).val((val/exchange).toFixed(2));
+                    format_number_input($(this));
                 })
             }
 
@@ -2059,8 +2084,9 @@ $(document).ready(function () {
             //vs personalizados
             if($('#market-checkbox').prop('checked')){
                 $('#vs-all input').each(function(){
-                    let val = $(this).val();
+                    let val = $(this).val().replace(/,/gi, '');
                     if(val != '') $(this).val((val*exchange).toFixed(2));
+                    format_number_input($(this));
                 })
             }
 
@@ -2222,10 +2248,16 @@ $(document).ready(function () {
 
     
     $('#vs-insecticida input, #vs-herbicida input, #vs-fungicida input, #vs-otros input').keyup(function(e){
-        let val_ins = parseFloat($('#vs-insecticida input').val());
-        let val_her = parseFloat($('#vs-herbicida input').val());
-        let val_fun = parseFloat($('#vs-fungicida input').val());
-        let val_otr = parseFloat($('#vs-otros input').val());
+        let allow_key_values = [8,37,39,48,49,50,51,52,53,54,55,56,57,188,190,96,97,98,99,100,101,102,103,104,105,110, 116];
+        if(!allow_key_values.includes(e.keyCode)){
+            $(this).val($(this).val().slice(0, -1));
+            return;
+        }
+
+        let val_ins = parseFloat($('#vs-insecticida input').val().replace(/,/gi, ''));
+        let val_her = parseFloat($('#vs-herbicida input').val().replace(/,/gi, ''));
+        let val_fun = parseFloat($('#vs-fungicida input').val().replace(/,/gi, ''));
+        let val_otr = parseFloat($('#vs-otros input').val().replace(/,/gi, ''));
         let new_provider = JSON.parse(JSON.stringify(current_provider));
         let pos_gra = 1;
         let legend_pos = 480;
@@ -2267,10 +2299,12 @@ $(document).ready(function () {
         $('#market-legend').css('top', legend_pos)
         chartMarketPie.dataProvider = new_provider;
         chartMarketPie.validateData();
+
+        format_number_input($(this));
     });
 
     $('#vs-total input').keyup(function(e){
-        let val_total = parseFloat($(this).val());
+        let val_total = parseFloat($(this).val().replace(/,/gi, ''));
         let exchange = parseFloat($('#market-current span:nth-child(2)').text());
         let val_dol = parseFloat((val_total/exchange).toFixed(2));
         let total = current_provider[0].total;
@@ -2285,7 +2319,7 @@ $(document).ready(function () {
 
         let provider_val = status == 'dol' ? total : total_dol;
         let label = status == 'dol' ? current_provider[0]['total_label'] : current_provider[0]['total_dolar_label'];
-        if($(this).val() > provider_val){
+        if(val_total > provider_val){
             let back_ins = $(this).val().slice(0, -1);
             $(this).val(back_ins);
             $('#vs-total').tooltip({'title': 'Valor Máximo: ' + label}).tooltip('show');
@@ -2322,6 +2356,8 @@ $(document).ready(function () {
         chartMarketPie2.dataProvider = provider;
         chartMarketPie2.validateData();
         chartMarketPie.validateData();
+
+        format_number_input($(this));
     });
 
     function user_values_market(new_provider, pos, pos_gra, val, color, name){
@@ -2329,12 +2365,14 @@ $(document).ready(function () {
         let status = $('#market-convert').attr('status');
         let val_dol = parseFloat((val/exchange).toFixed(2));
         let percent = Math.round((val*100)/current_provider[pos].value);
+        let sector_percent = Math.round((val*100)/new_provider[0]['total']);
+
         if(status == 'pes'){
             val_dol = val;
             val = parseFloat((val*exchange).toFixed(2));
             percent = Math.round((val_dol*100)/current_provider[pos].value_dolar);
         }
-        let test = {
+        let new_data = {
             'color': color,
             'percent': percent,
             'title': name + ' Usuario',
@@ -2345,8 +2383,9 @@ $(document).ready(function () {
         };
         new_provider[pos_gra-1].value = current_provider[pos].value - val;
         new_provider[pos_gra-1].value_dolar = current_provider[pos].value_dolar - val_dol;
-        new_provider.splice(pos_gra, 0, test);
-
+        new_provider[pos_gra-1].percent = current_provider[pos].percent - sector_percent;
+        new_provider[pos_gra-1].value_label = formatter_1.format(current_provider[pos].value - val).replace('$', '');
+        new_provider.splice(pos_gra, 0, new_data);
         return new_provider;
     }
 
@@ -2362,6 +2401,19 @@ $(document).ready(function () {
             tol_div.tooltip('destroy');
             return false;
         } 
+    }
+
+    function format_number_input(input){
+        let current_val = input.val().replace(/,/gi, '');
+        if(current_val <= 0) return;
+        let index_dot = current_val.indexOf('.');
+        let current_dec = index_dot == -1 ? "" : current_val.slice(index_dot);
+
+
+        let val_format = formatter_1.format(current_val).replace('$', '');
+        index_dot = val_format.indexOf('.');
+        let val_wo_dec = val_format.slice(0, index_dot);
+        input.val(val_wo_dec + current_dec);
     }
 
     ////////////////////////////////////////////// Fin Market Values ////////////////////////////////////////////

@@ -1002,13 +1002,21 @@ canvas{
   margin-bottom: 4px;
 }
 
-.radio-market label, #back-market button, .select-market select{
+.select-market-2{
+  padding-right: 0;
+}
+
+.select-market-2 select{
+  height: 47px;
+}
+
+.radio-market label, #back-market button, .select-market select, .select-market-2 select{
   background-color: #3e454c;
   color: white;
   font-size: 15px;
 }
 
-.select-market option{
+.select-market option, .select-market-2 option{
   background-color: white;
   color: black;
 }
@@ -1056,7 +1064,7 @@ canvas{
 }
 
 #market-vs{
-  margin-bottom: : 5px;
+  margin-bottom: 5px;
   text-align: right;
 }
 

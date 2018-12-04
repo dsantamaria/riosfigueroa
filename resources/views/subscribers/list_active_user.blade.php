@@ -44,6 +44,7 @@
                                                 <td class="table-td-actions">
                                                     @if($user->password == "")
                                                         <div class="actions-btn resend-request action-resend" email="{{ $user->email }}" data_toggle="tooltip" data-placement="bottom" title="Reenviar Solicitud"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></div>
+                                                        <div class="actions-btn delete-user action-delete" id="{{ $user->id }}" data_toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
                                                     @else
                                                         @if($user->active == 1) <div class="actions-btn active-user action-desactive" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Desactivar"><i class="fa fa-times" aria-hidden="true"></i></div>
                                                         @else <div class="actions-btn active-user action-active" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Activar"><i class="fa fa-check" aria-hidden="true"></i></div>

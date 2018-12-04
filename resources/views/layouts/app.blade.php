@@ -49,9 +49,6 @@
                                 @can('admin-role')
                                     <li><a href="{{ route('market.index') }}">Análisis del Mercado</a></li>
                                 @endcan
-                                <li><a href="{{ route('products.analisis' , ['analisis' => 'insecticidas']) }}">Insecticidas</a></li>
-                                <li><a href="{{ route('products.analisis' , ['analisis' => 'herbicidas']) }}">Herbicidas</a></li>
-                                <li><a href="{{ route('products.analisis' , ['analisis' => 'fungicidas']) }}">Fungicidas</a></li>
                             </ul>
                         </li>
                         <li>
