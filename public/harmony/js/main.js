@@ -1905,6 +1905,15 @@ $(document).ready(function () {
                     $('#vs-insecticida input').trigger(
                         $.Event('keyup', {keyCode: 48, which: 48})
                     );
+                    $('#vs-insecticida input').trigger(
+                        $.Event('keyup', {keyCode: 48, which: 48})
+                    );
+                    $('#vs-total input').trigger(
+                        $.Event('keyup', {keyCode: 48, which: 48})
+                    );
+                    $('#vs-total input').trigger(
+                        $.Event('keyup', {keyCode: 48, which: 48})
+                    );
                 }
 
                 trigger_key = false;
@@ -2314,9 +2323,12 @@ $(document).ready(function () {
 
         let provider_val = status == 'dol' ? total : total_dol;
         let label = status == 'dol' ? current_provider[0]['total_label'] : current_provider[0]['total_dolar_label'];
-        console.log(val_total, provider_val);
+
         if(val_total > provider_val){
-            let back_ins = $(this).val().slice(0, -1);
+            let index_dot = $(this).val().indexOf('.');
+            let current_dec = index_dot == -1 ? "" : $(this).val().slice(index_dot);
+            let back_ins = index_dot == -1 ? $(this).val().slice(0, -1) : $(this).val().slice(0, index_dot).slice(0, -1) + current_dec;
+
             $(this).val(back_ins);
             $('#vs-total').tooltip({'title': 'Valor Máximo: ' + label}).tooltip('show');
             return true;
@@ -2328,7 +2340,7 @@ $(document).ready(function () {
             val_dol = val_total;
             val_total = parseFloat((val_total*exchange).toFixed(2));
         }
-        
+
         let percent = Math.round((val_total*100)/total);
 
         let provider = [
@@ -2393,7 +2405,10 @@ $(document).ready(function () {
         let label = status == 'dol' ? provider['value_label'] : provider['legend_dolar'];
         let provider_val = status == 'dol' ? provider['value'] : provider['value_dolar'];
         if(val > provider_val){
-            let back_ins = input.val().slice(0, -1);
+            let index_dot = input.val().indexOf('.');
+            let current_dec = index_dot == -1 ? "" : input.val().slice(index_dot);
+            let back_ins = index_dot == -1 ? input.val().slice(0, -1) : input.val().slice(0, index_dot).slice(0, -1) + current_dec;
+
             input.val(back_ins);
             tol_div.tooltip({'title': 'Valor Máximo: ' + label}).tooltip('show');
             return true;
