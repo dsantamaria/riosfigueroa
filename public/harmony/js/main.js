@@ -491,6 +491,7 @@ $(document).ready(function () {
         minimunFractionDigits: 2,
     });
     
+    /*
     if(document.getElementById('chartAnalisisHistorico') !== null){
         var ctx = document.getElementById('chartAnalisisHistorico').getContext('2d');
         var tons = {'T1': 1, 'T2': 2, 'T3': 3, 'T4': 4};
@@ -712,11 +713,10 @@ $(document).ready(function () {
                 });
             }
         });
-        
-    }
+    }*/
 
 
-    /*
+    
     AmCharts.ready(function () {
         chartImport = new AmCharts.AmSerialChart();
         chartImport.balloon = {
@@ -725,181 +725,38 @@ $(document).ready(function () {
         };
         chartImport.backgroundColor = "#000000";
         chartImport.backgroundAlpha = 0.1;
-        /*chartImport.categoryAxis = {
+        chartImport.categoryAxis = {
             "labelFunction": function(valueText, serialDataItem, categoryAxis){
                 return serialDataItem.dataContext.tri;
             },
             'fontSize': 14,
             'boldLabels': true,
         }
-        chartImport.categoryField = "title",
+        //chartImport.categoryField = "title",
         
         chartImport.creditsPosition = "top-right";
-        chartImport.columnWidth = 0.5;
+        chartImport.columnWidth = 0.6;
         chartImport.dataProvider = [
             {
-                'value': 5,
-                'label_t1': '5',
-                'title': 'T1',
-                'color':'#ffffff',
-                'volumen': 100,
+            'value': 0,
+            'tri': 'T1'
             },
             {
-                'value2': 4,
-                'value': 5,
-                'label_t2': '4',
-                'title': 'T2',
-                'color':'#ffffff',
-                'volumen': 101,
+            'value': 0,
+            'tri': 'T2'
             },
             {
-                'value3': 3,
-                'value': 5,
-                'value2': 4,
-                'label_t3': '3',
-                'title': 'T3',
-                'color':'#ffffff',
-                'volumen': 102,
+            'value': 0,
+            'tri': 'T3'
             },
             {
-                'value4': 2,
-                'value': 5,
-                'value2': 4,
-                'value3': 3,
-                'label_t4': '2',
-                'title': 'T4',
-                'color':'#ffffff',
-                'volumen': 102,
-            },
-
-            
-            {
-                'value': 5,
-                'label_t1': '5',
-                'title': 'T1',
-                'color':'#ffffff',
-                'volumen': 100,
-            },
-            {
-                'value2': 4,
-                'value': 5,
-                'label_t2': '4',
-                'title': 'T2',
-                'color':'#ffffff',
-                'volumen': 101,
-            },
-            {
-                'value3': 3,
-                'value': 5,
-                'value2': 4,
-                'label_t3': '3',
-                'title': 'T3',
-                'color':'#ffffff',
-                'volumen': 102,
-            },
-            {
-                'value4': 2,
-                'value': 5,
-                'value2': 4,
-                'value3': 3,
-                'label_t4': '2',
-                'title': 'T4',
-                'color':'#ffffff',
-                'volumen': 102,
+            'value': 0,
+            'tri': 'T4'
             },
         ];
         chartImport.fontFamily = "Roboto, Helvetica Neue, Helvetica, Arial, sans-serif";
         //chartImport.fontSize = 20;
-        chartImport.graphs = [
-            {
-                "type": 'column',
-                "valueField": 'value',
-                'fillAlphas': 1,
-                'lineColor': '#02881f',
-                'fontSize': 18,
-                'labelColorField': 'color',
-                'labelText': '[[label_t1]]',
-                'labelPosition': 'left'
-            },
-            {
-                "type": 'column',
-                "valueField": 'value2',
-                'fillAlphas': 1,
-                'lineColor': '#1c24d8',
-                'fontSize': 18,
-                'labelColorField': 'color',
-                'labelText': '[[label_t2]]',
-                'labelPosition': 'left'
-            },
-            {
-                "type": 'column',
-                "valueField": 'value3',
-                'fillAlphas': 1,
-                'lineColor': '#ff9800',
-                'fontSize': 18,
-                'labelColorField': 'color',
-                'labelText': '[[label_t3]]',
-                'labelPosition': 'left'
-            },
-            {
-                "type": 'column',
-                "valueField": 'value4',
-                'fillAlphas': 1,
-                'lineColor': '#fb1818',
-                'fontSize': 18,
-                'labelColorField': 'color',
-                'labelText': '[[label_t4]]',
-                'labelPosition': 'left'
-            },
-
-
-            {
-                "type": 'column',
-                "valueField": 'value',
-                'fillAlphas': 1,
-                'lineColor': '#02881f',
-                'fontSize': 18,
-                'labelColorField': 'color',
-                'labelText': '[[label_t1]]',
-                'labelPosition': 'left',
-                'newStack': true
-            },
-            {
-                "type": 'column',
-                "valueField": 'value2',
-                'fillAlphas': 1,
-                'lineColor': '#1c24d8',
-                'fontSize': 18,
-                'labelColorField': 'color',
-                'labelText': '[[label_t2]]',
-                'labelPosition': 'left'
-            },
-            {
-                "type": 'column',
-                "valueField": 'value3',
-                'fillAlphas': 1,
-                'lineColor': '#ff9800',
-                'fontSize': 18,
-                'labelColorField': 'color',
-                'labelText': '[[label_t3]]',
-                'labelPosition': 'left'
-            },
-            {
-                "type": 'column',
-                "valueField": 'value4',
-                'fillAlphas': 1,
-                'lineColor': '#fb1818',
-                'fontSize': 18,
-                'labelColorField': 'color',
-                'labelText': '[[label_t4]]',
-                'labelPosition': 'left'
-            },
-        ];
-
-        chartImport.listeners = [{
-            "event": "drawn",
-            //"method": downLabel,
-        }];
+        chartImport.graphs = [];
 
         chartImport.rotate =  true;
         chartImport.startAlpha = 0.8;
@@ -918,35 +775,15 @@ $(document).ready(function () {
         }];
         
         chartImport.write('bar-import');
+    });
 
-        function downLabel(e){
-            let bars = e.chart.categoryAxis.chart.graphs;
-            console.log(bars);
-            if('columnWidth' in bars[1].lastDataItem){
-                console.log(bars[1].lastDataItem);
-                chartImport.clearLabels();
-                let t1_w = bars[0].lastDataItem.columnWidth;
-                let t2_w = bars[1].lastDataItem.columnWidth;
-                let t3_w = bars[2].lastDataItem.columnWidth;
-                let t4_w = bars[3].lastDataItem.columnWidth;
-                let vol_1 = bars[0].data[0].dataContext.volumen;
-                let vol_2 = bars[1].data[1].dataContext.volumen;
-                let vol_3 = bars[2].data[2].dataContext.volumen;
-                let vol_4 = bars[3].data[3].dataContext.volumen;
-                chartImport.addLabel(t1_w + 43, 153, vol_1, 'right', 16, '#000000', 0, 1, true);
-                chartImport.addLabel(t1_w + t2_w + 43, 279, vol_2, 'right', 16, '#000000', 0, 1, true);
-                chartImport.addLabel(t1_w + t2_w + t3_w + 43, 405, vol_3, 'right', 16, '#000000', 0, 1, true);
-                chartImport.addLabel(t1_w + t2_w + t3_w + t4_w + 43, 531, vol_4, 'right', 16, '#000000', 0, 1, true);
-            }
-        }
-    });*/
-
-    /*
     $('#analisisCategoriasHistorico').change(function(e){
         var categoria_id = $(this).val();
         var ingrediente_select = $('#selectAnalisisIngredienteHistorico');
         ingrediente_select.empty();
-        $('#selectAnalisisYearHistorico').empty();
+        $('#selectAnalisisYearHistorico, #selectAnalisisYearHistorico2').empty();
+        $('#import-extras, #import-extras-vs').addClass('hidden');
+        chartImportClear();
         $.ajax({
             type: "GET",
             url: '/getIngredientes/'+ categoria_id,
@@ -981,26 +818,38 @@ $(document).ready(function () {
         let thi_c = $('#form-graph-analisis-historic .form-group:nth-child(4)');
         let fou_c = $('#vs-text-import');
         let fiv_c = $('#form-graph-analisis-historic .form-group:last-child');
+        chartImport.titles[0].text = "Analísis Trimestral de Importaciones";
+        chartImportClear();
         if($(this).prop('checked')){
             one_c.addClass('col-md-offset-1 col-md-3').removeClass('col-md-4');
             sec_c.addClass('col-md-3').removeClass('col-md-4');
             thi_c.addClass('col-md-2').removeClass('col-md-4');
             fou_c.removeClass('hidden');
             fiv_c.removeClass('hidden');
+            $('#import-extras').addClass('hidden');
         }else{
             one_c.removeClass('col-md-offset-1 col-md-3').addClass('col-md-4');
             sec_c.removeClass('col-md-3').addClass('col-md-4');
             thi_c.removeClass('col-md-2').addClass('col-md-4');
             fou_c.addClass('hidden');
             fiv_c.addClass('hidden');
-        }
+            $('#import-extras-vs').addClass('hidden');
+        }        
+        $('#selectAnalisisYearHistorico2').val('empty');
+        if($('#selectAnalisisIngredienteHistorico').val() != 'empty') $('#selectAnalisisYearHistorico').trigger('change');
     })
 
-    $('#selectAnalisisYearHistorico').change(function(e){
+    $('#selectAnalisisYearHistorico, #selectAnalisisYearHistorico2').change(function(e){
         e.preventDefault();
         var ingrediente = $('#selectAnalisisIngredienteHistorico');
+        var vs = $('#import-checkbox').prop('checked');
         var year = $('#selectAnalisisYearHistorico');
-        if(year.val() != 'empty'){
+        var year2 = $('#selectAnalisisYearHistorico2');
+        if(year.val() == 'empty') return;
+        chartImport.removeListener(chartImport, "drawn", downLabel);
+        chartImport.removeListener(chartImport, "drawn", downLabelVs);
+        
+        if(!vs){
             $.ajax({
                 type: "GET",
                 url: '/updateAnalysisHistoric/'+ ingrediente.val() + '/' + year.val(),
@@ -1011,16 +860,249 @@ $(document).ready(function () {
                     $('#imp_kg_lt').text(unidad);
                     $('#import-extras').removeClass('hidden');
                     $('#importaciones_volumen_total').text(data['volumen_total']);
-                    chartImport.graphs[0]['labelPosition'] = data['provider'][0]['value']  == 0 ? 'right' : 'left';
-                    chartImport.graphs[1]['labelPosition'] = data['provider'][1]['value2'] == 0 ? 'right' : 'left';
-                    chartImport.graphs[2]['labelPosition'] = data['provider'][2]['value3'] == 0 ? 'right' : 'left';
-                    chartImport.graphs[3]['labelPosition'] = data['provider'][3]['value4'] == 0 ? 'right' : 'left';
+                    chartImport.graphs = [
+                        {
+                            "type": 'column',
+                            "valueField": 'value_0',
+                            'fillAlphas': 1,
+                            'lineColor': '#02881f',
+                            'fontSize': 18,
+                            'labelColorField': 'color',
+                            'labelText': '[[label_t1]]',
+                            'labelPosition': data['provider'][0]['value_0']  == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'value_1',
+                            'fillAlphas': 1,
+                            'lineColor': '#1c24d8',
+                            'fontSize': 18,
+                            'labelColorField': 'color',
+                            'labelText': '[[label_t2]]',
+                            'labelPosition': data['provider'][1]['value_1'] == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'value_2',
+                            'fillAlphas': 1,
+                            'lineColor': '#ff9800',
+                            'fontSize': 18,
+                            'labelColorField': 'color',
+                            'labelText': '[[label_t3]]',
+                            'labelPosition': data['provider'][2]['value_2'] == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'value_3',
+                            'fillAlphas': 1,
+                            'lineColor': '#fb1818',
+                            'fontSize': 18,
+                            'labelColorField': 'color',
+                            'labelText': '[[label_t4]]',
+                            'labelPosition': data['provider'][3]['value_3'] == 0 ? 'right' : 'left'
+                        },
+                    ];
+                    chartImport.listeners = [{
+                        "event": "drawn",
+                        "method": downLabel,
+                    }];
+                    chartImport.titles[0].text = "Analisis Trimestral de Importaciones";
+                    chartImport.validateData();
+                    chartImport.animateAgain();
+                }
+            });
+        }else{
+            if(year2.val() == 'empty') return;
+            $.ajax({
+                type: "GET",
+                url: '/updateAnalysisHistoricVs/'+ ingrediente.val() + '/' + year.val() + '/' + year2.val(),
+                success: function( data ) {
+                    $('#import-extras-vs').removeClass('hidden');
+                    let unidad = data['unit'] == 'kilogramo' ? 'Kg' : 'Litros';
+                    $('#impor-an-1').text(data['volumen_total']);
+                    $('#impor-an-2').text(data['volumen_total_2']);
+                    $('#precio-an-1').text(data['precio_total_prom'] + 'USD/' + unidad);
+                    $('#precio-an-2').text(data['precio_total_prom_2'] + 'USD/' + unidad);
+                    $('#title-an-1').text(year.val());
+                    $('#title-an-2').text(year2.val());
+                    chartImport.dataProvider = data['provider'];
+                    chartImport.graphs = [
+                        {
+                            "type": 'column',
+                            "valueField": 'value_0',
+                            'fillAlphas': 1,
+                            'lineColor': '#02881f',
+                            'fontSize': 18,
+                            'labelColorField': 'color',
+                            'labelText': '[[label_t1]]',
+                            'labelPosition': data['provider'][0]['value_0'] == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'value_1',
+                            'fillAlphas': 1,
+                            'lineColor': '#1c24d8',
+                            'fontSize': 18,
+                            'labelColorField': 'color',
+                            'labelText': '[[label_t2]]',
+                            'labelPosition': data['provider'][1]['value_1'] == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'value_2',
+                            'fillAlphas': 1,
+                            'lineColor': '#ff9800',
+                            'fontSize': 18,
+                            'labelColorField': 'color',
+                            'labelText': '[[label_t3]]',
+                            'labelPosition': data['provider'][2]['value_2'] == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'value_3',
+                            'fillAlphas': 1,
+                            'lineColor': '#fb1818',
+                            'fontSize': 18,
+                            'labelColorField': 'color',
+                            'labelText': '[[label_t4]]',
+                            'labelPosition': data['provider'][3]['value_3'] == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'svalue_0',
+                            'fillAlphas': 1,
+                            'lineColor': '#02881f',
+                            'fontSize': 18,
+                            'labelColorField': 'scolor',
+                            'labelText': '[[slabel_t1]]',
+                            'labelPosition': data['provider'][0]['svalue_0'] == 0 ? 'right' : 'left',
+                            'newStack': true
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'svalue_1',
+                            'fillAlphas': 1,
+                            'lineColor': '#1c24d8',
+                            'fontSize': 18,
+                            'labelColorField': 'scolor',
+                            'labelText': '[[slabel_t2]]',
+                            'labelPosition': data['provider'][1]['svalue_1'] == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'svalue_2',
+                            'fillAlphas': 1,
+                            'lineColor': '#ff9800',
+                            'fontSize': 18,
+                            'labelColorField': 'scolor',
+                            'labelText': '[[slabel_t3]]',
+                            'labelPosition': data['provider'][2]['svalue_2'] == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'column',
+                            "valueField": 'svalue_3',
+                            'fillAlphas': 1,
+                            'lineColor': '#fb1818',
+                            'fontSize': 18,
+                            'labelColorField': 'scolor',
+                            'labelText': '[[slabel_t4]]',
+                            'labelPosition': 'left',
+                            'labelPosition': data['provider'][3]['svalue_3'] == 0 ? 'right' : 'left',
+                        },
+                        {
+                            "type": 'line',
+                            "valueField": 'extra',
+                            'fillAlphas': 0,
+                            'lineColor': '#fb1818',
+                            'fontSize': 18,
+                            'labelColorField': 'scolor',
+                            'labelText': ' ',
+                            'labelPosition': 'left'
+                        },
+                    ];
+                    chartImport.titles[0].text = "Analisis Trimestral de Importaciones "+year.val()+ ' vs ' +year2.val();
+                    chartImport.listeners = [{
+                        "event": "drawn",
+                        "method": downLabelVs,
+                    }];
                     chartImport.validateData();
                     chartImport.animateAgain();
                 }
             });
         }
-    })*/
+    })
+
+    function downLabel(e){
+        let bars = e.chart.categoryAxis.chart.graphs;
+        if('columnWidth' in bars[1].lastDataItem){
+            chartImport.clearLabels();
+            let t1_w = bars[0].lastDataItem.columnWidth;
+            let t2_w = bars[1].lastDataItem.columnWidth;
+            let t3_w = bars[2].lastDataItem.columnWidth;
+            let t4_w = bars[3].lastDataItem.columnWidth;
+            let vol_1 = bars[0].data[0].dataContext.volumen;
+            let vol_2 = bars[1].data[1].dataContext.volumen;
+            let vol_3 = bars[2].data[2].dataContext.volumen;
+            let vol_4 = bars[3].data[3].dataContext.volumen;
+            chartImport.addLabel(t1_w + 43, 161, vol_1, 'right', 16, '#000000', 0, 1, true);
+            chartImport.addLabel(t1_w + t2_w + 43, 287, vol_2, 'right', 16, '#000000', 0, 1, true);
+            chartImport.addLabel(t1_w + t2_w + t3_w + 43, 413, vol_3, 'right', 16, '#000000', 0, 1, true);
+            chartImport.addLabel(t1_w + t2_w + t3_w + t4_w + 43, 539, vol_4, 'right', 16, '#000000', 0, 1, true);
+        }
+    }
+
+    function downLabelVs(e){
+        let bars = e.chart.categoryAxis.chart.graphs;
+        if('columnWidth' in bars[1].lastDataItem){
+            chartImport.clearLabels();
+            let x = 60;
+            let y = 105;
+            let acum1 = 0;
+            let acum2 = 0;
+            let acumWidth1 = 0;
+            let acumWidth2 = 0;
+
+            for(let i=0; i<4; i++){
+                acum1 = acum1 + bars[i].data[i].dataContext['value_'+i];
+                acum2 = acum2 + bars[i].data[i].dataContext['svalue_'+i];
+                acumWidth1 = acumWidth1 + bars[i].lastDataItem.columnWidth;
+                acumWidth2 = acumWidth2 + bars[i+4].lastDataItem.columnWidth;
+
+                let percent = bars[i].data[i].dataContext.percent === "" ? "" : bars[i].data[i].dataContext.percent == 0 ? "0%" : bars[i].data[i].dataContext.percent > 0 ? '\u21d1 ' + bars[i].data[i].dataContext.percent + "%" : '\u21d3 ' + bars[i].data[i].dataContext.percent + "%";
+
+                if(acum1 > acum2){
+                    chartImport.addLabel(acumWidth1 + x, y, percent, 'left', 25, bars[i].data[i].dataContext.percent_color, 0, 1, true);
+                }else{
+                    chartImport.addLabel(acumWidth2 + x, y, percent, 'left', 25, bars[i].data[i].dataContext.percent_color, 0, 1, true);
+                }
+                y = y + 126;
+            }
+        }
+    }
+
+    function chartImportClear(){
+        chartImport.dataProvider = [{
+            'value': 0,
+            'tri': 'T1'
+            },
+            {
+            'value': 0,
+            'tri': 'T2'
+            },
+            {
+            'value': 0,
+            'tri': 'T3'
+            },
+            {
+            'value': 0,
+            'tri': 'T4'
+            },
+        ];
+        chartImport.validateData();
+        chartImport.clearLabels();
+        chartImport.removeListener(chartImport, "drawn", downLabel);
+        chartImport.removeListener(chartImport, "drawn", downLabelVs);
+    }
     //##############################################################################################################
     //########################################### Fin Graficas #####################################################
     //############################################################################################################## 
@@ -1980,7 +2062,7 @@ $(document).ready(function () {
         }];
 
         chartMarketSerial.write('market-graph-2');
-        document.getElementById('market-1').click();
+        if(document.getElementById('market-1') !== null) document.getElementById('market-1').click();
         chartMarketSerial.addListener("clickGraphItem", function (event) {
             let year = event.item.category;
             let status = $('#market-convert').attr('status');

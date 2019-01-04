@@ -61,6 +61,7 @@ Route::group(['middleware' => ['auth']], function () {
     //************************* GraphicsController ******************//
     Route::get('updateAnalysisPrice/{category_id}/{analisis_especifico}/{tipo_analisis}/{producto_ingrediente}/{compania}/{tiempo}/{producto_ingrediente2}/{compania2}', ['as' => 'updateAnalysisPrice', 'uses' => 'GraphicsController@updateAnalysisPrice'])->middleware('saveRoute:precios');
     Route::get('updateAnalysisHistoric/{id}/{year}', ['as' => 'updateAnalysisHistoric', 'uses' => 'GraphicsController@updateAnalysisHistoric'])->middleware('saveRoute:importaciones');
+    Route::get('updateAnalysisHistoricVs/{id}/{year}/{year2}', ['as' => 'updateAnalysisHistoricVs', 'uses' => 'GraphicsController@updateAnalysisHistoricVs'])->middleware('saveRoute:importaciones');
     Route::get('getProducts/{category_name}/{company_id}', ['as' => 'getProducts', 'uses' => 'GraphicsController@getProducts']);
     Route::get('getIngredientsForCuartiles/{category_name}/{company_id}', ['as' => 'getIngredientsForCuartiles', 'uses' => 'GraphicsController@getIngredientsForCuartiles']);
     Route::get('getIngredientes/{categoria_id}', ['as' => 'getIngredientes', 'uses' => 'GraphicsController@getIngredientes']);

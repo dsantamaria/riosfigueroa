@@ -237,7 +237,7 @@ class GraphicsController extends Controller
     public function updateAnalysisHistoric($ingrediente_id, $year){
     	
     	$ingredient_data = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->orderBy('trimestre')->get();
-    	/*
+
     	$provider = [];
     	$volumen_total = 0;
     	$precios = [];
@@ -249,51 +249,156 @@ class GraphicsController extends Controller
 
     	if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'kilogramo' : 'Litro';
 
-    	$provider[0] = $t1 > 0 ? array('value' => $t1, 'label_t1' => '$'.number_format($t1, 2, '.', ''), 'tri' => 'T1', 'color' => '#ffffff') : 
-    							 array('value' => 0, 'label_t1' => 'Sin Importaciones Registradas', 'tri' => 'T1', 'color' => '#02881f');
+    	$provider[0] = $t1 > 0 ? array('value_0' => $t1, 'label_t1' => '$'.number_format($t1, 2, '.', ''), 'tri' => 'T1', 'color' => '#ffffff') : 
+    							 array('value_0' => 0, 'label_t1' => 'Sin Importaciones Registradas', 'tri' => 'T1', 'color' => '#02881f');
 
-    	$provider[1] = $t2 > 0 ? array('value' => $t1, 'value2' => $t2, 'label_t2' => '$'.number_format($t2, 2, '.', ''), 'tri' => 'T2', 'color' => '#ffffff') : 
-    							 array('value2' => 0, 'label_t2' => 'Sin Importaciones Registradas', 'tri' => 'T2', 'color' => '#1c24d8');
+    	$provider[1] = $t2 > 0 ? array('value_0' => $t1, 'value_1' => $t2, 'label_t2' => '$'.number_format($t2, 2, '.', ''), 'tri' => 'T2', 'color' => '#ffffff') : 
+    							 array('value_1' => 0, 'label_t2' => 'Sin Importaciones Registradas', 'tri' => 'T2', 'color' => '#1c24d8');
 
-    	$provider[2] = $t3 > 0 ? array('value' => $t1, 'value2' => $t2, 'value3' => $t3, 'label_t3' => '$'.number_format($t3, 2, '.', ''), 'tri' => 'T3', 'color' => '#ffffff') : 
-    							 array('value3' => 0, 'label_t3' => 'Sin Importaciones Registradas', 'tri' => 'T3', 'color' => '#ff9800');
+    	$provider[2] = $t3 > 0 ? array('value_0' => $t1, 'value_1' => $t2, 'value_2' => $t3, 'label_t3' => '$'.number_format($t3, 2, '.', ''), 'tri' => 'T3', 'color' => '#ffffff') : 
+    							 array('value_2' => 0, 'label_t3' => 'Sin Importaciones Registradas', 'tri' => 'T3', 'color' => '#ff9800');
 
-    	$provider[3] = $t4 > 0 ? array('value' => $t1, 'value2' => $t2, 'value3' => $t3, 'value4' => $t4, 'label_t4' => '$'.number_format($t4, 2, '.', ''), 'tri' => 'T4', 'color' => '#ffffff') : 
-    							 array('value4' => 0, 'label_t4' => 'Sin Importaciones Registradas', 'tri' => 'T4','color' => '#fb1818');
+    	$provider[3] = $t4 > 0 ? array('value_0' => $t1, 'value_1' => $t2, 'value_2' => $t3, 'value_3' => $t4, 'label_t4' => '$'.number_format($t4, 2, '.', ''), 'tri' => 'T4', 'color' => '#ffffff') : 
+    							 array('value_3' => 0, 'label_t4' => 'Sin Importaciones Registradas', 'tri' => 'T4','color' => '#fb1818');
 
     	foreach ($ingredient_data as $key => $row) {
     		$provider[$key]['volumen'] = $unit == 'kilogramo' ? number_format(($row->amount/1000), 2, '.', ',').' Tons' : number_format($row->amount, 2, '.', ',').' Litros';
     		$volumen_total = $volumen_total + $row->amount;
+
     		if($row->price != 0.00) array_push($precios, $row->price);
+    		else $provider[$key]['volumen'] = "";
     	}
 
     	$precio_total_prom = round((array_sum($precios)/count($precios)), 2);
     	$volumen_total = $unit == 'kilogramo' ? number_format(($volumen_total/1000), 2, '.', ',').' Tons' : number_format($volumen_total, 2, '.', ',').' Litros';
 
     	return response()->json(array('provider' => $provider, 'volumen_total' => $volumen_total, 'precio_total_prom' => $precio_total_prom, 'unit' => $unit));
-    	*/
+    }
+
+    public function updateAnalysisHistoricVs($ingrediente_id, $year, $year2){
+    	$ingredient_data = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->orderBy('trimestre')->get();
+    	$ingredient_data_2 = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year2])->orderBy('trimestre')->get();
     	
     	$volumen_total = 0;
-    	$precio_total = 0;
-    	$volumen_mes = [];
-    	$array_precio_prom = [];
-    	$prom = 0;
-    	$unit = 'kilogramo';
-    	if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'kilogramo' : 'Litro';
+    	$volumen_total_2 = 0;
+    	$precios = [];
+    	$precios_2 = [];
+    	$value_0 = $ingredient_data[0]['price'];
+    	$value_1 = $ingredient_data[1]['price'];
+    	$value_2 = $ingredient_data[2]['price'];
+    	$value_3 = $ingredient_data[3]['price'];
+    	$svalue_0 = $ingredient_data_2[0]['price'];
+    	$svalue_1 = $ingredient_data_2[1]['price'];
+    	$svalue_2 = $ingredient_data_2[2]['price'];
+    	$svalue_3 = $ingredient_data_2[3]['price'];
+        $total_value = $value_0 + $value_1 + $value_2 + $value_3;
+        $total_svalue = $svalue_0 + $svalue_1 + $svalue_2 + $svalue_3;
+
+    	$provider = array(
+    		array(
+    			'value_0' => $value_0,
+                'svalue_0' => $svalue_0,
+                'label_t1' => $value_0 != 0 ? '$'.number_format($value_0, 2, '.', '') : 'Sin Importaciones Registradas',
+                'slabel_t1' => $svalue_0 != 0 ? '$'.number_format($svalue_0, 2, '.', '') : 'Sin Importaciones Registradas',
+                'tri' => 'T1',
+                'color' => $value_0 != 0 ? '#ffffff' : '#02881f',
+                'scolor' => $svalue_0 != 0 ? '#ffffff' : '#02881f',
+                'volumen' => 0,
+                'volumen2' => 0,
+                "percent" => "",
+                "percent_color" => '',
+    		),
+    		array(
+    			'value_0' => $value_1 == 0 ? 0 : $value_0,
+    			'value_1' => $value_1,
+      			'svalue_0' => $svalue_1 == 0 ? 0 : $svalue_0,
+                'svalue_1' => $svalue_1,
+                'label_t2' => $value_1 != 0 ? '$'.number_format($value_1, 2, '.', '') : 'Sin Importaciones Registradas',
+                'slabel_t2' => $svalue_1 != 0 ? '$'.number_format($svalue_1, 2, '.', '') : 'Sin Importaciones Registradas',
+                'tri' => 'T2',
+                'color' => $value_1 != 0 ? '#ffffff' : '#1c24d8',
+                'scolor' => $svalue_1 != 0 ? '#ffffff' : '#1c24d8',
+                'volumen' => 0,
+                'volumen2' => 0,
+                "percent" => "",
+                "percent_color" => '',
+    		),
+    		array(
+    			'value_0' => $value_2 == 0 ? 0 : $value_0,
+                'value_1' => $value_2 == 0 ? 0 : $value_1,
+    			'value_2' => $value_2,
+                'svalue_0' => $svalue_2 == 0 ? 0 : $svalue_0,
+                'svalue_1' => $svalue_2 == 0 ? 0 : $svalue_1,
+                'svalue_2' => $svalue_2,
+                'label_t3' => $value_2 != 0 ? '$'.number_format($value_2, 2, '.', '') : 'Sin Importaciones Registradas',
+                'slabel_t3' => $svalue_2 != 0 ? '$'.number_format($svalue_2, 2, '.', '') : 'Sin Importaciones Registradas',
+                'tri' => 'T3',
+                'color' => $value_2 != 0 ? '#ffffff' : '#ff9800',
+                'scolor' => $svalue_2 != 0 ? '#ffffff' : '#ff9800',
+                'volumen' => 0,
+                'volumen2' => 0,
+                "percent" => "",
+                "percent_color" => '',
+    		),
+    		array(
+    			'value_0' => $value_3 == 0 ? 0 : $value_0,
+                'value_1' => $value_3 == 0 ? 0 : $value_1,
+                'value_2' => $value_3 == 0 ? 0 : $value_2,
+    			'value_3' => $value_3,
+                'svalue_0' => $svalue_3 == 0 ? 0 : $svalue_0,
+                'svalue_1' => $svalue_3 == 0 ? 0 : $svalue_1,
+                'svalue_2' => $svalue_3 == 0 ? 0 : $svalue_2,
+                'svalue_3' => $svalue_3,
+                'label_t4' => $value_3 != 0 ? '$'.number_format($value_3, 2, '.', '') : 'Sin Importaciones Registradas',
+                'slabel_t4' => $svalue_3 != 0 ? '$'.number_format($svalue_3, 2, '.', '') : 'Sin Importaciones Registradas',
+                'tri' => 'T4',
+                'color' => $value_3 != 0 ? '#ffffff' : '#fb1818',
+                'scolor' => $svalue_3 != 0 ? '#ffffff' : '#fb1818',
+                'volumen' => 0,
+                'volumen2' => 0,
+                "percent" => "",
+                "percent_color" => '',
+                'extra' => $total_value > $total_svalue ? $total_value + 3 : $total_svalue + 3,
+    		),
+    	);
+
+        if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'kilogramo' : 'Litro';
+
     	foreach ($ingredient_data as $key => $row) {
-    		$ingredient_data[0]->unit == 'kilogramo' ? array_push($volumen_mes, round($row->amount/1000, 2)) : array_push($volumen_mes, $row->amount);
+    		$provider[$key]['volumen'] = $ingredient_data[0]->unit == 'kilogramo' ? number_format(($row->amount/1000), 2, '.', ',').' Tons' : number_format($row->amount, 2, '.', ',').' Litros';
     		$volumen_total = $volumen_total + $row->amount;
+    		if($row->price != 0.00) array_push($precios, $row->price);
 
-    		array_push($array_precio_prom, $row->price);
-    		if($row->price != 0.00) $prom++;
-    		$precio_total = $precio_total + $row->price;
+    		if($ingredient_data_2[$key]->price != 0 && $ingredient_data[$key]->price != 0){
+    			$percent = (($ingredient_data_2[$key]->price * 100)/$ingredient_data[$key]->price) - 100;
+    			$provider[$key]['percent'] = number_format($percent, 2, '.', '');
+
+    			if($ingredient_data_2[$key]->price == $ingredient_data[$key]->price) $provider[$key]['percent_color'] = "#0505fdba";
+    			else if($percent > 0) $provider[$key]['percent_color'] = "#007100b5";
+    			else $provider[$key]['percent_color'] = "#f56156";
+    		}else{
+    			$provider[$key]['percent'] = "";
+    			$provider[$key]['percent_color'] = "#f56156";
+    		}
     	}
-    	$precio_total_prom = $precio_total != 0 ? round($precio_total/$prom, 2) : 0;
-    	$volumen_total = $volumen_total != 0 ? $ingredient_data[0]->unit == 'kilogramo' ? round($volumen_total/1000, 2) : $volumen_total : 0;
+        Log::debug($volumen_total);
 
-    	return response()->json(array('volumen_mes' => $volumen_mes, 'volumen_total' => $volumen_total, 'precio_prom_mes' => $array_precio_prom, 'precio_total_prom' => $precio_total_prom, 'trimestres' => count($array_precio_prom),'unit' => $unit));
+    	foreach ($ingredient_data_2 as $key => $row) {
+    		$provider[$key]['volumen2'] = $ingredient_data[0]->unit == 'kilogramo' ? number_format(($row->amount/1000), 2, '.', ',').' Tons' : number_format($row->amount, 2, '.', ',').' Litros';
+    		$volumen_total_2 = $volumen_total_2 + $row->amount;
+    		if($row->price != 0.00) array_push($precios_2, $row->price);
+    	}
+
+        Log::debug($volumen_total_2);
+
+        $precio_total_prom = round((array_sum($precios)/count($precios)), 2);
+        $precio_total_prom_2 = round((array_sum($precios_2)/count($precios_2)), 2);
+        $volumen_total = $unit == 'kilogramo' ? number_format(($volumen_total/1000), 2, '.', ',').' Tons' : number_format($volumen_total, 2, '.', ',').' Litros';
+        $volumen_total_2 = $unit == 'kilogramo' ? number_format(($volumen_total_2/1000), 2, '.', ',').' Tons' : number_format($volumen_total_2, 2, '.', ',').' Litros';
+
+        return response()->json(array('provider' => $provider, 'volumen_total' => $volumen_total, 'volumen_total_2' => $volumen_total_2, 'precio_total_prom' => $precio_total_prom, 'precio_total_prom_2' => $precio_total_prom_2,'unit' => $unit));
     	
-    }
+    }	
 
     public function getIngredientes($categoria_id){
     	$ingredient_data = Analysis_import_ingredient::where('categoria_id', $categoria_id)->orderBy('ingrediente_activo', 'asc')->pluck('ingrediente_activo', 'id')->all();

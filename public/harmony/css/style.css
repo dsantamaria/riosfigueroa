@@ -1142,6 +1142,36 @@ canvas{
   font-weight: bold;
   font-size: 16px;
 } 
+
+#vs-text-import{
+  text-align: center;
+  padding-right: 22.5px;
+  padding-left: 7.5px;
+  font-size: 15px;
+  font-weight: bold;
+  padding-top: 10px;
+}
+
+@media(max-width: 1600px){
+  #vs-text-import{
+    padding-top: 0px;
+  }
+}
+
+@media(max-width: 991px){
+  #form-graph-analisis-historic{
+    margin-left: 0;
+  }
+}
+
+#import-extras-vs{
+  margin-top: 10px;
+}
+
+#import-extras-vs th, #import-extras-vs tr td:not(:first-child){
+  text-align: center;
+}
+
 /*
 #form-graph-analisis-historic select{
   background-color: #3e454c;
