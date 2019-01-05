@@ -854,6 +854,7 @@ $(document).ready(function () {
                 type: "GET",
                 url: '/updateAnalysisHistoric/'+ ingrediente.val() + '/' + year.val(),
                 success: function( data ) {
+                    console.log(data);
                     chartImport.dataProvider = data['provider'];
                     let unidad = data['unit'] == 'kilogramo' ? 'Kg' : 'Litros';
                     $('#importaciones_precio_total').text(data['precio_total_prom']);
@@ -902,10 +903,12 @@ $(document).ready(function () {
                             'labelPosition': data['provider'][3]['value_3'] == 0 ? 'right' : 'left'
                         },
                     ];
-                    chartImport.listeners = [{
-                        "event": "drawn",
-                        "method": downLabel,
-                    }];
+                    chartImport.listeners = [
+                        {
+                            "event": "drawn",
+                            "method": downLabel,
+                        }
+                    ];
                     chartImport.titles[0].text = "Analisis Trimestral de Importaciones";
                     chartImport.validateData();
                     chartImport.animateAgain();
@@ -1034,50 +1037,55 @@ $(document).ready(function () {
 
     function downLabel(e){
         let bars = e.chart.categoryAxis.chart.graphs;
-        if('columnWidth' in bars[1].lastDataItem){
-            chartImport.clearLabels();
-            let t1_w = bars[0].lastDataItem.columnWidth;
-            let t2_w = bars[1].lastDataItem.columnWidth;
-            let t3_w = bars[2].lastDataItem.columnWidth;
-            let t4_w = bars[3].lastDataItem.columnWidth;
-            let vol_1 = bars[0].data[0].dataContext.volumen;
-            let vol_2 = bars[1].data[1].dataContext.volumen;
-            let vol_3 = bars[2].data[2].dataContext.volumen;
-            let vol_4 = bars[3].data[3].dataContext.volumen;
-            chartImport.addLabel(t1_w + 43, 161, vol_1, 'right', 16, '#000000', 0, 1, true);
-            chartImport.addLabel(t1_w + t2_w + 43, 287, vol_2, 'right', 16, '#000000', 0, 1, true);
-            chartImport.addLabel(t1_w + t2_w + t3_w + 43, 413, vol_3, 'right', 16, '#000000', 0, 1, true);
-            chartImport.addLabel(t1_w + t2_w + t3_w + t4_w + 43, 539, vol_4, 'right', 16, '#000000', 0, 1, true);
-        }
+        chartImport.clearLabels();
+        let t1_w = bars[0].lastDataItem.columnWidth;
+        let t2_w = bars[1].lastDataItem.columnWidth;
+        let t3_w = bars[2].lastDataItem.columnWidth;
+        let t4_w = bars[3].lastDataItem.columnWidth;
+        let vol_1 = bars[0].data[0].dataContext.volumen;
+        let vol_2 = bars[1].data[1].dataContext.volumen;
+        let vol_3 = bars[2].data[2].dataContext.volumen;
+        let vol_4 = bars[3].data[3].dataContext.volumen;
+        chartImport.addLabel(t1_w + 43, 161, vol_1, 'right', 16, '#000000', 0, 1, true);
+        chartImport.addLabel(t1_w + t2_w + 43, 287, vol_2, 'right', 16, '#000000', 0, 1, true);
+        chartImport.addLabel(t1_w + t2_w + t3_w + 43, 413, vol_3, 'right', 16, '#000000', 0, 1, true);
+        chartImport.addLabel(t1_w + t2_w + t3_w + t4_w + 43, 539, vol_4, 'right', 16, '#000000', 0, 1, true);
+
+        chartImport.removeListener(chartImport, "drawn", downLabel);
+        chartImport.dataProvider.pop();
+        chartImport.validateData();
     }
 
     function downLabelVs(e){
         let bars = e.chart.categoryAxis.chart.graphs;
-        if('columnWidth' in bars[1].lastDataItem){
-            chartImport.clearLabels();
-            let x = 60;
-            let y = 105;
-            let acum1 = 0;
-            let acum2 = 0;
-            let acumWidth1 = 0;
-            let acumWidth2 = 0;
+        chartImport.clearLabels();
+        let x = 60;
+        let y = 105;
+        let acum1 = 0;
+        let acum2 = 0;
+        let acumWidth1 = 0;
+        let acumWidth2 = 0;
 
-            for(let i=0; i<4; i++){
-                acum1 = acum1 + bars[i].data[i].dataContext['value_'+i];
-                acum2 = acum2 + bars[i].data[i].dataContext['svalue_'+i];
-                acumWidth1 = acumWidth1 + bars[i].lastDataItem.columnWidth;
-                acumWidth2 = acumWidth2 + bars[i+4].lastDataItem.columnWidth;
+        for(let i=0; i<4; i++){
+            acum1 = acum1 + bars[i].data[i].dataContext['value_'+i];
+            acum2 = acum2 + bars[i].data[i].dataContext['svalue_'+i];
+            acumWidth1 = acumWidth1 + bars[i].lastDataItem.columnWidth;
+            acumWidth2 = acumWidth2 + bars[i+4].lastDataItem.columnWidth;
 
-                let percent = bars[i].data[i].dataContext.percent === "" ? "" : bars[i].data[i].dataContext.percent == 0 ? "0%" : bars[i].data[i].dataContext.percent > 0 ? '\u21d1 ' + bars[i].data[i].dataContext.percent + "%" : '\u21d3 ' + bars[i].data[i].dataContext.percent + "%";
+            let percent = bars[i].data[i].dataContext.percent === "" ? "" : bars[i].data[i].dataContext.percent == 0 ? "0%" : bars[i].data[i].dataContext.percent > 0 ? '\u21d1 ' + bars[i].data[i].dataContext.percent + "%" : '\u21d3 ' + bars[i].data[i].dataContext.percent + "%";
 
-                if(acum1 > acum2){
-                    chartImport.addLabel(acumWidth1 + x, y, percent, 'left', 25, bars[i].data[i].dataContext.percent_color, 0, 1, true);
-                }else{
-                    chartImport.addLabel(acumWidth2 + x, y, percent, 'left', 25, bars[i].data[i].dataContext.percent_color, 0, 1, true);
-                }
-                y = y + 126;
+            if(acum1 > acum2){
+                chartImport.addLabel(acumWidth1 + x, y, percent, 'left', 25, bars[i].data[i].dataContext.percent_color, 0, 1, true);
+            }else{
+                chartImport.addLabel(acumWidth2 + x, y, percent, 'left', 25, bars[i].data[i].dataContext.percent_color, 0, 1, true);
             }
+            y = y + 126;
         }
+
+        chartImport.removeListener(chartImport, "drawn", downLabelVs);
+        chartImport.dataProvider.pop()
+        chartImport.validateData();
+
     }
 
     function chartImportClear(){

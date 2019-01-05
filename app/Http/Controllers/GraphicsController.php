@@ -261,6 +261,9 @@ class GraphicsController extends Controller
     	$provider[3] = $t4 > 0 ? array('value_0' => $t1, 'value_1' => $t2, 'value_2' => $t3, 'value_3' => $t4, 'label_t4' => '$'.number_format($t4, 2, '.', ''), 'tri' => 'T4', 'color' => '#ffffff') : 
     							 array('value_3' => 0, 'label_t4' => 'Sin Importaciones Registradas', 'tri' => 'T4','color' => '#fb1818');
 
+        $provider[4] = array('value_0' => $t1, 'value_1' => $t2, 'value_2' => $t3, 'value_3' => $t4, 'value_4' => 0, 'label_t4' => '', 'tri' => '', 'color' => '');
+
+
     	foreach ($ingredient_data as $key => $row) {
     		$provider[$key]['volumen'] = $unit == 'kilogramo' ? number_format(($row->amount/1000), 2, '.', ',').' Tons' : number_format($row->amount, 2, '.', ',').' Litros';
     		$volumen_total = $volumen_total + $row->amount;
@@ -269,7 +272,9 @@ class GraphicsController extends Controller
     		else $provider[$key]['volumen'] = "";
     	}
 
-    	$precio_total_prom = round((array_sum($precios)/count($precios)), 2);
+        $cont = count($precios) > 0 ? count($precios) : 1;
+
+    	$precio_total_prom = round((array_sum($precios)/$cont), 2);
     	$volumen_total = $unit == 'kilogramo' ? number_format(($volumen_total/1000), 2, '.', ',').' Tons' : number_format($volumen_total, 2, '.', ',').' Litros';
 
     	return response()->json(array('provider' => $provider, 'volumen_total' => $volumen_total, 'precio_total_prom' => $precio_total_prom, 'unit' => $unit));
@@ -360,6 +365,25 @@ class GraphicsController extends Controller
                 "percent_color" => '',
                 'extra' => $total_value > $total_svalue ? $total_value + 3 : $total_svalue + 3,
     		),
+            array(
+                'value_0' => $value_0,
+                'value_1' => $value_1,
+                'value_2' => $value_2,
+                'value_3' => $value_3,
+                'svalue_0' => $svalue_0,
+                'svalue_1' => $svalue_1,
+                'svalue_2' => $svalue_2,
+                'svalue_3' => $svalue_3,
+                'label_t4' => '',
+                'slabel_t4' => '',
+                'tri' => '',
+                'color' => '',
+                'scolor' => '',
+                'volumen' => '',
+                'volumen2' => '',
+                "percent" => "",
+                "percent_color" => '',
+            ),
     	);
 
         if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'kilogramo' : 'Litro';
@@ -391,8 +415,11 @@ class GraphicsController extends Controller
 
         Log::debug($volumen_total_2);
 
-        $precio_total_prom = round((array_sum($precios)/count($precios)), 2);
-        $precio_total_prom_2 = round((array_sum($precios_2)/count($precios_2)), 2);
+        $cont = count($precios) > 0 ? count($precios) : 1;
+        $cont_2 = count($precios_2) > 0 ? count($precios_2) : 1;
+
+        $precio_total_prom = round((array_sum($precios)/$cont), 2);
+        $precio_total_prom_2 = round((array_sum($precios_2)/$cont_2), 2);
         $volumen_total = $unit == 'kilogramo' ? number_format(($volumen_total/1000), 2, '.', ',').' Tons' : number_format($volumen_total, 2, '.', ',').' Litros';
         $volumen_total_2 = $unit == 'kilogramo' ? number_format(($volumen_total_2/1000), 2, '.', ',').' Tons' : number_format($volumen_total_2, 2, '.', ',').' Litros';
 
