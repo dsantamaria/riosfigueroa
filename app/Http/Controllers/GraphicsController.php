@@ -242,10 +242,10 @@ class GraphicsController extends Controller
     	$volumen_total = 0;
     	$precios = [];
 
-    	$t1 = $ingredient_data[0]['price'];
-    	$t2 = $ingredient_data[1]['price'];
-    	$t3 = $ingredient_data[2]['price'];
-    	$t4 = $ingredient_data[3]['price'];
+    	$t1 = floatval($ingredient_data[0]['price']);
+    	$t2 = floatval($ingredient_data[1]['price']);
+    	$t3 = floatval($ingredient_data[2]['price']);
+    	$t4 = floatval($ingredient_data[3]['price']);
 
     	if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'kilogramo' : 'Litro';
 
@@ -288,14 +288,14 @@ class GraphicsController extends Controller
     	$volumen_total_2 = 0;
     	$precios = [];
     	$precios_2 = [];
-    	$value_0 = $ingredient_data[0]['price'];
-    	$value_1 = $ingredient_data[1]['price'];
-    	$value_2 = $ingredient_data[2]['price'];
-    	$value_3 = $ingredient_data[3]['price'];
-    	$svalue_0 = $ingredient_data_2[0]['price'];
-    	$svalue_1 = $ingredient_data_2[1]['price'];
-    	$svalue_2 = $ingredient_data_2[2]['price'];
-    	$svalue_3 = $ingredient_data_2[3]['price'];
+    	$value_0 = floatval($ingredient_data[0]['price']);
+    	$value_1 = floatval($ingredient_data[1]['price']);
+    	$value_2 = floatval($ingredient_data[2]['price']);
+    	$value_3 = floatval($ingredient_data[3]['price']);
+    	$svalue_0 = floatval($ingredient_data_2[0]['price']);
+    	$svalue_1 = floatval($ingredient_data_2[1]['price']);
+    	$svalue_2 = floatval($ingredient_data_2[2]['price']);
+    	$svalue_3 = floatval($ingredient_data_2[3]['price']);
         $total_value = $value_0 + $value_1 + $value_2 + $value_3;
         $total_svalue = $svalue_0 + $svalue_1 + $svalue_2 + $svalue_3;
 

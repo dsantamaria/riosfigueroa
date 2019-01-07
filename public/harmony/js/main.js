@@ -924,8 +924,8 @@ $(document).ready(function () {
                     let unidad = data['unit'] == 'kilogramo' ? 'Kg' : 'Litros';
                     $('#impor-an-1').text(data['volumen_total']);
                     $('#impor-an-2').text(data['volumen_total_2']);
-                    $('#precio-an-1').text(data['precio_total_prom'] + 'USD/' + unidad);
-                    $('#precio-an-2').text(data['precio_total_prom_2'] + 'USD/' + unidad);
+                    $('#precio-an-1').text(data['precio_total_prom'] + ' USD/' + unidad);
+                    $('#precio-an-2').text(data['precio_total_prom_2'] + ' USD/' + unidad);
                     $('#title-an-1').text(year.val());
                     $('#title-an-2').text(year2.val());
                     chartImport.dataProvider = data['provider'];
@@ -1071,6 +1071,7 @@ $(document).ready(function () {
             acum2 = acum2 + bars[i].data[i].dataContext['svalue_'+i];
             acumWidth1 = acumWidth1 + bars[i].lastDataItem.columnWidth;
             acumWidth2 = acumWidth2 + bars[i+4].lastDataItem.columnWidth;
+
 
             let percent = bars[i].data[i].dataContext.percent === "" ? "" : bars[i].data[i].dataContext.percent == 0 ? "0%" : bars[i].data[i].dataContext.percent > 0 ? '\u21d1 ' + bars[i].data[i].dataContext.percent + "%" : '\u21d3 ' + bars[i].data[i].dataContext.percent + "%";
 
