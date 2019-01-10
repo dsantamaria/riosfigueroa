@@ -860,7 +860,7 @@ $(document).ready(function () {
                 type: "GET",
                 url: '/updateAnalysisHistoric/'+ ingrediente.val() + '/' + year.val(),
                 success: function( data ) {
-                    console.log(data);
+                    chartImport.balloon.enabled = false;
                     chartImport.dataProvider = data['provider'];
                     let unidad = data['unit'] == 'kilogramo' ? 'Kg' : 'Litros';
                     $('#importaciones_precio_total').text(data['precio_total_prom']);
@@ -926,6 +926,7 @@ $(document).ready(function () {
                 type: "GET",
                 url: '/updateAnalysisHistoricVs/'+ ingrediente.val() + '/' + year.val() + '/' + year2.val(),
                 success: function( data ) {
+                    chartImport.balloon.enabled = true;
                     $('#import-extras-vs').removeClass('hidden');
                     let unidad = data['unit'] == 'kilogramo' ? 'Kg' : 'Litros';
                     $('#impor-an-1').text(data['volumen_total']);
