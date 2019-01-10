@@ -389,7 +389,7 @@ class GraphicsController extends Controller
         if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'kilogramo' : 'Litro';
 
     	foreach ($ingredient_data as $key => $row) {
-    		$provider[$key]['volumen'] = $ingredient_data[0]->unit == 'kilogramo' ? number_format(($row->amount/1000), 2, '.', ',').' Tons' : number_format($row->amount, 2, '.', ',').' Litros';
+    		$provider[$key]['volumen'] = $ingredient_data[0]->unit == 'kilogramo' ? 'Trimestre '.($key+1).': <strong>'.number_format(($row->amount/1000), 2, '.', ',').' Tons</strong>' : 'Trimestre'.($key+1).': <strong>'.number_format($row->amount, 2, '.', ',').' Litros</strong>';
     		$volumen_total = $volumen_total + $row->amount;
     		if($row->price != 0.00) array_push($precios, $row->price);
 
@@ -408,7 +408,7 @@ class GraphicsController extends Controller
         Log::debug($volumen_total);
 
     	foreach ($ingredient_data_2 as $key => $row) {
-    		$provider[$key]['volumen2'] = $ingredient_data[0]->unit == 'kilogramo' ? number_format(($row->amount/1000), 2, '.', ',').' Tons' : number_format($row->amount, 2, '.', ',').' Litros';
+    		$provider[$key]['volumen2'] = $ingredient_data[0]->unit == 'kilogramo' ? 'Trimestre '.($key+1).': <strong>'.number_format(($row->amount/1000), 2, '.', ',').' Tons</strong>' : 'Trimestre'.($key+1).': <strong>'.number_format($row->amount, 2, '.', ',').' Litros</strong>';
     		$volumen_total_2 = $volumen_total_2 + $row->amount;
     		if($row->price != 0.00) array_push($precios_2, $row->price);
     	}

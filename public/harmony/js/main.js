@@ -720,9 +720,15 @@ $(document).ready(function () {
     AmCharts.ready(function () {
         chartImport = new AmCharts.AmSerialChart();
         chartImport.balloon = {
-            "fillAlpha": 1,
-            "enabled": false
-        };
+            "fillAlpha": 0.8,
+            "fillColor": "#FFFFFF",
+            "borderAlpha": 0.0001,
+            "borderThickness": 5,
+            'textAlign': 'center',
+            "maxWidth": 500,
+            'fontSize': 16,
+
+        }
         chartImport.backgroundColor = "#000000";
         chartImport.backgroundAlpha = 0.1;
         chartImport.categoryAxis = {
@@ -939,6 +945,7 @@ $(document).ready(function () {
                             'labelColorField': 'color',
                             'labelText': '[[label_t1]]',
                             'labelPosition': data['provider'][0]['value_0'] == 0 ? 'right' : 'left',
+                            'balloonText': 'Importacion </br> [[volumen]]',
                         },
                         {
                             "type": 'column',
@@ -949,6 +956,7 @@ $(document).ready(function () {
                             'labelColorField': 'color',
                             'labelText': '[[label_t2]]',
                             'labelPosition': data['provider'][1]['value_1'] == 0 ? 'right' : 'left',
+                            'balloonText': 'Importacion </br> [[volumen]]',
                         },
                         {
                             "type": 'column',
@@ -959,6 +967,7 @@ $(document).ready(function () {
                             'labelColorField': 'color',
                             'labelText': '[[label_t3]]',
                             'labelPosition': data['provider'][2]['value_2'] == 0 ? 'right' : 'left',
+                            'balloonText': 'Importacion </br> [[volumen]]',
                         },
                         {
                             "type": 'column',
@@ -969,6 +978,7 @@ $(document).ready(function () {
                             'labelColorField': 'color',
                             'labelText': '[[label_t4]]',
                             'labelPosition': data['provider'][3]['value_3'] == 0 ? 'right' : 'left',
+                            'balloonText': 'Importacion </br> [[volumen]]',
                         },
                         {
                             "type": 'column',
@@ -979,6 +989,7 @@ $(document).ready(function () {
                             'labelColorField': 'scolor',
                             'labelText': '[[slabel_t1]]',
                             'labelPosition': data['provider'][0]['svalue_0'] == 0 ? 'right' : 'left',
+                            'balloonText': 'Importacion </br> [[volumen2]]',
                             'newStack': true
                         },
                         {
@@ -990,6 +1001,7 @@ $(document).ready(function () {
                             'labelColorField': 'scolor',
                             'labelText': '[[slabel_t2]]',
                             'labelPosition': data['provider'][1]['svalue_1'] == 0 ? 'right' : 'left',
+                            'balloonText': 'Importacion </br> [[volumen2]]',
                         },
                         {
                             "type": 'column',
@@ -1000,6 +1012,7 @@ $(document).ready(function () {
                             'labelColorField': 'scolor',
                             'labelText': '[[slabel_t3]]',
                             'labelPosition': data['provider'][2]['svalue_2'] == 0 ? 'right' : 'left',
+                            'balloonText': 'Importacion </br> [[volumen2]]',
                         },
                         {
                             "type": 'column',
@@ -1011,6 +1024,7 @@ $(document).ready(function () {
                             'labelText': '[[slabel_t4]]',
                             'labelPosition': 'left',
                             'labelPosition': data['provider'][3]['svalue_3'] == 0 ? 'right' : 'left',
+                            'balloonText': 'Importacion </br> [[volumen2]]',
                         },
                         {
                             "type": 'line',
