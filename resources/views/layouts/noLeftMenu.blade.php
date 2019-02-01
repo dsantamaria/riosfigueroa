@@ -10,11 +10,6 @@
 
         {!! Html::style('harmony/css/font-awesome.min.css') !!}
         {!! Html::style('harmony/css/bootstrap.min.css') !!}
-        {!! Html::style('harmony/css/dataTables.bootstrap.min.css') !!}
-        {!! Html::style('harmony/css/bootstrap-social.css') !!}
-        {!! Html::style('harmony/css/bootstrap-select.css') !!}
-        {!! Html::style('harmony/css/fileinput.min.css') !!}
-        {!! Html::style('harmony/css/awesome-bootstrap-checkbox.css') !!}
         {!! Html::style('harmony/css/style.css') !!}
     </head>
 
@@ -56,11 +51,5 @@
         {!! Html::script('harmony/js/jquery.min.js') !!}
         {!! Html::script('harmony/js/bootstrap-select.min.js') !!}
         {!! Html::script('harmony/js/bootstrap.min.js') !!}
-        {!! Html::script('harmony/js/jquery.dataTables.min.js') !!}
-        {!! Html::script('harmony/js/dataTables.bootstrap.min.js') !!}
-        {!! Html::script('harmony/js/Chart.min.js') !!}
-        {!! Html::script('harmony/js/fileinput.js') !!}
-        {!! Html::script('harmony/js/chartData.js') !!}
-        {!! Html::script('harmony/js/main.js') !!}
     </body>
 </html>

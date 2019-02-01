@@ -94,8 +94,6 @@ class Market_value extends Model
     	$suma = 0;
     	$pro = 'pro_'.$sector;
     	$umf = 'umf_'.$sector;
-        $projection = self::projection($pro, $umf, $data, false);
-        $projection_dol = self::projection($pro, $umf, $data, true);
 
         /*yearly column chart*/
     	foreach ($data as $key => $value) {
@@ -135,59 +133,12 @@ class Market_value extends Model
     			'suma_dol'		       => number_format(($suma_dol), 1),
     			'round_suma'	       => '$'.$round_suma,
     			'round_suma_dol'	   => '$'.$round_suma_dol,
-                'projection'           => $projection['a0'] + ($projection['a1'] * ($key +1)),
-                'projection_dol'       => $projection_dol['a0'] + ($projection_dol['a1'] * ($key +1)),
 
     			'pro_percent'		   => round(($value[$pro] * 100)/$suma),
     			'umf_percent'		   => round(($value[$umf] * 100)/$suma),
     		);
     	}
-        /*
-        array_push($all_data, array(
-            'projection'     => $projection['a0'] + ($projection['a1'] * 11),
-            'projection_dol' => $projection_dol['a0'] + ($projection_dol['a1'] * 11),
-            'year'           => "",        
-        ));*/
 
     	return $all_data;
-    }
-
-    public static function projection($pro, $umf, $data, $dol){
-        $x = [];
-        $log_y = [];
-        $x2 = [];
-        $x_log_y = [];
-        $n = 0;
-        $a0 = 0;
-        $a1 = 0;
-
-        /*projection chart*/
-        foreach ($data as $key => $value) {
-            $total = $dol ? $value[$pro]/$value['tipo_de_cambio'] + $value[$umf]/$value['tipo_de_cambio'] : $value[$pro] + $value[$umf];
-            array_push($x, $key + 1);
-            array_push($log_y, log10($total));
-            array_push($x2, ($key + 1)*($key + 1));
-            array_push($x_log_y, ($key+1)*log10($total));
-            $n = $key + 1;
-        }
-
-        $total_x = array_sum($x);
-        $total_log_y = array_sum($log_y);
-        $total_x2 = array_sum($x2);
-        $total_x_log_y = array_sum($x_log_y);
-
-        $log_a = (($total_log_y * $total_x2) - ($total_x * $total_x_log_y)) / (($n * $total_x2) - ($total_x * $total_x));
-        $log_b = (($n * $total_x_log_y) - ($total_log_y * $total_x)) / (($n * $total_x2) - ($total_x * $total_x));
-
-
-        $del_a = pow(10, $log_a);
-        $del_b = pow(10, $log_b);
-
-        foreach ($data as $key => $value) {
-            $y = $del_a * pow($del_b, ($value[$pro] + $value[$umf]));
-            //Log::debug($y);
-        }
-
-        return array('a0' => 1, 'a1' => 2);
     }
 }

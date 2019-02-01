@@ -40,4 +40,8 @@ class User_route extends Model
         }
         return $all_routes;
     }
+
+    public static function delete_routes($id){
+        self::where('user_login_id', $id)->delete();
+    }
 }

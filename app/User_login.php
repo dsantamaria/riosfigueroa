@@ -2,6 +2,7 @@
 
 namespace App;
 use App\User;
+use App\User_route;
 use Carbon\Carbon;
 use Auth;
 use Log;
@@ -61,5 +62,12 @@ class User_login extends Model
             array_push($all_logins, $user_login);
         }
         return $all_logins;
+    }
+
+    public static function delete_logins($id){
+        self::where('user_id', $id)->get()->each(function ($item, $key) {
+            User_route::delete_routes($item->id);
+        });
+        self::where('user_id', $id)->delete();
     }
 }

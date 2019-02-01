@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 use App\Http\Requests;
 use App\Company_subscriber;
 use App\User;
+use App\User_login;
 use App\Products;
 use App\Pending_subscriber;
 use App\Role;
@@ -147,6 +148,7 @@ class SubscribersController extends Controller
     public function delete_user($id){
         $user = User::where('id', $id)->delete();
         if($user){
+            User_login::delete_logins($id);
             return response()->json(['response' => 1]);
         }
         return response()->json(['response' => 0]);
