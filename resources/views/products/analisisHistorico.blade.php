@@ -40,8 +40,20 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <th></th>
-                    <th id="title-an-1"></th>
-                    <th id="title-an-2"></th>
+                    <th id="title-an-1">
+                        <span></span>
+                        <i class="fa fa-circle"></i>
+                        <i class="fa fa-circle"></i>
+                        <i class="fa fa-circle"></i>
+                        <i class="fa fa-circle"></i>
+                    </th>
+                    <th id="title-an-2">
+                        <span></span>
+                        <i class="fa fa-circle"></i>
+                        <i class="fa fa-circle"></i>
+                        <i class="fa fa-circle"></i>
+                        <i class="fa fa-circle"></i>
+                    </th>
                 </thead>
                 <tbody>
                     <tr>

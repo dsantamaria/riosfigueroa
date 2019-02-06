@@ -1172,6 +1172,32 @@ canvas{
   text-align: center;
 }
 
+#title-an-1 i:nth-child(2){
+  color: #02881f;
+}
+#title-an-1 i:nth-child(3){
+  color: #1c24d8;
+}
+#title-an-1 i:nth-child(4){
+  color: #ff9800;
+}
+#title-an-1 i:nth-child(5){
+  color: #fb1818;
+}
+
+#title-an-2 i:nth-child(2){
+  color: #02881f97;
+}
+#title-an-2 i:nth-child(3){
+  color: #1c24d897;
+}
+#title-an-2 i:nth-child(4){
+  color: #ff980097;
+}
+#title-an-2 i:nth-child(5){
+  color: #fb181897;
+}
+
 /*
 #form-graph-analisis-historic select{
   background-color: #3e454c;

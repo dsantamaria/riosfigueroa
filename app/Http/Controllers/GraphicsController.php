@@ -284,18 +284,21 @@ class GraphicsController extends Controller
     	$ingredient_data = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year])->orderBy('trimestre')->get();
     	$ingredient_data_2 = Analysis_import_list::where(['analysis_import_ingredient_id' => $ingrediente_id, 'year' => $year2])->orderBy('trimestre')->get();
     	
+        if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'Tons' : 'Litros';
+
     	$volumen_total = 0;
     	$volumen_total_2 = 0;
     	$precios = [];
     	$precios_2 = [];
-    	$value_0 = floatval($ingredient_data[0]['price']);
-    	$value_1 = floatval($ingredient_data[1]['price']);
-    	$value_2 = floatval($ingredient_data[2]['price']);
-    	$value_3 = floatval($ingredient_data[3]['price']);
-    	$svalue_0 = floatval($ingredient_data_2[0]['price']);
-    	$svalue_1 = floatval($ingredient_data_2[1]['price']);
-    	$svalue_2 = floatval($ingredient_data_2[2]['price']);
-    	$svalue_3 = floatval($ingredient_data_2[3]['price']);
+        $tons_convertion = $unit == 'Tons' ? 1000 : 1;
+    	$value_0 = floatval($ingredient_data[0]['amount']/$tons_convertion);
+    	$value_1 = floatval($ingredient_data[1]['amount']/$tons_convertion);
+    	$value_2 = floatval($ingredient_data[2]['amount']/$tons_convertion);
+    	$value_3 = floatval($ingredient_data[3]['amount']/$tons_convertion);
+    	$svalue_0 = floatval($ingredient_data_2[0]['amount']/$tons_convertion);
+    	$svalue_1 = floatval($ingredient_data_2[1]['amount']/$tons_convertion);
+    	$svalue_2 = floatval($ingredient_data_2[2]['amount']/$tons_convertion);
+    	$svalue_3 = floatval($ingredient_data_2[3]['amount']/$tons_convertion);
         $total_value = $value_0 + $value_1 + $value_2 + $value_3;
         $total_svalue = $svalue_0 + $svalue_1 + $svalue_2 + $svalue_3;
 
@@ -303,11 +306,11 @@ class GraphicsController extends Controller
     		array(
     			'value_0' => $value_0,
                 'svalue_0' => $svalue_0,
-                'label_t1' => $value_0 != 0 ? '$'.number_format($value_0, 2, '.', '') : 'Sin Importaciones Registradas',
-                'slabel_t1' => $svalue_0 != 0 ? '$'.number_format($svalue_0, 2, '.', '') : 'Sin Importaciones Registradas',
+                'label_t1' => $value_0 != 0 ? number_format($value_0, 2, '.', '').' '.$unit : 'Sin Importaciones Registradas',
+                'slabel_t1' => $svalue_0 != 0 ? number_format($svalue_0, 2, '.', '').' '.$unit : 'Sin Importaciones Registradas',
                 'tri' => 'T1',
-                'color' => $value_0 != 0 ? '#ffffff' : '#02881f',
-                'scolor' => $svalue_0 != 0 ? '#ffffff' : '#02881f',
+                'color' => $value_0 != 0 ? '#000000' : '#02881f',
+                'scolor' => $svalue_0 != 0 ? '#000000' : '#02881fa3',
                 'volumen' => 0,
                 'volumen2' => 0,
                 "percent" => "",
@@ -318,11 +321,11 @@ class GraphicsController extends Controller
     			'value_1' => $value_1,
       			'svalue_0' => $svalue_1 == 0 ? 0 : $svalue_0,
                 'svalue_1' => $svalue_1,
-                'label_t2' => $value_1 != 0 ? '$'.number_format($value_1, 2, '.', '') : 'Sin Importaciones Registradas',
-                'slabel_t2' => $svalue_1 != 0 ? '$'.number_format($svalue_1, 2, '.', '') : 'Sin Importaciones Registradas',
+                'label_t2' => $value_1 != 0 ? number_format($value_1, 2, '.', '').' '.$unit : 'Sin Importaciones Registradas',
+                'slabel_t2' => $svalue_1 != 0 ? number_format($svalue_1, 2, '.', '').' '.$unit : 'Sin Importaciones Registradas',
                 'tri' => 'T2',
-                'color' => $value_1 != 0 ? '#ffffff' : '#1c24d8',
-                'scolor' => $svalue_1 != 0 ? '#ffffff' : '#1c24d8',
+                'color' => $value_1 != 0 ? '#000000' : '#1c24d8',
+                'scolor' => $svalue_1 != 0 ? '#000000' : '#1c24d8a3',
                 'volumen' => 0,
                 'volumen2' => 0,
                 "percent" => "",
@@ -335,11 +338,11 @@ class GraphicsController extends Controller
                 'svalue_0' => $svalue_2 == 0 ? 0 : $svalue_0,
                 'svalue_1' => $svalue_2 == 0 ? 0 : $svalue_1,
                 'svalue_2' => $svalue_2,
-                'label_t3' => $value_2 != 0 ? '$'.number_format($value_2, 2, '.', '') : 'Sin Importaciones Registradas',
-                'slabel_t3' => $svalue_2 != 0 ? '$'.number_format($svalue_2, 2, '.', '') : 'Sin Importaciones Registradas',
+                'label_t3' => $value_2 != 0 ? number_format($value_2, 2, '.', '').' '.$unit : 'Sin Importaciones Registradas',
+                'slabel_t3' => $svalue_2 != 0 ? number_format($svalue_2, 2, '.', '').' '.$unit : 'Sin Importaciones Registradas',
                 'tri' => 'T3',
-                'color' => $value_2 != 0 ? '#ffffff' : '#ff9800',
-                'scolor' => $svalue_2 != 0 ? '#ffffff' : '#ff9800',
+                'color' => $value_2 != 0 ? '#000000' : '#ff9800',
+                'scolor' => $svalue_2 != 0 ? '#000000' : '#ff9800a3',
                 'volumen' => 0,
                 'volumen2' => 0,
                 "percent" => "",
@@ -354,16 +357,16 @@ class GraphicsController extends Controller
                 'svalue_1' => $svalue_3 == 0 ? 0 : $svalue_1,
                 'svalue_2' => $svalue_3 == 0 ? 0 : $svalue_2,
                 'svalue_3' => $svalue_3,
-                'label_t4' => $value_3 != 0 ? '$'.number_format($value_3, 2, '.', '') : 'Sin Importaciones Registradas',
-                'slabel_t4' => $svalue_3 != 0 ? '$'.number_format($svalue_3, 2, '.', '') : 'Sin Importaciones Registradas',
+                'label_t4' => $value_3 != 0 ? number_format($value_3, 2, '.', '').' '.$unit : 'Sin Importaciones Registradas',
+                'slabel_t4' => $svalue_3 != 0 ? number_format($svalue_3, 2, '.', '').' '.$unit : 'Sin Importaciones Registradas',
                 'tri' => 'T4',
-                'color' => $value_3 != 0 ? '#ffffff' : '#fb1818',
-                'scolor' => $svalue_3 != 0 ? '#ffffff' : '#fb1818',
+                'color' => $value_3 != 0 ? '#000000' : '#fb1818',
+                'scolor' => $svalue_3 != 0 ? '#000000' : '#fb1818a3',
                 'volumen' => 0,
                 'volumen2' => 0,
                 "percent" => "",
                 "percent_color" => '',
-                'extra' => $total_value > $total_svalue ? $total_value + 3 : $total_svalue + 3,
+                'extra' => $total_value > $total_svalue ? $total_value + ($total_value*0.30) : $total_svalue + ($total_svalue*0.30),
     		),
             array(
                 'value_0' => $value_0,
@@ -386,18 +389,17 @@ class GraphicsController extends Controller
             ),
     	);
 
-        if(!$ingredient_data->isEmpty()) $unit = $ingredient_data[0]->unit == 'kilogramo' ? 'kilogramo' : 'Litro';
-
     	foreach ($ingredient_data as $key => $row) {
-    		$provider[$key]['volumen'] = $ingredient_data[0]->unit == 'kilogramo' ? 'Trimestre '.($key+1).': <strong>'.number_format(($row->amount/1000), 2, '.', ',').' Tons</strong>' : 'Trimestre '.($key+1).': <strong>'.number_format($row->amount, 2, '.', ',').' Litros</strong>';
+    		$provider[$key]['volumen'] = number_format($row->amount/$tons_convertion, 2, '.', ',').' '.$unit;
     		$volumen_total = $volumen_total + $row->amount;
+
     		if($row->price != 0.00) array_push($precios, $row->price);
 
-    		if($ingredient_data_2[$key]->price != 0 && $ingredient_data[$key]->price != 0){
-    			$percent = (($ingredient_data_2[$key]->price * 100)/$ingredient_data[$key]->price) - 100;
+    		if($ingredient_data_2[$key]->amount != 0 && $ingredient_data[$key]->amount != 0){
+    			$percent = (($ingredient_data_2[$key]->amount * 100)/$ingredient_data[$key]->amount) - 100;
     			$provider[$key]['percent'] = number_format($percent, 2, '.', '');
 
-    			if($ingredient_data_2[$key]->price == $ingredient_data[$key]->price) $provider[$key]['percent_color'] = "#0505fdba";
+    			if($ingredient_data_2[$key]->amount == $ingredient_data[$key]->amount) $provider[$key]['percent_color'] = "#0505fdba";
     			else if($percent > 0) $provider[$key]['percent_color'] = "#007100b5";
     			else $provider[$key]['percent_color'] = "#f56156";
     		}else{
@@ -405,23 +407,22 @@ class GraphicsController extends Controller
     			$provider[$key]['percent_color'] = "#f56156";
     		}
     	}
-        Log::debug($volumen_total);
 
     	foreach ($ingredient_data_2 as $key => $row) {
-    		$provider[$key]['volumen2'] = $ingredient_data[0]->unit == 'kilogramo' ? 'Trimestre '.($key+1).': <strong>'.number_format(($row->amount/1000), 2, '.', ',').' Tons</strong>' : 'Trimestre '.($key+1).': <strong>'.number_format($row->amount, 2, '.', ',').' Litros</strong>';
+    		$provider[$key]['volumen2'] = number_format($row->amount/$tons_convertion, 2, '.', ',').' '.$unit;
     		$volumen_total_2 = $volumen_total_2 + $row->amount;
     		if($row->price != 0.00) array_push($precios_2, $row->price);
     	}
-
-        Log::debug($volumen_total_2);
 
         $cont = count($precios) > 0 ? count($precios) : 1;
         $cont_2 = count($precios_2) > 0 ? count($precios_2) : 1;
 
         $precio_total_prom = round((array_sum($precios)/$cont), 2);
         $precio_total_prom_2 = round((array_sum($precios_2)/$cont_2), 2);
-        $volumen_total = $unit == 'kilogramo' ? number_format(($volumen_total/1000), 2, '.', ',').' Tons' : number_format($volumen_total, 2, '.', ',').' Litros';
-        $volumen_total_2 = $unit == 'kilogramo' ? number_format(($volumen_total_2/1000), 2, '.', ',').' Tons' : number_format($volumen_total_2, 2, '.', ',').' Litros';
+        $volumen_total = number_format($volumen_total/$tons_convertion, 2, '.', ',').' '.$unit;
+        $volumen_total_2 = number_format($volumen_total_2/$tons_convertion, 2, '.', ',').' '.$unit;
+
+        Log::debug($volumen_total);
 
         return response()->json(array('provider' => $provider, 'volumen_total' => $volumen_total, 'volumen_total_2' => $volumen_total_2, 'precio_total_prom' => $precio_total_prom, 'precio_total_prom_2' => $precio_total_prom_2,'unit' => $unit));
     	

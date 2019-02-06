@@ -865,7 +865,7 @@ $(document).ready(function () {
                 success: function( data ) {
                     chartImport.balloon.enabled = false;
                     chartImport.dataProvider = data['provider'];
-                    let unidad = data['unit'] == 'kilogramo' ? 'Kg' : 'Litros';
+                    let unidad = data['unit'] == 'Tons' ? 'Kg' : 'Litros';
                     $('#importaciones_precio_total').text(data['precio_total_prom']);
                     $('#imp_kg_lt').text(unidad);
                     $('#import-extras').removeClass('hidden');
@@ -931,13 +931,13 @@ $(document).ready(function () {
                 success: function( data ) {
                     chartImport.balloon.enabled = true;
                     $('#import-extras-vs').removeClass('hidden');
-                    let unidad = data['unit'] == 'kilogramo' ? 'Kg' : 'Litros';
+                    let unidad = data['unit'] == 'Tons' ? 'Kg' : 'Litros';
                     $('#impor-an-1').text(data['volumen_total']);
                     $('#impor-an-2').text(data['volumen_total_2']);
                     $('#precio-an-1').text(data['precio_total_prom'] + ' USD/' + unidad);
                     $('#precio-an-2').text(data['precio_total_prom_2'] + ' USD/' + unidad);
-                    $('#title-an-1').text(year.val());
-                    $('#title-an-2').text(year2.val());
+                    $('#title-an-1 span').text(year.val());
+                    $('#title-an-2 span').text(year2.val());
                     chartImport.dataProvider = data['provider'];
                     chartImport.graphs = [
                         {
@@ -947,8 +947,8 @@ $(document).ready(function () {
                             'lineColor': '#02881f',
                             'fontSize': 18,
                             'labelColorField': 'color',
-                            'labelText': '[[label_t1]]',
-                            'labelPosition': data['provider'][0]['value_0'] == 0 ? 'right' : 'left',
+                            //'labelText': '[[label_t1]]',
+                            'labelPosition': data['provider'][0]['value_0'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen]]',
                         },
                         {
@@ -958,8 +958,8 @@ $(document).ready(function () {
                             'lineColor': '#1c24d8',
                             'fontSize': 18,
                             'labelColorField': 'color',
-                            'labelText': '[[label_t2]]',
-                            'labelPosition': data['provider'][1]['value_1'] == 0 ? 'right' : 'left',
+                            //'labelText': '[[label_t2]]',
+                            'labelPosition': data['provider'][1]['value_1'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen]]',
                         },
                         {
@@ -969,8 +969,8 @@ $(document).ready(function () {
                             'lineColor': '#ff9800',
                             'fontSize': 18,
                             'labelColorField': 'color',
-                            'labelText': '[[label_t3]]',
-                            'labelPosition': data['provider'][2]['value_2'] == 0 ? 'right' : 'left',
+                            //'labelText': '[[label_t3]]',
+                            'labelPosition': data['provider'][2]['value_2'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen]]',
                         },
                         {
@@ -980,19 +980,19 @@ $(document).ready(function () {
                             'lineColor': '#fb1818',
                             'fontSize': 18,
                             'labelColorField': 'color',
-                            'labelText': '[[label_t4]]',
-                            'labelPosition': data['provider'][3]['value_3'] == 0 ? 'right' : 'left',
+                            //'labelText': '[[label_t4]]',
+                            'labelPosition': data['provider'][3]['value_3'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen]]',
                         },
                         {
                             "type": 'column',
                             "valueField": 'svalue_0',
                             'fillAlphas': 1,
-                            'lineColor': '#02881f',
+                            'lineColor': '#02881f7a',
                             'fontSize': 18,
                             'labelColorField': 'scolor',
-                            'labelText': '[[slabel_t1]]',
-                            'labelPosition': data['provider'][0]['svalue_0'] == 0 ? 'right' : 'left',
+                            //'labelText': '[[slabel_t1]]',
+                            'labelPosition': data['provider'][0]['svalue_0'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen2]]',
                             'newStack': true
                         },
@@ -1000,34 +1000,34 @@ $(document).ready(function () {
                             "type": 'column',
                             "valueField": 'svalue_1',
                             'fillAlphas': 1,
-                            'lineColor': '#1c24d8',
+                            'lineColor': '#1c24d87a',
                             'fontSize': 18,
                             'labelColorField': 'scolor',
-                            'labelText': '[[slabel_t2]]',
-                            'labelPosition': data['provider'][1]['svalue_1'] == 0 ? 'right' : 'left',
+                            //'labelText': '[[slabel_t2]]',
+                            'labelPosition': data['provider'][1]['svalue_1'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen2]]',
                         },
                         {
                             "type": 'column',
                             "valueField": 'svalue_2',
                             'fillAlphas': 1,
-                            'lineColor': '#ff9800',
+                            'lineColor': '#ff98007a',
                             'fontSize': 18,
                             'labelColorField': 'scolor',
-                            'labelText': '[[slabel_t3]]',
-                            'labelPosition': data['provider'][2]['svalue_2'] == 0 ? 'right' : 'left',
+                            //'labelText': '[[slabel_t3]]',
+                            'labelPosition': data['provider'][2]['svalue_2'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen2]]',
                         },
                         {
                             "type": 'column',
                             "valueField": 'svalue_3',
                             'fillAlphas': 1,
-                            'lineColor': '#fb1818',
+                            'lineColor': '#fb18187a',
                             'fontSize': 18,
                             'labelColorField': 'scolor',
-                            'labelText': '[[slabel_t4]]',
+                            //'labelText': '[[slabel_t4]]',
                             'labelPosition': 'left',
-                            'labelPosition': data['provider'][3]['svalue_3'] == 0 ? 'right' : 'left',
+                            'labelPosition': data['provider'][3]['svalue_3'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen2]]',
                         },
                         {
@@ -1077,12 +1077,14 @@ $(document).ready(function () {
     function downLabelVs(e){
         let bars = e.chart.categoryAxis.chart.graphs;
         chartImport.clearLabels();
-        let x = 60;
+        let x = 170;
         let y = 105;
+        let y_vol = [92, 217, 344, 470, 132, 257, 384, 510];
         let acum1 = 0;
         let acum2 = 0;
         let acumWidth1 = 0;
         let acumWidth2 = 0;
+        let colors_vol = ['#02881f', '#1c24d8', '#ff9800', '#fb1818', '#02881fb0', '#1c24d8b0', '#ff9800b0', '#fb1818b0'];
 
         for(let i=0; i<4; i++){
             acum1 = acum1 + bars[i].data[i].dataContext['value_'+i];
@@ -1093,12 +1095,16 @@ $(document).ready(function () {
 
             let percent = bars[i].data[i].dataContext.percent === "" ? "" : bars[i].data[i].dataContext.percent == 0 ? "0%" : bars[i].data[i].dataContext.percent > 0 ? '\u21d1 ' + bars[i].data[i].dataContext.percent + "%" : '\u21d3 ' + bars[i].data[i].dataContext.percent + "%";
 
+
             if(acum1 > acum2){
                 chartImport.addLabel(acumWidth1 + x, y, percent, 'left', 25, bars[i].data[i].dataContext.percent_color, 0, 1, true);
             }else{
                 chartImport.addLabel(acumWidth2 + x, y, percent, 'left', 25, bars[i].data[i].dataContext.percent_color, 0, 1, true);
             }
             y = y + 126;
+
+            chartImport.addLabel(acumWidth1 + 50, y_vol[i], bars[0].data[i].dataContext['volumen'], 'left', 15, '#000000', 0, 1, true);
+            chartImport.addLabel(acumWidth2 + 50, y_vol[i+4], bars[0].data[i].dataContext['volumen2'], 'left', 15, '#000000', 0, 1, true);
         }
 
         chartImport.removeListener(chartImport, "drawn", downLabelVs);
