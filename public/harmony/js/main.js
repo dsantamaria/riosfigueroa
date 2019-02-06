@@ -947,7 +947,7 @@ $(document).ready(function () {
                             'lineColor': '#02881f',
                             'fontSize': 18,
                             'labelColorField': 'color',
-                            'labelText': '[[label_t1]]',
+                            //'labelText': '[[label_t1]]',
                             'labelPosition': data['provider'][0]['value_0'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen]]',
                         },
@@ -958,7 +958,7 @@ $(document).ready(function () {
                             'lineColor': '#1c24d8',
                             'fontSize': 18,
                             'labelColorField': 'color',
-                            'labelText': '[[label_t2]]',
+                            //'labelText': '[[label_t2]]',
                             'labelPosition': data['provider'][1]['value_1'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen]]',
                         },
@@ -969,7 +969,7 @@ $(document).ready(function () {
                             'lineColor': '#ff9800',
                             'fontSize': 18,
                             'labelColorField': 'color',
-                            'labelText': '[[label_t3]]',
+                            //'labelText': '[[label_t3]]',
                             'labelPosition': data['provider'][2]['value_2'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen]]',
                         },
@@ -980,7 +980,7 @@ $(document).ready(function () {
                             'lineColor': '#fb1818',
                             'fontSize': 18,
                             'labelColorField': 'color',
-                            'labelText': '[[label_t4]]',
+                            //'labelText': '[[label_t4]]',
                             'labelPosition': data['provider'][3]['value_3'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen]]',
                         },
@@ -991,7 +991,7 @@ $(document).ready(function () {
                             'lineColor': '#02881f7a',
                             'fontSize': 18,
                             'labelColorField': 'scolor',
-                            'labelText': '[[slabel_t1]]',
+                            //'labelText': '[[slabel_t1]]',
                             'labelPosition': data['provider'][0]['svalue_0'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen2]]',
                             'newStack': true
@@ -1003,7 +1003,7 @@ $(document).ready(function () {
                             'lineColor': '#1c24d87a',
                             'fontSize': 18,
                             'labelColorField': 'scolor',
-                            'labelText': '[[slabel_t2]]',
+                            //'labelText': '[[slabel_t2]]',
                             'labelPosition': data['provider'][1]['svalue_1'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen2]]',
                         },
@@ -1014,7 +1014,7 @@ $(document).ready(function () {
                             'lineColor': '#ff98007a',
                             'fontSize': 18,
                             'labelColorField': 'scolor',
-                            'labelText': '[[slabel_t3]]',
+                            //'labelText': '[[slabel_t3]]',
                             'labelPosition': data['provider'][2]['svalue_2'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen2]]',
                         },
@@ -1025,7 +1025,7 @@ $(document).ready(function () {
                             'lineColor': '#fb18187a',
                             'fontSize': 18,
                             'labelColorField': 'scolor',
-                            'labelText': '[[slabel_t4]]',
+                            //'labelText': '[[slabel_t4]]',
                             'labelPosition': 'left',
                             'labelPosition': data['provider'][3]['svalue_3'] == 0 ? 'right' : 'right',
                             'balloonText': 'Importacion </br> [[volumen2]]',
@@ -1103,8 +1103,10 @@ $(document).ready(function () {
             }
             y = y + 126;
 
-            //chartImport.addLabel(acumWidth1 + 50, y_vol[i], bars[0].data[i].dataContext['volumen'], 'left', 15, '#000000', 0, 1, true);
-            //chartImport.addLabel(acumWidth2 + 50, y_vol[i+4], bars[0].data[i].dataContext['volumen2'], 'left', 15, '#000000', 0, 1, true);
+            console.log(bars[0].data[i].dataContext['value_'+i], bars[0].data[i].dataContext['svalue_'+i]);
+
+            bars[0].data[i].dataContext['value_'+i] != 0 ? chartImport.addLabel(acumWidth1 + 50, y_vol[i], bars[0].data[i].dataContext['volumen'], 'left', 15, '#000000', 0, 1, true) : chartImport.addLabel(46, y_vol[i], 'Sin Importaciones Registradas', 'left', 15, colors_vol[i], 0, 1, false);
+            bars[0].data[i].dataContext['svalue_'+i] != 0 ? chartImport.addLabel(acumWidth2 + 50, y_vol[i+4], bars[0].data[i].dataContext['volumen2'], 'left', 15, '#000000', 0, 1, true) : chartImport.addLabel(46, y_vol[i+4], 'Sin Importaciones Registradas', 'left', 15, colors_vol[i+4], 0, 1, false);;
         }
 
         chartImport.removeListener(chartImport, "drawn", downLabelVs);
