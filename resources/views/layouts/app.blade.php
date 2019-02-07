@@ -46,9 +46,7 @@
                         <li>
                             <a href="#" class="parent parent-flex"><i class="fa fa-pie-chart"></i><div>Análisis del Mercado Mexicano</div></a>
                             <ul>
-                                @can('admin-role')
                                     <li><a href="{{ route('market.index') }}">Análisis del Mercado</a></li>
-                                @endcan
                             </ul>
                         </li>
                         <li>
