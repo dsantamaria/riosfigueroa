@@ -23,7 +23,7 @@
             </div>
             <div class="form-group">
                 <div class="col-md-4 col-md-offset-5">
-                    <button class="btn btn-primary" type="submit">Filtrar Productos</button>
+                    <button class="btn btn-primary" type="submit">Cambiar Contraseña</button>
                 </div>
             </div>
         {!! Form::close() !!}
