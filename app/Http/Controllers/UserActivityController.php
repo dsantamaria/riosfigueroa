@@ -41,4 +41,25 @@ class UserActivityController extends Controller
     	$date_routes = User_route::where('user_login_id', $id)->with('route')->get();
     	return response()->json(array('date_routes' => $date_routes));
     }
+
+    public function changePassword(){
+        return view('user_activity.changePassword');
+    }
+
+    public function savePassword(Request $request){
+        
+        $this->validate($request,[
+            'password' => 'required|confirmed|min:6',
+        ]);
+
+        $user = Auth::user();
+
+        $user->password = bcrypt($request['password']);
+        $user->save(); 
+
+
+        session()->flash('success', 'Contraseña establecida exitosamente.');
+
+        return view('user_activity.changePassword');
+    }
 }

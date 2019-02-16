@@ -83,6 +83,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('user_activity/index', ['as' => 'user_activity.index', 'uses' => 'UserActivityController@index'])->middleware('admin');
     Route::get('user_activity/userInfo/{id}', ['as' => 'user_activity.userInfo', 'uses' => 'UserActivityController@userInfo'])->middleware('admin');
     Route::get('getDateInfo/{id}', ['as' => 'getDateInfo', 'uses' => 'UserActivityController@getDateInfo'])->middleware('admin');
+    Route::get('changePassword', ['as' => 'changePassword', 'uses' => 'UserActivityController@changePassword'])->middleware('admin');
+    Route::post('savePassword', ['as' => 'savePassword', 'uses' => 'UserActivityController@savePassword'])->middleware('admin');
 });
 
 Route::group(['middleware' => ['guest']], function () {

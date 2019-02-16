@@ -50,6 +50,7 @@ class Kernel extends HttpKernel
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'admin' => \App\Http\Middleware\AdminControl::class,
+        'super-admin' => \App\Http\Middleware\superAdminControl::class,
         'country' => \App\Http\Middleware\RestrictionIpMiddleware::class,
         'saveRoute' => \App\Http\Middleware\SaveRouteMiddleware::class,
     ];

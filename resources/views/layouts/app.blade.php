@@ -86,6 +86,7 @@
                                             <li><a href="{{ route('gestionListasAnalisisHistoricos') }}">Gestión de Listas para Análisis de Importaciones</a></li>
                                         </ul>
                                     </li>
+                                    <li><a href="{{ route('changePassword') }}">Cambiar Contraseña</a></li>
                                     <li><a href="{{ route('uploadImage') }}">Subir Imagen</a></li>
                                 </ul>
                             </li>
@@ -100,19 +101,37 @@
             @endif
                 <div class="content-wrapper">
                 <div class="container-fluid">
-                    @if (Session::has('success'))
+                    @if (session('success'))
                         <div class="row">
                             <div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">
                                 <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
-                                <strong>{{Session::get('success')}}</strong>
+                                <strong>{{ session('success') }}</strong>
+                                {{ session()->forget('success') }}
                             </div>
                         </div>
                     @endif
-                    @if (Session::has('warning'))
+                    @if (session('warning'))
                         <div class="row">
                             <div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">
                                 <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
-                                <strong>{{Session::get('warning')}}</strong>
+                                <strong>{{session('warning')}}</strong>
+                                {{ session()->forget('warning') }}
+                            </div>
+                        </div>
+                    @endif
+                    @if(count($errors) > 0)
+                        <div class="row">
+                            <div class="alert alert-dismissible alert-danger col-xs-10 col-xs-offset-1">
+                                <button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>
+                                <ul>
+                                    @foreach($errors->all() as $error)
+                                        <strong>
+                                            <li>
+                                                {{ $error }}
+                                            </li>
+                                        </strong>
+                                    @endforeach
+                                </ul>
                             </div>
                         </div>
                     @endif
