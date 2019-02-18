@@ -28,6 +28,7 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->before(function ($user) {
             if($user->inRole('super_admin')){
+                dd('yes');
                 return true;
             }
         });
