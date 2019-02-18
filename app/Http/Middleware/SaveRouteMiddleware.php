@@ -34,6 +34,9 @@ class SaveRouteMiddleware
                 case 'proveedores':
                     $route_field = 'Empresas Comercializadoras';
                     break;
+                case 'analisis_del_mercado':
+                    $route_field = 'Analisis del Mercado';
+                    break;
                 case 'precios':
                     $parameters = $request->route()->parameters()['analisis_especifico'];
 

@@ -73,7 +73,7 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     //************************* MarketValueController *********************//
-    Route::get('market/index', ['as' => 'market.index', 'uses' => 'MarketValueController@index']);
+    Route::get('market/index', ['as' => 'market.index', 'uses' => 'MarketValueController@index'])->middleware('saveRoute:analisis_del_mercado');;
     Route::get('market_value', ['as' => 'market_value', 'uses' => 'MarketValueController@market_value']);
     Route::post('market_update', ['as' => 'market_update', 'uses' => 'MarketValueController@market_update']);
     Route::post('market_year_update', ['as' => 'market_year_update', 'uses' => 'MarketValueController@market_year_update']);

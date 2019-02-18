@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         //$this->call(AdminsSeeder::class);
         //$this->call(ActivateAdmin::class);
         //$this->call(AddSpecialRoleSeeder::class);
-        $this->call(RouteSeeder::class);
+        //$this->call(RouteSeeder::class);
+        $this->call(marketSeeder::class);
     }
 }
