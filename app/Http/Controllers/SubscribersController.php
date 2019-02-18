@@ -157,6 +157,7 @@ class SubscribersController extends Controller
         if($user){
             User_login::delete_logins($id);
             DB::table('role_users')->where('user_id', $id)->delete();
+            DB::table('pending_subscribers')->where('user_id', $id)->delete();
             return response()->json(['response' => 1]);
         }
         return response()->json(['response' => 0]);
