@@ -39,6 +39,7 @@ class SubscribersController extends Controller
     }
 
     public function sendSubscriptionEmail(Request $request){
+
     	$this->validate($request, [
     		'email' => 'required'
     	]);
@@ -53,6 +54,7 @@ class SubscribersController extends Controller
         $token = sha1(time());
         $current_time = Carbon::now();
         $user = User::where('email', $email)->get();
+
 
     	try{
             if($user->count() > 0){
@@ -82,12 +84,17 @@ class SubscribersController extends Controller
 
     		DB::commit();
 
+            Log::debug($email);
+
     		//envio del email
     		$url = url('/registerPending?tok='.$token);
 	        Mail::queue('emails.subscriber', ['url' => $url], function ($m) use ($email) {
 	            $m->from('suscripciones@riosfigueroa.net', 'Rios figueroa');
 	            $m->to($email)->subject('Completa la suscripcion!');
 	        });
+
+            Log::debug('here');
+
     	}catch(\Exception $e){
     		DB::rollback();
             if($reques_from_subscriber_panel) return response()->json(array('error' => 'Ocurrio un error al enviar el email a '. $email . '. Por favor intente de nuevo'));
@@ -149,6 +156,7 @@ class SubscribersController extends Controller
         $user = User::where('id', $id)->delete();
         if($user){
             User_login::delete_logins($id);
+            DB::table('role_users')->where('user_id', $id)->delete();
             return response()->json(['response' => 1]);
         }
         return response()->json(['response' => 0]);
