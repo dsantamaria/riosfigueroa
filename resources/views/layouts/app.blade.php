@@ -62,14 +62,24 @@
                             <li>
                                 <a href="#" class="parent"><i class="fa fa-desktop"></i>Administrador</a>
                                 <ul>
-                                    <li class="second-level">
-                                        <a href="#" class="parent"><i class="fa fa-circle"></i>Usuarios</a>
-                                        <ul>
-                                            <li><a href="{{ route('sendSubscription') }}">Suscribir Usuarios</a></li>
-                                            <li><a href="{{ route('listActiveUsers') }}">Gestión de Usuarios</a></li>
-                                            <li><a href="{{ route('user_activity.index') }}">Panel de Actividad por Usuario</a></li>
-                                        </ul>
-                                    </li>
+                                    @can('super-role')
+                                        <li class="second-level">
+                                            <a href="#" class="parent"><i class="fa fa-circle"></i>Usuarios</a>
+                                            <ul>
+                                                <li><a href="{{ route('sendSubscription') }}">Suscribir Usuarios</a></li>
+                                                <li><a href="{{ route('listActiveUsers') }}">Gestión de Usuarios</a></li>
+                                                <li><a href="{{ route('user_activity.index') }}">Panel de Actividad por Usuario</a></li>
+                                            </ul>
+                                        </li>
+
+                                        <li class="second-level">
+                                            <a href="#" class="parent"><i class="fa fa-circle"></i>Admins</a>
+                                            <ul>
+                                                <li><a href="{{ route('admin.create') }}">Registrar Admin</a></li>
+                                                <li><a href="{{ route('admin.index') }}">Gestión de Admins</a></li>
+                                            </ul>
+                                        </li>
+                                    @endcan
                                     <li class="second-level">
                                         <a href="#" class="parent"><i class="fa fa-circle"></i>Importaciones de Listas</a>
                                         <ul>

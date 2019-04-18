@@ -28,7 +28,6 @@ class AuthServiceProvider extends ServiceProvider
 
         $gate->before(function ($user) {
             if($user->inRole('super_admin')){
-                dd('yes');
                 return true;
             }
         });
@@ -44,9 +43,9 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('admin-role', function ($user) {
            return $user->hasAccess(['admin']);
         });
-        
+
         $gate->define('super-role', function ($user) {
-           return $user->hasAccess(['super_admin']);
+           return $user->hasAccess(['super']);
         });
     }
 }

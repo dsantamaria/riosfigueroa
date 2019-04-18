@@ -50,12 +50,12 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     //************************* SubscriberController ******************//
-    Route::get('sendSubscription', ['as'=>'sendSubscription', 'uses'=>'SubscribersController@sendSubscription'])->middleware('admin');
-    Route::get('listActiveUsers', ['as' => 'listActiveUsers', 'uses' => 'SubscribersController@list_active_user'])->middleware('admin');
-    Route::get('activateUser/{id}/{state}', ['as'=>'activateUser', 'uses'=>'SubscribersController@activate_user'])->middleware('admin');
-    Route::get('globalAccessUser/{id}/{state}', ['as'=>'globalAccessUser', 'uses'=>'SubscribersController@global_access_user'])->middleware('admin');
-    Route::get('deleteUser/{id}', ['as'=>'deleteUser', 'uses'=>'SubscribersController@delete_user'])->middleware('admin');
-    Route::post('sendSubscriptionEmail', ['as' => 'sendSubscriptionEmail', 'uses' => 'SubscribersController@sendSubscriptionEmail'])->middleware('admin');
+    Route::get('sendSubscription', ['as'=>'sendSubscription', 'uses'=>'SubscribersController@sendSubscription'])->middleware('super-admin');
+    Route::get('listActiveUsers', ['as' => 'listActiveUsers', 'uses' => 'SubscribersController@list_active_user'])->middleware('super-admin');
+    Route::get('activateUser/{id}/{state}', ['as'=>'activateUser', 'uses'=>'SubscribersController@activate_user'])->middleware('super-admin');
+    Route::get('globalAccessUser/{id}/{state}', ['as'=>'globalAccessUser', 'uses'=>'SubscribersController@global_access_user'])->middleware('super-admin');
+    Route::get('deleteUser/{id}', ['as'=>'deleteUser', 'uses'=>'SubscribersController@delete_user'])->middleware('super-admin');
+    Route::post('sendSubscriptionEmail', ['as' => 'sendSubscriptionEmail', 'uses' => 'SubscribersController@sendSubscriptionEmail'])->middleware('super-admin');
     
     
     //************************* GraphicsController ******************//
@@ -80,11 +80,20 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('market_import', ['as' => 'market_import', 'uses' => 'MarketValueController@market_import'])->middleware('admin');
 
     //************************* UserActivityController *********************//
-    Route::get('user_activity/index', ['as' => 'user_activity.index', 'uses' => 'UserActivityController@index'])->middleware('admin');
-    Route::get('user_activity/userInfo/{id}', ['as' => 'user_activity.userInfo', 'uses' => 'UserActivityController@userInfo'])->middleware('admin');
-    Route::get('getDateInfo/{id}', ['as' => 'getDateInfo', 'uses' => 'UserActivityController@getDateInfo'])->middleware('admin');
+    Route::get('user_activity/index', ['as' => 'user_activity.index', 'uses' => 'UserActivityController@index'])->middleware('super-admin');
+    Route::get('user_activity/userInfo/{id}', ['as' => 'user_activity.userInfo', 'uses' => 'UserActivityController@userInfo'])->middleware('super-admin');
+    Route::get('getDateInfo/{id}', ['as' => 'getDateInfo', 'uses' => 'UserActivityController@getDateInfo'])->middleware('super-admin');
     Route::get('changePassword', ['as' => 'changePassword', 'uses' => 'UserActivityController@changePassword'])->middleware('admin');
     Route::post('savePassword', ['as' => 'savePassword', 'uses' => 'UserActivityController@savePassword'])->middleware('admin');
+
+    //************************* adminController *********************//
+    Route::get('admin/create', ['as' => 'admin.create', 'uses' => 'AdminController@create'])->middleware('super-admin');;
+    Route::get('admin/index', ['as' => 'admin.index', 'uses' => 'AdminController@index'])->middleware('super-admin');;
+    Route::post('admin/saveAdmin', ['as' => 'admin.saveAdmin', 'uses' => 'AdminController@saveAdmin'])->middleware('super-admin');;
+    Route::get('admin/activateAdmin/{id}/{state}', ['as'=>'admin.activateAdmin', 'uses'=>'AdminController@activateAdmin'])->middleware('super-admin');
+    Route::get('admin/deleteAdmin/{id}', ['as'=>'admin.deleteAdmin', 'uses'=>'AdminController@deleteAdmin'])->middleware('super-admin');
+    
+
 });
 
 Route::group(['middleware' => ['guest']], function () {

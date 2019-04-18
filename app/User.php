@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\Role;
 
 class User extends Authenticatable
 {
@@ -12,7 +13,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'active'
     ];
 
     /**
@@ -48,5 +49,19 @@ class User extends Authenticatable
 
     public function inRole($rolesSlug){
         return $this->roles()->where('slug', $rolesSlug)->count() == 1;
+    }
+
+    public static function createAdmin($data){
+        $admin = self::create([
+            'name'      => $data['name'],
+            'email'     => $data['email'],
+            'password'  => bcrypt($data['password']),
+            'active'    => 1
+        ]);
+        
+        $defaultRole = Role::where('slug', 'admin')->pluck('id');
+        $admin->roles()->attach($defaultRole[0]);
+
+        return $admin;
     }
 }
