@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Log;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -49,7 +50,20 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         $gate->define('import', function ($user) {
-           return $user->hasToolAccess(['import']);
+           return !$user->hasToolAccess(['import']);
         });
+
+        $gate->define('price', function ($user) {
+           return !$user->hasToolAccess(['price']);
+        });
+
+        $gate->define('market', function ($user) {
+           return !$user->hasToolAccess(['market']);
+        });
+
+        $gate->define('priceImport', function ($user) {
+           return !$user->hasToolAccess(['price']) || !$user->hasToolAccess(['import']);
+        });
+
     }
 }

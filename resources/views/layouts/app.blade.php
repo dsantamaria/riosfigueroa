@@ -43,21 +43,27 @@
                                 <li><a href="{{ route('products.index') }}">Listado Productos</a></li>
                             </ul>
                         </li>
+                        @can('market')
                         <li>
                             <a href="#" class="parent parent-flex"><i class="fa fa-pie-chart"></i><div>Análisis del Mercado Mexicano</div></a>
                             <ul>
                                     <li><a href="{{ route('market.index') }}">Análisis del Mercado</a></li>
                             </ul>
                         </li>
+                        @endcan
+                        @can('priceImport')
                         <li>
                             <a href="#" class="parent"><i class="fa fa-line-chart"></i>Análisis Histórico</a>
                             <ul>
+                                @can('price')
                                 <li><a href="{{ route('analisisPrecios') }}">Análisis de Precios</a></li>
-                                @cannot('import')
+                                @endcan
+                                @can('import')
                                     <li><a href="{{ route('analisisHistorico') }}"></i>Análisis de Importaciones</a></li>
                                 @endcan
                             </ul>
                         </li>
+                        @endcan
                         <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-industry"></i>Empresas Comercializadoras</a></li>
 
                         @can('admin-role')

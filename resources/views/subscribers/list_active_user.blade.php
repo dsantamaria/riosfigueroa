@@ -61,16 +61,16 @@
                                                                 @endif
                                                             </div>
                                                             <div style="display: flex">
-                                                                @if(!$user->tools->contains('permissions', 'price')) <div class="actions-btn action-price active-price" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Desactivar Análisis de Precios"><i class="fa fa-random" aria-hidden="true"></i></div>
-                                                                @else <div class="actions-btn action-price desactive-price" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Activar Análisis de Precios"><i class="fa fa-random" aria-hidden="true"></i></div>
+                                                                @if(!$user->tools->contains('permissions', 'price')) <div class="actions-btn action-price active-price" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Remover acceso al sistema de precios"><i class="fa fa-random" aria-hidden="true"></i></div>
+                                                                @else <div class="actions-btn action-price desactive-price" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="left" title="Dar acceso al sistema de precios"><i class="fa fa-random" aria-hidden="true"></i></div>
                                                                 @endif
 
-                                                                @if(!$user->tools->contains('permissions', 'import')) <div class="actions-btn action-import active-import" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Desactivar Análisis de Importaciones"><i class="fa fa-download" aria-hidden="true"></i></div>
-                                                                @else <div class="actions-btn action-import desactive-import" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Activar Análisis de Importaciones"><i class="fa fa-download" aria-hidden="true"></i></div>
+                                                                @if(!$user->tools->contains('permissions', 'import')) <div class="actions-btn action-import active-import" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Remover acceso al sistema de importaciones"><i class="fa fa-download" aria-hidden="true"></i></div>
+                                                                @else <div class="actions-btn action-import desactive-import" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Dar acceso al sistema de importaciones"><i class="fa fa-download" aria-hidden="true"></i></div>
                                                                 @endif
 
-                                                                @if(!$user->tools->contains('permissions', 'market')) <div class="actions-btn action-market active-market" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Desactivar Análisis de Mercado"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
-                                                                @else <div class="actions-btn action-market desactive-market" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Activar Análisis de Mercado"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
+                                                                @if(!$user->tools->contains('permissions', 'market')) <div class="actions-btn action-market active-market" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Remover acceso al sistema de mercado"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
+                                                                @else <div class="actions-btn action-market desactive-market" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Dar acceso al sistema de mercado"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
                                                                 @endif
                                                             </div>
                                                         @endif

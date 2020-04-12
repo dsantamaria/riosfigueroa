@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+@can('price')
 <div class="col-lg-12">
     <h2 class="page-title">Análisis de Precios</h2>
     <div class="col-lg-3 col-md-12">
@@ -105,4 +106,5 @@
         </div>
     </div>
 </div>
+@endcan
 @endsection

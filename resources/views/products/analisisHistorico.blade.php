@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@cannot('import')
+@can('import')
     <div class="col-md-12">
         <h2 class="page-title">Análisis Histórico</h2>
         <div class="col-md-12" style="text-align: right;">

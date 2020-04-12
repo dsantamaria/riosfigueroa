@@ -413,7 +413,7 @@ $(document).ready(function () {
         var id = $(this).attr('id');
         var user_email = $(this).closest('tr').find('#email').html();
         var state = $(this).attr('state');
-        var message_state = state === '0' ? 'activo para utilizar análisis de precios' : 'inactivo para utilizar análisis de precio';
+        var message_state = state === '0' ? 'activo para utilizar sistema de precios' : 'inactivo para utilizar sistema de precio';
         $.ajax({
             type: "GET",
             url: '/pricePermission/'+ id +'/'+ state,
@@ -427,7 +427,7 @@ $(document).ready(function () {
                             '</div>'+
                         '</div>'
                     ).fadeIn(1000);
-                    state === '0' ? element.removeClass('desactive-price').addClass('active-price').attr('state', 1).attr('title', 'Desactivar Análisis de Precios') : element.removeClass('active-price').addClass('desactive-price').attr('state', 0).attr('title', 'Activar Análisis de Precios');
+                    state === '0' ? element.removeClass('desactive-price').addClass('active-price').attr('state', 1).attr('title', 'Remover acceso al sistema de precios') : element.removeClass('active-price').addClass('desactive-price').attr('state', 0).attr('title', 'Dar acceso al sistema de precios');
                 }else{
                     $('#messages').html(
                         '<div class="row">'+
@@ -447,7 +447,7 @@ $(document).ready(function () {
         var id = $(this).attr('id');
         var user_email = $(this).closest('tr').find('#email').html();
         var state = $(this).attr('state');
-        var message_state = state === '0' ? 'activo para utilizar análisis de importaciones' : 'inactivo para utilizar análisis de importaciones';
+        var message_state = state === '0' ? 'activo para utilizar sistema de importaciones' : 'inactivo para utilizar sistema de importaciones';
         $.ajax({
             type: "GET",
             url: '/importPermission/'+ id +'/'+ state,
@@ -461,7 +461,7 @@ $(document).ready(function () {
                             '</div>'+
                         '</div>'
                     ).fadeIn(1000);
-                    state === '0' ? element.removeClass('desactive-import').addClass('active-import').attr('state', 1).attr('title', 'Desactivar Análisis de Importaciones') : element.removeClass('active-import').addClass('desactive-import').attr('state', 0).attr('title', 'Activar Análisis de Importaciones');
+                    state === '0' ? element.removeClass('desactive-import').addClass('active-import').attr('state', 1).attr('title', 'Remover acceso al sistema de importaciones') : element.removeClass('active-import').addClass('desactive-import').attr('state', 0).attr('title', 'Dar acceso al sistema de importaciones');
                 }else{
                     $('#messages').html(
                         '<div class="row">'+
@@ -481,7 +481,7 @@ $(document).ready(function () {
         var id = $(this).attr('id');
         var user_email = $(this).closest('tr').find('#email').html();
         var state = $(this).attr('state');
-        var message_state = state === '0' ? 'activo para utilizar análisis del mercado' : 'inactivo para utilizar análisis del mercado';
+        var message_state = state === '0' ? 'activo para utilizar sistema del mercado' : 'inactivo para utilizar sistema del mercado';
         $.ajax({
             type: "GET",
             url: '/marketPermission/'+ id +'/'+ state,
@@ -495,7 +495,7 @@ $(document).ready(function () {
                             '</div>'+
                         '</div>'
                     ).fadeIn(1000);
-                    state === '0' ? element.removeClass('desactive-market').addClass('active-market').attr('state', 1).attr('title', 'Desactivar Análisis del Mercado') : element.removeClass('active-market').addClass('desactive-market').attr('state', 0).attr('title', 'Activar Análisis del Mercado');
+                    state === '0' ? element.removeClass('desactive-market').addClass('active-market').attr('state', 1).attr('title', 'Remover acceso al sistema de mercado') : element.removeClass('active-market').addClass('desactive-market').attr('state', 0).attr('title', 'Dar acceso al sistema de mercado');
                 }else{
                     $('#messages').html(
                         '<div class="row">'+

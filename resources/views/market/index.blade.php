@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
+@can('market')
 <div class="col-md-12">
 
     <h2 class="page-title">Análisis del Mercado</h2>
@@ -114,4 +114,5 @@
         </div>
     </div>
 </div>
+@endcan
 @stop
