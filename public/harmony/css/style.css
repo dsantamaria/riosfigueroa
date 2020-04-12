@@ -770,7 +770,7 @@ img{
   opacity: 0.8;
 }
  
-.action-delete, .desactive-global-user{
+.action-delete, .desactive-global-user, .desactive-price, .desactive-import, .desactive-market{
   background-color: #a70707;
 }
 .action-active, .active-global-user{
@@ -779,6 +779,19 @@ img{
 .action-desactive{
   background-color: #988d07;
 }
+
+.active-price{
+  background-color: #e6ac06;
+}
+
+.active-import{
+  background-color: #0b690e;
+}
+
+.active-market{
+  background-color: #e6ac06;
+}
+
 
 .action-resend{
   background-color: #2196f3;

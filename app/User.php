@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Role;
+use App\Tool;
 
 class User extends Authenticatable
 {
@@ -29,6 +30,10 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_users');
     }
 
+    public function tools(){
+        return $this->belongsToMany(Tool::class, 'denied_tools_user');
+    }
+
     public function pending_subscriber(){
         return $this->hasOne('App\Pending_subscriber');
     }
@@ -41,6 +46,15 @@ class User extends Authenticatable
     public function hasAccess(array $permissions) {
         foreach ($this->roles as $role) {
             if($role->hasAccess($permissions)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public function hasToolAccess(array $permissions) {
+        foreach ($this->tools as $tool) {
+            if($tool->hasToolAccess($permissions)){
                 return true;
             }
         }

@@ -56,6 +56,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('globalAccessUser/{id}/{state}', ['as'=>'globalAccessUser', 'uses'=>'SubscribersController@global_access_user'])->middleware('super-admin');
     Route::get('deleteUser/{id}', ['as'=>'deleteUser', 'uses'=>'SubscribersController@delete_user'])->middleware('super-admin');
     Route::post('sendSubscriptionEmail', ['as' => 'sendSubscriptionEmail', 'uses' => 'SubscribersController@sendSubscriptionEmail'])->middleware('super-admin');
+    Route::get('pricePermission/{id}/{state}', ['as'=>'pricePermission', 'uses'=>'SubscribersController@price_permission'])->middleware('super-admin');
+    Route::get('importPermission/{id}/{state}', ['as'=>'importPermission', 'uses'=>'SubscribersController@import_permission'])->middleware('super-admin');
+    Route::get('marketPermission/{id}/{state}', ['as'=>'marketPermission', 'uses'=>'SubscribersController@market_permission'])->middleware('super-admin');
     
     
     //************************* GraphicsController ******************//

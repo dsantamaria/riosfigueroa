@@ -4,7 +4,7 @@
         <h2 class="page-title">Listado de Usuarios</h2>
     </div>
     <div id="messages" class="col-xs-12" style="display: none"></div>
-    <div class="col-md-8 col-md-offset-2 col-xs-12">
+    <div class="col-md-10 col-md-offset-1 col-xs-12">
         <div class="panel panel-primary">
             <div class="panel-heading">Listado de Usuarios</div>
             <div class="panel-body">
@@ -42,20 +42,37 @@
                                                             @endif
                                                         </span>
                                                     </td>
-                                                    <td class="table-td-actions">
+                                                    <td class="table-td-actions" style="display: flex;flex-direction: column;justify-content: center;align-items: center;">
                                                         @if($user->password == "")
-                                                            <div class="actions-btn resend-request action-resend" email="{{ $user->email }}" data_toggle="tooltip" data-placement="bottom" title="Reenviar Solicitud"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></div>
-                                                            <div class="actions-btn delete-user action-delete" id="{{ $user->id }}" data_toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                                                            <div style="display: flex;margin-bottom: 2px;">
+                                                                <div class="actions-btn resend-request action-resend" email="{{ $user->email }}" data_toggle="tooltip" data-placement="bottom" title="Reenviar Solicitud"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></div>
+                                                                <div class="actions-btn delete-user action-delete" id="{{ $user->id }}" data_toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                                                            </div>
                                                         @else
-                                                            @if($user->active == 1) <div class="actions-btn active-user action-desactive" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Desactivar"><i class="fa fa-times" aria-hidden="true"></i></div>
-                                                            @else <div class="actions-btn active-user action-active" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Activar"><i class="fa fa-check" aria-hidden="true"></i></div>
-                                                            @endif
+                                                            <div style="display: flex;margin-bottom: 2px;">
+                                                                @if($user->active == 1) <div class="actions-btn active-user action-desactive" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Desactivar"><i class="fa fa-times" aria-hidden="true"></i></div>
+                                                                @else <div class="actions-btn active-user action-active" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Activar"><i class="fa fa-check" aria-hidden="true"></i></div>
+                                                                @endif
 
-                                                            <div class="actions-btn delete-user action-delete" id="{{ $user->id }}" data_toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
-                                                            
-                                                            @if($user->roles[0]->permissions == 'user_out_mx') <div class="actions-btn global-access active-global-user" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Desactivar"><i class="fa fa-globe" aria-hidden="true"></i></div>
-                                                            @else <div class="actions-btn global-access desactive-global-user" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Activar"><i class="fa fa-globe" aria-hidden="true"></i></div>
-                                                            @endif
+                                                                <div class="actions-btn delete-user action-delete" id="{{ $user->id }}" data_toggle="tooltip" data-placement="bottom" title="Eliminar"><i class="fa fa-trash-o" aria-hidden="true"></i></div>
+                                                                
+                                                                @if($user->roles[0]->permissions == 'user_out_mx') <div class="actions-btn global-access active-global-user" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Desactivar"><i class="fa fa-globe" aria-hidden="true"></i></div>
+                                                                @else <div class="actions-btn global-access desactive-global-user" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Activar"><i class="fa fa-globe" aria-hidden="true"></i></div>
+                                                                @endif
+                                                            </div>
+                                                            <div style="display: flex">
+                                                                @if(!$user->tools->contains('permissions', 'price')) <div class="actions-btn action-price active-price" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Desactivar Análisis de Precios"><i class="fa fa-random" aria-hidden="true"></i></div>
+                                                                @else <div class="actions-btn action-price desactive-price" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Activar Análisis de Precios"><i class="fa fa-random" aria-hidden="true"></i></div>
+                                                                @endif
+
+                                                                @if(!$user->tools->contains('permissions', 'import')) <div class="actions-btn action-import active-import" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Desactivar Análisis de Importaciones"><i class="fa fa-download" aria-hidden="true"></i></div>
+                                                                @else <div class="actions-btn action-import desactive-import" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Activar Análisis de Importaciones"><i class="fa fa-download" aria-hidden="true"></i></div>
+                                                                @endif
+
+                                                                @if(!$user->tools->contains('permissions', 'market')) <div class="actions-btn action-market active-market" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Desactivar Análisis de Mercado"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
+                                                                @else <div class="actions-btn action-market desactive-market" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Activar Análisis de Mercado"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
+                                                                @endif
+                                                            </div>
                                                         @endif
 
                                                     </td>

@@ -47,5 +47,9 @@ class AuthServiceProvider extends ServiceProvider
         $gate->define('super-role', function ($user) {
            return $user->hasAccess(['super']);
         });
+
+        $gate->define('import', function ($user) {
+           return $user->hasToolAccess(['import']);
+        });
     }
 }

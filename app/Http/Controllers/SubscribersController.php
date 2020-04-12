@@ -12,6 +12,7 @@ use App\User_login;
 use App\Products;
 use App\Pending_subscriber;
 use App\Role;
+use App\Tool;
 use Mail;
 use Carbon\Carbon;
 use Log;
@@ -173,4 +174,53 @@ class SubscribersController extends Controller
             return response()->json(['response' => 0]);
         }
     }
+
+    public function price_permission($id, $state){
+        //state 1 = desactivar acceso global
+        //state 0 = activar acceso global
+        try{
+            $tool = Tool::where('permissions', 'price')->get();
+
+            $state
+                ? DB::table('denied_tools_user')->insert(['user_id' => $id, 'tool_id' => $tool[0]->id])
+                : DB::table('denied_tools_user')->where(['user_id' => $id, 'tool_id' => $tool[0]->id])->delete();
+            return response()->json(['response' => 1]);
+
+        }catch (Exception $e) {
+            return response()->json(['response' => 0]);
+        }
+    }
+
+    public function import_permission($id, $state){
+        //state 1 = desactivar acceso global
+        //state 0 = activar acceso global
+        try{
+            $tool = Tool::where('permissions', 'import')->get();
+
+            $state
+                ? DB::table('denied_tools_user')->insert(['user_id' => $id, 'tool_id' => $tool[0]->id])
+                : DB::table('denied_tools_user')->where(['user_id' => $id, 'tool_id' => $tool[0]->id])->delete();
+            return response()->json(['response' => 1]);
+
+        }catch (Exception $e) {
+            return response()->json(['response' => 0]);
+        }
+    }
+
+    public function market_permission($id, $state){
+        //state 1 = desactivar acceso global
+        //state 0 = activar acceso global
+        try{
+            $tool = Tool::where('permissions', 'market')->get();
+
+            $state
+                ? DB::table('denied_tools_user')->insert(['user_id' => $id, 'tool_id' => $tool[0]->id])
+                : DB::table('denied_tools_user')->where(['user_id' => $id, 'tool_id' => $tool[0]->id])->delete();
+            return response()->json(['response' => 1]);
+
+        }catch (Exception $e) {
+            return response()->json(['response' => 0]);
+        }
+    }
+
 }

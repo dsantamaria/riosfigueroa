@@ -53,7 +53,9 @@
                             <a href="#" class="parent"><i class="fa fa-line-chart"></i>Análisis Histórico</a>
                             <ul>
                                 <li><a href="{{ route('analisisPrecios') }}">Análisis de Precios</a></li>
-                                <li><a href="{{ route('analisisHistorico') }}"></i>Análisis de Importaciones</a></li>
+                                @cannot('import')
+                                    <li><a href="{{ route('analisisHistorico') }}"></i>Análisis de Importaciones</a></li>
+                                @endcan
                             </ul>
                         </li>
                         <li><a href="{{ route('proveedores.index') }}"><i class="fa fa-industry"></i>Empresas Comercializadoras</a></li>
