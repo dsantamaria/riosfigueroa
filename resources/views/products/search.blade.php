@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-
+@can('price')
     <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
         <div class="panel panel-primary" style="overflow: visible;">
             <div class="panel-heading">Filtrar Productos</div>
@@ -35,4 +35,5 @@
             </div>
         </div>
     </div>
+@endcan
 @stop

@@ -36,13 +36,15 @@
                 <nav class="ts-sidebar">
                     <ul class="ts-sidebar-menu">
                         <li class="ts-label">Dashboard</li>
-                        <li>
-                            <a href="#" class="parent"><i class="fa fa-codepen"></i>Productos</a>
-                            <ul>
-                                <li><a href="{{ route('products.search') }}">Buscador de Productos</a></li>
-                                <li><a href="{{ route('products.index') }}">Listado Productos</a></li>
-                            </ul>
-                        </li>
+                        @can('price')
+                            <li>
+                                <a href="#" class="parent"><i class="fa fa-codepen"></i>Productos</a>
+                                <ul>
+                                    <li><a href="{{ route('products.search') }}">Buscador de Productos</a></li>
+                                    <li><a href="{{ route('products.index') }}">Listado Productos</a></li>
+                                </ul>
+                            </li>
+                        @endcan
                         @can('market')
                         <li>
                             <a href="#" class="parent parent-flex"><i class="fa fa-pie-chart"></i><div>Análisis del Mercado Mexicano</div></a>

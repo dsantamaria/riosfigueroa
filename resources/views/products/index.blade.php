@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+@can('price')
     <div class="col-md-12">
 
         <h2 class="page-title">Listado de Productos</h2>
@@ -61,4 +62,5 @@
         </div>
     </div>
     @include('partials.modal')
+@endcan
 @stop
