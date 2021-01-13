@@ -14,11 +14,11 @@ class CreateFarmingProductTable extends Migration
     {
         Schema::create('farming_productions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('año');
-            $table->string('cultivo');
-            $table->float('superficie_sembrada');
-            $table->float('superficie_cosechada');
-            $table->float('valor_produccion');
+            $table->integer('anio');
+            $table->string('entidad');
+            $table->double('superficie_sembrada', 16, 2);
+            $table->double('superficie_cosechada', 16, 2);
+            $table->double('valor_produccion', 16, 2);
             $table->timestamps();
         });
     }

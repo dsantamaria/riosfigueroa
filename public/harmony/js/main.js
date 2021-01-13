@@ -4,6 +4,114 @@ var chartMarketPie;
 var chartMarketSerial;
 var trigger_key = false;
 
+const farm_products = {
+    "AGAVE": {'img': 'Agave N.svg', 'imgB': 'Agave color.svg', 'color': "#550000ff", "active": false, 'adapterBase': 'Agave'},
+    "AGUACATE": {'img': 'Aguacate N.svg', 'imgB': 'Aguacate color.svg', 'color': "#00ff00ff", "active": false, 'adapterBase': 'Aguacate'},
+    "AJO": {'img': 'Ajo N.svg', 'imgB': 'Ajo color.svg', 'color': "#e3dbdbff", "active": false, 'adapterBase': 'Ajo'},
+    "ALFALFA VERDE": {'img': 'Alfalfa N.svg', 'imgB': 'Alfalfa color.svg', 'color': "#ff2a2aff", "active": false, 'adapterBase': 'Alfalfa (T)'},
+    "ALGODN HUESO": {'img': 'Algodón N.svg', 'imgB': 'Algodón color.svg', 'color': "#ff8080ff", "active": false, 'adapterBase': 'Algodón'},
+    "ARROZ PALAY": {'img': 'Arroz N.svg', 'imgB': 'Arroz color.svg', 'color': "#D7DBDD", "active": false, 'adapterBase': 'Arroz'},
+    
+    "AVENA GRANO": {'img': 'Avena Grano N.svg', 'imgB': 'Avena Grano color.svg', 'color': "#ffe680ff", "active": false, 'adapterBase': 'Avena Grano'},
+    "BERENJENA": {'img': 'Berenjena N.svg', 'imgB': 'Berenjena color.svg', 'color': "#bc5fd3ff" , "active": false, 'adapterBase': 'Berenjena'},
+    "BROCOLI": {'img': 'Brócoli N.svg', 'imgB': 'Brócoli color.svg', 'color': "#008080ff" , "active": false, 'adapterBase': 'Brócoli'},
+    "CACAO": {'img': 'Cacao N.svg', 'imgB': 'Cacao color.svg', 'color': "#502d16ff" , "active": false, 'adapterBase': 'Cacao'},
+    "CALABACITA": {'img': 'Calabacita N.svg', 'imgB': 'Calabacita color.svg', 'color': "#ffb380ff" , "active": false, 'adapterBase': 'Calabacita'},
+    "CAA DE AZUCAR": {'img': 'Caña de Azúcar N.svg', 'imgB': 'Caña de Azúcar color.svg', 'color': "#008000ff" , "active": false, 'adapterBase': 'Cana de Azúcar'},
+    
+    "CEBOLLA": {'img': 'Cebolla N.svg', 'imgB': 'Cebolla color.svg', 'color': "#b3b3b3ff" , "active": false, 'adapterBase': 'Cebolla'},
+    "CHILE VERDE": {'img': 'Chile Verde N.svg', 'imgB': 'Chile Verde color.svg', 'color': "#88aa00ff" , "active": false, 'adapterBase': 'Chile verde'},
+    "CRISANTEMO (Gruesa)": {'img': 'Crisantemo N.svg', 'imgB': 'Crisantemo color.svg', 'color': "#37c8abff" , "active": false, 'adapterBase': 'Crisantemo'},
+    "DURAZNO": {'img': 'Durazno N.svg', 'imgB': 'Durazno color.svg', 'color': "#ffccaaff" , "active": false, 'adapterBase': 'Durazno'},
+    "ESPARRAGO": {'img': 'Esparrago N.svg', 'imgB': 'Esparrago color.svg', 'color': "#806600ff" , "active": false, 'adapterBase': 'Espárrago'},
+    "FRAMBUESA": {'img': 'Frambuesa N.svg', 'imgB': 'Frambuesa color.svg', 'color': "#800080ff" , "active": false, 'adapterBase': 'Frambuesa'},
+    
+    "FRESA": {'img': 'Fresa N.svg', 'imgB': 'Fresa color.svg', 'color': "#ffaaccff" , "active": false, 'adapterBase': 'Fresa'},
+    "FRIJOL": {'img': 'Frijol N.svg', 'imgB': 'Frijol color.svg', 'color': "#d38d5fff" , "active": false, 'adapterBase': 'Frijol'},
+    "GLADIOLA (Gruesa)": {'img': 'Gladiola N.svg', 'imgB': 'Gladiola color.svg', 'color': "#44aa00ff" , "active": false, 'adapterBase': 'Gladiola'},
+    "LECHUGA": {'img': 'Lechuga N.svg', 'imgB': 'Lechuga color.svg', 'color': "#2aff80ff" , "active": false, 'adapterBase': 'Lechuga'},
+    "LIMON": {'img': 'Limon N.svg', 'imgB': 'Limon color.svg', 'color': "#e9ddafff" , "active": false, 'adapterBase': 'Limón'},
+    "MAIZ GRANO": {'img': 'Maíz (Grano) N.svg', 'imgB': 'Maíz (Grano) color.svg', 'color': "#F9E79F" , "active": false, 'adapterBase': 'Maíz grano'},
+    
+    "MANGO": {'img': 'Mango N.svg', 'imgB': 'Mango color.svg', 'color': "#55ddffff" , "active": false, 'adapterBase': 'Mango'},
+    "MANZANA": {'img': 'Manzana N.svg', 'imgB': 'Manzana color.svg', 'color': "#782121ff" , "active": false, 'adapterBase': 'Manzana'},
+    "MELON": {'img': 'Melón N.svg', 'imgB': 'Melón color.svg', 'color': "#ff7f2aff" , "active": false, 'adapterBase': 'Melón'},
+    "NARANJA": {'img': 'Naranja N.svg', 'imgB': 'Naranja color.svg', 'color': "#aa4400ff" , "active": false, 'adapterBase': 'Naranja'},
+    "NUEZ": {'img': 'Nogal (Nuez) N.svg', 'imgB': 'Nogal (Nuez) color.svg', 'color': "#d38d5fff" , "active": false, 'adapterBase': 'Nogal (Nuez)'},
+    "PAPA": {'img': 'Papa N.svg', 'imgB': 'Papa color.svg', 'color': "#803300ff" , "active": false, 'adapterBase': 'Papa'},
+    
+    "PAPAYA": {'img': 'Papaya N.svg', 'imgB': 'Papaya color.svg', 'color': "#80b3ffff" , "active": false, 'adapterBase': 'Papaya'},
+    "PEPINO": {'img': 'Pepino N.svg', 'imgB': 'Pepino color.svg', 'color': "#9dac93ff" , "active": false, 'adapterBase': 'Pepino'},
+    "PIA": {'img': 'Piña N.svg', 'imgB': 'Piña color.svg', 'color': "#ffdd55ff" , "active": false, 'adapterBase': 'Piña'},
+    "PLATANO": {'img': 'Plátano N.svg', 'imgB': 'Plátano color.svg', 'color': "#d3bc5fff" , "active": false, 'adapterBase': 'Plátano'},
+    "ROSA (Gruesa)": {'img': 'Rosas (Gruesa) N.svg', 'imgB': 'Rosas (Gruesa) color.svg', 'color': "#bcd35fff" , "active": false, 'adapterBase': 'Rosas (Gruesa)'},
+    "SANDIA": {'img': 'Sandía N.svg', 'imgB': 'Sandía color.svg', 'color': "#c83737ff" , "active": false, 'adapterBase': 'Sandía'},
+    
+    "SORGO GRANO": {'img': 'Sorgo N.svg', 'imgB': 'Sorgo color.svg', 'color': "#5a2ca0ff" , "active": false, 'adapterBase': 'Sorgo Grano'},
+    "SOYA": {'img': 'Soya N.svg', 'imgB': 'Soya color.svg', 'color': "#6c535dff" , "active": false, 'adapterBase': 'Soya'},
+    "TABACO": {'img': 'Tabaco N.svg', 'imgB': 'Tabaco color.svg', 'color': "#ac9d93ff" , "active": false, 'adapterBase': 'Tabaco'},
+    "TOMATE ROJO (JITOMATE)": {'img': 'Jitomate (Tomate) N.svg', 'imgB': 'Jitomate (Tomate) color.svg', 'color': "#ff5555ff" , "active": false, 'adapterBase': 'Tomate (Jitomate)'},
+    "TOMATE VERDE": {'img':'Tomate Verde N.svg', 'imgB': 'Tomate Verde color.svg', 'color': "#ccff00ff" , "active": false, 'adapterBase': 'Tomate Verde'},
+    "TORONJA (POMELO)": {'img': 'Toronja (Pomelo) N.svg', 'imgB': 'Toronja (Pomelo) color.svg', 'color': "#ff2a7fff", "active": false, 'adapterBase': 'Toronja (pomelo)'},
+    
+    "TRIGO GRANO": {'img': 'Trigo Grano N.svg', 'imgB': 'Trigo Grano color.svg', 'color': "#d4aa00ff", "active": false, 'adapterBase': 'Trigo Grano'},
+    "UVA": {'img': 'Uva N.svg', 'imgB': 'Uva color.svg', 'color': "#7f2affff", "active": false, 'adapterBase': 'Uva'},
+    "ZANAHORIA": {'img': 'Zanahoria N.svg', 'imgB': 'Zanahoria color.svg', 'color': "#d45500ff", "active": false, 'adapterBase': 'Zanahoria'},
+    "ZARZAMORA": {'img': 'Zarzamora N.svg', 'imgB': 'Zarzamora color.svg', 'color': "#0055d4ff", "active": false, 'adapterBase': 'Zarzamora'},
+    
+    
+}
+
+const typeProductColors = {
+    'Insecticida' : "#ff0000",
+    'Herbicida' : "#008000",
+    'Fungicida' : "#800080",
+    'Otro' : "#ffa500"
+}
+
+const states = {
+    "MX-AGU": {'name': "Aguascalientes", 'active': false},
+    "MX-BCN": {'name': "Baja California", 'active': false},
+    "MX-BCS": {'name': "Baja California Sur", 'active': false},
+    "MX-CAM": {'name': "Campeche", 'active': false},
+    "MX-CHP": {'name': "Chiapas", 'active': false},
+    "MX-CHH": {'name': "Chihuahua", 'active': false},
+    "MX-CMX": {'name': "Ciudad de México", 'active': false},
+    "MX-COA": {'name': "Coahuila", 'active': false},
+    "MX-COL": {'name': "Colima", 'active': false},
+    "MX-DUR": {'name': "Durango", 'active': false},
+    "MX-GUA": {'name': "Guanajuato", 'active': false},
+    "MX-GRO": {'name': "Guerrero", 'active': false},
+    "MX-HID": {'name': "Hidalgo", 'active': false},
+    "MX-JAL": {'name': "Jalisco", 'active': false},
+    "MX-MIC": {'name': "Michoacán", 'active': false},
+    "MX-MOR": {'name': "Morelos", 'active': false},
+    "MX-MEX": {'name': "México", 'active': false},
+    "MX-NAY": {'name': "Nayarit", 'active': false},
+    "MX-NLE": {'name': "Nuevo León", 'active': false},
+    "MX-OAX": {'name': "Oaxaca", 'active': false},
+    "MX-PUE": {'name': "Puebla", 'active': false},
+    "MX-QUE": {'name': "Querétaro", 'active': false},
+    "MX-ROO": {'name': "Quintana Roo", 'active': false},
+    "MX-SLP": {'name': "San Luis Potosí", 'active': false},
+    "MX-SIN": {'name': "Sinaloa", 'active': false},
+    "MX-SON": {'name': "Sonora", 'active': false},
+    "MX-TAB": {'name': "Tabasco", 'active': false},
+    "MX-TAM": {'name': "Tamaulipas", 'active': false},
+    "MX-TLA": {'name': "Tlaxcala", 'active': false},
+    "MX-VER": {'name': "Veracruz", 'active': false},
+    "MX-YUC": {'name': "Yucatán", 'active': false},
+    "MX-ZAC": {'name': "Zacatecas", 'active': false},
+}
+
+let marketInsecticidaValue = 0
+let marketHerbicidaValue = 0
+let marketFungicidadaValue = 0
+let marketOtroValue = 0
+let markettotalValue = 0
+
+const mexicoIds = ["MX-ZAC", "MX-YUC", "MX-VER", "MX-TLA", "MX-TAM", "MX-TAB", "MX-SON", "MX-SIN", "MX-SLP", "MX-ROO", "MX-QUE", "MX-PUE", "MX-OAX", "MX-NLE", "MX-NAY", "MX-MOR", "MX-MIC", "MX-MEX", "MX-JAL", "MX-HID", "MX-GRO", "MX-GUA", "MX-DUR", "MX-CMX", "MX-COL", "MX-COA", "MX-CHH", "MX-CHP", "MX-CAM", "MX-BCS", "MX-BCN", "MX-AGU"]
+
 Array.prototype.clone = function(){
     return this.slice(0)
 }
@@ -32,7 +140,7 @@ $(document).ready(function () {
  	});
  	$('.menu-btn').click(function () {
  		$('nav.ts-sidebar').toggleClass('menu-open');
- 	});
+     });
 	 
 	 
 	var table = $('#zctb').DataTable( {
@@ -582,7 +690,7 @@ $(document).ready(function () {
     })
 
     //###############################################################################################################
-    //##################################### Incio Graficas Analisis Importacionjes ##################################
+    //##################################### Incio Graficas Analisis Importaciones ##################################
     //###############################################################################################################
     
     var Toneladas_trimestre = [];
@@ -593,231 +701,6 @@ $(document).ready(function () {
         minimunFractionDigits: 2,
     });
     
-    /*
-    if(document.getElementById('chartAnalisisHistorico') !== null){
-        var ctx = document.getElementById('chartAnalisisHistorico').getContext('2d');
-        var tons = {'T1': 1, 'T2': 2, 'T3': 3, 'T4': 4};
-        var chart = new Chart(ctx, {
-            // The type of chart we want to create
-            type: 'horizontalBar',
-
-            // The data for our dataset
-            data: {
-                labels: ['T1', 'T2', 'T3', 'T4'],
-                datasets: [{
-                    label: 'Test',
-                    backgroundColor: ['rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)'],
-                    borderColor: ['rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)', 'rgba(2, 136, 31, 1)'],
-                    data: [],
-                    xAxisID: 0
-                },
-                {
-                    label: 'Test',
-                    backgroundColor: ['rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)'],
-                    borderColor: ['rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)', 'rgba(25, 31, 210, 1)'],
-                    data: [],
-                    xAxisID: 0
-                },
-                {
-                    label: 'Test',
-                    backgroundColor: ['rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)'],
-                    borderColor: ['rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)', 'rgba(255, 110, 7, 1)'],
-                    data: [],
-                    xAxisID: 0
-                },
-                {
-                    label: 'Test',
-                    backgroundColor: ['rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)'],
-                    borderColor: ['rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)', 'rgba(255, 37, 37, 1)'],
-                    data: [],
-                    xAxisID: 0
-                }]
-            },
-            options: {
-                elements: {
-                    rectangle: {
-                        borderWidth: 1.5,
-                    },
-                },
-                scales: {
-                    xAxes: [{
-                        gridLines: {
-                            offsetGridLines: true,
-                        },
-                        stacked: true,
-                        display: false,
-                    }],
-                    yAxes: [{
-                        stacked: true,
-                        barThickness: 40,
-                    }]
-                },
-                legend: {
-                    display: false,
-                },
-                responsive: true,
-                tooltips: {
-                    enabled: false,
-                },
-            }
-
-            // Configuration options go here
-        });
-        Chart.plugins.register({
-            afterDraw: function(chart, easing) {
-                // To only draw at the end of animation, check for easing === 1
-                var ctx = chart.ctx;
-
-                chart.data.datasets.forEach(function (dataset, i) {
-                    var meta = chart.getDatasetMeta(i);
-
-                    var control_flow = true;
-                    if (!meta.hidden) {
-                        meta.data.forEach(function(element, index) {
-                            // Draw the text in black, with the specified font
-                            if(dataset.data[index] != 0 && control_flow){
-                                control_flow = false;
-                                
-                                var fontSize = 15;
-                                var fontStyle = 'bold';
-                                var fontFamily = 'Roboto';
-                                ctx.font = Chart.helpers.fontString(fontSize, fontStyle, fontFamily);
-                                ctx.textBaseline = 'middle';
-                                var padding = 0;
-                                var position = element.tooltipPosition();
-
-                                if(dataset.data[index] != 'x'){
-                                    // Just naively convert to string for now
-                                    var precioPromedio = formatter.format( dataset.data[index]);
-                                    var unidad = Unit == 'kilogramo' ? 'Tons' : 'Litros';
-                                    var ton_tri = formatter.format(Toneladas_trimestre[i]).replace('$', '') + ' ' + unidad;
-
-                                    // Make sure alignment settings are correct
-                                    var positionX = (element._model.x-30)/8 <= precioPromedio.length + 1 ? position.x + 5 :  position.x - 5;
-                                    ctx.textAlign = (element._model.x-30)/8 <= precioPromedio.length + 1 ? 'left' : 'right';
-                                    ctx.fillStyle = (element._model.x-30)/8 <= precioPromedio.length + 1 ? 'rgb(0,0,0)' : 'rgb(255,255,255)';
-                                    ctx.fillText(precioPromedio, positionX, position.y - (fontSize / 3) - padding + 5);
-
-                                    ctx.fillStyle = 'rgb(0, 0, 0)';
-                                    var positionX1 = (element._model.x-30)/8  <= ton_tri.length ? 35 : position.x;
-                                    ctx.textAlign = (element._model.x-30)/8  <= ton_tri.length ? 'left' : 'right';
-                                    ctx.fillText(ton_tri, positionX1, position.y + 33 - (fontSize / 2) - padding + 5);
-                                    
-                                }else{
-                                    // Make sure alignment settings are correct
-                                    var text = 'Sin Importaciones Registradas';
-                                    ctx.textAlign = 'left';
-                                    ctx.fillStyle = dataset.backgroundColor[0];
-                                    ctx.fillText(text, 35, position.y);
-                                }
-                            }
-                        });
-                    }
-                });
-            }
-        });
-
-        function addData(chart, precio_prom_mes, volumen_mes, trimestres, unidad) {
-            chart.data.datasets.forEach(function(datasets){
-                datasets.data = [];
-            })
-
-           t1 = [0,0,0,0];
-            t2 = [0,0,0,0];
-            t3 = [0,0,0,0];
-            t4 = [0,0,0,0];;
-
-            precio_prom_mes.forEach(function(value, key){
-                if(value != 0){
-                    if(key == 0 ) t1[0] = value;
-                    if(key == 1){
-                        t1[1] = t1[0] == 'x' ? 0 : t1[0];
-                        t2[1] = value;
-                    }
-                    if(key == 2){
-                        t1[2] = t1[0] == 'x' ? 0 : t1[0];
-                        t2[2] = t2[1] == 'x' ? 0 : t2[1];
-                        t3[2] = value;
-                    }
-                    if(key == 3){
-                        t1[3] = t1[0] == 'x' ? 0 : t1[0];
-                        t2[3] = t2[1] == 'x' ? 0 : t2[1];
-                        t3[3] = t3[2] == 'x' ? 0 : t3[2];
-                        t4[3] = value;
-                    }
-                }else{
-                    if(key == 0 ) t1[0] = 'x';
-                    if(key == 1 ) t2[1] = 'x';
-                    if(key == 2 ) t3[2] = 'x';
-                    if(key == 3 ) t4[3] = 'x';
-                }
-            })
-            chart.data.datasets[0].data = t1;
-            chart.data.datasets[1].data = t2;
-            chart.data.datasets[2].data = t3;
-            chart.data.datasets[3].data = t4;
-            Toneladas_trimestre = volumen_mes;
-            Unit = unidad;
-            chart.update();
-        }
-
-
-        $('#analisisCategoriasHistorico').change(function(e){
-            var categoria_id = $(this).val();
-            var ingrediente_select = $('#selectAnalisisIngredienteHistorico');
-            ingrediente_select.empty();
-            $('#selectAnalisisYearHistorico').empty();
-            $.ajax({
-                type: "GET",
-                url: '/getIngredientes/'+ categoria_id,
-                success: function( data ) {
-                    if(data['years'] != []) ingrediente_select.append($('<option></option>').attr('value', 'empty').text(''));
-                    Object.keys(data['ingredientes']).forEach(function(key){
-                        ingrediente_select.append($('<option></option>').attr('value', key).text(data['ingredientes'][key]));
-                    });
-                }
-            });
-        })
-
-        $('#selectAnalisisIngredienteHistorico').change(function(e){
-            var year_select = $('#selectAnalisisYearHistorico');
-            var ingrediente_select = $('#selectAnalisisIngredienteHistorico').val();
-            year_select.empty();
-            $.ajax({
-                type: "GET",
-                url: '/getYears/'+ ingrediente_select,
-                success: function( data ) {
-                    if(data['years'] != []) year_select.append($('<option></option>').attr('value', 'empty').text(''));
-                    data['years'].forEach(function(e){
-                        year_select.append($('<option></option>').attr('value', e).text(e));
-                    });
-                }
-            });
-        })
-
-        $('#update-graphic-historic').click(function(e){
-            e.preventDefault();
-            var ingrediente = $('#selectAnalisisIngredienteHistorico');
-            var year = $('#selectAnalisisYearHistorico');
-            ingrediente.val() == 'empty' ? ingrediente.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : ingrediente.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
-            year.val() == 'empty' ? year.closest('.form-group').addClass('has-error').find('.help-block').fadeIn() : year.closest('.form-group').removeClass('has-error').find('.help-block').fadeOut();
-            if(ingrediente.val() != 'empty' && year.val() != 'empty'){
-                $.ajax({
-                    type: "GET",
-                    url: '/updateAnalysisHistoric/'+ ingrediente.val() + '/' + year.val(),
-                    success: function( data ) {
-                        console.log(data);
-                        var unidad = data['unit'] == 'kilogramo' ? ' Tons' : ' Litros';
-                        addData(chart, data['precio_prom_mes'], data['volumen_mes'], data['trimestres'], data['unit']);
-                        $('#importaciones_precio_total').text(formatter.format(data['precio_total_prom']).replace('$', ''));
-                        $('#importaciones_volumen_total').text(formatter.format(data['volumen_total']).replace('$', '') + unidad);
-                    }
-                });
-            }
-        });
-    }*/
-
-
     
     AmCharts.ready(function () {
         chartImport = new AmCharts.AmSerialChart();
@@ -2250,7 +2133,6 @@ $(document).ready(function () {
                 'sector': sector
             },
             success: function( data ) {
-                console.log(data);
                 $('#market-graph, #market-current, #market-legend').addClass('hidden');
                 $('#market-process-exchange, #market-graph-2').removeClass('hidden');
                 chartMarketSerial.dataProvider = data['chartData'];
@@ -2726,12 +2608,3026 @@ $(document).ready(function () {
     ////////////////////////////////////////////// Fin gestion Admins ////////////////////////////////////////////
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
 
+    
+    
+    ////////////////////////////////////////////// Analisis de cultivos ////////////////////////////////////////////
+    ///////////////////////////////////////////////////////////////////////////////////////////////////////////// 
+
+    //----------------------------------------------------general
+    AmCharts.ready(function () {
+       
+        let farmProducts = []
+        let farmSector = []
+        let labelForModalPie = ""
+        let dataForModalPie = []
+        let dataForModalTree = []
+        let dataForModalPyramid = []
+        let dataForModalForcedTree = []
+        let piramidMaxValue = 0
+
+        const searchMarketFarmValues = () => {
+            let activesStates = []
+            mexicoIds.forEach(id => {
+                var mex = polygonSeries.getPolygonById(id);
+                if(mex.isActive){
+                    activesStates.push(states[id].name) 
+                }
+            })
+
+            let activeFarms = []
+
+            $('table > tbody  > tr > th').each(function(i, th) { 
+                const element = $(th)
+                if(element.attr('active') === "true"){
+                    activeFarms.push(element.attr('value'))
+                }
+            });
+
+            if(activesStates.length <= 0 || activeFarms.length <= 0) {
+                chartPieMarket.data = []
+                marketFarmTree.data = []
+                totalFarmChart.data = []
+                marketPiramidState.data = []
+                chartForcedTree.data = []
+                dataForModalPie = []
+                label.text = "";
+                labelForModalPie = "";
+
+                $('#marketF5SuperficieSembrada').val("0" + " HA")
+                $('#marketF5SuperficieSembrada').attr('valueNum', 0)
+
+                if(!$('#marketAdvanced').hasClass('hidden')){
+                    $('#marketF5SuperficiePercent').keyup()
+                    $("#m5IncPercent").keyup()
+                    $("#m5HerPercent").keyup()
+                    $("#m5FunPercent").keyup()
+                    $("#m5OtrPercent").keyup()
+                }
+
+                return 
+            }
+            
+            $.ajax({
+                type: "GET",
+                url: '/market/farming/values/'+ JSON.stringify(activesStates) + "/" + JSON.stringify(activeFarms),
+                success: function( data ) {
+                    const farmKeys = Object.keys(data["farm_data"])
+                    const stateKeys = Object.keys(data["states_data"])
+                    let farmsPie = []
+                    let farmTree = []
+                    let farmPiramid = []
+                    let farmForceTree = [] 
+                    let total = 0
+
+                    farmKeys.forEach(product => total = total + data["farm_data"][product])
+
+                    stateKeys.forEach(state => {
+                        const stateFarmKeys = Object.keys(data["states_data"][state])
+
+                        let totalState = stateFarmKeys.reduce((carry, farm )=> {
+                            carry = carry + data["states_data"][state][farm]
+                            return carry
+                        }, 0)
+
+                        return farmForceTree.push({
+                            name: state,
+                            nameValue: `${state} \n ${totalState.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`,
+                            children: stateFarmKeys.map(farm => {
+                                return {
+                                    name: data["states_data"][state][farm], 
+                                    value: data["states_data"][state][farm],
+                                    valueState: `${farm}: ${data["states_data"][state][farm].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} HA`,
+                                    fill: farm_products[farm].color,
+                                    counterString: (`${data["states_data"][state][farm].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} HA`).length
+                                }
+                            }),
+                        })
+                    })
+
+                    farmKeys.forEach(product => {
+                        let productAdapt = product.toLowerCase().charAt(0).toUpperCase() + product.toLowerCase().slice(1)
+                        let percent = ((data["farm_data"][product] * 100) / total).toFixed(1)
+                        let index = 0
+
+                        if(data["farm_data"][product] > 0){
+                            farmsPie.push({
+                                "index": index,
+                                "active": true,
+                                "value": data["farm_data"][product],
+                                "product": productAdapt,
+                                "img": `/project_images/${farm_products[product].imgB}`,
+                                "config": {
+                                    "fill": farm_products[product].color
+                                },
+
+                            })
+        
+                            farmTree.push({
+                                name: "",
+                                color: farm_products[product].color,
+                                img: `/project_images/${farm_products[product].imgB}`,
+                                active: true,
+                                children: [
+                                    {
+                                        name: productAdapt,
+                                        value: data["farm_data"][product],
+                                        color: farm_products[product].color,
+                                        img: `/project_images/${farm_products[product].imgB}`,
+                                    }
+                                ]
+                            })
+        
+                            farmPiramid.push({
+                                "product": productAdapt,
+                                "active": true,
+                                "farmValue": data["farm_data"][product],
+                                "totalValue": data["total_state"][product],
+                                "farmValueHA": data["farm_data"][product] + " HA",
+                                "totalValueHA": data["total_state"][product] +" HA",
+                                "config": {
+                                    "fill": farm_products[product].color,
+                                    "stroke": farm_products[product].color,
+                                }
+                            })
+                        }else{
+                            console.log(product)
+                        }
+
+                        index = index + 1
+                    })
+
+                    farmsPie = farmsPie.sort(function(a, b) {return b.value - a.value;})
+                    farmTree = farmTree.sort(function(a, b) {return b.children.value - a.children.value;})
+                    farmPiramid = farmPiramid.sort(function(a, b) {return b.totalValue - a.totalValue;})
+
+                    chartPieMarket.data = farmsPie.slice(0, 3)
+                    dataForModalPie = farmsPie
+
+                    marketFarmTree.data = farmTree.slice(0, 3)
+                    dataForModalTree = farmTree
+                    dataForModalPyramid = farmPiramid
+
+                    totalFarmValueAxis.max = farmPiramid[0].totalValue
+                    stateFarmValueAxis.max = farmPiramid[0].totalValue
+                    totalFarmChart.data = JSON.parse(JSON.stringify(farmPiramid.slice(0, 3).reverse()));
+                    marketPiramidState.data = JSON.parse(JSON.stringify(farmPiramid.slice(0, 3).reverse()));
+
+                    chartForcedTree.data = [{
+                        name: `Total \n ${data["total_superficie"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} HA`,
+                        children: farmForceTree,
+                        collapsed: true,
+                        
+                    }]
+
+                    dataForModalForcedTree= [{
+                        name: `Total \n ${data["total_superficie"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} HA`,
+                        children: farmForceTree,
+                        collapsed: false,
+                    }]
+
+                    label.text = "Total \n" + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " HA";
+                    label.x = -((total.toString().length * 5) + 130)
+                    label.fontSize =  22 - (total.toString().length * 1.2);
+
+                    labelForModalPie = "Total \n" + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " HA";
+
+                    isActiveCustomAdvancedInput() ? null : $('#marketF5SuperficieSembrada').val(data["total_superficie_sembrada"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " HA")
+                    isActiveCustomAdvancedInput() ? null : $('#marketF5SuperficieSembrada').attr('valueNum', data["total_superficie_sembrada"])
+
+                    if(!$('#marketAdvanced').hasClass('hidden') && !isActiveCustomAdvancedInput()){
+                        $('#marketF5SuperficiePercent').keyup()
+                        $("#m5IncPercent").keyup()
+                        $("#m5HerPercent").keyup()
+                        $("#m5FunPercent").keyup()
+                        $("#m5OtrPercent").keyup()
+                    }
+
+                },
+                error: (e) => {
+                    console.log(e)
+                }
+            });
+        }
 
 
- });
+        const searchMarketBaseValues = () => {
+            let activesStates = []
+            mexicoIds.forEach(id => {
+                var mex = polygonSeries.getPolygonById(id);
+                if(mex.isActive){
+                    activesStates.push(states[id].name) 
+                }
+            })
+        
+            let activeFarms = []
+        
+            $('table > tbody  > tr > th').each(function(i, th) { 
+                const element = $(th)
+                if(element.attr('active') === "true"){
+                    activeFarms.push(farm_products[element.attr('value')].adapterBase)
+                }
+            });
+        
+            if(activesStates.length <= 0 || activeFarms.length <= 0) {
+                chartPieMarket.data = []
+                marketFarmTree.data = []
+                totalFarmChart.data = []
+                marketPiramidState.data = []
+                chartForcedTree.data = []
+                dataForModalPie = []
+                label.text = "";
+                labelForModalPie = "";
+                return 
+            }
+        
+            $.ajax({
+                type: "GET",
+                url: '/market/getBaseByStatesFarms/'+ JSON.stringify(activesStates) + "/" + JSON.stringify(activeFarms),
+                success: function( data ) {
+                    const herbicida = data['herbicida']
+                    const insecticida = data['insecticida']
+                    const fungicida = data['fungicida']
+                    const otro = data['otro']
+                    const total = data['total']
+
+                    marketInsecticidaValue = '$' + formatPrice(insecticida.toString())
+                    marketHerbicidaValue = '$' + formatPrice(herbicida.toString())
+                    marketFungicidadaValue = '$' + formatPrice(fungicida.toString())
+                    marketOtroValue = '$' + formatPrice(otro.toString())
+                    markettotalValue = '$' + formatPrice(total.toString())
+
+                    if($('#marketAdvanced').hasClass('hidden')){
+                        $("#insecticida-product-market").attr('active') === "false" ? $('#insecticidaValue').text('$0') : $('#insecticidaValue').text(marketInsecticidaValue)
+                        $("#herbicida-product-market").attr('active') === "false" ? $('#herbicidaValue').text('$0') : $('#herbicidaValue').text(marketHerbicidaValue)
+                        $("#fungicida-product-market").attr('active') === "false" ? $('#fungicidaValue').text('$0') : $('#fungicidaValue').text(marketFungicidadaValue)
+                        $("#otros-product-market").attr('active') === "false" ? $('#otrosValue').text('$0') : $('#otrosValue').text(marketOtroValue)
+                        $("#total-product-market").attr('active') === "false" ? $('#totalValue').text('$0') : $('#totalValue').text(markettotalValue)
+                    }
+                },
+                error: (e) => {
+                    console.log(e)
+                }
+            });
+        }
+
+        $('#toggleAdvancedMarket').click(function() {
+            $('#marketF5SuperficieVal').val("")
+            $('#marketF5SuperficiePercent').val("")
+            $('#marketF5GastoTotal').val("")
+            $("#m5IncPercent").val("")
+            $("#m5HerPercent").val("")
+            $("#m5FunPercent").val("")
+            $("#m5OtrPercent").val("")
+
+            if($('#marketAdvanced').hasClass('hidden')){
+                $('#marketAdvanced, #wrapper_table_advanced_market').removeClass('hidden')
+                $('#insecticidaValue').text('$0')
+                $('#herbicidaValue').text('$0')
+                $('#fungicidaValue').text('$0')
+                $('#otrosValue').text('$0')
+                $('#totalValue').text('$0')
+            }else{
+                $('#marketAdvanced, #wrapper_table_advanced_market').addClass('hidden')
+                $("#insecticida-product-market").attr('active') === "false" ? $('#insecticidaValue').text('$0') : $('#insecticidaValue').text(marketInsecticidaValue)
+                $("#herbicida-product-market").attr('active') === "false" ? $('#herbicidaValue').text('$0') : $('#herbicidaValue').text(marketHerbicidaValue)
+                $("#fungicida-product-market").attr('active') === "false" ? $('#fungicidaValue').text('$0') : $('#fungicidaValue').text(marketFungicidadaValue)
+                $("#otros-product-market").attr('active') === "false" ? $('#otrosValue').text('$0') : $('#otrosValue').text(marketOtroValue)
+                $("#total-product-market").attr('active') === "false" ? $('#totalValue').text('$0') : $('#totalValue').text(markettotalValue)
+            }
+
+            $('#bodyForCustomAdvanced tr').each(function(e){
+                $(this).find('input').prop('checked', false)
+            })
+
+            $('#save-advanced-market').hasClass('hidden') ? $('#save-advanced-market').removeClass('hidden') : $('#save-advanced-market').addClass('hidden')
+        })
+
+        let tempSavedMarketAdvance = {}
+
+        $('#save-advanced-market-button').click(function(){
+
+            let insecticida = parseFloat(formatEntryWithDot($('#insecticidaValue').text()).replace(/,/g, ""))
+            let herbicida = parseFloat(formatEntryWithDot($('#herbicidaValue').text()).replace(/,/g, ""))
+            let fungicida = parseFloat(formatEntryWithDot($('#fungicidaValue').text()).replace(/,/g, ""))
+            let otros = parseFloat(formatEntryWithDot($('#otrosValue').text()).replace(/,/g, ""))
+            let total = parseFloat(formatEntryWithDot($('#totalValue').text()).replace(/,/g, ""))
+
+            if(insecticida === 0 && herbicida === 0 && fungicida === 0 && otros === 0 && total === 0) return
+
+            let sembrada = parseFloat($('#marketF5SuperficieSembrada').val().replace(/,/g, ""))
+            let tratadasHA =  parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, ""))
+            let tratadasPercent =  parseFloat($('#marketF5SuperficiePercent').val().replace(/,/g, ""))
+            let gasto =  parseFloat($('#marketF5GastoTotal').val().replace(/,/g, ""))
+            let incPercent = parseFloat($("#m5IncPercent").val()) ? parseFloat($("#m5IncPercent").val()) : 0
+            let herPercent = parseFloat($("#m5HerPercent").val()) ? parseFloat($("#m5HerPercent").val()) : 0
+            let funPercent = parseFloat($("#m5FunPercent").val()) ? parseFloat($("#m5FunPercent").val()) : 0
+            let otrPercent = parseFloat($("#m5OtrPercent").val()) ? parseFloat($("#m5OtrPercent").val()) : 0
+
+            let activesStates = []
+            mexicoIds.forEach(id => {
+                var mex = polygonSeries.getPolygonById(id);
+                if(mex.isActive){
+                    activesStates.push(states[id].name) 
+                }
+            })
+
+            let activeFarms = []
+
+            $('table > tbody  > tr > th').each(function(i, th) { 
+                const element = $(th)
+                if(element.attr('active') === "true"){
+                    activeFarms.push(element.attr('value'))
+                }
+            });
+
+            let armValue = {
+                'insecticida': insecticida,
+                'herbicida': herbicida,
+                'fungicida': fungicida,
+                'otros': otros,
+                'total': total,
+                'sembrada': sembrada,
+                'tratadasHA': tratadasHA,
+                'tratadasPercent': tratadasPercent,
+                'gasto': gasto,
+                'incPercent': incPercent,
+                'herPercent': herPercent,
+                'funPercent': funPercent,
+                'otrPercent': otrPercent
+            }
+
+            let key = activeFarms.concat(activesStates).join("")
+
+            if(isActiveCustomAdvancedInput){
+                $('#bodyForCustomAdvanced tr').each(function(e){
+                    let isActive = $(this).find('input').is(':checked')
+                    if(isActive){
+                        key = $(this).attr('id')
+                    }
+                })
+            }
+
+            let keyExist = Object.keys(tempSavedMarketAdvance).includes(key)
+
+            tempSavedMarketAdvance[key] = armValue
+
+            if(!keyExist){
+                const row = buildRowsForAdvance(activeFarms, activesStates, key)
+                $('#bodyForCustomAdvanced').append(row)
+            }
+
+            Object.keys(tempSavedMarketAdvance).length > 0 ? $('.table_advanced_market').removeClass('hidden') : $('.table_advanced_market').addClass('hidden')
+
+            alert('Valores guardados correctamente!')
+        })
+
+        const isActiveCustomAdvancedInput = () => {
+            let someActive = false
+
+            $('#bodyForCustomAdvanced tr').each(function(e){
+                let isActive = $(this).find('input').is(':checked')
+                if(isActive){
+                    someActive = true
+                }
+            })
+
+            return someActive
+        }
+
+        $('#bodyForCustomAdvanced').on('click', '.delete-advanced-values', function(e){
+            let id = $(this).attr('id')
+            console.log('id')
+            delete tempSavedMarketAdvance[id]
+            $(this).closest('tr').remove()
+            updateWithCustomAdvanced()
+            Object.keys(tempSavedMarketAdvance).length > 0 ? $('.table_advanced_market').removeClass('hidden') : $('.table_advanced_market').addClass('hidden')
+        })
+
+
+        $('#bodyForCustomAdvanced').on("click", "input", function(e){
+            updateWithCustomAdvanced()
+        })
+
+        const updateWithCustomAdvanced = () => {
+            let actives = 0
+            let sembrada = 0
+            let tratadasHA = 0
+            let tratadasPercent = 0
+            let someActive = false
+            let gasto = 0
+            let inc = 0
+            let her = 0
+            let fun = 0
+            let otr = 0
+            let total = 0
+            let incPer = 0
+            let herPer = 0
+            let funPer = 0
+            let otrPer = 0
+
+            $('#bodyForCustomAdvanced tr').each(function(e){
+                let isActive = $(this).find('input').is(':checked')
+                
+                if(isActive){
+                    actives = actives + 1
+                    someActive = true
+                    let key = $(this).attr('id')
+                    sembrada = tempSavedMarketAdvance[key].sembrada + sembrada
+                    tratadasHA = tratadasHA + tempSavedMarketAdvance[key].tratadasHA
+                    gasto = gasto + tempSavedMarketAdvance[key].gasto
+                    inc = inc + tempSavedMarketAdvance[key].insecticida
+                    her = her + tempSavedMarketAdvance[key].herbicida
+                    fun = fun + tempSavedMarketAdvance[key].fungicida
+                    otr = otr + tempSavedMarketAdvance[key].otros
+                    total = total + tempSavedMarketAdvance[key].total
+                    incPer = tempSavedMarketAdvance[key].incPercent
+                    herPer = tempSavedMarketAdvance[key].herPercent
+                    funPer = tempSavedMarketAdvance[key].funPercent
+                    otrPer = tempSavedMarketAdvance[key].otrPercent
+        
+                }
+            })
+
+            actives >= 2 ? $('#save-advanced-market-button').attr('disabled', true) : $('#save-advanced-market-button').attr('disabled', false)
+
+            tratadasPercent = (tratadasHA * 100)/sembrada
+            incPercent = actives >= 2 ? (inc*100)/(gasto*tratadasHA) : incPer
+            funPercent = actives >= 2 ? (fun*100)/(gasto*tratadasHA) : funPer
+            herPercent = actives >= 2 ? (her*100)/(gasto*tratadasHA) : herPer
+            otrPercent = actives >= 2 ? (otr*100)/(gasto*tratadasHA) : otrPer
+
+
+            if(someActive){
+                $('#insecticidaValue').text('$' + formatPrice(inc.toString()))
+                $('#herbicidaValue').text('$' + formatPrice(her.toString()))
+                $('#fungicidaValue').text('$' + formatPrice(fun.toString()))
+                $('#otrosValue').text('$' + formatPrice(otr.toString()))
+                $('#totalValue').text('$' + formatPrice(total.toString()))
+
+                $('#marketF5SuperficieSembrada').val(formatPrice(sembrada.toString()) + " HA")
+                $('#marketF5SuperficieVal').val(formatPrice(tratadasHA.toString()))
+                $('#marketF5SuperficiePercent').val(formatPrice(tratadasPercent.toString()))
+                $('#marketF5GastoTotal').val(formatPrice(gasto.toString()))
+
+                $("#m5IncPercent").val(formatPercent(incPercent.toString()))
+                $("#m5HerPercent").val(formatPercent(herPercent.toString()))
+                $("#m5FunPercent").val(formatPercent(funPercent.toString()))
+                $("#m5OtrPercent").val(formatPercent(otrPercent.toString()))
+
+            }else{
+                $('#insecticidaValue').text('$0')
+                $('#herbicidaValue').text('$0')
+                $('#fungicidaValue').text('$0')
+                $('#otrosValue').text('$0')
+                $('#totalValue').text('$0')
+
+                $('#marketF5SuperficieSembrada').val("")
+                $('#marketF5SuperficieVal').val("")
+                $('#marketF5SuperficiePercent').val("")
+                $('#marketF5GastoTotal').val("")
+
+                $("#m5IncPercent").val("")
+                $("#m5HerPercent").val("")
+                $("#m5FunPercent").val("")
+                $("#m5OtrPercent").val("")
+
+                searchMarketBaseValues()
+                searchMarketFarmValues()
+            }
+        }
+
+
+
+        $('body').on("keyup", "#marketF5SuperficiePercent", function(e){
+            let superficieTotal = $('#marketF5SuperficieSembrada').attr('valueNum')
+            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
+
+            if(value != ""){
+                let valueMax = parseInt(value.replace(/,/g, "")) >= 100 ? 100 : value
+                $(this).val(valueMax)
+
+                let valueForHa = (superficieTotal * parseFloat(valueMax))/100
+
+                $('#marketF5SuperficieVal').val(formatPrice(valueForHa.toString()))
+            }else{
+                $('#marketF5SuperficieVal').val("")
+                $(this).val("")
+            }
+
+            $("#m5IncPercent").keyup()
+            $("#m5HerPercent").keyup()
+            $("#m5FunPercent").keyup()
+            $("#m5OtrPercent").keyup()
+        })
+
+        $('body').on("keyup", "#marketF5SuperficieVal", function(e){
+            let superficieTotal = $('#marketF5SuperficieSembrada').attr('valueNum')
+            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
+
+
+            if(value != "" && superficieTotal > 0){
+                let valueMax = parseInt(value.replace(/,/g, "")) >= superficieTotal ? superficieTotal : value
+                $(this).val(valueMax)
+
+                let valueForPer = ((100 * parseFloat(valueMax.replace(/,/g, "")))/superficieTotal).toFixed(2)
+                $('#marketF5SuperficiePercent').val(valueForPer)
+            }else{
+                $('#marketF5SuperficiePercent').val("")
+                $(this).val("")
+            }
+
+            $("#m5IncPercent").keyup()
+            $("#m5HerPercent").keyup()
+            $("#m5FunPercent").keyup()
+            $("#m5OtrPercent").keyup()
+        })
+
+        $('body').on("keyup", "#marketF5GastoTotal", function(e){
+            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
+            $(this).val(value)
+
+            $("#m5IncPercent").keyup()
+            $("#m5HerPercent").keyup()
+            $("#m5FunPercent").keyup()
+            $("#m5OtrPercent").keyup()
+        })
+
+        $('body').on("keyup", "#m5IncPercent", function(e){
+            let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
+            let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
+            let incVal = 0
+
+            let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
+            let v3 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
+            let v4 = parseFloat($('#m5OtrPercent').val() ? $('#m5OtrPercent').val() : 0)
+
+            let maxValue = 100
+            let restValue = maxValue - (v2 + v3 + v4)
+
+            if(value == "" || parseFloat(value) <= restValue){
+                $(this).val(value)
+                if(value == "") value = 0
+                incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
+                let total = v2 + v3 + v4 + parseFloat(value)
+                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
+
+            }else{
+                $(this).val("")
+                let total = v2 + v3 + v4
+                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
+                incVal = 0
+                alert("La suma de los porcentajes no puede execeder el 100%")
+            }
+
+            $('#insecticidaValue').text('$' + formatEntryWithDot(incVal.toString()))
+        })
+
+        $('body').on("keyup", "#m5HerPercent", function(e){
+            let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
+            let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
+            let incVal = 0
+
+            let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
+            let v3 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
+            let v4 = parseFloat($('#m5OtrPercent').val() ? $('#m5OtrPercent').val() : 0)
+
+            let maxValue = 100
+            let restValue = maxValue - (v1 + v3 + v4)
+
+            if(value == "" || parseFloat(value) <= restValue){
+                $(this).val(value)
+                if(value == "") value = 0
+                incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
+                let total = v1 + v3 + v4 + parseFloat(value)
+                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
+            }else{
+                $(this).val(0)
+                let total = v1 + v3 + v4
+                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
+                incVal = 0
+                alert("La suma de los porcentajes no puede execeder el 100%")
+            }
+
+            $('#herbicidaValue').text('$' + formatEntryWithDot(incVal.toString()))
+            
+        })
+
+        $('body').on("keyup", "#m5FunPercent", function(e){
+            let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
+            let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
+            let incVal = 0
+
+            let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
+            let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
+            let v3 = parseFloat($('#m5OtrPercent').val() ? $('#m5OtrPercent').val() : 0)
+
+            let maxValue = 100
+            let restValue = maxValue - (v1 + v2 + v3)
+
+            if(value == "" || parseFloat(value) <= restValue){
+                $(this).val(value)
+                if(value == "") value = 0
+                incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
+                let total = v1 + v2 + v3 + parseFloat(value)
+                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
+            }else{
+                $(this).val(0)
+                let total = v2 + v2 + v3
+                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
+                incVal = 0
+                alert("La suma de los porcentajes no puede execeder el 100%")
+            }
+
+            $('#fungicidaValue').text('$' + formatEntryWithDot(incVal.toString()))
+            
+        })
+
+        $('body').on("keyup", "#m5OtrPercent", function(e){
+            let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
+            let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
+            let incVal = 0
+
+            let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
+            let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
+            let v4 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
+
+            let maxValue = 100
+            let restValue = maxValue - (v1 + v2 + v4)
+
+            if(value == "" || parseFloat(value) <= restValue){
+                $(this).val(value)
+                if(value == "") value = 0
+                incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
+                let total = v1 + v2 + v4 + parseFloat(value)
+                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
+            }else{
+                $(this).val(0)
+                let total = v2 + v2 + v4
+                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
+                incVal = 0
+                alert("La suma de los porcentajes no puede execeder el 100%")
+            }
+
+            $('#otrosValue').text('$' + formatEntryWithDot(incVal.toString()))
+            
+        })
+
+
+
+
+
+        //-----------------------------------------------------mapa
+
+        var mapMarket = am4core.create("mapMarket", am4maps.MapChart);
+        mapMarket.geodata = am4geodata_mexicoHigh;
+        mapMarket.projection = new am4maps.projections.Miller();
+
+        var polygonSeries = mapMarket.series.push(new am4maps.MapPolygonSeries());
+        polygonSeries.useGeodata = true;
+
+        var polygonTemplate = polygonSeries.mapPolygons.template;
+        polygonTemplate.tooltipText = "{name}";
+        polygonTemplate.fill = am4core.color("#d2d2d2");
+
+        var hs = polygonTemplate.states.create("hover");
+        hs.properties.fill = am4core.color("#6c70ec");
+
+        var ac = polygonTemplate.states.create("active");
+        ac.properties.fill = am4core.color("#3034a5");
+        
+        polygonTemplate.events.on("hit", function(ev) {       
+            ev.target.isActive = !ev.target.isActive  
+
+            mexicoIds.forEach(id => {
+                let mex = polygonSeries.getPolygonById(id);
+                states[id].active = mex.isActive
+            })
+
+            searchMarketFarmValues()
+            searchMarketBaseValues()
+        });  
+
+        polygonTemplate.propertyFields.fill = "fill";
+
+        $('#selectFarmingAll').click(() => {
+            mexicoIds.forEach(id => {
+                var us = polygonSeries.getPolygonById(id);
+                us.isActive = true;
+            })
+        })
+
+        $('#removeFarmingAll').click(() => {
+            mexicoIds.forEach(id => {
+                var us = polygonSeries.getPolygonById(id);
+                us.isActive = false;
+            })
+        })
+
+        //----------------------------------------------seleccion de cultivos
+
+        $('#market-products-table th').click((event) => {
+            let isActive = $(event.currentTarget).attr('active') === "true"
+            let farm = $(event.currentTarget).attr('value')
+            let all = $(event.currentTarget).hasClass('market-all') === true
+
+            if(all) return
+
+            if(isActive){
+                $(event.currentTarget).attr('active', 'false')
+                $(event.currentTarget).children("img").attr('src', `/project_images/${farm_products[farm].img}`)
+                $(event.currentTarget).removeClass('market-product-active').addClass('market-product-desactive')
+                farm_products[farm].active = false
+            }else{
+                $(event.currentTarget).attr('active', 'true')
+                $(event.currentTarget).children("img").attr('src',`/project_images/${farm_products[farm].imgB}`)
+                $(event.currentTarget).removeClass('market-product-desactive').addClass('market-product-active')
+                farm_products[farm].active = true
+            }
+
+            searchMarketFarmValues()
+            searchMarketBaseValues()
+        })
+
+        $('#insecticida-product-market').click((event) => {
+            let isActive = $(event.currentTarget).attr('active') === "true"
+
+            if(isActive){
+                $(event.currentTarget).attr('active', 'false')
+                $(event.currentTarget).removeClass('insecticida-product-market').addClass('default-color-product')
+                if($('#marketAdvanced').hasClass('hidden')) $('#insecticidaValue').text('$0')
+            }else{
+                $(event.currentTarget).attr('active', 'true')
+                $(event.currentTarget).removeClass('default-color-product').addClass('insecticida-product-market')
+                if($('#marketAdvanced').hasClass('hidden')) $('#insecticidaValue').text(marketInsecticidaValue)
+            }
+        })
+
+        $('#herbicida-product-market').click((event) => {
+            let isActive = $(event.currentTarget).attr('active') === "true"
+
+            if(isActive){
+                $(event.currentTarget).attr('active', 'false')
+                $(event.currentTarget).removeClass('herbicida-product-market').addClass('default-color-product')
+                if($('#marketAdvanced').hasClass('hidden')) $('#herbicidaValue').text('$0')
+            }else{
+                $(event.currentTarget).attr('active', 'true')
+                $(event.currentTarget).removeClass('default-color-product').addClass('herbicida-product-market')
+                if($('#marketAdvanced').hasClass('hidden'))  $('#herbicidaValue').text(marketHerbicidaValue)
+            }
+        })
+
+        $('#fungicida-product-market').click((event) => {
+            let isActive = $(event.currentTarget).attr('active') === "true"
+
+            if(isActive){
+                $(event.currentTarget).attr('active', 'false')
+                $(event.currentTarget).removeClass('fungicida-product-market').addClass('default-color-product')
+                if($('#marketAdvanced').hasClass('hidden'))  $('#fungicidaValue').text('$0')
+            }else{
+                $(event.currentTarget).attr('active', 'true')
+                $(event.currentTarget).removeClass('default-color-product').addClass('fungicida-product-market')
+                if($('#marketAdvanced').hasClass('hidden'))  $('#fungicidaValue').text(marketFungicidadaValue)
+            }
+        })
+
+        $('#otros-product-market').click((event) => {
+            let isActive = $(event.currentTarget).attr('active') === "true"
+
+            if(isActive){
+                $(event.currentTarget).attr('active', 'false')
+                $(event.currentTarget).removeClass('otros-product-market').addClass('default-color-product')
+                if($('#marketAdvanced').hasClass('hidden'))  $('#otrosValue').text('$0')
+            }else{
+                $(event.currentTarget).attr('active', 'true')
+                $(event.currentTarget).removeClass('default-color-product').addClass('otros-product-market')
+                if($('#marketAdvanced').hasClass('hidden'))  $('#otrosValue').text(marketOtroValue)
+            }
+        })
+
+        $('#total-product-market').click((event) => {
+            let isActive = $(event.currentTarget).attr('active') === "true"
+
+            if(isActive){
+                $(event.currentTarget).attr('active', 'false')
+                $(event.currentTarget).removeClass('total-product-market').addClass('default-color-product')
+                if($('#marketAdvanced').hasClass('hidden'))  $('#totalValue').text('$0')
+            }else{
+                $(event.currentTarget).attr('active', 'true')
+                $(event.currentTarget).removeClass('default-color-product').addClass('total-product-market')
+                if($('#marketAdvanced').hasClass('hidden'))  $('#totalValue').text(markettotalValue)
+            }
+        })
+
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip({
+                placement: "top",
+                container: 'body'
+            })
+        })
+
+        
+        //-------------------------------------------------mapa de pie
+        var chartPieMarket = am4core.create("marketFarmPie", am4charts.PieChart3D);
+        chartPieMarket.innerRadius = am4core.percent(50);
+
+
+        // Add and configure Series
+        let marketPieSeries = chartPieMarket.series.push(new am4charts.PieSeries3D());
+        marketPieSeries.dataFields.value = "value";
+        marketPieSeries.dataFields.category = "product";
+        marketPieSeries.angle= 5;
+        marketPieSeries.depth= 7;
+        marketPieSeries.dx = 45;
+
+        marketPieSeries.slices.template.configField = "config"
+
+        marketPieSeries.ticks.template.disabled = true;
+        //marketPieSeries.alignLabels = false;
+        marketPieSeries.labels.template.text = "";
+    // marketPieSeries.labels.template.html = "{img}" 
+        //marketPieSeries.labels.template.radius = am4core.percent(-25);
+        //marketPieSeries.exportable = true
+        //marketPieSeries.exporting.menu = new am4core.ExportMenu();
+        //marketPieSeries.labels.template.fill = am4core.color("white");
+
+    // chartPieMarket.legend = new am4charts.Legend();
+        //chartPieMarket.legend.position = "left";
+
+        //marketPieSeries.labels.template.maxWidth = 500;
+        //marketPieSeries.labels.template.wrap = true;
+
+        marketPieSeries.slices.template.tooltipText = "{category}: {value.value} HA"
+
+        marketPieSeries.slices.template.states.getKey("hover").properties.scale = 1;
+        marketPieSeries.slices.template.states.getKey("active").properties.shiftRadius = 0;
+
+        let label = marketPieSeries.createChild(am4core.Label);
+        //label.horizontalCenter = "right";
+        //label.verticalCenter = "middle";
+        label.textAlign = "middle"
+        //label.isMeasured = false;
+        label.maxWidth = 150
+        //label.align = "center";
+        label.y = -25;
+
+        // marketPieSeries.labels.template.adapter.add("radius", function(radius, target) {
+        //     if (target.dataItem && (target.dataItem.values.value.percent < 10)) {
+        //       return 0;
+        //     }
+        //     return radius;
+        // });
+
+
+        $('#modalMarketPie').on('shown.bs.modal', function () {
+            const newMapDiv = document.createElement("div")
+            newMapDiv.setAttribute("class", "modalBodyMap")
+            newMapDiv.setAttribute("id", "mapMarket2")
+            document.getElementById("firstMarket").appendChild(newMapDiv);
+
+            var mapMarket2 = am4core.create("mapMarket2", am4maps.MapChart);
+            mapMarket2.geodata = am4geodata_mexicoHigh;
+            mapMarket2.projection = new am4maps.projections.Miller();
+        
+            var polygonSeries2 = mapMarket2.series.push(new am4maps.MapPolygonSeries());
+            polygonSeries2.useGeodata = true;
+        
+            var polygonTemplate2 = polygonSeries2.mapPolygons.template;
+            polygonTemplate2.tooltipText = "{name}";
+            polygonTemplate2.fill = am4core.color("#d2d2d2");
+        
+            var hs2 = polygonTemplate2.states.create("hover");
+            hs2.properties.fill = am4core.color("#6c70ec");
+        
+            var ac2 = polygonTemplate2.states.create("active");
+            ac2.properties.fill = am4core.color("#3034a5");
+            
+            polygonTemplate2.events.on("hit", function(ev) {       
+                return;
+            }); 
+            
+            
+            mapMarket2.events.on("ready", function(ev) {      
+                mexicoIds.forEach(id => {
+                    var mex = polygonSeries.getPolygonById(id);
+                    if(mex.isActive){
+                        var us2 = polygonSeries2.getPolygonById(id);
+                        us2.isActive = true;
+                    }
+                })
+
+                $("#spinnerModal").addClass('hidden')
+            }); 
+
+        
+            polygonTemplate2.propertyFields.fill = "fill";
+
+
+
+
+            const newChartDiv = document.createElement("div")
+            newChartDiv.setAttribute("class", "modalBodyMarket")
+            newChartDiv.setAttribute("id", "marketFarmPie2")
+            document.getElementById("modalBodyMarket").appendChild(newChartDiv);
+
+            var chartPieMarket2 = am4core.create("marketFarmPie2", am4charts.PieChart3D);
+            chartPieMarket2.innerRadius = am4core.percent(50);
+            chartPieMarket2.data = dataForModalPie
+
+            // Add and configure Series
+            let marketPieSeries2 = chartPieMarket2.series.push(new am4charts.PieSeries3D());
+            marketPieSeries2.dataFields.value = "value";
+            marketPieSeries2.dataFields.category = "product";
+            marketPieSeries2.angle= 5;
+            marketPieSeries2.depth= 7;
+            marketPieSeries2.dx = 20
+
+            marketPieSeries2.slices.template.configField = "config"
+
+            marketPieSeries2.ticks.template.disabled = true;
+            marketPieSeries2.labels.template.text = ""
+        // marketPieSeries2.alignLabels = false;
+        // marketPieSeries2.labels.template.text = "{value.percent.formatNumber('#.0000')}% {category.toLowerCase()}";
+        // marketPieSeries2.labels.template.html = "{img}" 
+        // marketPieSeries2.labels.template.radius = am4core.percent(-20);
+            //marketPieSeries2.labels.template.exportable = true;
+            //marketPieSeries2.exporting.menu = new am4core.ExportMenu();
+
+            marketPieSeries2.slices.template.tooltipText = "{category}: {value.value} HA";
+
+            marketPieSeries2.slices.template.states.getKey("hover").properties.scale = 1;
+            marketPieSeries2.slices.template.states.getKey("active").properties.shiftRadius = 0;
+
+            chartPieMarket2.legend = new am4charts.Legend();
+            chartPieMarket2.legend.position = "left";
+            chartPieMarket2.legend.valueLabels.template.text = "[bold]{value.percent.formatNumber('#.00')} %[/]  \n [font-size: 12px]{value} HA[/]";
+            chartPieMarket2.legend.valueLabels.template.dy = 8
+            chartPieMarket2.legend.valueLabels.template.marginTop = 6
+
+            chartPieMarket2.legend.contentValign = "top"
+            chartPieMarket2.legend.height = "50%"
+            chartPieMarket2.legend.scrollable =true
+            chartPieMarket2.legend.name = "[bold]{product}[/]"
+            chartPieMarket2.legend.fontSize = 20
+            chartPieMarket2.legend.width = 300
+
+
+            chartPieMarket2.legend.itemContainers.template.events.on("toggled", function(event){
+    
+                dataForModalPie = dataForModalPie.map(x => {
+                    if(event.target.dataItem.dataContext.category === x.product) {
+                        x.active = !x.active
+                    }
+                    return x
+                })
+
+                dataForModalPie = dataForModalPie.map(x => {
+                    if(event.target.dataItem.dataContext.category === x.product) {
+                        let productUpper = x.product.toUpperCase()
+                        x.img = x.active ? `/project_images/${farm_products[productUpper].imgB}` : `/project_images/${farm_products[productUpper].img}`
+                    }
+                    return x
+                })
+
+
+                let total = dataForModalPie.reduce((carry, x) => {
+                    if(x.active) carry = carry + x.value
+                    return carry
+                }, 0)
+
+                label2.text = "Total \n" + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " HA";
+                chartPieMarket2.legend.reinit()
+            })
+
+            let label2= marketPieSeries2.createChild(am4core.Label);
+            label2.horizontalCenter = "middle";
+            label2.verticalCenter = "middle";
+            label2.textAlign = "middle"
+            label2.fontSize = 40;
+            label2.maxWidth = 500
+            label2.text = labelForModalPie
+
+            // var pieLabelTitle = marketPieSeries2.createChild(am4core.Label);
+            // pieLabelTitle.verticalCenter = "bottom";
+            // // pieLabelTitle.y = 0
+            // // pieLabelTitle.x = 0
+            // pieLabelTitle.fontSize = 40;
+            // pieLabelTitle.text = "la que te dijo"
+
+            // marketPieSeries2.labels.template.adapter.add("radius", function(radius, target) {
+            //     if (target.dataItem && (target.dataItem.values.value.percent < 5)) {
+            //         return 30;
+            //     }
+            //         return radius;
+            // });
+
+            marketPieSeries2.ticks.template.adapter.add("disabled", function(tick, target) {
+                if (target.dataItem && (target.dataItem.values.value.percent < 5)) {
+                    return false;
+                }
+                    return true;
+            });
+
+            // var titlePirChart = chartPieMarket2.titles.create();
+            // titlePirChart.text = "[bold]Porcentaje de Hectáreas (Ha)[/]";
+            // titlePirChart.fontSize = 40;
+            // titlePirChart.marginTop = 30;
+            // titlePirChart.dx = 140;
+
+
+            // Remove square from marker template
+            var markerLegendPie = chartPieMarket2.legend.markers.template;
+            markerLegendPie.disposeChildren();
+
+            // Add custom image instead
+            let pieMarketLegendImage = markerLegendPie.createChild(am4core.Image);
+            pieMarketLegendImage.width = 20;
+            pieMarketLegendImage.height = 20;
+            pieMarketLegendImage.verticalCenter = "top";
+            pieMarketLegendImage.horizontalCenter = "left";
+            pieMarketLegendImage.togglable = true;
+
+
+            // We're going to use an adapter to set href
+            pieMarketLegendImage.adapter.add("href", function(href, target) {
+                return target.dataItem.dataContext.dataContext.img; 
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+            const newChartTreeDiv = document.createElement("div")
+            newChartTreeDiv.setAttribute("class", "modalBodyTree")
+            newChartTreeDiv.setAttribute("id", "marketFarmTree2")
+            document.getElementById("modalBodyTree").appendChild(newChartTreeDiv);
+
+
+            var marketFarmTree2 = am4core.create("marketFarmTree2", am4charts.TreeMap);
+            marketFarmTree2.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+        
+            marketFarmTree2.data = dataForModalTree;
+        
+        // marketFarmTree2.colors.step = 2;
+        
+            // define data fields
+            marketFarmTree2.dataFields.value = "value";
+            marketFarmTree2.dataFields.name = "name";
+            marketFarmTree2.dataFields.children = "children";
+            marketFarmTree2.dataFields.color = 'color'
+        
+            marketFarmTree2.zoomable = false;
+            var bgColor2 = new am4core.InterfaceColorSet().getFor("background");
+        
+            // level 0 series template
+            var level0SeriesTemplate2 = marketFarmTree2.seriesTemplates.create("0");
+            var level0ColumnTemplate2 = level0SeriesTemplate2.columns.template;
+
+            marketFarmTree2.seriesTemplates.configField = "config"
+        
+            level0ColumnTemplate2.column.cornerRadius(0, 0, 0, 0);
+            level0ColumnTemplate2.fillOpacity = 0;
+            level0ColumnTemplate2.strokeWidth = 4;
+            level0ColumnTemplate2.strokeOpacity = 0;
+        
+            // level 1 series template
+            var level1SeriesTemplate2 = marketFarmTree2.seriesTemplates.create("1");
+            var level1ColumnTemplate2= level1SeriesTemplate2.columns.template;
+
+        
+            level1SeriesTemplate2.tooltip.animationDuration = 0;
+            level1SeriesTemplate2.strokeOpacity = 1;
+        
+            level1ColumnTemplate2.column.cornerRadius(10, 10, 10, 10)
+            level1ColumnTemplate2.fillOpacity = 1;
+            level1ColumnTemplate2.strokeWidth = 4;
+            level1ColumnTemplate2.stroke = bgColor2;
+            level1ColumnTemplate2.tooltipText = "{name}: {value} HA";
+        
+            // var bullet1 = level1ColumnTemplate2.bullets.push(new am4charts.LabelBullet());
+            // bullet1.locationY = 0.5;
+            // bullet1.locationX = 0.5;
+            // bullet1.label.text = "{name}";
+            // bullet1.label.fill = am4core.color("#ffffff");
+        
+            marketFarmTree2.maxLevels = 2;
+        
+            marketFarmTree2.legend = new am4charts.Legend();
+            marketFarmTree2.legend.valueLabels.template.text = "[bold]{value} HA[/]";
+            marketFarmTree2.legend.position = "left";
+            marketFarmTree2.legend.fontSize = 20
+            marketFarmTree2.legend.width = 300
+
+            // Remove square from marker template
+            var markerLegendTree = marketFarmTree2.legend.markers.template;
+            markerLegendTree.disposeChildren();
+
+            // Add custom image instead
+            let treeMarketLegendImage = markerLegendTree.createChild(am4core.Image);
+            treeMarketLegendImage.width = 20;
+            treeMarketLegendImage.height = 20;
+            treeMarketLegendImage.verticalCenter = "top";
+            treeMarketLegendImage.horizontalCenter = "left";
+            treeMarketLegendImage.togglable = true;
+
+
+            // We're going to use an adapter to set href
+            treeMarketLegendImage.adapter.add("href", function(href, target) {
+                return target.dataItem.dataContext.dataContext.img; 
+            });
+
+            marketFarmTree2.legend.itemContainers.template.events.on("toggled", function(event){
+    
+                dataForModalTree = dataForModalTree.map(x => {
+                    if(event.target.dataItem.name === x.name) {
+                        x.active = !x.active
+                        let productUpper = x.name.toUpperCase()
+                        x.img = x.active ? `/project_images/${farm_products[productUpper].imgB}` : `/project_images/${farm_products[productUpper].img}`
+                        x.children[0].img = x.active ? `/project_images/${farm_products[productUpper].imgB}` : `/project_images/${farm_products[productUpper].img}`
+                    }
+                    return x
+                })
+
+                marketFarmTree2.legend.reinit()
+            })
+
+
+            // var titleModalTree = marketFarmTree2.titles.create();
+            // titleModalTree.text = "[bold]Cantidad de Hectáreas (Ha) por cultivo[/]";
+            // titleModalTree.fontSize = 40;
+            // titleModalTree.marginTop = 15
+
+
+
+
+
+
+
+
+
+
+
+
+
+            const newPyramidTreeDiv = document.createElement("div")
+            newPyramidTreeDiv.setAttribute("class", "modalBodyPyramid")
+            newPyramidTreeDiv.setAttribute("id", "marketFarmPyramid2")
+            document.getElementById("modalBodyPyramid").appendChild(newPyramidTreeDiv);
+
+
+            var marketPiramidContainer2 = am4core.create("marketFarmPyramid2", am4core.Container);
+            marketPiramidContainer2.width = am4core.percent(100);
+            marketPiramidContainer2.height = am4core.percent(100);
+            marketPiramidContainer2.layout = "horizontal";
+
+            var marketPiramidState2 = marketPiramidContainer2.createChild(am4charts.XYChart);
+            marketPiramidState2.paddingRight = 0;
+            marketPiramidState2.data = JSON.parse(JSON.stringify(dataForModalPyramid));
+
+
+            // Create axes
+            var stateFarmCategoryAxis2 = marketPiramidState2.yAxes.push(new am4charts.CategoryAxis());
+            stateFarmCategoryAxis2.dataFields.category = "farmValue";
+            stateFarmCategoryAxis2.renderer.grid.template.location = 0;
+            //maleCategoryAxis.renderer.inversed = true;
+            stateFarmCategoryAxis2.renderer.minGridDistance = 15;
+
+            var stateFarmValueAxis2 = marketPiramidState2.xAxes.push(new am4charts.ValueAxis());
+            stateFarmValueAxis2.renderer.inversed = true;
+            stateFarmValueAxis2.min = 0;
+            stateFarmValueAxis2.max = dataForModalPyramid[0].totalValue;
+            stateFarmValueAxis2.strictMinMax = true;
+
+            //stateFarmValueAxis2.numberFormatter = new am4core.NumberFormatter();
+            stateFarmValueAxis.numberFormatter.numberFormat = "#,###,###' HA'";
+
+            // Create series
+            var stateFarmSeries2 = marketPiramidState2.series.push(new am4charts.ColumnSeries());
+            stateFarmSeries2.dataFields.valueX = "farmValueHA";
+            stateFarmSeries2.columns.template.configField = "config"
+            //stateFarmSeries2.dataFields.valueXShow = "percent";
+            //stateFarmSeries2.calculatePercent = true;
+            stateFarmSeries2.dataFields.categoryY = "farmValue";
+            stateFarmSeries2.interpolationDuration = 1000;
+            stateFarmSeries2.columns.template.tooltipText = "{product}: {valueX}";
+            //stateFarmSeries2.sequencedInterpolation = true;
+
+            var valueLabelPyramidModal = stateFarmSeries2.bullets.push(new am4charts.LabelBullet());
+            valueLabelPyramidModal.label.html = '';
+            //valueLabelPyramidModal.label.horizontalCenter = "left";
+            valueLabelPyramidModal.label.dx = -30;
+        // valueLabelPyramidModal.label.hideOversized = false;
+            //valueLabelPyramidModal.label.truncate = false;
+
+            valueLabelPyramidModal.label.adapter.add("html", function(html, target) {
+                let product = farm_products[(target.dataItem.dataContext.product).toUpperCase()].imgB
+                return `<div><img src="/project_images/${product}" width="35px" height="35px"><div/>`
+            });
+
+
+            var totalFarmChart2 = marketPiramidContainer2.createChild(am4charts.XYChart);
+            totalFarmChart2.paddingLeft = 0;
+            totalFarmChart2.data = JSON.parse(JSON.stringify(dataForModalPyramid));
+
+            // Create axes
+            var totalFarmCategoryAxis2 = totalFarmChart2.yAxes.push(new am4charts.CategoryAxis());
+            totalFarmCategoryAxis2.renderer.opposite = true;
+            totalFarmCategoryAxis2.dataFields.category = "totalValue";
+            totalFarmCategoryAxis2.renderer.grid.template.location = 0;
+            totalFarmCategoryAxis2.renderer.minGridDistance = 15;
+
+
+            var totalFarmValueAxis2 = totalFarmChart2.xAxes.push(new am4charts.ValueAxis());
+            //totalFarmValueAxis2.numberFormatter = new am4core.NumberFormatter();
+            totalFarmValueAxis2.numberFormatter.numberFormat = "#,###,###' HA'";
+            totalFarmValueAxis2.renderer.minLabelPosition = 0.01;
+
+            totalFarmValueAxis2.min = 0;
+            totalFarmValueAxis2.max = dataForModalPyramid[0].totalValue;
+            totalFarmValueAxis2.strictMinMax = true;
+            
+
+            // Create series
+            var totalFarmSeries2 = totalFarmChart2.series.push(new am4charts.ColumnSeries());
+            totalFarmSeries2.dataFields.valueX = "totalValue";
+            //totalFarmSeries2.dataFields.valueXShow = "percent";
+            totalFarmSeries2.calculatePercent = true;
+            totalFarmSeries2.fill = "#000000b0";
+            totalFarmSeries2.stroke = "#000000b0";
+            //totalFarmSeries2.sequencedInterpolation = true;
+            totalFarmSeries2.columns.template.tooltipText = "{product}: {valueX}";
+            totalFarmSeries2.dataFields.categoryY = "totalValue";
+            totalFarmSeries2.interpolationDuration = 1000;
+
+            // let legendData = dataForModalPyramid.map(value => {
+            //     return {
+            //         name: value.product,
+            //         fill: value.config.fill,
+            //         img: `/project_images/${farm_products[(value.product).toUpperCase()].imgB}`,
+            //     }
+            // })
+
+            // legendData.push({
+            //     name: "Total",
+            //     fill: "#000000b0",
+            //     img: "/project_images/baseline_eco_black_48dp.png",
+            // })
+
+            // let legendPyramid = new am4charts.Legend();
+            // legendPyramid.position = "left";
+            // legendPyramid.scrollable = true;
+            // legendPyramid.reverseOrder = true;
+
+            // marketPiramidState2.legend = legendPyramid;
+            // legendPyramid.data = legendData
+
+
+            // // Remove square from marker template
+            // var markerLegendPiramid = marketPiramidState2.legend.markers.template;
+            // markerLegendPiramid.disposeChildren();
+
+            // // Add custom image instead
+            // let piramidMarketLegendImage = markerLegendPiramid.createChild(am4core.Image);
+            // piramidMarketLegendImage.width = 20;
+            // piramidMarketLegendImage.height = 20;
+            // piramidMarketLegendImage.verticalCenter = "top";
+            // piramidMarketLegendImage.horizontalCenter = "left";
+            // piramidMarketLegendImage.togglable = true;
+
+
+            // // We're going to use an adapter to set href
+            // piramidMarketLegendImage.adapter.add("href", function(href, target) {
+            //     return target.dataItem.dataContext.img;  
+            // });
+
+
+            // legendPyramid.itemContainers.template.events.on("toggled", function(event){
+
+            //     dataForModalPyramid = dataForModalPyramid.map(x => {
+            //         if(x.product === event.target.dataItem.dataContext.name) {
+            //             x.active = !event.target.isActive
+
+            //             legendData = legendData.map(y => {
+            //                 let productUpper = y.name.toUpperCase()
+            //                 if(y.name === "Total") return y
+            //                 if(y.name === event.target.dataItem.dataContext.name){
+            //                     y.img = x.active ? `/project_images/${farm_products[productUpper].imgB}` : `/project_images/${farm_products[productUpper].img}`
+            //                 }
+                            
+            //                 return y
+            //             })
+                    
+            //         }
+
+            //         return x
+            //     })
+
+            //     let dataForModalPyramidCopy = dataForModalPyramid.filter(x => x.active)
+
+            //     marketPiramidState2.data = JSON.parse(JSON.stringify(dataForModalPyramidCopy));
+            //     stateFarmValueAxis2.max = dataForModalPyramidCopy.length > 0 ? dataForModalPyramidCopy[0].totalValue : 0;
+            //     totalFarmChart2.data = JSON.parse(JSON.stringify(dataForModalPyramidCopy));
+            //     totalFarmValueAxis2.max = dataForModalPyramidCopy.length > 0 ? dataForModalPyramidCopy[0].totalValue : 0;
+
+            //     marketPiramidState2.legend.reinit()
+            // })
+
+
+
+
+
+
+
+
+
+            const newChartForcedTreeDiv = document.createElement("div")
+            newChartForcedTreeDiv.setAttribute("class", "modalBodyForcedTree")
+            newChartForcedTreeDiv.setAttribute("id", "marketDirectTree2")
+            document.getElementById("modalBodyForcedTree").appendChild(newChartForcedTreeDiv);
+
+            var chartForcedTree2 = am4core.create("marketDirectTree2", am4plugins_forceDirected.ForceDirectedTree);
+            var chartForecedTreeSeries2 = chartForcedTree2.series.push(new am4plugins_forceDirected.ForceDirectedSeries())
+
+            chartForcedTree2.data = dataForModalForcedTree;
+
+            chartForecedTreeSeries2.dataFields.value = "value";
+            chartForecedTreeSeries2.dataFields.name = "name";
+            chartForecedTreeSeries2.dataFields.children = "children";
+            chartForecedTreeSeries2.nodes.template.tooltipText = "{valueState}";
+            chartForecedTreeSeries2.nodes.template.fillOpacity = 1;
+
+            chartForecedTreeSeries2.nodes.template.label.text = "{name}"
+            chartForecedTreeSeries2.numberFormatter.numberFormat = "#,###,###' HA'";
+            chartForecedTreeSeries2.fontSize = 15;
+
+            chartForecedTreeSeries2.links.template.strokeWidth = 1;
+            chartForecedTreeSeries2.dataFields.collapsed = "collapsed";
+
+            chartForecedTreeSeries2.minRadius = 30
+            chartForecedTreeSeries2.maxRadius = 130
+
+            var hoverState2 =   chartForecedTreeSeries2.links.template.states.create("hover");
+            hoverState2.properties.strokeWidth = 3;
+            hoverState2.properties.strokeOpacity = 1;
+
+            chartForecedTreeSeries2.nodes.template.events.on("over", function(event) {
+                event.target.dataItem.childLinks.each(function(link) {
+                    link.isHover = true;
+                })
+                if (event.target.dataItem.parentLink) {
+                    event.target.dataItem.parentLink.isHover = true;
+                }
+            })
+
+            chartForecedTreeSeries2.nodes.template.events.on("out", function(event) {
+                event.target.dataItem.childLinks.each(function(link) {
+                    link.isHover = false;
+                })
+                if (event.target.dataItem.parentLink) {
+                    event.target.dataItem.parentLink.isHover = false;
+                }
+            })
+
+
+            chartForecedTreeSeries2.nodes.template.adapter.add("fill", function(fill, target) {
+                return typeof target.dataItem.name === "string" ? fill : target.dataItem.dataContext.fill
+            });
+
+            chartForecedTreeSeries2.nodes.template.adapter.add("stroke", function(fill, target) {
+                return typeof target.dataItem.name === "string" ? fill : target.dataItem.dataContext.fill
+            });
+
+            chartForcedTree2.legend = new am4charts.Legend();
+            chartForcedTree2.legend.valueLabels.template.text = "[bold]{value}[/]";
+            chartForcedTree2.legend.position = "bottom";
+            chartForcedTree2.legend.fontSize = 20
+            
+
+            let legendDataTree = dataForModalPyramid.map(value => {
+                return {
+                    fill: value.config.fill,
+                    name: value.product,
+                    img: `/project_images/${farm_products[(value.product).toUpperCase()].imgB}`,
+                }
+            })
+
+            let legendForecedTree = new am4charts.Legend();
+            legendForecedTree.position = "right";
+            legendForecedTree.scrollable = true;
+            legendForecedTree.parent = chartForcedTree2.chartContainer;
+            legendForecedTree.data = legendDataTree
+            legendForecedTree.fontSize = 20
+            legendForecedTree.width = 300
+
+            // Remove square from marker template
+            var markerLegendFocedTree = legendForecedTree.markers.template;
+            markerLegendFocedTree.disposeChildren();
+
+            // Add custom image instead
+            let ForcedtreeMarketLegendImage = markerLegendFocedTree.createChild(am4core.Image);
+            ForcedtreeMarketLegendImage.width = 20;
+            ForcedtreeMarketLegendImage.height = 20;
+            ForcedtreeMarketLegendImage.verticalCenter = "top";
+            ForcedtreeMarketLegendImage.horizontalCenter = "left";
+            ForcedtreeMarketLegendImage.togglable = true;
+
+            // We're going to use an adapter to set href
+            ForcedtreeMarketLegendImage.adapter.add("href", function(href, target) {
+                return target.dataItem.dataContext.img;  
+            });
+
+        })
+
+        $('#modalMarketPie').on('hide.bs.modal', function () {
+            const chartToRemove0 = document.getElementById("mapMarket2")
+            document.getElementById("firstMarket").removeChild(chartToRemove0);
+            
+            const chartToRemove = document.getElementById("marketFarmPie2")
+            document.getElementById("modalBodyMarket").removeChild(chartToRemove);
+
+            const chartToRemove2 = document.getElementById("marketFarmTree2")
+            document.getElementById("modalBodyTree").removeChild(chartToRemove2);
+
+            const chartToRemove3 = document.getElementById("marketFarmPyramid2")
+            document.getElementById("modalBodyPyramid").removeChild(chartToRemove3);
+
+            const chartToRemove4 = document.getElementById("marketDirectTree2")
+            document.getElementById("modalBodyForcedTree").removeChild(chartToRemove4);
+
+            $("#spinnerModal").removeClass('hidden')
+        })
+
+        //-------------------------------------------------mapa de tree
+
+        var marketFarmTree = am4core.create("marketFarmTree", am4charts.TreeMap);
+        marketFarmTree.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
+        marketFarmTree.data = [];
+
+        marketFarmTree.colors.step = 2;
+
+        // define data fields
+        marketFarmTree.dataFields.value = "value";
+        marketFarmTree.dataFields.name = "name";
+        marketFarmTree.dataFields.children = "children";
+        marketFarmTree.dataFields.color = 'color'
+
+        marketFarmTree.zoomable = false;
+        var bgColor = new am4core.InterfaceColorSet().getFor("background");
+
+        // level 0 series template
+        var level0SeriesTemplate = marketFarmTree.seriesTemplates.create("0");
+        var level0ColumnTemplate = level0SeriesTemplate.columns.template;
+
+        level0ColumnTemplate.column.cornerRadius(0, 0, 0, 0);
+        level0ColumnTemplate.fillOpacity = 0;
+        level0ColumnTemplate.strokeWidth = 4;
+        level0ColumnTemplate.strokeOpacity = 0;
+
+        // level 1 series template
+        var level1SeriesTemplate = marketFarmTree.seriesTemplates.create("1");
+        var level1ColumnTemplate = level1SeriesTemplate.columns.template;
+
+        level1SeriesTemplate.tooltip.animationDuration = 0;
+        level1SeriesTemplate.strokeOpacity = 1;
+
+        level1ColumnTemplate.column.cornerRadius(10, 10, 10, 10)
+        level1ColumnTemplate.fillOpacity = 1;
+        level1ColumnTemplate.strokeWidth = 4;
+        level1ColumnTemplate.stroke = bgColor;
+        level1ColumnTemplate.tooltipText = "{name}: {value} HA"
+
+        // var bullet1 = level1SeriesTemplate.bullets.push(new am4charts.LabelBullet());
+        // bullet1.locationY = 0.5;
+        // bullet1.locationX = 0.5;
+        // bullet1.label.text = "{name}";
+        // bullet1.label.fill = am4core.color("#ffffff");
+
+        marketFarmTree.maxLevels = 2;
+
+
+            //************************************ */
+
+
+
+
+        //------------------------------------------- piramide
+        var marketPiramidContainer = am4core.create("marketFarPiramid", am4core.Container);
+        marketPiramidContainer.width = am4core.percent(100);
+        marketPiramidContainer.height = am4core.percent(100);
+        marketPiramidContainer.layout = "horizontal";
+
+        var marketPiramidState = marketPiramidContainer.createChild(am4charts.XYChart);
+        marketPiramidState.paddingRight = 0;
+        marketPiramidState.data = JSON.parse(JSON.stringify([]));
+
+        // Create axes
+        var stateFarmCategoryAxis = marketPiramidState.yAxes.push(new am4charts.CategoryAxis());
+        stateFarmCategoryAxis.dataFields.category = "farmValue";
+        stateFarmCategoryAxis.renderer.grid.template.location = 0;
+        //maleCategoryAxis.renderer.inversed = true;
+        stateFarmCategoryAxis.renderer.minGridDistance = 15;
+
+        var stateFarmValueAxis = marketPiramidState.xAxes.push(new am4charts.ValueAxis());
+        stateFarmValueAxis.renderer.inversed = true;
+        stateFarmValueAxis.min = 0;
+        stateFarmValueAxis.max = piramidMaxValue;
+        stateFarmValueAxis.strictMinMax = true;
+
+        stateFarmValueAxis.numberFormatter = new am4core.NumberFormatter();
+        stateFarmValueAxis.numberFormatter.numberFormat = "#,###,###' HA'";
+        //stateFarmValueAxis.numberFormatter.numberFormat = "#.#'%'";
+
+        // Create series
+        var stateFarmSeries = marketPiramidState.series.push(new am4charts.ColumnSeries());
+        stateFarmSeries.dataFields.valueX = "farmValueHA";
+        stateFarmSeries.columns.template.configField = "config"
+        //stateFarmSeries.dataFields.valueXShow = "percent";
+        //stateFarmSeries.calculatePercent = true;
+        stateFarmSeries.dataFields.categoryY = "farmValue";
+        stateFarmSeries.interpolationDuration = 1000;
+        //stateFarmSeries.columns.template.tooltipText = "Males, age{categoryY}: {valueX} ({valueX.percent.formatNumber('#.0')}%)";
+        //stateFarmSeries.sequencedInterpolation = true;
+
+
+        var totalFarmChart = marketPiramidContainer.createChild(am4charts.XYChart);
+        totalFarmChart.paddingLeft = 0;
+        totalFarmChart.data = JSON.parse(JSON.stringify([]));
+
+        // Create axes
+        var totalFarmCategoryAxis = totalFarmChart.yAxes.push(new am4charts.CategoryAxis());
+        totalFarmCategoryAxis.renderer.opposite = true;
+        totalFarmCategoryAxis.dataFields.category = "totalValue";
+        totalFarmCategoryAxis.renderer.grid.template.location = 0;
+        totalFarmCategoryAxis.renderer.minGridDistance = 15;
+        
+
+
+        var totalFarmValueAxis = totalFarmChart.xAxes.push(new am4charts.ValueAxis());
+        totalFarmValueAxis.min = 0;
+        totalFarmValueAxis.max = 0;
+        totalFarmValueAxis.strictMinMax = true;
+        //totalFarmValueAxis.numberFormatter = new am4core.NumberFormatter();
+        //totalFarmValueAxis.numberFormatter.numberFormat = "#.#'%'";
+        totalFarmValueAxis.renderer.minLabelPosition = 0.01;
+        totalFarmValueAxis.numberFormatter.numberFormat = "#,###,###' HA'";
+
+        // Create series
+        var totalFarmSeries = totalFarmChart.series.push(new am4charts.ColumnSeries());
+        totalFarmSeries.dataFields.valueX = "totalValue";
+        //totalFarmSeries.dataFields.valueXShow = "percent";
+        totalFarmSeries.calculatePercent = true;
+        totalFarmSeries.fill = "#000000b0";
+        totalFarmSeries.stroke = "#000000b0";
+        //totalFarmSeries.sequencedInterpolation = true;
+        //totalFarmSeries.columns.template.tooltipText = "Females, age{categoryY}: {valueX} ({valueX.percent.formatNumber('#.0')}%)";
+        totalFarmSeries.dataFields.categoryY = "totalValue";
+        totalFarmSeries.interpolationDuration = 1000;
+
+        });
+
+
+
+        /////////----------------------------------------directed-tree
+
+        var chartForcedTree = am4core.create("marketDirectTree", am4plugins_forceDirected.ForceDirectedTree);
+        var networkSeries = chartForcedTree.series.push(new am4plugins_forceDirected.ForceDirectedSeries())
+
+        chartForcedTree.data = []
+
+        networkSeries.dataFields.value = "value";
+        networkSeries.dataFields.name = "name";
+        networkSeries.dataFields.children = "children";
+        networkSeries.nodes.template.tooltipText = "{valueState}";
+        networkSeries.nodes.template.fillOpacity = 1;
+
+        networkSeries.nodes.template.label.text = "{name}"
+        networkSeries.fontSize = 15;
+
+        networkSeries.links.template.strokeWidth = 1;
+        networkSeries.dataFields.collapsed = "collapsed";
+
+        networkSeries.minRadius = 5
+        networkSeries.maxRadius = 70
+
+        var hoverState = networkSeries.links.template.states.create("hover");
+        hoverState.properties.strokeWidth = 3;
+        hoverState.properties.strokeOpacity = 1;
+
+        networkSeries.nodes.template.events.on("over", function(event) {
+        event.target.dataItem.childLinks.each(function(link) {
+            link.isHover = true;
+        })
+        if (event.target.dataItem.parentLink) {
+            event.target.dataItem.parentLink.isHover = true;
+        }
+
+        })
+
+        networkSeries.nodes.template.events.on("out", function(event) {
+            event.target.dataItem.childLinks.each(function(link) {
+                link.isHover = false;
+            })
+            if (event.target.dataItem.parentLink) {
+                event.target.dataItem.parentLink.isHover = false;
+            }
+        })
+
+
+        $("#expand-all").click(event => {
+            const headerHidden = $("body").find('.brand').hasClass('hidden')
+            const sideBar = $("body").find('.ts-sidebar').hasClass('hideSidebar')
+            const content = $("body").find('.content-wrapper').hasClass('marginNone')
+
+            headerHidden ? $("body").find('.brand').removeClass('hidden') : $("body").find('.brand').addClass('hidden')
+            sideBar ? $("body").find('.ts-sidebar').removeClass('hideSidebar') : $("body").find('.ts-sidebar').addClass('hideSidebar')
+            content ? $("body").find('.content-wrapper').removeClass('marginNone') : $("body").find('.content-wrapper').addClass('marginNone')
+            
+            headerHidden ? $(event.currentTarget).html('<i class="fa fa-plus-square-o fa-2x" aria-hidden="true" style="position: absolute;top: -15px;right:10px;cursor: pointer;z-index: 100;"></i>') : $(event.currentTarget).html('<i class="fa fa-minus-square-o fa-2x" aria-hidden="true" style="position: absolute;top: -15px;right: 10px;cursor: pointer;z-index: 100;"></i>')
+        })
+
+        
+        //abrir modal del market
+        $("#openModalPie").click(function(){
+            $('#modalMarketPie').modal('show')
+            $('a[href="#firstMarket"]').tab('show') 
+        })
+
+        $("#openModalMap").click(function(){
+            $('#modalMarketPie').modal('show')
+            $('a[href="#secondMarket"]').tab('show') 
+        })
+
+        $("#openModalPiramid").click(function(){
+            $('#modalMarketPie').modal('show')
+            $('a[href="#thirdMarket"]').tab('show') 
+        })
+
+        $("#openModalTree").click(function(){
+            $('#modalMarketPie').modal('show')
+            $('a[href="#fourthMarket"]').tab('show') 
+        })
+})
 
 var formatter_1 = new Intl.NumberFormat('en-US', {
     style: 'currency',
     currency: 'USD',
     minimunFractionDigits: 1,
 });
+
+
+
+
+
+
+
+
+
+
+let productsByLt = []
+let ingredentsByProduct = {}
+let rowGeneraCountId = 0
+
+// var table22 = $('#${dinamyTableId}').DataTable( {
+//     "columnDefs": [
+//         { "width": "100px", "targets": 0 }
+//     ]
+// });
+
+const userCanSeePrice = $('#pricePermission').attr('permissiongranted')
+
+
+$('.addGeneralRowMarket').click(function(e){
+    let dinamycCollapsedId = "collapse" + rowGeneraCountId.toString()
+    let dinamycHeadId = "heading" + rowGeneraCountId.toString()
+    let dinamyTableId = "zctb" + rowGeneraCountId.toString()
+
+
+    const rowGeneralToadd = `
+        <div class="panel panel-default overflow-visible ${dinamycCollapsedId}">
+            <div class="panel-heading collapsedHeader" role="tab" id="${dinamycHeadId}">
+            <div class="panel-title displayFlex">
+                <div class="col-md-2">
+                    <div class="toggleSearchCultivo">
+                        <span class="searchCultivoLabel">Seleccionar Cultivo </span> <img src="/project_images/add2.png" width="20px" height="20px">                         
+                    </div>
+                    <div class="CultivoAdded" class="col-md-12 no-padding"></div>
+                    <div>
+                        <div class="dropdown-content myDropdownCultivo">
+                            <input type="text" placeholder="Buscar.." autocomplete="off" class="searchComplete searchCultivo">
+                            <div class="showValuesCultivos"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="toggleSearchStates">
+                        <span class="searchStateLabel">Seleccionar estados</span> <img src="/project_images/add2.png" width="20px" height="20px">                         
+                    </div>
+
+                    <div class="col-md-12 no-padding StatedAdded"></div>
+                    <div>
+                        <div class="dropdown-content myDropdownState">
+                            <input type="text" placeholder="Buscar.." autocomplete="off" class="searchComplete searchState">
+                            <div class="showValuesStates"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <span class="collapsedLabels">Problema</span> <input type="text" class="form-control" placeholder="Descripción" id="marketProblem">
+                </div>
+
+                <div class="col-md-2">
+                    <span class="collapsedLabels">Hectareas Sembradas</span> <input type="text" class="form-control haSembradas" placeholder="Mosquitos" value="0" disabled="disabled">
+                </div>
+                
+                <div class="col-md-2">
+                    <span class="collapsedLabels">Hectareas tratadas</span> <input type="text" class="form-control haTratadas" placeholder="0">
+                </div>
+
+                <div class="col-md-2 collapsedButtons">
+                    <div role="button" data-toggle="collapse" href="#${dinamycCollapsedId}" aria-expanded="true" aria-controls="${dinamycCollapsedId}" style="padding-right: 10px">
+                        <i class="fa fa-angle-down fa-3x" aria-hidden="true"></i>
+                    </div>
+                    <div class="cursor deleteGeneralRowMarket">
+                        <i class="fa fa-trash-o fa-3x" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+            </div>
+
+            
+            <div id="${dinamycCollapsedId}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="${dinamycHeadId}">
+            <div class="panel-body">
+                <div class="panel-body">
+                    <div id="zctb_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <button class="button-add-product btn btn-primary">Agregar producto</button>
+                                <button class="button-market-grahp btn btn-info">Analisis market share</button>
+                                <table id="${dinamyTableId}" class="display table table-striped table-bordered table-hover dataTable table-scroll" cellspacing="0" width="100%" role="grid" aria-describedby="zctb_info">
+                                    <thead>
+                                        <tr role="row">
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="5" rowspan="1" colspan="1">Producto</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="6" rowspan="1" colspan="1">Ingrediente&nbsp;Activo</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="7" rowspan="1" colspan="1">Presentación</th>
+                                            ${userCanSeePrice ? '<th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="8" rowspan="1" colspan="1">Precio&nbsp;Público</th>' : null}
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="9" rowspan="1" colspan="1">Precio&nbsp;Distribuidor</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="10" rowspan="1" colspan="1">Dosis&nbsp;por&nbsp;Ha</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="11" rowspan="1" colspan="1">Costo&nbsp;por&nbsp;Ha</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="12" rowspan="1" colspan="1">No.&nbsp;De&nbsp;Aplicaciónes&nbsp;por&nbsp;ciclo</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="13" rowspan="1" colspan="1">Costo&nbsp;por&nbsp;Ciclo&nbsp;por&nbsp;Ha</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="14" rowspan="1" colspan="1">Mercado&nbsp;Potencial&nbsp;Valor</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="15" rowspan="1" colspan="1">Mercado&nbsp;potencial&nbsp;en&nbsp;Ha&nbsp;Aplicadas</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="16" rowspan="1" colspan="1">N°&nbsp;de&nbsp;aplicaciones&nbsp;deseadas</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="17" rowspan="1" colspan="1">Mercado&nbsp;Deseado&nbsp;HA&nbsp;Aplicadas</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="18" rowspan="1" colspan="1">Market&nbsp;Share&nbsp;Deseado</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="19" rowspan="1" colspan="1">MS&nbsp;Deseado&nbsp;en&nbsp;Ha</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="20" rowspan="1" colspan="1">Valor&nbsp;MS&nbsp;Deseado</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="21" rowspan="1" colspan="1">Litros&nbsp;equivalentes</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="22" rowspan="1" colspan="1">Analisis&nbsp;total</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="23" rowspan="1" colspan="1">Eliminar</th>
+                                        </tr>
+                                    </thead>
+        
+                                    <tbody>
+                                        <tr role="row" id="" class="marketTable">
+                                            <td class="cursor">
+                                                <div class="dropdownMarket toggleSearchProduct">
+                                                    <button class="dropbtnMarket selectedProduct">
+                                                        <div id="0">Seleccionar</div>
+                                                    </button>
+                                                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                                                </div>
+                                                <div>
+                                                    <div class="dropdown-content myDropdownProduct">
+                                                        <input type="text" placeholder="Buscar.." autocomplete="off" class="searchComplete searchProduct">
+                                                        <div class="showValueProducts"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td class="cursor iActivo td-disabled"></td>
+                                            <td class="cursor unit td-disabled"></td>
+                                            ${userCanSeePrice ? '<td class="cursor priceProduct td-disabled"></td>' : null}
+                                            <td class="cursor">
+                                                <input type="text" class="borderless pDistribuidor" placeholder="$0.00"/>
+                                            </td>
+                                            <td class="cursor">
+                                                <input type="text" class="borderless dosis" placeholder="0"/>
+                                            </td>
+                                            <td class="cursor td-disabled">
+                                                <input type="text" class="borderless priceHa" placeholder="$0.00" disabled="disabled"/>
+                                            </td>
+                                            <td class="cursor">
+                                                <input type="text" class="borderless numberApplications" placeholder="0"/>
+                                            </td>
+                                            <td class="cursor td-disabled">
+                                                    <input type="text" class="borderless pricePerCicle" placeholder="$0.00" disabled="disabled"/>
+                                            </td>
+
+                                            <td class="cursor td-disabled">
+                                                    <input type="text" class="borderless potencialPrice" placeholder="$0.00" disabled="disabled"/>
+                                            </td>
+
+                                            <td class="cursor td-disabled">
+                                                    <input type="text" class="borderless potencialPriceHa" placeholder="0" disabled="disabled"/>
+                                            </td>
+                                            <td class="cursor">
+                                                    <input type="text" class="borderless ApplicationsWish" placeholder="0"/>
+                                            </td>
+                                            <td class="cursor td-disabled">
+                                                <input type="text" class="borderless wishMarketHaApplications" placeholder="0" disabled="disabled"/>
+                                            </td>
+
+                                            <td class="cursor">
+                                                <input type="text" class="borderless MsPercent" placeholder="0%">
+                                            </td>
+
+                                            <td class="cursor td-disabled">
+                                                <input type="text" class="borderless MsWishHa" placeholder="0" disabled="disabled"/>
+                                            </td>
+                                            <td class="cursor td-disabled">
+                                                <input type="text" class="borderless MsWish" placeholder="$0.00" disabled="disabled"/>
+                                            </td>
+                                            <td class="cursor td-disabled">
+                                                <input type="text" class="borderless ltEquivalent" placeholder="0.00" disabled="disabled"/>
+                                            </td>
+                                            <td class="cursor td-button">
+                                                <div class="marketAllData">Analizar</div>
+                                            </td>
+                                            <td class="cursor td-delete">
+                                                <div class="deleteProductRow">
+                                                    <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+    `
+
+    $('.marketValueSection').append(rowGeneralToadd)
+    rowGeneraCountId = rowGeneraCountId + 1
+})
+
+
+$('.panel-group').on("click", ".deleteGeneralRowMarket", function(e){
+    $(this).closest('.panel-default').remove()
+})
+
+
+
+
+$('.panel-group').on("click", ".toggleSearchCultivo", function(e){
+    let dropCultivo = $(this).closest('.panel-title').find('.myDropdownCultivo')
+    let searchCultivo = $(this).closest('.panel-title').find('.searchCultivo')
+    let showValuesCultivos = $(this).closest('.panel-title').find('.showValuesCultivos')
+
+    if(dropCultivo.hasClass('show')){
+        dropCultivo.removeClass('show')
+
+    }else{
+        searchCultivo.val("")
+        dropCultivo.addClass('show')
+        let cultivos = []
+
+        let farms = Object.keys(farm_products)
+        cultivos = farms.filter(x => farm_products[x].active)
+
+        showValuesCultivos.html('');
+
+        cultivos.forEach(val => {
+            showValuesCultivos.append(`<div class="searchedValueCultivo" name="${val}" id="${val}">${val}</div>`)
+        })
+
+        if(cultivos.length === 0) showValuesCultivos.append('<div class="searchedValueCultivoEmpty">No hay resultados</div>')
+    }
+})
+
+$('.panel-group').on("keyup", ".searchCultivo", function(ev){
+    let value = ev.target.value
+    let cultivos = []
+    let farms = Object.keys(farm_products)
+    cultivos = farms.filter(x => farm_products[x].active)
+
+    const result = (cultivos.filter(cultivo => {
+        let cultivoNormalize = deleteAcentos(cultivo).toUpperCase()
+        let valueNormalize = deleteAcentos(value).toUpperCase()
+        return cultivoNormalize.includes(valueNormalize)
+    })).slice(0, 10)
+
+    let showValuesCultivos = $(this).closest('.panel-title').find('.showValuesCultivos')
+    showValuesCultivos.html('')
+
+    result.forEach(val => {
+        showValuesCultivos.append(`<div class="searchedValueCultivo" name="${val}" id="${val}">${val}</div>`)
+    })
+
+    if(cultivos.length === 0) showValuesCultivos.append('<div class="searchedValueCultivoEmpty">No hay resultados</div>')
+})
+
+
+$('body').on("click", ".searchedValueCultivo", function(e){
+    let name = $(this).attr('name')
+    let id = $(this).attr('id')
+    $(this).closest('.myDropdownCultivo').removeClass('show')
+    $(this).closest('.panel-title').find('.CultivoAdded').html(`<div id="${id}" name="${name}" class="labelCultivo"><span class="label label-primary text-normal">${name} &nbsp; <i class="fa fa-times deleteCultivo" aria-hidden="true"></i> </span></div>`)
+    
+    let stateNames = []
+    $(this).closest('.panel-title').find('.StatedAdded').children('div').each(function () {
+        stateNames.push($(this).attr('name'))
+    });
+
+    if(stateNames.length > 0 && name.length > 0){
+        const elem = $(this).closest('.panel-title').find('.haSembradas')
+        getHaBystatesAndfarm(stateNames, name, elem)
+    }
+})
+
+$('body').on("click", ".deleteCultivo", function(e){
+    $(this).closest('.panel-title').find('.haSembradas').val("0")
+    $(this).closest('div').remove();
+})
+
+
+// const getCultivos = () => {
+//     $.ajax({
+//         type: "GET",
+//         url: '/farms',
+//         success: function( data ) {
+//             cultivosMarket = data["farms"]
+//         }
+//     })
+// }
+
+
+
+
+
+
+
+
+
+
+$('.panel-group').on("click", ".toggleSearchStates", function(e){
+    let dropState = $(this).closest('.panel-title').find('.myDropdownState')
+    let searchState = $(this).closest('.panel-title').find('.searchState')
+    let showValuesState = $(this).closest('.panel-title').find('.showValuesStates')
+
+    if(dropState.hasClass('show')){
+        dropState.removeClass('show')
+
+    }else{
+        searchState.val("")
+        dropState.addClass('show')
+
+        let mxStates
+        let keyStates = Object.keys(states)
+        mxStates = keyStates.filter(x => states[x].active)
+
+        showValuesState.html('');
+
+        mxStates.forEach(val => {
+            showValuesState.append(`<div class="searchedValueState" name="${states[val].name}" id="${val}">${states[val].name}</div>`)
+        })
+
+        if(mxStates.length === 0) showValuesState.append('<div class="searchedValueCultivoEmpty">No hay resultados</div>')
+    }
+})
+
+$('.panel-group').on("keyup", ".searchState", function(ev){
+    let value = ev.target.value
+    let keyStates = Object.keys(states)
+    mxStates = keyStates.filter(x => states[x].active)
+
+    const result = (mxStates.filter(state => {
+        let stateNormalize = deleteAcentos(state).toUpperCase()
+        let valueNormalize = deleteAcentos(value).toUpperCase()
+        return stateNormalize.includes(valueNormalize)
+    })).slice(0, 10)
+
+    let showValuesStates = $(this).closest('.panel-title').find('.showValuesStates')
+    showValuesStates.html('')
+
+    result.forEach(val => {
+        showValuesStates.append(`<div class="searchedValueState" name="${states[val].name}" id="${val}">${states[val].name}</div>`)
+    })
+
+    if(result.length === 0) showValuesStates.append('<div class="searchedValueCultivoEmpty">No hay resultados</div>')
+})
+
+
+$('body').on("click", ".searchedValueState", function(e){
+    let name = $(this).attr('name')
+    let id = $(this).attr('id')
+    $(this).closest('.myDropdownState').removeClass('show')
+    
+    let exist = false
+    let states = []
+
+    $(this).closest('.panel-title').find('.StatedAdded').children('div').each(function () {
+        states.push($(this).attr('name'))
+        if(exist) return 
+        exist = $(this).attr('id') === id
+    });
+
+    if(!exist){
+        $(this).closest('.panel-title').find('.StatedAdded').append(`<div id="${id}" name="${name}" class="labelState col-md-12"><span class="label label-primary text-normal">${name} &nbsp; <i class="fa fa-times deleteState" aria-hidden="true"></i> </span></div>`)
+        states.push(name)
+        let cultivoDiv = $(this).closest('.panel-title').find('.CultivoAdded').children('div')[0]
+
+        const elem = $(this).closest('.panel-title').find('.haSembradas')
+
+        if(cultivoDiv != undefined){
+            getHaBystatesAndfarm(states, $(cultivoDiv).attr('name'), elem)
+        }
+    }
+})
+
+$('body').on("click", ".deleteState", function(e){
+    let states = []
+    let name =  $(this).closest('div').attr('name')
+
+    $(this).closest('.panel-title').find('.StatedAdded').children('div').each(function () {
+        name === $(this).attr('name') ? null : states.push($(this).attr('name'))
+    });
+
+    if(states.length >= 1){
+        let cultivoDiv = $(this).closest('.panel-title').find('.CultivoAdded').children('div')[0]
+
+        const elem = $(this).closest('.panel-title').find('.haSembradas')
+
+        if(cultivoDiv != undefined){
+            getHaBystatesAndfarm(states, $(cultivoDiv).attr('name'), elem)
+        }
+    }else{
+        $(this).closest('.panel-title').find('.haSembradas').val("0")
+    }
+
+    $(this).closest('div').remove();
+})
+
+
+
+
+$('.panel-group').on("keyup", ".haTratadas", function(e){
+    let value = e.target.value.length <= 0 ? "" : formatComms(e.target.value.replace(/\D/g, ""))
+    $(this).val(value)
+
+    $(this).closest('.panel-default').find('.pricePerCicle').each(function(){
+        let pricePerCicle = $(this).val()
+        let mul = parseInt(e.target.value.replace(/\D/g, "")) * parseFloat(pricePerCicle.replace(/[$,]/gm, ""))
+        let finalValueA = '$' + (isNaN(mul) ? "0.00" : formatPrice(mul.toFixed(2)))
+        $(this).closest('.marketTable').find('.potencialPrice').val(finalValueA)
+    })
+
+    $(this).closest('.panel-default').find('.numberApplications').each(function(){
+        let numberApplications = $(this).val()
+        let mulA = parseInt(numberApplications) * parseInt(e.target.value.replace(/\D/g, ""))
+        let finalValue = isNaN(mulA) ? "0" : formatComms(mulA.toString())
+        $(this).closest('.marketTable').find('.potencialPriceHa').val(finalValue)
+    })
+
+    $(this).closest('.panel-default').find('.ApplicationsWish').each(function(){
+        let ApplicationsWish = $(this).val()
+        let mulB = parseInt(ApplicationsWish) * parseInt(e.target.value.replace(/\D/g, ""))
+        let finalValueB = isNaN(mulB) ? "0" : formatComms(mulB.toString())
+        $(this).closest('.marketTable').find('.wishMarketHaApplications').val(finalValueB)
+        $(this).closest('.marketTable').find('.wishMarketHaApplications').change()
+    })
+})
+
+
+// const getMxStates = () => {
+//     $.ajax({
+//         type: "GET",
+//         url: '/mxStates',
+//         success: function( data ) {
+//             mxStates = data["states"]
+//         }
+//     })
+// }
+
+const getHaBystatesAndfarm = (states, farm, elem) => {
+    let farms = [deleteAcentos(farm.toUpperCase())]
+    $.ajax({
+        type: "GET",
+        url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms),
+        success: function( data ) {
+            $(elem).val(formatComms(data["total_superficie_sembrada"].toString()))
+        },
+        error: (e) => {
+            console.log(e)
+        }
+    });
+}
+
+
+
+
+
+
+
+
+
+
+$('.panel-group').on("click", ".button-add-product", function(e){
+    let row = `
+        <tr role="row" id="" class="marketTable">
+            <td class="cursor">
+                <div class="dropdownMarket toggleSearchProduct">
+                    <button class="dropbtnMarket selectedProduct">
+                        <div id="0">Seleccionar</div>
+                    </button>
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <div class="dropdown-content myDropdownProduct">
+                        <input type="text" placeholder="Buscar.." autocomplete="off" class="searchComplete searchProduct">
+                        <div class="showValueProducts"></div>
+                    </div>
+                </div>
+            </td>
+            <td class="cursor iActivo td-disabled"></td>
+            <td class="cursor unit td-disabled"></td>
+            ${userCanSeePrice ? '<td class="cursor priceProduct td-disabled"></td>' : null }
+            <td class="cursor">
+                <input type="text" class="borderless pDistribuidor" placeholder="$0.00"/>
+            </td>
+            <td class="cursor">
+                <input type="text" class="borderless dosis" placeholder="0"/>
+            </td>
+            <td class="cursor td-disabled">
+                <input type="text" class="borderless priceHa" placeholder="$0.00" disabled="disabled"/>
+            </td>
+            <td class="cursor">
+                <input type="text" class="borderless numberApplications" placeholder="0"/>
+            </td>
+            <td class="cursor td-disabled">
+                    <input type="text" class="borderless pricePerCicle" placeholder="$0.00" disabled="disabled"/>
+            </td>
+
+            <td class="cursor td-disabled">
+                    <input type="text" class="borderless potencialPrice" placeholder="$0.00" disabled="disabled"/>
+            </td>
+
+            <td class="cursor td-disabled">
+                    <input type="text" class="borderless potencialPriceHa" placeholder="0" disabled="disabled"/>
+            </td>
+            <td class="cursor">
+                    <input type="text" class="borderless ApplicationsWish" placeholder="0"/>
+            </td>
+            <td class="cursor td-disabled">
+                <input type="text" class="borderless wishMarketHaApplications" placeholder="0" disabled="disabled"/>
+            </td>
+
+            <td class="cursor">
+                <input type="text" class="borderless MsPercent" placeholder="0%">
+            </td>
+
+            <td class="cursor td-disabled">
+                <input type="text" class="borderless MsWishHa" placeholder="0" disabled="disabled"/>
+            </td>
+            <td class="cursor td-disabled">
+                <input type="text" class="borderless MsWish" placeholder="$0.00" disabled="disabled"/>
+            </td>
+            <td class="cursor td-disabled">
+                <input type="text" class="borderless ltEquivalent" placeholder="0.00" disabled="disabled"/>
+            </td>
+            <td class="cursor td-button">
+                <div class="marketAllData">Analizar</div>
+            </td>
+            <td class="cursor td-delete">
+                <i class="fa fa-times fa-lg" aria-hidden="true"></i>
+            </td>
+        </tr>
+    `
+
+    $(this).closest('div').find('tbody').append(row)
+})
+
+
+let selectedCategoryIds = []
+let marketShareDataChart = []
+let seriesForMarket = []
+let marketShareTotal = 0
+
+$('.panel-group').on("click", ".td-delete", function(e){
+    selectedCategoryIds.pop()
+    $(this).closest('tr').remove()
+})
+
+
+$('.panel-group').on("click", ".button-market-grahp", function(e){
+
+    let tipo = $(this).closest('div').find('.selectedProduct').find('div').attr('tipo')
+
+    let classFromId = $(this).closest('.panel-collapse').attr('id')
+    let cultivo = $('.'+classFromId).find('.CultivoAdded').find('div').attr('name')
+
+    let cultivoAdapt = farm_products[cultivo].adapterBase
+
+    let states = []
+
+    $('.'+classFromId).find('.StatedAdded').children('div').each(function () {
+        states.push($(this).attr('name'))
+    });
+
+    if(tipo != undefined && cultivo != undefined && states.length > 0){
+        if(tipo != 'Fungicida' && tipo != 'Herbicida' && tipo != 'Insecticida') tipo = 'Otro'
+
+        let marketshareUser = []
+        let totalValue = 0
+
+        $(this).closest('div').find('.marketTable').each(function () {
+            let name = $(this).find('.selectedProduct').find('div').text()
+            let value = $(this).find('.MsWish').val() != "" ? parseFloat($(this).find('.MsWish').val().replace(/[$,]/gm, "")) : 0
+
+            totalValue = totalValue + value
+
+
+            if(name != "Seleccionar"){
+                marketshareUser.push({ "value" : value , "name" : name })
+            }
+        });
+
+        $.ajax({
+            type: "GET",
+            url: '/market/getBaseValue/' + 'Tomate (Jitomate)' + '/' + JSON.stringify(states) + '/' + tipo,
+            success: function( data ) {
+                let typevalue = data['typevalue'] > totalValue ? data['typevalue'] : data['typevalue'] + totalValue
+
+                marketshareUser = marketshareUser.sort((a,b) => (a.value < b.value) ? 1 : ((b.value < a.value) ? -1 : 0)); 
+
+                let marketshareUserConcat = marketshareUser.reduce((carry, val) => {
+                    carry[val.name] = parseFloat(((val.value * 100) / typevalue).toFixed(2)) * -1
+                    return carry
+                }, {})
+                
+                let total = { [tipo]: 100}
+                let cult = {'category': cultivoAdapt}
+
+                Object.assign(cult, marketshareUserConcat, total)
+                
+                marketShareDataChart = Object.assign(cult, marketshareUserConcat, total)
+
+                let positiveColor = am4core.color(typeProductColors[tipo]);
+                let negativeColor = ['#0088aaff','#5599ffff', '#00aad4ff', '#aaccffff', '#afdde9ff', '#d5d5ffff', '#9d93acff', '#8080ffff',  '#ccaaffff', '#c6afe9ff']
+
+                let light = 0
+
+                seriesForMarket = marketshareUser.map((x, index) => {
+                    light = light + 0.2
+                    return [x.name, x.name + ` - $${formatPrice(x.value.toString())}`, negativeColor[index]]
+                })
+
+                seriesForMarket.push( [tipo, tipo + ` - $${formatPrice(typevalue.toString())}`, positiveColor])
+
+                marketShareTotal = data['total']
+
+                $('#modalMarketshare').modal('show')
+
+            }
+        })
+
+    }
+})
+
+$('#modalMarketshare').on('show.bs.modal', function (event) {
+    $('#marketSharePreChart').html('<div id="marketShareChart"></div>')
+
+    // Create chart instance
+    let chart = am4core.create("marketShareChart", am4charts.XYChart);
+
+    // Title
+    let title = chart.titles.push(new am4core.Label());
+    title.text = "Analisis de market share";
+    title.fontSize = 35;
+    title.marginBottom = 15;
+
+    // Add data
+    chart.data = [marketShareDataChart]
+
+    // Create axes
+    let categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+    categoryAxis.dataFields.category = "category";
+    categoryAxis.renderer.grid.template.location = 0;
+    categoryAxis.renderer.inversed = true;
+    categoryAxis.renderer.minGridDistance = 20;
+    categoryAxis.renderer.axisFills.template.disabled = false;
+    categoryAxis.renderer.axisFills.template.fillOpacity = 0.05;
+    categoryAxis.fontSize = 30;
+
+
+    let valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+    valueAxis.min = -100;
+    valueAxis.max = 100;
+    valueAxis.renderer.minGridDistance = 50;
+    valueAxis.renderer.ticks.template.length = 5;
+    valueAxis.renderer.ticks.template.disabled = false;
+    valueAxis.renderer.ticks.template.strokeOpacity = 0.4;
+    
+    valueAxis.renderer.labels.template.adapter.add("text", function(text) {
+        return text + "%";
+    })
+
+    // Legend
+    chart.legend = new am4charts.Legend();
+    chart.legend.position = "bottom";
+    chart.legend.minWidth = 250
+    chart.legend.fontSize = 20
+    chart.legend.verticalCente = "center"
+    chart.legend.contentValign = "center"
+
+
+    chart.legend.valueLabels.template.text = "{valueX}";
+
+    // Use only absolute numbers
+    chart.numberFormatter.numberFormat = "#.#s";
+
+    // Create series
+    function createSeries(field, name, color) {
+        var series = chart.series.push(new am4charts.ColumnSeries());
+        series.dataFields.valueX = field;
+        series.dataFields.categoryY = "category";
+        series.stacked = true;
+        series.name = name;
+        series.stroke = color;
+        series.fill = color;
+        
+        var label = series.bullets.push(new am4charts.LabelBullet);
+        label.label.text = "{valueX}%";
+        label.label.fill = am4core.color("#fff");
+        label.label.strokeWidth = 0;
+        label.label.truncate = false;
+        label.label.hideOversized = true;
+        label.label.fontSize = 23;
+        label.locationX = 0.5;
+        return series;
+    }
+
+    seriesForMarket.forEach(x => {
+        createSeries(x[0], x[1], x[2]);
+    })
+
+
+    chart.legend.events.on("layoutvalidated", function(event){
+    chart.legend.itemContainers.each((container)=>{
+        if(container.dataItem.dataContext.name == "Herbi"){
+            container.toBack();
+            }
+        })
+    })
+})
+
+
+
+let allDataMarketRow = []
+let allDataMarketMoneyRow = []
+
+$('.panel-group').on("click", ".marketAllData", function(e){
+    let potencialPriceValue = $(this).closest('tr').find('.potencialPrice').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.potencialPrice').val().replace(/[$,]/gm, ""))
+    let potencialPriceHaValue = $(this).closest('tr').find('.potencialPriceHa').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.potencialPriceHa').val().replace(/[$,]/gm, ""))
+    let wishMarketAppValue = $(this).closest('tr').find('.wishMarketHaApplications').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.wishMarketHaApplications').val().replace(/[$,]/gm, ""))
+    let msWishHa = $(this).closest('tr').find('.MsWishHa').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.MsWishHa').val().replace(/[$,]/gm, ""))
+    let msWish = $(this).closest('tr').find('.MsWish').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.MsWish').val().replace(/[$,]/gm, ""))
+    let ltEquivalent = $(this).closest('tr').find('.ltEquivalent').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.ltEquivalent').val().replace(/[$,]/gm, ""))
+
+    allDataMarketRow = [
+        //{name: "Mercado Potencial Valor", value: potencialPriceValue},
+        {name: "Mercado potencial en Ha Aplicadas", value: potencialPriceHaValue},
+        {name: "Mercado  Deseado HA Aplicadas", value: wishMarketAppValue},
+        {name: "MS Deseado en Ha", value: msWishHa},
+       // {name: "Valor  MS Deseado", value: msWish},
+        {name: "Litros equivalentes", value: ltEquivalent},
+    ]
+
+    let percentWish = (msWish*100)/potencialPriceValue ? ((msWish*100)/potencialPriceValue).toFixed(2).toString() + '%' : "0%"
+
+    allDataMarketMoneyRow = [{
+        name: potencialPriceValue,
+        children: [
+        {
+            name: msWish,
+            value: msWish,
+            percent1: percentWish
+        }],
+        value: potencialPriceValue,
+        percent1: "100%"
+    }]
+
+    allDataMarketRow = allDataMarketRow.sort((a,b) => (a.value > b.value) ? 1 : ((b.value > a.value) ? -1 : 0)); 
+
+    let classFromId = $(this).closest('.panel-collapse').attr('id')
+    let title = $('.'+classFromId).find('#marketProblem').val() != undefined ? $('.'+classFromId).find('#marketProblem').val() : ""
+
+
+    $('#titleMarketShare').text(`Resultados Mercado ${title}`)
+
+    $('#modalMarketFunnel').modal('show')
+})
+
+
+$('#modalMarketFunnel').on('show.bs.modal', function (event) {
+    $('#marketFunnelPreChart').html('<div id="marketFunnelChart"></div>')
+
+    let chart = am4core.create("marketFunnelChart", am4charts.SlicedChart);
+    chart.hiddenState.properties.opacity = 0; // this makes initial fade in effect
+
+    chart.data = allDataMarketRow;
+
+
+    let series = chart.series.push(new am4charts.FunnelSeries());
+    series.colors.step = 2;
+    series.dataFields.value = "value";
+    series.dataFields.category = "name";
+    series.alignLabels = true;
+
+    series.labelsContainer.paddingLeft = 15;
+    series.labelsContainer.width = 300;
+    series.labels.template.textAlign = "end"
+
+    //series.orientation = "horizontal";
+    //series.bottomRatio = 1;
+
+    chart.legend = new am4charts.Legend();
+    chart.legend.position = "bottom";
+    chart.legend.margin(5,5,20,5);
+    chart.legend.valueLabels.template.text = "";
+    
+
+    series.labels.template.adapter.add("text", function(text, target) {
+        let valueFormatter = formatComms(target.dataItem.label.dataItem.dataContext.value.toString())
+
+        console.log(valueFormatter)
+
+        return target.dataItem.label.dataItem.dataContext.name.includes('Litros') ? `${text} \n $${valueFormatter}` : `${text} \n ${valueFormatter} HA`
+    });
+
+
+
+
+
+
+    ///forced-tree
+    $('#marketTree4PreChart').html('<div id="marketTree4Chart" style="height: 100%"></div>')
+
+    let chartForced= am4core.create("marketTree4Chart", am4plugins_forceDirected.ForceDirectedTree);
+    let chartForecedSeries = chartForced.series.push(new am4plugins_forceDirected.ForceDirectedSeries())
+
+    chartForced.data = allDataMarketMoneyRow;
+
+    chartForecedSeries.dataFields.value = "value";
+    chartForecedSeries.dataFields.name = "name";
+    chartForecedSeries.dataFields.children = "children";
+    chartForecedSeries.nodes.template.tooltipText = "{value}";
+    chartForecedSeries.nodes.template.fillOpacity = 1;
+
+    chartForecedSeries.nodes.template.label.text = "{name} \n {percent1}"
+    chartForecedSeries.numberFormatter.numberFormat = "'$'#,###,###";
+    chartForecedSeries.fontSize = 15;
+
+    chartForecedSeries.links.template.strokeWidth = 1;
+    chartForecedSeries.dataFields.collapsed = "collapsed";
+
+    chartForecedSeries.minRadius = 50
+    chartForecedSeries.maxRadius = 130
+
+    let hoverState2 =   chartForecedSeries.links.template.states.create("hover");
+    hoverState2.properties.strokeWidth = 3;
+    hoverState2.properties.strokeOpacity = 1;
+
+    chartForecedSeries.nodes.template.events.on("over", function(event) {
+        event.target.dataItem.childLinks.each(function(link) {
+            link.isHover = true;
+        })
+        if (event.target.dataItem.parentLink) {
+            event.target.dataItem.parentLink.isHover = true;
+        }
+    })
+
+    chartForecedSeries.nodes.template.events.on("out", function(event) {
+        event.target.dataItem.childLinks.each(function(link) {
+            link.isHover = false;
+        })
+        if (event.target.dataItem.parentLink) {
+            event.target.dataItem.parentLink.isHover = false;
+        }
+    })
+
+    let colorsFill = ["#d9534f", "#f47c3c"]
+
+    chartForecedSeries.nodes.template.adapter.add("fill", function(fill, target, i) {
+        return fill.hex === "#67b7dc" || fill.hex === "#d9534f"? colorsFill[0] : colorsFill[1]
+    });
+
+    chartForecedSeries.nodes.template.adapter.add("stroke", function(fill, target) {
+        return fill.hex === "#67b7dc" || fill.hex === "#d9534f"? colorsFill[0] : colorsFill[1]
+    });
+
+    let legendDataTree = [
+        {
+            fill: "#d9534f",
+            name: "Mercado Potencial Valor",
+        },
+        {
+            fill: "#f47c3c",
+            name: "Valor  MS Deseado",
+        }
+    ]
+    
+
+    let legendForecedTree4 = new am4charts.Legend();
+    legendForecedTree4.position = "bottom";
+    legendForecedTree4.valign = "bottom";
+    legendForecedTree4.margin(5,5,20,5);
+    legendForecedTree4.parent = chartForced.chartContainer;
+    legendForecedTree4.data = legendDataTree
+
+})
+
+
+
+
+$('.panel-group').on("click", ".toggleSearchProduct", function(e){
+    let dropProduct = $(this).closest('.marketTable').find('.myDropdownProduct')
+    let searchProduct = $(this).closest('.marketTable').find('.searchProduct')
+    let showValuesProducts = $(this).closest('.marketTable').find('.showValueProducts')
+
+    if(dropProduct.hasClass('show')){
+        dropProduct.removeClass('show')
+
+    }else{
+        searchProduct.val("")
+        dropProduct.addClass('show')
+        let products = productsByLt.slice(0, 10)
+
+        showValuesProducts.html('');
+
+        products.forEach(val => {
+            let unidad = val.unidad === 'Mililitros' ? "Litro" : (val.unidad === 'Gramos' || val.unidad === 'Kilo') ? "Kilogramo" : val.unidad
+            showValuesProducts.append(`<div class="searchedValue" categoryId="${val.categoria_id}" tipo="${val.tipo_producto}" name="${val.nombre_producto}" id="${val.id}" unit="${'1 ' + unidad}" iActivo="${val.ingrediente_activo}" price="${val.precio_por_medida}">${val.nombre_producto}</div>`)
+        })
+    }
+})
+
+$('.panel-group').on("keyup", ".searchProduct", function(ev){
+    let value = ev.target.value
+    let products = productsByLt
+    const result = (products.filter(product => {
+        let stateNormalize = deleteAcentos(product.nombre_producto).toUpperCase()
+        let valueNormalize = deleteAcentos(value).toUpperCase()
+        return stateNormalize.includes(valueNormalize)
+    })).slice(0, 10)
+
+    let showValuesProducts = $(this).closest('.marketTable').find('.showValueProducts')
+    showValuesProducts.html('')
+
+    result.forEach(val => {
+        let unidad = val.unidad === 'Mililitros' ? "Litro" : (val.unidad === 'Gramos' || val.unidad === 'Kilo') ? "Kilogramo" : val.unidad
+        showValuesProducts.append(`<div class="searchedValue" categoryId="${val.categoria_id}" tipo="${val.tipo_producto}" name="${val.nombre_producto}" id="${val.id}" unit="${'1 ' + unidad}" iActivo="${val.ingrediente_activo}" price="${val.precio_por_medida}">${val.nombre_producto}</div>`)
+    })
+})
+
+
+$('body').on("click", ".searchedValue", function(e){
+    let categoryId = $(this).attr('categoryId')
+    let isValid = false
+
+    let rows = $(this).closest('tbody').children().length
+    let categorySelected = categoryId
+
+    $(this).closest('tbody').find('tr').each(function(){
+        let currentCategory = $(this).closest('.marketTable').find('.selectedProduct').find('div').attr('categoryId')
+        if (currentCategory != undefined) categorySelected = currentCategory
+    })
+ 
+
+    if(categoryId != 1 && categoryId != 4 && categoryId != 5 ) categoryId = 4
+
+    if(rows <= 1 || categorySelected === categoryId) {
+        isValid = true
+    }else{
+        isValid = false
+    }
+
+    if(isValid){
+        selectedCategoryIds.push(categoryId)
+
+        let name = ($(this).attr('name')).replace(/\s/g, '&nbsp;')
+        let iActivo = ($(this).attr('iActivo')).replace(/\s/g, '&nbsp;')
+        let tipo = $(this).attr('tipo')
+        $(this).closest('.marketTable').find('.myDropdownProduct').removeClass('show')
+        $(this).closest('.marketTable').find('.selectedProduct').html(`<div categoryId="${categoryId}" tipo="${tipo}">${ name }</div>`)
+        $(this).closest('.marketTable').find('.unit').html(`<div>${ $(this).attr('unit') }</div>`)
+        $(this).closest('.marketTable').find('.priceProduct').html(`<div>${ $(this).attr('price') }</div>`)
+        $(this).closest('.marketTable').find('.iActivo').html(`<div>${iActivo}</div>`)
+    }else{
+        alert("Debe seleccionar productos de una misma categoria.")
+    }
+})
+
+$('.panel-group').on("blur", ".pDistribuidor", function(e){
+    let value = e.target.value.length <= 0 ? "" : formatPrice(e.target.value)
+    let valYeh = e.target.value.length <= 0 ? "" : "$" + formatPrice(e.target.value)
+    $(this).val(valYeh)
+
+    let dosis = $(this).closest('.marketTable').find('.dosis').val()
+
+    let pDistribuidorFloat = parseFloat(value.replace(/[$,]/gm, ""))
+    let dosisInt = parseInt(dosis)
+    let priceHa = pDistribuidorFloat * dosisInt
+    let finalValue = '$' + (isNaN(priceHa) ? "0.00" : formatPrice(priceHa.toFixed(2)))
+    $(this).closest('.marketTable').find('.priceHa').val(finalValue)
+    $(this).closest('.marketTable').find('.priceHa').change()
+
+    let MsWish = parseFloat($(this).closest('.marketTable').find('.MsWish').val().replace(/[$,]/gm, ""))
+    let finalValueB = isNaN((MsWish/pDistribuidorFloat)) ? "$0.00" : '$' + formatComms((MsWish/pDistribuidorFloat).toFixed(2))
+    $(this).closest('.marketTable').find('.ltEquivalent').val(finalValueB)
+})
+
+$('.panel-group').on("keyup", ".pDistribuidor, .haTratadas, .MsPercent", function(e){
+    if(e.keyCode===13){
+        $(this).blur();
+    }
+})
+
+$('.panel-group').on("keyup", ".dosis", function(e){
+    let value = e.target.value.replace(/\D/g, "")
+    $(this).val(value)
+
+    let pDistribuidor = $(this).closest('.marketTable').find('.pDistribuidor').val()
+
+    let pDistribuidorFloat = parseFloat(pDistribuidor.replace(/[$,]/gm, ""))
+    let dosisInt = parseInt(value)
+    let priceHa = pDistribuidorFloat * dosisInt
+    let finalValue = '$' + (isNaN(priceHa) ? "0.00" : formatPrice(priceHa.toFixed(2)))
+    $(this).closest('.marketTable').find('.priceHa').val(finalValue)
+    $(this).closest('.marketTable').find('.priceHa').change()
+})
+
+$('.panel-group').on("keyup", ".numberApplications", function(e){
+    let value = e.target.value.replace(/\D/g, "")
+    $(this).val(value)
+    
+    let priceHa = $(this).closest('.marketTable').find('.priceHa').val()
+
+    let priceHaFloat = parseFloat(priceHa.replace(/[$,]/gm, ""))
+    let applicationInt = parseInt(value)
+    let pricePerCicle = priceHaFloat * applicationInt
+    $(this).closest('.marketTable').find('.pricePerCicle').val('$' + (isNaN(pricePerCicle) ? "0.00" : formatPrice(pricePerCicle.toFixed(2))))
+    $(this).closest('.marketTable').find('.pricePerCicle').change()
+
+    let classFromId = $(this).closest('table').closest('.panel-collapse').attr('id')
+    let haTratadas = parseInt($('.' + classFromId).find('.haTratadas').val().replace(/[\s,HA]/gm, ""))
+    let finalValue = isNaN(haTratadas*applicationInt) ? "0.00" : formatComms((haTratadas*applicationInt).toString())
+    $(this).closest('.marketTable').find('.potencialPriceHa').val(finalValue)
+
+    
+    let wishApps = parseInt($(this).closest('.marketTable').find('.ApplicationsWish').val())
+
+    if(wishApps > applicationInt){
+        $(this).closest('.marketTable').find('.ApplicationsWish').val(value)
+        $(this).closest('.marketTable').find('.ApplicationsWish').keyup()
+    }
+})
+
+$('.panel-group').on("change", ".priceHa", function(e){
+    let value = e.target.value
+    
+    let numberApplications = $(this).closest('.marketTable').find('.numberApplications').val()
+    let priceHaFloat = parseFloat(value.replace(/[$,]/gm, ""))
+
+    if(value.length > 0 &&  numberApplications.length > 0){
+        let applicationInt = parseInt(numberApplications)
+        let pricePerCicle = priceHaFloat * applicationInt
+        $(this).closest('.marketTable').find('.pricePerCicle').val('$' + formatPrice(pricePerCicle.toFixed(2)))
+        $(this).closest('.marketTable').find('.pricePerCicle').change()
+    }
+
+    let MsWishHa = parseFloat($(this).closest('.marketTable').find('.MsWishHa').val().replace(/[,]/gm, ""))
+    let finalValue = isNaN((priceHaFloat*MsWishHa)) ? "$0.00" : '$' + formatComms((priceHaFloat*MsWishHa).toFixed(2))
+    $(this).closest('.marketTable').find('.MsWish').val(finalValue)
+    $(this).closest('.marketTable').find('.MsWish').change()
+})
+
+$('.panel-group').on("change", ".pricePerCicle", function(e){
+    let classFromId = $(this).closest('table').closest('.panel-collapse').attr('id')
+    let haTratadas = parseInt($('.' + classFromId).find('.haTratadas').val().replace(/[\s,HA]/gm, ""))
+    let pricePerCicle = parseFloat(e.target.value.replace(/[$,]/gm, ""))
+    let finalValue = '$' + (isNaN(haTratadas*pricePerCicle) ? "0.00" : formatPrice((haTratadas*pricePerCicle).toFixed(2)))
+
+    $(this).closest('.marketTable').find('.potencialPrice').val(finalValue)
+})
+
+$('.panel-group').on("keyup", ".ApplicationsWish", function(e){
+    let value = e.target.value.replace(/\D/g, "")
+    $(this).val(value)
+    
+    let applicationsValue =  parseInt($(this).closest('.marketTable').find('.numberApplications').val())
+    value = parseInt(value)
+
+    if(value > applicationsValue){
+        $(this).val(applicationsValue)
+        value = applicationsValue
+    }
+
+    let classFromId = $(this).closest('table').closest('.panel-collapse').attr('id')
+    let haTratadas = parseInt($('.' + classFromId).find('.haTratadas').val().replace(/[\s,HA]/gm, ""))
+    let mul = haTratadas * value
+
+    $(this).closest('.marketTable').find('.wishMarketHaApplications').val(formatComms((isNaN(mul) ? 0 : mul).toString()))
+    $(this).closest('.marketTable').find('.wishMarketHaApplications').change()
+})
+
+$('.panel-group').on("change", ".wishMarketHaApplications", function(e){
+    
+    let wishMarketHaApplications = parseInt($(this).val().replace(/\D/g, ""))
+    let MsPercent = parseFloat(($(this).closest('.marketTable').find('.MsPercent').val()).replace(/[%]/gm, ""))
+    let finalValue = isNaN((MsPercent*wishMarketHaApplications)/100) ? "0" : formatComms(((MsPercent*wishMarketHaApplications)/100).toFixed(2))
+
+    $(this).closest('.marketTable').find('.MsWishHa').val(finalValue)
+    $(this).closest('.marketTable').find('.MsWishHa').change()
+})
+
+$('.panel-group').on("blur", ".MsPercent", function(e){
+    let value = e.target.value.length <= 0 ? "" : formatPercent(e.target.value)
+    let valueShow = e.target.value.length <= 0 ? "" : formatPercent(e.target.value) + "%"
+    $(this).val(valueShow)
+
+    let MsPercent = parseFloat(value)
+    let wishMarketHaApplications = ($(this).closest('.marketTable').find('.wishMarketHaApplications').val()).replace(/\D/g, "")
+    let finalValue = isNaN((MsPercent*wishMarketHaApplications)/100) ? "0" : formatComms(((MsPercent*wishMarketHaApplications)/100).toFixed(2))
+    $(this).closest('.marketTable').find('.MsWishHa').val(finalValue)
+    $(this).closest('.marketTable').find('.MsWishHa').change()
+})
+
+$('.panel-group').on("change", ".MsWishHa", function(e){
+    let MsWishHa = parseFloat(e.target.value.replace(/[,]/gm, ""))
+
+    let priceHa = $(this).closest('.marketTable').find('.priceHa').val()
+    let priceHaFloat = parseFloat(priceHa.replace(/[$,]/gm, ""))
+
+    let finalValue = isNaN((priceHaFloat*MsWishHa)) ? "$0.00" : '$' + formatComms((priceHaFloat*MsWishHa).toFixed(2))
+    $(this).closest('.marketTable').find('.MsWish').val(finalValue)
+    $(this).closest('.marketTable').find('.MsWish').change()
+})
+
+
+$('.panel-group').on("change", ".MsWish", function(e){
+    let MsWish = parseFloat(e.target.value.replace(/[$,]/gm, ""))
+    let pDistribuidor = parseFloat(($(this).closest('.marketTable').find('.pDistribuidor').val()).replace(/[$,]/gm, ""))
+    let finalValue = isNaN((MsWish/pDistribuidor)) ? "$0.00" : '$' + formatComms((MsWish/pDistribuidor).toFixed(2))
+    $(this).closest('.marketTable').find('.ltEquivalent').val(finalValue)
+})
+
+
+
+
+
+const getProductsLt = () => {
+    $.ajax({
+        type: "GET",
+        url: '/productsByLt',
+        success: function( data ) {
+            productsByLt = data["products"]
+        }
+    })
+}
+
+
+getProductsLt()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const deleteAcentos = (texto)  => {
+    return texto
+           .normalize('NFD')
+           .replace(/([^n\u0300-\u036f]|n(?!\u0303(?![\u0300-\u036f])))[\u0300-\u036f]+/gi,"$1")
+           .normalize();
+}
+
+const formatPrice = (value) => {
+    let dotExist = value.indexOf(".") === -1 ? false : true
+    let firstValue = dotExist ? value.split(".")[0] : value
+    let cleanFirst = firstValue.replace(/\D/g, "")
+
+    if(cleanFirst.length <= 0) return ""
+    let finalfirst = cleanFirst.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    let secondValue = dotExist ? (value.split(".")[1]).slice(0, 2) : "00"
+    let formarSecondValue = dotExist ? secondValue.length === 0 ? "00" : secondValue.length === 1 ? secondValue + "0" : secondValue : "00"
+
+    return finalfirst + "." + formarSecondValue
+}
+
+const formatPercent = (value, decim = 2) => {
+    let dotExist = value.indexOf(".") === -1 ? false : true
+    let firstValue = dotExist ? value.split(".")[0] : value
+    let cleanFirst = firstValue.replace(/\D/g, "")
+
+    if(cleanFirst.length <= 0) return ""
+    let finalfirst = cleanFirst.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    let secondValue = dotExist ? (value.split(".")[1]).slice(0, decim).replace(/\D/g, "") : "00"
+    let formarSecondValue = dotExist ? secondValue.length === 0 ? "00" : secondValue.length === 1 ? secondValue + "0" : secondValue : "00"
+
+    return dotExist ? (finalfirst + "." + formarSecondValue) : finalfirst
+}
+
+
+const formatEntryWithDot = value => {
+    let dotExist = value.indexOf(".") === -1 ? false : true
+    let firstValue = dotExist ? value.split(".")[0] : value
+    let cleanFirst = firstValue.replace(/\D/g, "")
+
+    if(cleanFirst.length <= 0) return ""
+    let finalfirst = cleanFirst.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+    let secondValue = dotExist ? '.' + (value.split(".")[1]).slice(0, 2).replace(/\D/g, "") : ""
+
+    return dotExist ? (finalfirst + secondValue) : finalfirst
+}
+
+
+
+
+const formatComms = value => value.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+
+const buildRowsForAdvance = (farms, states, id) => {
+    const farmDivs = farms.map(farm => `<div>&bull; ${farm_products[farm].adapterBase}</div>`)
+    const statesDivs = states.map(state => `<div>&bull; ${state}</div>`)
+
+    const row = `
+        <tr role="row" states="${states}" farms="${farms}" id="${id}">
+            <td class="center-td">
+                <div class="checkbox checkbox-primary row" style="padding: 0px">
+                    <input type="checkbox">
+                    <label for="${id}"></label>
+                </div>
+            </td>
+            <td>${farmDivs.join('')}</td>
+            <td>${statesDivs.join('')}</td>
+            <td class="center-td cursor">
+                <i class="fa fa-trash-o fa-2x delete-advanced-values" aria-hidden="true" id="${id}"></i>
+            </td>
+        </tr>
+    `
+
+    return row
+}
+
+
+
+
+// create chart
+// var chart1111111111 = am4core.create("testiiing", am4plugins_sunburst.Sunburst);
+// chart1111111111.padding(0,0,0,0);
+// chart1111111111.radius = am4core.percent(98);
+
+// chart1111111111.data = [{
+//   name: "First",
+//   children: [
+//     { name: "A1", value: 100 },
+//     { name: "A2", value: 60 }
+//   ]
+// },
+// {
+//   name: "Second",
+//   children: [
+//     { name: "B1", value: 135 },
+//     { name: "B2", value: 98 }
+//   ]
+// },
+// {
+//   name: "Third",
+//   children: [
+//     {
+//       name: "C1",
+//       children: [
+//         { name: "EE1", value: 130 },
+//         { name: "EE2", value: 87 },
+//         { name: "EE3", value: 55 }
+//       ]
+//     },
+//     { name: "C2", value: 148 },
+//     {
+//       name: "C3", children: [
+//         { name: "CC1", value: 53 },
+//         { name: "CC2", value: 30 }
+//       ]
+//     },
+//     { name: "C4", value: 26 }
+//   ]
+// },
+// {
+//   name: "Fourth",
+//   children: [
+//     { name: "D1", value: 415 },
+//     { name: "D2", value: 148 },
+//     { name: "D3", value: 89 }
+//   ]
+// },
+// {
+//   name: "Fifth",
+//   children: [
+//     {
+//       name: "E1",
+//       children: [
+//         { name: "EE1", value: 33 },
+//         { name: "EE2", value: 40 },
+//         { name: "EE3", value: 89 }
+//       ]
+//     },
+//     {
+//       name: "E2",
+//       value: 148
+//     }
+//   ]
+// }];
+
+// chart1111111111.colors.step = 2;
+// chart1111111111.fontSize = 11;
+// chart1111111111.innerRadius = am4core.percent(10);
+
+// // define data fields
+// chart1111111111.dataFields.value = "value";
+// chart1111111111.dataFields.name = "name";
+// chart1111111111.dataFields.children = "children";
+
+
+// var level0SeriesTemplate111111111 = new am4plugins_sunburst.SunburstSeries();
+// level0SeriesTemplate111111111.hiddenInLegend = false;
+// chart1111111111.seriesTemplates.setKey("0", level0SeriesTemplate111111111)
+
+// // this makes labels to be hidden if they don't fit
+// level0SeriesTemplate111111111.labels.template.truncate = true;
+// level0SeriesTemplate111111111.labels.template.hideOversized = true;
+
+// level0SeriesTemplate111111111.labels.template.adapter.add("rotation", function(rotation, target) {
+//   target.maxWidth = target.dataItem.slice.radius - target.dataItem.slice.innerRadius - 10;
+//   target.maxHeight = Math.abs(target.dataItem.slice.arc * (target.dataItem.slice.innerRadius + target.dataItem.slice.radius) / 2 * am4core.math.RADIANS);
+
+//   return rotation;
+// })
+
+
+// var level1SeriesTemplate11111111 = level0SeriesTemplate111111111.clone();
+// chart1111111111.seriesTemplates.setKey("1", level1SeriesTemplate11111111)
+// level1SeriesTemplate11111111.fillOpacity = 0.75;
+// level1SeriesTemplate11111111.hiddenInLegend = true;
+
+// var level2SeriesTemplate11111111111 = level0SeriesTemplate111111111.clone();
+// chart1111111111.seriesTemplates.setKey("2", level2SeriesTemplate11111111111)
+// level2SeriesTemplate11111111111.fillOpacity = 0.5;
+// level2SeriesTemplate11111111111.hiddenInLegend = true;
+
+
+// $($.fn.dataTable.tables(true)).DataTable()
+//    .columns.adjust();

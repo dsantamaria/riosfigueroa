@@ -480,4 +480,16 @@ class ProductsController extends Controller
         }
         return response()->json(['response' => 0]);       
     }
+
+    public function productsByLt()
+    {
+        try {
+            $products = Products::getByLt();
+            return response()->json(array('products' => $products))->setStatusCode(200);
+            
+        } catch (\Throwable $th) {
+            Log::error($th->getMessage() . " in -> productsByLt");
+            return response()->json(array('error' => $th->getMessage()))->setStatusCode(500);
+        }
+	}
 }

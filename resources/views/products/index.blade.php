@@ -44,7 +44,7 @@
                                                 <td class="edit-cell name-product">{{$product->nombre_producto}}</td>
                                                 <td>{{$product->presentacion}}</td>
                                                 <td class="edit-cell ing-product">{{$product->ingrediente_activo}}</td>
-                                                <td>{{$product->concentracion}}</tpriceMedd>
+                                                <td>{{$product->concentracion}}</td>
                                                 <td>{{$product->unidad}}</td>
                                                 <td class="edit-cell price-product-uni">{{$product->precio_comercial}}</td>
                                                 <td class="edit-cell price-product-med">{{$product->precio_por_medida}}</td>

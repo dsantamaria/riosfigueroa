@@ -30,7 +30,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('gestionListasAnalisisHistoricos', ['as'=>'gestionListasAnalisisHistoricos', 'uses'=>'ProductsController@gestionListasAnalisisHistoricos'])->middleware('admin');
     Route::get('deleteListCategory/{id}', ['as'=>'deleteListCategory', 'uses'=>'ProductsController@deleteListCategory'])->middleware('admin');
     Route::get('deleteListHistoric/{ingrediente_id}/{year}', ['as'=>'deleteListHistoric', 'uses'=>'ProductsController@deleteListHistoric'])->middleware('admin');
-    
+    Route::get('productsByLt', ['as' => 'market.productsByLt', 'uses' => 'ProductsController@productsByLt']);
+
     //post form import products
     Route::post('/products/process_import', ['as' => 'lista_precios.process', 'uses' => 'ProductsController@processImport'])->middleware('admin');
     Route::post('/products/process_import_products_analysis_category', ['as' => 'process_import_products_analysis_category', 'uses' => 'ProductsController@processImportProductsAnalysisCategory'])->middleware('admin');
@@ -76,11 +77,19 @@ Route::group(['middleware' => ['auth']], function () {
 
 
     //************************* MarketValueController *********************//
-    Route::get('market/index', ['as' => 'market.index', 'uses' => 'MarketValueController@index'])->middleware('saveRoute:analisis_del_mercado');;
+    Route::get('market/index', ['as' => 'market.index', 'uses' => 'MarketValueController@index'])->middleware('saveRoute:analisis_del_mercado');
     Route::get('market_value', ['as' => 'market_value', 'uses' => 'MarketValueController@market_value']);
     Route::post('market_update', ['as' => 'market_update', 'uses' => 'MarketValueController@market_update']);
     Route::post('market_year_update', ['as' => 'market_year_update', 'uses' => 'MarketValueController@market_year_update']);
     Route::post('market_import', ['as' => 'market_import', 'uses' => 'MarketValueController@market_import'])->middleware('admin');
+    Route::get('market/farming', ['as' => 'market.farming', 'uses' => 'MarketValueController@market_farming'])->middleware('saveRoute:analisis_del_mercado');;
+    Route::get('market/farming/values/{states}/{farmProducts}', ['as' => 'market.farming.values', 'uses' => 'MarketValueController@market_farming_values'])->middleware('saveRoute:analisis_del_mercado');;
+    Route::get('farms', ['as' => 'market.farms', 'uses' => 'MarketValueController@farms'])->middleware('saveRoute:analisis_del_mercado');
+    Route::get('mxStates', ['as' => 'market.mxStates', 'uses' => 'MarketValueController@mxStates'])->middleware('saveRoute:analisis_del_mercado');
+    Route::get('market/final_base_import', ['as' => 'market.final_base_import', 'uses' => 'MarketValueController@final_base_import']);
+    Route::get('market/getBaseValue/{farm}/{states}/{producType}', ['as' => 'market.getBaseValue', 'uses' => 'MarketValueController@getBaseValue']);
+    Route::get('market/getBaseByStatesFarms/{states}/{farms}', ['as' => 'market.getBaseByStatesFarms', 'uses' => 'MarketValueController@getBaseByStatesFarms']);
+
 
     //************************* UserActivityController *********************//
     Route::get('user_activity/index', ['as' => 'user_activity.index', 'uses' => 'UserActivityController@index'])->middleware('super-admin');

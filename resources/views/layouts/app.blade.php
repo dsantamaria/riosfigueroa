@@ -19,7 +19,7 @@
         {!! Html::style('harmony/css/responsive.dataTable.min.css') !!}
     </head>
 
-    <body oncopy='return false' oncut='return false' class="hidden-print">
+    <body oncopy='return false' oncut='return false' class="hidden-print" id="mainBody">
         <div class="brand clearfix">
             <a href="/" class="logo fixlogo">Sistema de Información</a>
             <span class="menu-btn">
@@ -46,10 +46,13 @@
                             </li>
                         @endcan
                         @can('market')
-                        <li>
+                        <li class="">
                             <a href="#" class="parent parent-flex"><i class="fa fa-pie-chart"></i><div>Análisis del Mercado Mexicano</div></a>
                             <ul>
-                                    <li><a href="{{ route('market.index') }}">Análisis del Mercado</a></li>
+                                <li><a href="{{ route('market.index') }}">Análisis del Mercado</a></li>
+                                @can('admin-role')
+                                    <li><a href="{{ route('market.farming') }}">Análisis del Mercado por Cultivo</a></li>
+                                @endcan
                             </ul>
                         </li>
                         @endcan
@@ -172,11 +175,24 @@
         {!! Html::script('harmony/js/fileinput.js') !!}
         {!! Html::script('harmony/js/chartData.js') !!}
         {!! Html::script('harmony/js/tinymce/tinymce.min.js') !!}
+
         {!! Html::script('harmony/js/amchart/amcharts.js') !!}
         {!! Html::script('harmony/js/amchart/serial.js') !!}
         {!! Html::script('harmony/js/amchart/pie.js') !!}
         {!! Html::script('harmony/js/amchart/animate.min.js') !!}
         {!! Html::script('harmony/js/amchart/responsive.min.js') !!}
+        {!! Html::script('harmony/js/amchart/amcharts.js') !!}
+
+        {!! Html::script('harmony/js/amchart/core.js') !!}
+        {!! Html::script('harmony/js/amchart/charts.js') !!}
+        {!! Html::script('harmony/js/amchart/forceDirected.js') !!}
+        {!! Html::script('harmony/js/amchart/maps.js') !!}
+        {!! Html::script('harmony/js/amchart/worldLow.js') !!}
+        {!! Html::script('harmony/js/amchart/mexicoLow.js') !!}
+        {!! Html::script('harmony/js/amchart/mexicoHigh.js') !!}
+        {!! Html::script('harmony/js/amchart/sunburst.js') !!}
+
         {!! Html::script('harmony/js/main.js') !!}
+
     </body>
 </html>

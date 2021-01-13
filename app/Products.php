@@ -66,8 +66,8 @@ class Products extends Model
         return $products;
     } 
 
-    public static function findByCategory($category = null)
-    {
+    public static function findByCategory($categoryId = null)
+    {   
         
     }
 
@@ -83,5 +83,11 @@ class Products extends Model
                             });
 
         return $fechas_productos->sortBy('precio_por_medida')->values()->all();
+    }
+
+    public static function getByLt(){
+        $data = self::all();
+    
+        return $data;
     }
 }
