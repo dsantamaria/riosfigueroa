@@ -117,6 +117,8 @@ Array.prototype.clone = function(){
 }
 
 $(document).ready(function () {
+
+    am4core.addLicense("CH235272211");
 	 
     $.ajaxSetup({
         headers: {
