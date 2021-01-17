@@ -112,7 +112,7 @@ class MarketValueController extends Controller
         try {
             $farms = json_decode($farmProducts);
             $farmStates = json_decode($states);
-            $farm_data = Agricola_siap::get_all_per_farm_farm($farmStates, $farms);
+            $farm_data = Agricola_siap::get_all_per_state_farm($farmStates, $farms);
 
             $farms_state_total = Agricola_siap::get_all_data_for_states($farms);
 
@@ -136,28 +136,26 @@ class MarketValueController extends Controller
 
             foreach ($farm_data as $data) {
                 $farm = $data['producto'];
-                $superficie_cosechada = $data['superficie_sembrada'];
-                if($superficie_cosechada < 0) continue;
-                $farm_adapt[$farm] = $farm_adapt[$farm] + $superficie_cosechada;
+                $superficie_sembrada = $data['superficie_sembrada'];
+                if($superficie_sembrada < 0) continue;
+                $farm_adapt[$farm] = $farm_adapt[$farm] + $superficie_sembrada;
             }
 
             foreach ($farms_state_total as $data) {
                 $farm = $data['producto'];
-                $superficie_cosechada = $data['superficie_sembrada'];
-                if($superficie_cosechada < 0) continue;
-                $farm_adapt_total[$farm] = $farm_adapt_total[$farm] + $superficie_cosechada;
+                $superficie_sembrada = $data['superficie_sembrada'];
+                if($superficie_sembrada < 0) continue;
+                $farm_adapt_total[$farm] = $farm_adapt_total[$farm] + $superficie_sembrada;
             }
 
             foreach ($farm_data as $data) {
                 $farm = $data['producto'];
                 $state = $data['estado'];
                 $state_trimmed = trim($state);
-                $superficie_cosechada = $data['superficie_sembrada'];
                 $superficie_sembrada = $data['superficie_sembrada'];
-                $total_superficie_sembrada = $total_superficie_sembrada + $superficie_sembrada;
-                if($superficie_cosechada < 0) continue;
-                $total_superficie = $total_superficie + $superficie_cosechada;
-                $state_adapt[$state_trimmed][$farm] = $state_adapt[$state_trimmed][$farm] + $superficie_cosechada;
+                if($superficie_sembrada < 0) continue;
+                $total_superficie = $total_superficie + $superficie_sembrada;
+                $state_adapt[$state_trimmed][$farm] = $superficie_sembrada;
             }
 
             return response()->json(array('farm_data' => $farm_adapt, 'total_state' => $farm_adapt_total, 'total_superficie' => $total_superficie, 'states_data' => $state_adapt, 'total_superficie_sembrada' => $total_superficie_sembrada))->setStatusCode(200);
@@ -300,18 +298,48 @@ class MarketValueController extends Controller
         $otro = 0;
         $total = 0;
 
+        $statesValues = [];
+        $stateFarmsValues = [];
 
-        foreach ($baseData as $key => $value) {
+        foreach ($states as $state) {
+            $statesValues[$state]['value'] = 0;
+            $statesValues[$state]['max'] = 0;
+            foreach ($farms as $farm) {
+                $stateFarmsValues[$state][$farm]['insecticida'] = 0;
+                $stateFarmsValues[$state][$farm]['herbicida'] = 0;
+                $stateFarmsValues[$state][$farm]['fungicida'] = 0;
+                $stateFarmsValues[$state][$farm]['otro'] = 0;
+                $stateFarmsValues[$state][$farm]['total'] = 0;
+                $stateFarmsValues[$state][$farm]['max'] = 0;
+            }
+        }
+
+        foreach ($baseData as $value) {
             $fungicida = $fungicida + $value['fungicida'];
             $herbicida = $herbicida + $value['herbicida'];
             $insecticida = $insecticida + $value['insecticida'];
             $otro = $otro + $value['otro'];
-            $total = $total + $value['total'];
-            Log::debug($value['total']);
+            $total = $total + $value['fungicida'] +  $value['herbicida'] +  $value['insecticida'] +  $value['otro'];
+
+            $statesValues[$value['estado']]['value'] = $statesValues[$value['estado']]['value'] + $value['fungicida'] +  $value['herbicida'] +  $value['insecticida'] +  $value['otro'];
+            $statesValues[$value['estado']]['max'] = $statesValues[$value['estado']]['max'] > ($value['fungicida'] +  $value['herbicida'] +  $value['insecticida'] +  $value['otro']) ? $statesValues[$value['estado']]['max'] : ($value['fungicida'] +  $value['herbicida'] +  $value['insecticida'] +  $value['otro']);
+
+            $stateFarmsValues[$value['estado']][$value['cultivo']]['insecticida'] = $value['insecticida'];
+            $stateFarmsValues[$value['estado']][$value['cultivo']]['herbicida'] = $value['herbicida'];
+            $stateFarmsValues[$value['estado']][$value['cultivo']]['fungicida'] = $value['fungicida'];
+            $stateFarmsValues[$value['estado']][$value['cultivo']]['otro'] = $value['otro'];
+            $stateFarmsValues[$value['estado']][$value['cultivo']]['total'] = $value['total']; 
+            $stateFarmsValues[$value['estado']][$value['cultivo']]['max'] = $value['fungicida'] +  $value['herbicida'] +  $value['insecticida'] +  $value['otro']; 
         }
-        
 
-
-        return response()->json(array('fungicida' => $fungicida, 'herbicida' => $herbicida, 'insecticida' => $insecticida, 'otro' => $otro, 'total' => $total))->setStatusCode(200);
+        return response()->json(array(
+            'fungicida' => $fungicida, 
+            'herbicida' => $herbicida, 
+            'insecticida' => $insecticida, 
+            'otro' => $otro, 
+            'total' => $total, 
+            "stateFarmsValues" => $stateFarmsValues, 
+            'statesValues' => $statesValues)
+        )->setStatusCode(200);
     }
 }

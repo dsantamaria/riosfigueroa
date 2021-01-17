@@ -216,7 +216,7 @@
         </div>
         
 
-        <div class="col-md-10 col-md-offset-1" id="market-products-table">
+        <div class="col-md-12" id="market-products-table">
             <div class="col-md-12" style="text-align: center">
                 <div>Cultivos</div>
             </div>
@@ -296,10 +296,10 @@
 
                     <tr id="market-table-last-tr">
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ZARZAMORA" title="Zarzamora" product="zarzamora"><img src="/project_images/Zarzamora N.svg" width="30px" height="30px"></th>
-                        <th class="market-all" active="false" data-toggle="tooltip" value="" title="" product=""><img src="/project_images/baseline_eco_black_48dp.png" width="30px" height="30px"></th>
-                        <th class="market-all" active="false" data-toggle="tooltip" value="" title="" product=""><img src="/project_images/baseline_eco_black_48dp.png" width="30px" height="30px"></th>
-                        <th class="market-all" active="false" data-toggle="tooltip" value="" title="" product=""><img src="/project_images/baseline_eco_black_48dp.png" width="30px" height="30px"></th>
-                        <th class="market-all" active="false" data-toggle="tooltip" value="" title="" product=""><img src="/project_images/baseline_eco_black_48dp.png" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CAF CEREZA" title="Café" product="cafe"><img src="/project_images/Café N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="COLIFLOR" title="Col (repollo)" product="coliflor"><img src="/project_images/Col (Repollo) N.svg" width="30px" height="30px"></th>
+                        <th class="market-all ignore" active="false" data-toggle="tooltip" value="" title="" product=""><img src="/project_images/baseline_eco_black_48dp.png" width="30px" height="30px"></th>
+                        <th class="ignore" active="false" data-toggle="tooltip" value="" title="" product="" style="background-color: #0000008c"></th>
                     </tr>
 
                     {{-- <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PASTOS Y PRADERAS" title="Pastos y praderas" product="pastos y praderas"><img src="/project_images/Pastos y Praderas N.svg" width="30px" height="30px"></th> --}}
@@ -339,29 +339,53 @@
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div id="mapMarket" style="width: 100%; height: 500px"></div>
-        <button id="selectFarmingAll">Seleccionar Todos</button>
-        {{-- <button id="removeFarmingAll">Remover Todos</button> --}}
-        <button id="selectFarmingRegion">Seleccionar Region</button>
-        <button id="saveRegion">Guardar seleccion</button>
+    <div class="col-md-7">
+        <div class="row">
+            <div class="col-md-6">
+                <div id="mapMarket" style="width: 100%; height: 400px"></div>
+                <button id="selectFarmingAll" active="false">Seleccionar Todos</button>
+                {{-- <button id="removeFarmingAll">Remover Todos</button> --}}
+                <button id="selectFarmingRegion">Seleccionar Región</button>
+                <button id="saveRegion">Guardar Selección</button>
 
-        {{-- <div class="checkbox checkbox-primary row">
-            <div class="col-md-12" style="margin-bottom: 12px">
-                <input type="checkbox" id="market-advance-farms-states">
-                <label for="market-advance-farms">Visualizar valores personalizados</label>
+                {{-- <div class="checkbox checkbox-primary row">
+                    <div class="col-md-12" style="margin-bottom: 12px">
+                        <input type="checkbox" id="market-advance-farms-states">
+                        <label for="market-advance-farms">Visualizar valores personalizados</label>
+                    </div>
+                </div> --}}
             </div>
-        </div> --}}
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item list-group-item-danger" style="font-size: 24px; color: white;background-color: red;display: flex;justify-content: space-between;">Insecticida: <span id="insecticidaValue">$0</span></li>
+                    <li class="list-group-item list-group-item-success" style="font-size: 24px; color: white;background-color: green;display: flex;justify-content: space-between;">Herbicida: <span id="herbicidaValue">$0</span></li>
+                    <li class="list-group-item list-group-item-warning" style="font-size: 24px; color: white; background-color: purple;display: flex;justify-content: space-between;">Fungicida: <span id="fungicidaValue">$0</span></li>
+                    <li class="list-group-item list-group-item-warning" style="font-size: 24px; color: white;background-color: orange;display: flex;justify-content: space-between;">Otros: <span id="otrosValue">$0</span></li>
+                    <li class="list-group-item list-group-item-info" style="font-size: 24px; color: white;background-color: darkblue;display: flex;justify-content: space-between;">Total: <span id="totalValue">$0</span></li>
+                </ul>
+            </div>
 
-        <div id="testiiing" style="height: 400px"></div>
+            <div class="col-md-12">
+                <div style="position: absolute;color: skyblue;top: 6px;right: 20px;z-index: 1" id="">
+                    <i class="fa fa-asterisk fa-lg" aria-hidden="true"></i>
+                </div>
+                <div style="position: absolute;top: 8px;right: 45px;z-index: 1;cursor: pointer" id="toggleModalBaseMarket">
+                    <i class="fa fa-external-link fa-lg" aria-hidden="true"></i>
+                </div>
+                <div id="baseMarketSmall" style="height: 400px"></div>
+            </div>
+        </div>
     </div>
 
-    <div class="col-md-3" style="">
-        <div style="padding-bottom: 5px;color: skyblue;cursor: pointer;font-weight: bold;" id="toggleAdvancedMarket">
-            <i class="fa fa-asterisk" aria-hidden="true"></i> Configuraciones avanzadas
-        </div>
+    {{-- <div class="col-md-8 col-md-offset-4" style="">
 
-        <div class="row hidden" id="marketAdvanced">
+        <div id="testiiing" style="height: 400px"></div>
+
+        {{-- <div style="padding-bottom: 5px;color: skyblue;cursor: pointer;font-weight: bold;" id="toggleAdvancedMarket">
+            <i class="fa fa-asterisk" aria-hidden="true"></i> Configuraciones avanzadas
+        </div> --}}
+
+        {{-- <div class="row hidden" id="marketAdvanced">
             <div class="form-group col-md-12">
                 <label>Superficie sembrada</label>
                 <input type="text" class="form-control" disabled="disabled" placeholder="0" id="marketF5SuperficieSembrada" valueNum="0">
@@ -402,20 +426,20 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
 
-        <ul class="list-group">
+        {{-- <ul class="list-group">
             <li class="list-group-item list-group-item-danger" style="font-size: 24px; color: white;background-color: red;display: flex;justify-content: space-between;">Insecticida: <span id="insecticidaValue">$0</span></li>
             <li class="list-group-item list-group-item-success" style="font-size: 24px; color: white;background-color: green;display: flex;justify-content: space-between;">Herbicida: <span id="herbicidaValue">$0</span></li>
             <li class="list-group-item list-group-item-warning" style="font-size: 24px; color: white; background-color: purple;display: flex;justify-content: space-between;">Fungicida: <span id="fungicidaValue">$0</span></li>
             <li class="list-group-item list-group-item-warning" style="font-size: 24px; color: white;background-color: orange;display: flex;justify-content: space-between;">Otros: <span id="otrosValue">$0</span></li>
             <li class="list-group-item list-group-item-info" style="font-size: 24px; color: white;background-color: darkblue;display: flex;justify-content: space-between;">Total: <span id="totalValue">$0</span></li>
-        </ul>
+        </ul> --}}
 
-        <div style="text-align: right" class="hidden" id="save-advanced-market">
+        {{-- <div style="text-align: right" class="hidden" id="save-advanced-market">
             <button class="btn btn-primary" style="font-size: 16px" id="save-advanced-market-button">Guardar valores</button>
-        </div>
-    </div>
+        </div> 
+    </div> --}}
 
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalMarketPie">
@@ -493,6 +517,23 @@
             <div class="modal-body bodyMarketShare" style="display: flex">  
                 <div id="marketFunnelPreChart" style="width: 50%"></div>
                 <div id="marketTree4PreChart" style="width: 50%"></div>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalBaseMarket">
+        <div class="modal-dialog" role="document" style="width: 95%">
+          <div class="modal-content">
+            {{-- <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Analisis de market share</h4>
+            </div> --}}
+            <div class="modal-body" id="bodyBaseMarket">
+                <div class="spinner" id="spinnerModalBase">
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+                </div>
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

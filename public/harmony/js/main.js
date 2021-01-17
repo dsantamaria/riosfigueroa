@@ -16,11 +16,13 @@ const farm_products = {
     "BERENJENA": {'img': 'Berenjena N.svg', 'imgB': 'Berenjena color.svg', 'color': "#bc5fd3ff" , "active": false, 'adapterBase': 'Berenjena'},
     "BROCOLI": {'img': 'Brócoli N.svg', 'imgB': 'Brócoli color.svg', 'color': "#008080ff" , "active": false, 'adapterBase': 'Brócoli'},
     "CACAO": {'img': 'Cacao N.svg', 'imgB': 'Cacao color.svg', 'color': "#502d16ff" , "active": false, 'adapterBase': 'Cacao'},
+    "CAF CEREZA": {'img': 'Café N.svg', 'imgB': 'Café color.svg', 'color': "#ac939dff" , "active": false, 'adapterBase': 'Café'},
     "CALABACITA": {'img': 'Calabacita N.svg', 'imgB': 'Calabacita color.svg', 'color': "#ffb380ff" , "active": false, 'adapterBase': 'Calabacita'},
     "CAA DE AZUCAR": {'img': 'Caña de Azúcar N.svg', 'imgB': 'Caña de Azúcar color.svg', 'color': "#008000ff" , "active": false, 'adapterBase': 'Cana de Azúcar'},
     
     "CEBOLLA": {'img': 'Cebolla N.svg', 'imgB': 'Cebolla color.svg', 'color': "#b3b3b3ff" , "active": false, 'adapterBase': 'Cebolla'},
     "CHILE VERDE": {'img': 'Chile Verde N.svg', 'imgB': 'Chile Verde color.svg', 'color': "#88aa00ff" , "active": false, 'adapterBase': 'Chile verde'},
+    "COLIFLOR": {'img': 'Col (Repollo) N.svg', 'imgB': 'Col (Repollo) color.svg', 'color': "#aa0088ff" , "active": false, 'adapterBase': 'Col (repollo)'},
     "CRISANTEMO (Gruesa)": {'img': 'Crisantemo N.svg', 'imgB': 'Crisantemo color.svg', 'color': "#37c8abff" , "active": false, 'adapterBase': 'Crisantemo'},
     "DURAZNO": {'img': 'Durazno N.svg', 'imgB': 'Durazno color.svg', 'color': "#ffccaaff" , "active": false, 'adapterBase': 'Durazno'},
     "ESPARRAGO": {'img': 'Esparrago N.svg', 'imgB': 'Esparrago color.svg', 'color': "#806600ff" , "active": false, 'adapterBase': 'Espárrago'},
@@ -104,6 +106,7 @@ const states = {
     "MX-ZAC": {'name': "Zacatecas", 'active': false},
 }
 
+let statesBaseMarket = []
 let marketInsecticidaValue = 0
 let marketHerbicidaValue = 0
 let marketFungicidadaValue = 0
@@ -1090,8 +1093,6 @@ $(document).ready(function () {
             }
             y = y + 126;
 
-            console.log(bars[0].data[i].dataContext['value_'+i], bars[0].data[i].dataContext['svalue_'+i]);
-
             bars[0].data[i].dataContext['value_'+i] != 0 ? chartImport.addLabel(acumWidth1 + 50, y_vol[i], bars[0].data[i].dataContext['volumen'], 'left', 15, '#000000', 0, 1, true) : chartImport.addLabel(46, y_vol[i], 'Sin Importaciones Registradas', 'left', 15, colors_vol[i], 0, 1, false);
             bars[0].data[i].dataContext['svalue_'+i] != 0 ? chartImport.addLabel(acumWidth2 + 50, y_vol[i+4], bars[0].data[i].dataContext['volumen2'], 'left', 15, '#000000', 0, 1, true) : chartImport.addLabel(46, y_vol[i+4], 'Sin Importaciones Registradas', 'left', 15, colors_vol[i+4], 0, 1, false);;
         }
@@ -1743,7 +1744,6 @@ $(document).ready(function () {
         ],
         images_upload_url: '/uploadImageHome',
         images_upload_handler: function (blobInfo, success, failure) {
-            console.log(blobInfo);
             var xhr, formData;
             xhr = new XMLHttpRequest();
             xhr.withCredentials = true;
@@ -2625,6 +2625,7 @@ $(document).ready(function () {
         let dataForModalTree = []
         let dataForModalPyramid = []
         let dataForModalForcedTree = []
+        let dataForModalBaseMarket = []
         let piramidMaxValue = 0
 
         const searchMarketFarmValues = () => {
@@ -2640,7 +2641,7 @@ $(document).ready(function () {
 
             $('table > tbody  > tr > th').each(function(i, th) { 
                 const element = $(th)
-                if(element.attr('active') === "true"){
+                if(element.attr('active') === "true" && !element.hasClass('ignore')){
                     activeFarms.push(element.attr('value'))
                 }
             });
@@ -2654,18 +2655,6 @@ $(document).ready(function () {
                 dataForModalPie = []
                 label.text = "";
                 labelForModalPie = "";
-
-                $('#marketF5SuperficieSembrada').val("0" + " HA")
-                $('#marketF5SuperficieSembrada').attr('valueNum', 0)
-
-                if(!$('#marketAdvanced').hasClass('hidden')){
-                    $('#marketF5SuperficiePercent').keyup()
-                    $("#m5IncPercent").keyup()
-                    $("#m5HerPercent").keyup()
-                    $("#m5FunPercent").keyup()
-                    $("#m5OtrPercent").keyup()
-                }
-
                 return 
             }
             
@@ -2793,17 +2782,6 @@ $(document).ready(function () {
 
                     labelForModalPie = "Total \n" + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " HA";
 
-                    isActiveCustomAdvancedInput() ? null : $('#marketF5SuperficieSembrada').val(data["total_superficie_sembrada"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " HA")
-                    isActiveCustomAdvancedInput() ? null : $('#marketF5SuperficieSembrada').attr('valueNum', data["total_superficie_sembrada"])
-
-                    if(!$('#marketAdvanced').hasClass('hidden') && !isActiveCustomAdvancedInput()){
-                        $('#marketF5SuperficiePercent').keyup()
-                        $("#m5IncPercent").keyup()
-                        $("#m5HerPercent").keyup()
-                        $("#m5FunPercent").keyup()
-                        $("#m5OtrPercent").keyup()
-                    }
-
                 },
                 error: (e) => {
                     console.log(e)
@@ -2825,22 +2803,15 @@ $(document).ready(function () {
         
             $('table > tbody  > tr > th').each(function(i, th) { 
                 const element = $(th)
-                if(element.attr('active') === "true"){
+                if(element.attr('active') === "true" && !element.hasClass('ignore')){
                     activeFarms.push(farm_products[element.attr('value')].adapterBase)
                 }
             });
-        
-            if(activesStates.length <= 0 || activeFarms.length <= 0) {
-                chartPieMarket.data = []
-                marketFarmTree.data = []
-                totalFarmChart.data = []
-                marketPiramidState.data = []
-                chartForcedTree.data = []
-                dataForModalPie = []
-                label.text = "";
-                labelForModalPie = "";
-                return 
-            }
+
+            if(activesStates.length <= 0 || activeFarms.length <= 0){
+                pieChartBaseMarket.data = []
+                return
+            }  
         
             $.ajax({
                 type: "GET",
@@ -2851,20 +2822,50 @@ $(document).ready(function () {
                     const fungicida = data['fungicida']
                     const otro = data['otro']
                     const total = data['total']
+                    const statesValues = data['statesValues']
+                    const stateFarmsValues = data['stateFarmsValues']
 
-                    marketInsecticidaValue = '$' + formatPrice(insecticida.toString())
-                    marketHerbicidaValue = '$' + formatPrice(herbicida.toString())
-                    marketFungicidadaValue = '$' + formatPrice(fungicida.toString())
-                    marketOtroValue = '$' + formatPrice(otro.toString())
-                    markettotalValue = '$' + formatPrice(total.toString())
+                    marketInsecticidaValue = insecticida 
+                    marketHerbicidaValue = herbicida 
+                    marketFungicidadaValue = fungicida
+                    marketOtroValue = otro 
+                    markettotalValue = total 
 
-                    if($('#marketAdvanced').hasClass('hidden')){
-                        $("#insecticida-product-market").attr('active') === "false" ? $('#insecticidaValue').text('$0') : $('#insecticidaValue').text(marketInsecticidaValue)
-                        $("#herbicida-product-market").attr('active') === "false" ? $('#herbicidaValue').text('$0') : $('#herbicidaValue').text(marketHerbicidaValue)
-                        $("#fungicida-product-market").attr('active') === "false" ? $('#fungicidaValue').text('$0') : $('#fungicidaValue').text(marketFungicidadaValue)
-                        $("#otros-product-market").attr('active') === "false" ? $('#otrosValue').text('$0') : $('#otrosValue').text(marketOtroValue)
-                        $("#total-product-market").attr('active') === "false" ? $('#totalValue').text('$0') : $('#totalValue').text(markettotalValue)
-                    }
+                    $("#insecticida-product-market").attr('active') === "false" ? $('#insecticidaValue').text('$0') : $('#insecticidaValue').text('$' + formatPrice(insecticida.toString()))
+                    $("#herbicida-product-market").attr('active') === "false" ? $('#herbicidaValue').text('$0') : $('#herbicidaValue').text('$' + formatPrice(herbicida.toString()))
+                    $("#fungicida-product-market").attr('active') === "false" ? $('#fungicidaValue').text('$0') : $('#fungicidaValue').text('$' + formatPrice(fungicida.toString()))
+                    $("#otros-product-market").attr('active') === "false" ? $('#otrosValue').text('$0') : $('#otrosValue').text('$' + formatPrice(otro.toString()))
+                    $("#total-product-market").attr('active') === "false" ? $('#totalValue').text('$0') : $('#totalValue').text('$' + formatPrice(total.toString()))
+
+                    
+
+                    dataForModalBaseMarket = activesStates.reduce((carry, state) => {
+                        
+                        const breakdown = activeFarms.reduce((carry, farm) => {
+                            carry.push({
+                                'cultivo': farm,
+                                "insecticida": stateFarmsValues[state][farm]['insecticida'], 
+                                "herbicida": stateFarmsValues[state][farm]['herbicida'],
+                                "fungicida": stateFarmsValues[state][farm]['fungicida'],
+                                "otro": stateFarmsValues[state][farm]['otro'],
+                                "max": stateFarmsValues[state][farm]['max']
+                            })
+                            return carry
+                        }, [])
+
+
+                        carry.push({
+                            "category": state,
+                            "value": statesValues[state]['value'],
+                            'max': statesValues[state]['max'],
+                            "breakdown": breakdown
+                        })
+
+                        return carry
+                    }, [])
+
+                    pieChartBaseMarket.data = dataForModalBaseMarket
+                      
                 },
                 error: (e) => {
                     console.log(e)
@@ -2873,234 +2874,12 @@ $(document).ready(function () {
         }
 
         $('#toggleAdvancedMarket').click(function() {
-            $('#marketF5SuperficieVal').val("")
-            $('#marketF5SuperficiePercent').val("")
-            $('#marketF5GastoTotal').val("")
-            $("#m5IncPercent").val("")
-            $("#m5HerPercent").val("")
-            $("#m5FunPercent").val("")
-            $("#m5OtrPercent").val("")
-
-            if($('#marketAdvanced').hasClass('hidden')){
-                $('#marketAdvanced, #wrapper_table_advanced_market').removeClass('hidden')
-                $('#insecticidaValue').text('$0')
-                $('#herbicidaValue').text('$0')
-                $('#fungicidaValue').text('$0')
-                $('#otrosValue').text('$0')
-                $('#totalValue').text('$0')
-            }else{
-                $('#marketAdvanced, #wrapper_table_advanced_market').addClass('hidden')
-                $("#insecticida-product-market").attr('active') === "false" ? $('#insecticidaValue').text('$0') : $('#insecticidaValue').text(marketInsecticidaValue)
-                $("#herbicida-product-market").attr('active') === "false" ? $('#herbicidaValue').text('$0') : $('#herbicidaValue').text(marketHerbicidaValue)
-                $("#fungicida-product-market").attr('active') === "false" ? $('#fungicidaValue').text('$0') : $('#fungicidaValue').text(marketFungicidadaValue)
-                $("#otros-product-market").attr('active') === "false" ? $('#otrosValue').text('$0') : $('#otrosValue').text(marketOtroValue)
-                $("#total-product-market").attr('active') === "false" ? $('#totalValue').text('$0') : $('#totalValue').text(markettotalValue)
-            }
-
-            $('#bodyForCustomAdvanced tr').each(function(e){
-                $(this).find('input').prop('checked', false)
-            })
-
-            $('#save-advanced-market').hasClass('hidden') ? $('#save-advanced-market').removeClass('hidden') : $('#save-advanced-market').addClass('hidden')
-        })
-
-        let tempSavedMarketAdvance = {}
-
-        $('#save-advanced-market-button').click(function(){
-
-            let insecticida = parseFloat(formatEntryWithDot($('#insecticidaValue').text()).replace(/,/g, ""))
-            let herbicida = parseFloat(formatEntryWithDot($('#herbicidaValue').text()).replace(/,/g, ""))
-            let fungicida = parseFloat(formatEntryWithDot($('#fungicidaValue').text()).replace(/,/g, ""))
-            let otros = parseFloat(formatEntryWithDot($('#otrosValue').text()).replace(/,/g, ""))
-            let total = parseFloat(formatEntryWithDot($('#totalValue').text()).replace(/,/g, ""))
-
-            if(insecticida === 0 && herbicida === 0 && fungicida === 0 && otros === 0 && total === 0) return
-
-            let sembrada = parseFloat($('#marketF5SuperficieSembrada').val().replace(/,/g, ""))
-            let tratadasHA =  parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, ""))
-            let tratadasPercent =  parseFloat($('#marketF5SuperficiePercent').val().replace(/,/g, ""))
-            let gasto =  parseFloat($('#marketF5GastoTotal').val().replace(/,/g, ""))
-            let incPercent = parseFloat($("#m5IncPercent").val()) ? parseFloat($("#m5IncPercent").val()) : 0
-            let herPercent = parseFloat($("#m5HerPercent").val()) ? parseFloat($("#m5HerPercent").val()) : 0
-            let funPercent = parseFloat($("#m5FunPercent").val()) ? parseFloat($("#m5FunPercent").val()) : 0
-            let otrPercent = parseFloat($("#m5OtrPercent").val()) ? parseFloat($("#m5OtrPercent").val()) : 0
-
-            let activesStates = []
-            mexicoIds.forEach(id => {
-                var mex = polygonSeries.getPolygonById(id);
-                if(mex.isActive){
-                    activesStates.push(states[id].name) 
-                }
-            })
-
-            let activeFarms = []
-
-            $('table > tbody  > tr > th').each(function(i, th) { 
-                const element = $(th)
-                if(element.attr('active') === "true"){
-                    activeFarms.push(element.attr('value'))
-                }
-            });
-
-            let armValue = {
-                'insecticida': insecticida,
-                'herbicida': herbicida,
-                'fungicida': fungicida,
-                'otros': otros,
-                'total': total,
-                'sembrada': sembrada,
-                'tratadasHA': tratadasHA,
-                'tratadasPercent': tratadasPercent,
-                'gasto': gasto,
-                'incPercent': incPercent,
-                'herPercent': herPercent,
-                'funPercent': funPercent,
-                'otrPercent': otrPercent
-            }
-
-            let key = activeFarms.concat(activesStates).join("")
-
-            if(isActiveCustomAdvancedInput){
-                $('#bodyForCustomAdvanced tr').each(function(e){
-                    let isActive = $(this).find('input').is(':checked')
-                    if(isActive){
-                        key = $(this).attr('id')
-                    }
-                })
-            }
-
-            let keyExist = Object.keys(tempSavedMarketAdvance).includes(key)
-
-            tempSavedMarketAdvance[key] = armValue
-
-            if(!keyExist){
-                const row = buildRowsForAdvance(activeFarms, activesStates, key)
-                $('#bodyForCustomAdvanced').append(row)
-            }
-
-            Object.keys(tempSavedMarketAdvance).length > 0 ? $('.table_advanced_market').removeClass('hidden') : $('.table_advanced_market').addClass('hidden')
-
-            alert('Valores guardados correctamente!')
-        })
-
-        const isActiveCustomAdvancedInput = () => {
-            let someActive = false
-
-            $('#bodyForCustomAdvanced tr').each(function(e){
-                let isActive = $(this).find('input').is(':checked')
-                if(isActive){
-                    someActive = true
-                }
-            })
-
-            return someActive
-        }
-
-        $('#bodyForCustomAdvanced').on('click', '.delete-advanced-values', function(e){
-            let id = $(this).attr('id')
-            console.log('id')
-            delete tempSavedMarketAdvance[id]
-            $(this).closest('tr').remove()
-            updateWithCustomAdvanced()
-            Object.keys(tempSavedMarketAdvance).length > 0 ? $('.table_advanced_market').removeClass('hidden') : $('.table_advanced_market').addClass('hidden')
+            
         })
 
 
-        $('#bodyForCustomAdvanced').on("click", "input", function(e){
-            updateWithCustomAdvanced()
-        })
 
-        const updateWithCustomAdvanced = () => {
-            let actives = 0
-            let sembrada = 0
-            let tratadasHA = 0
-            let tratadasPercent = 0
-            let someActive = false
-            let gasto = 0
-            let inc = 0
-            let her = 0
-            let fun = 0
-            let otr = 0
-            let total = 0
-            let incPer = 0
-            let herPer = 0
-            let funPer = 0
-            let otrPer = 0
-
-            $('#bodyForCustomAdvanced tr').each(function(e){
-                let isActive = $(this).find('input').is(':checked')
-                
-                if(isActive){
-                    actives = actives + 1
-                    someActive = true
-                    let key = $(this).attr('id')
-                    sembrada = tempSavedMarketAdvance[key].sembrada + sembrada
-                    tratadasHA = tratadasHA + tempSavedMarketAdvance[key].tratadasHA
-                    gasto = gasto + tempSavedMarketAdvance[key].gasto
-                    inc = inc + tempSavedMarketAdvance[key].insecticida
-                    her = her + tempSavedMarketAdvance[key].herbicida
-                    fun = fun + tempSavedMarketAdvance[key].fungicida
-                    otr = otr + tempSavedMarketAdvance[key].otros
-                    total = total + tempSavedMarketAdvance[key].total
-                    incPer = tempSavedMarketAdvance[key].incPercent
-                    herPer = tempSavedMarketAdvance[key].herPercent
-                    funPer = tempSavedMarketAdvance[key].funPercent
-                    otrPer = tempSavedMarketAdvance[key].otrPercent
-        
-                }
-            })
-
-            actives >= 2 ? $('#save-advanced-market-button').attr('disabled', true) : $('#save-advanced-market-button').attr('disabled', false)
-
-            tratadasPercent = (tratadasHA * 100)/sembrada
-            incPercent = actives >= 2 ? (inc*100)/(gasto*tratadasHA) : incPer
-            funPercent = actives >= 2 ? (fun*100)/(gasto*tratadasHA) : funPer
-            herPercent = actives >= 2 ? (her*100)/(gasto*tratadasHA) : herPer
-            otrPercent = actives >= 2 ? (otr*100)/(gasto*tratadasHA) : otrPer
-
-
-            if(someActive){
-                $('#insecticidaValue').text('$' + formatPrice(inc.toString()))
-                $('#herbicidaValue').text('$' + formatPrice(her.toString()))
-                $('#fungicidaValue').text('$' + formatPrice(fun.toString()))
-                $('#otrosValue').text('$' + formatPrice(otr.toString()))
-                $('#totalValue').text('$' + formatPrice(total.toString()))
-
-                $('#marketF5SuperficieSembrada').val(formatPrice(sembrada.toString()) + " HA")
-                $('#marketF5SuperficieVal').val(formatPrice(tratadasHA.toString()))
-                $('#marketF5SuperficiePercent').val(formatPrice(tratadasPercent.toString()))
-                $('#marketF5GastoTotal').val(formatPrice(gasto.toString()))
-
-                $("#m5IncPercent").val(formatPercent(incPercent.toString()))
-                $("#m5HerPercent").val(formatPercent(herPercent.toString()))
-                $("#m5FunPercent").val(formatPercent(funPercent.toString()))
-                $("#m5OtrPercent").val(formatPercent(otrPercent.toString()))
-
-            }else{
-                $('#insecticidaValue').text('$0')
-                $('#herbicidaValue').text('$0')
-                $('#fungicidaValue').text('$0')
-                $('#otrosValue').text('$0')
-                $('#totalValue').text('$0')
-
-                $('#marketF5SuperficieSembrada').val("")
-                $('#marketF5SuperficieVal').val("")
-                $('#marketF5SuperficiePercent').val("")
-                $('#marketF5GastoTotal').val("")
-
-                $("#m5IncPercent").val("")
-                $("#m5HerPercent").val("")
-                $("#m5FunPercent").val("")
-                $("#m5OtrPercent").val("")
-
-                searchMarketBaseValues()
-                searchMarketFarmValues()
-            }
-        }
-
-
-
-        $('body').on("keyup", "#marketF5SuperficiePercent", function(e){
+        /*$('body').on("keyup", "#marketF5SuperficiePercent", function(e){
             let superficieTotal = $('#marketF5SuperficieSembrada').attr('valueNum')
             let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
 
@@ -3276,7 +3055,7 @@ $(document).ready(function () {
 
             $('#otrosValue').text('$' + formatEntryWithDot(incVal.toString()))
             
-        })
+        })*/
 
 
 
@@ -3304,6 +3083,13 @@ $(document).ready(function () {
         polygonTemplate.events.on("hit", function(ev) {       
             ev.target.isActive = !ev.target.isActive  
 
+            let state = states[ev.target.dataItem.dataContext.id].name
+            if(ev.target.isActive ){
+                statesBaseMarket.push(state)
+            }else{
+                statesBaseMarket = statesBaseMarket.filter(x => x != state)
+            }
+
             mexicoIds.forEach(id => {
                 let mex = polygonSeries.getPolygonById(id);
                 states[id].active = mex.isActive
@@ -3315,39 +3101,67 @@ $(document).ready(function () {
 
         polygonTemplate.propertyFields.fill = "fill";
 
-        $('#selectFarmingAll').click(() => {
+        $('#selectFarmingAll').click(function(){
+
+            let isActive = $(this).attr('active') === "true"
+            $(this).attr('active', !isActive)
+
             mexicoIds.forEach(id => {
                 var us = polygonSeries.getPolygonById(id);
-                us.isActive = true;
+                us.isActive = !isActive;
             })
+
+            statesBaseMarket = isActive ? [] : Object.values(states).map(s => s.name)
+
+            searchMarketFarmValues()
+            searchMarketBaseValues()
         })
 
-        $('#removeFarmingAll').click(() => {
-            mexicoIds.forEach(id => {
-                var us = polygonSeries.getPolygonById(id);
-                us.isActive = false;
-            })
-        })
 
         //----------------------------------------------seleccion de cultivos
+
+        $('.market-all').click(function(e){
+            let isActive = $(this).attr('active') === "true"
+            $(this).attr('active', !isActive)
+
+            $('#market-products-table th').each(function(){
+                let farm = $(this).attr('value')
+                let ignore = $(this).hasClass('ignore') === true
+
+                if(!ignore){
+                    $(this).attr('active', !isActive)
+                    farm_products[farm].active = !isActive
+
+                    if(isActive){
+                        $(this).children("img").attr('src', `/project_images/${farm_products[farm].img}`)
+                        $(this).removeClass('market-product-active').addClass('market-product-desactive')
+                    }else{
+                        $(this).children("img").attr('src',`/project_images/${farm_products[farm].imgB}`)
+                        $(this).removeClass('market-product-desactive').addClass('market-product-active')
+                    }
+                } 
+            })
+
+            searchMarketFarmValues()
+            searchMarketBaseValues()
+        })
 
         $('#market-products-table th').click((event) => {
             let isActive = $(event.currentTarget).attr('active') === "true"
             let farm = $(event.currentTarget).attr('value')
-            let all = $(event.currentTarget).hasClass('market-all') === true
+            let all = $(event.currentTarget).hasClass('ignore') === true
 
             if(all) return
 
+            $(event.currentTarget).attr('active', !isActive)
+            farm_products[farm].active = !isActive
+
             if(isActive){
-                $(event.currentTarget).attr('active', 'false')
                 $(event.currentTarget).children("img").attr('src', `/project_images/${farm_products[farm].img}`)
                 $(event.currentTarget).removeClass('market-product-active').addClass('market-product-desactive')
-                farm_products[farm].active = false
             }else{
-                $(event.currentTarget).attr('active', 'true')
                 $(event.currentTarget).children("img").attr('src',`/project_images/${farm_products[farm].imgB}`)
                 $(event.currentTarget).removeClass('market-product-desactive').addClass('market-product-active')
-                farm_products[farm].active = true
             }
 
             searchMarketFarmValues()
@@ -3360,12 +3174,14 @@ $(document).ready(function () {
             if(isActive){
                 $(event.currentTarget).attr('active', 'false')
                 $(event.currentTarget).removeClass('insecticida-product-market').addClass('default-color-product')
-                if($('#marketAdvanced').hasClass('hidden')) $('#insecticidaValue').text('$0')
+                $('#insecticidaValue').text('$0')
             }else{
                 $(event.currentTarget).attr('active', 'true')
                 $(event.currentTarget).removeClass('default-color-product').addClass('insecticida-product-market')
-                if($('#marketAdvanced').hasClass('hidden')) $('#insecticidaValue').text(marketInsecticidaValue)
+                $('#insecticidaValue').text('$' + formatPrice(marketInsecticidaValue.toString()))
             }
+
+            setTotalProductMarket()
         })
 
         $('#herbicida-product-market').click((event) => {
@@ -3374,12 +3190,14 @@ $(document).ready(function () {
             if(isActive){
                 $(event.currentTarget).attr('active', 'false')
                 $(event.currentTarget).removeClass('herbicida-product-market').addClass('default-color-product')
-                if($('#marketAdvanced').hasClass('hidden')) $('#herbicidaValue').text('$0')
+                ('#herbicidaValue').text('$0')
             }else{
                 $(event.currentTarget).attr('active', 'true')
                 $(event.currentTarget).removeClass('default-color-product').addClass('herbicida-product-market')
-                if($('#marketAdvanced').hasClass('hidden'))  $('#herbicidaValue').text(marketHerbicidaValue)
+                $('#herbicidaValue').text('$' + formatPrice(marketHerbicidaValue.toString()))
             }
+
+            setTotalProductMarket()
         })
 
         $('#fungicida-product-market').click((event) => {
@@ -3388,12 +3206,14 @@ $(document).ready(function () {
             if(isActive){
                 $(event.currentTarget).attr('active', 'false')
                 $(event.currentTarget).removeClass('fungicida-product-market').addClass('default-color-product')
-                if($('#marketAdvanced').hasClass('hidden'))  $('#fungicidaValue').text('$0')
+                $('#fungicidaValue').text('$0')
             }else{
                 $(event.currentTarget).attr('active', 'true')
                 $(event.currentTarget).removeClass('default-color-product').addClass('fungicida-product-market')
-                if($('#marketAdvanced').hasClass('hidden'))  $('#fungicidaValue').text(marketFungicidadaValue)
+                $('#fungicidaValue').text('$' + formatPrice(marketFungicidadaValue.toString()))
             }
+
+            setTotalProductMarket()
         })
 
         $('#otros-product-market').click((event) => {
@@ -3402,12 +3222,14 @@ $(document).ready(function () {
             if(isActive){
                 $(event.currentTarget).attr('active', 'false')
                 $(event.currentTarget).removeClass('otros-product-market').addClass('default-color-product')
-                if($('#marketAdvanced').hasClass('hidden'))  $('#otrosValue').text('$0')
+                $('#otrosValue').text('$0')
             }else{
                 $(event.currentTarget).attr('active', 'true')
                 $(event.currentTarget).removeClass('default-color-product').addClass('otros-product-market')
-                if($('#marketAdvanced').hasClass('hidden'))  $('#otrosValue').text(marketOtroValue)
+                $('#otrosValue').text('$' + formatPrice(marketOtroValue.toString()))
             }
+
+            setTotalProductMarket()
         })
 
         $('#total-product-market').click((event) => {
@@ -3416,13 +3238,27 @@ $(document).ready(function () {
             if(isActive){
                 $(event.currentTarget).attr('active', 'false')
                 $(event.currentTarget).removeClass('total-product-market').addClass('default-color-product')
-                if($('#marketAdvanced').hasClass('hidden'))  $('#totalValue').text('$0')
+                $('#totalValue').text('$0')
             }else{
                 $(event.currentTarget).attr('active', 'true')
                 $(event.currentTarget).removeClass('default-color-product').addClass('total-product-market')
-                if($('#marketAdvanced').hasClass('hidden'))  $('#totalValue').text(markettotalValue)
+                $('#totalValue').text('$' + formatPrice(markettotalValue.toString()))
             }
+
+            setTotalProductMarket()
         })
+
+        const setTotalProductMarket = () => {
+            let insecticida = $('#insecticida-product-market').attr('active') === "true" ? marketInsecticidaValue : 0
+            let herbicida = $('#herbicida-product-market').attr('active') === "true" ? marketHerbicidaValue : 0
+            let fungicida = $('#fungicida-product-market').attr('active') === "true" ? marketFungicidadaValue : 0
+            let otros = $('#otros-product-market').attr('active') === "true" ? marketOtroValue : 0
+            let total = $('#total-product-market').attr('active') === "true"
+
+            if(total) return
+            let totalValue = insecticida + herbicida + fungicida + otros
+            $('#totalValue').text('$' + formatPrice(totalValue.toString()))
+        }
 
         $(function () {
             $('[data-toggle="tooltip"]').tooltip({
@@ -3431,8 +3267,271 @@ $(document).ready(function () {
             })
         })
 
+
+        $("#toggleModalBaseMarket").click(function(){
+            if(!stateAndFarmActives()) return
+            $('#modalBaseMarket').modal('show')
+        })
+
+
+        //---------------------------------------------------------grafica de baseMarketSmall
+          
+        // Create chart instance
+        var chartBaseMarketSmall = am4core.create("baseMarketSmall", am4core.Container);
+        chartBaseMarketSmall.width = am4core.percent(100);
+        chartBaseMarketSmall.height = am4core.percent(100);
+        chartBaseMarketSmall.layout = "horizontal";
+          
+
+        var columnChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.XYChart);
+       
+        columnChartBaseMarket.data = []
+
+        // columnChartBaseMarket.legend = new am4charts.Legend();
+        // columnChartBaseMarket.legend.position = "bottom";
+
+        // Create axes
+        var categoryAxisBaseMarket = columnChartBaseMarket.yAxes.push(new am4charts.CategoryAxis());
+        categoryAxisBaseMarket.dataFields.category = "cultivo";
+        categoryAxisBaseMarket.renderer.grid.template.opacity = 0;
+
+        var valueAxisBaseMarket = columnChartBaseMarket.xAxes.push(new am4charts.ValueAxis());
+        valueAxisBaseMarket.min = 0;
+        valueAxisBaseMarket.renderer.grid.template.opacity = 0;
+        valueAxisBaseMarket.renderer.ticks.template.strokeOpacity = 0.5;
+        valueAxisBaseMarket.renderer.ticks.template.stroke = am4core.color("#495C43");
+        valueAxisBaseMarket.renderer.ticks.template.length = 10;
+        valueAxisBaseMarket.renderer.line.strokeOpacity = 0.5;
+        valueAxisBaseMarket.renderer.baseGrid.disabled = true;
+
+        // Create series
+        function createSeriesxxxx(field, name, color) {
+            let series = columnChartBaseMarket.series.push(new am4charts.ColumnSeries());
+            series.dataFields.valueX = field;
+            series.dataFields.categoryY = "cultivo";
+            series.stacked = true;
+            series.name = name;
+            series.fill = color
+            series.stroke = color
+            series.columns.template.tooltipText = field + " ${valueX}";
+        }
+
+        ['insecticida', 'herbicida', 'fungicida', 'otro'].forEach((element, index) => {
+            let color = ["#ff0000", "#008000", "#800080", "#ffa500"]
+            createSeriesxxxx(element, element, color[index]);
+        });
         
-        //-------------------------------------------------mapa de pie
+
+          /**
+           * Pie chart
+           */
+          
+          // Create chart instance
+          var pieChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.PieChart);
+          pieChartBaseMarket.data = [];
+          pieChartBaseMarket.innerRadius = am4core.percent(50);
+          
+          
+          // Add and configure Series
+          var pieSeriesBaseMarket = pieChartBaseMarket.series.push(new am4charts.PieSeries());
+          pieSeriesBaseMarket.dataFields.value = "value";
+          pieSeriesBaseMarket.dataFields.category = "category";
+          pieSeriesBaseMarket.slices.template.propertyFields.fill = "color";
+          pieSeriesBaseMarket.labels.template.disabled = true;
+          
+          let asBaseChart = pieSeriesBaseMarket.slices.template.states.getKey("active");
+          asBaseChart.properties.shiftRadius = 0;
+          
+          // Set up labels
+          var label1BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
+          label1BaseMarket.text = "";
+          label1BaseMarket.horizontalCenter = "middle";
+          label1BaseMarket.fontSize = 35;
+          label1BaseMarket.fontWeight = 600;
+          label1BaseMarket.dy = -30;
+          
+          var label2BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
+          label2BaseMarket.text = "";
+          label2BaseMarket.horizontalCenter = "middle";
+          label2BaseMarket.fontSize = 20;
+          label2BaseMarket.dy = 20;
+          
+          // Auto-select first slice on load
+          pieChartBaseMarket.events.on("datavalidated", function(ev) {
+
+            if(pieSeriesBaseMarket.slices.length <= 0){
+                // Update column chart
+              columnChartBaseMarket.data = []
+
+              //Update labels
+              label1BaseMarket.text = "";
+              label2BaseMarket.text = "";
+            }
+
+            pieSeriesBaseMarket.slices.each(function(slice) {
+                if (slice.dataItem.dataContext.category === statesBaseMarket[statesBaseMarket.length - 1]){
+                    pieSeriesBaseMarket.slices.getIndex(slice.dataItem.index).isActive = true;
+                }   
+            });
+          });
+          
+          // Set up toggling events
+          pieSeriesBaseMarket.slices.template.events.on("toggled", function(ev) {
+            if (ev.target.isActive) {
+              // Untoggle other slices
+              pieSeriesBaseMarket.slices.each(function(slice) {
+                if (slice != ev.target) {
+                  slice.isActive = false;
+                }
+              });
+              
+              // Update column chart
+              valueAxisBaseMarket.max = ev.target.dataItem.dataContext.max;
+              columnChartBaseMarket.data = ev.target.dataItem.dataContext.breakdown;
+              valueAxisBaseMarket.strictMinMax = true;
+
+              //Update labels
+              label1BaseMarket.text = pieChartBaseMarket.numberFormatter.format(ev.target.dataItem.values.value.percent, "#.'%'");
+              label1BaseMarket.fill = ev.target.fill;
+              label2BaseMarket.text = ev.target.dataItem.category;
+
+              
+            }else{
+                columnChartBaseMarket.data = [];
+                label1BaseMarket.text = ""
+                label2BaseMarket.text = ""
+            }
+          });
+
+
+
+        $('#modalBaseMarket').on('shown.bs.modal', function () {
+            $('#spinnerModalBase').addClass('hidden')
+            $('#bodyBaseMarket').append(`
+                <div id="temporalBaseModal">
+                    <div style="font-size: 40px; font-weight: bold; text-align: center">Titulo opcional aqui</div>
+                    <div id="baseModalChart" style="height: 85vh"></div>
+                </div>
+            `)
+
+            // Create chart instance
+            let chartBaseMarketSmall = am4core.create("baseModalChart", am4core.Container);
+            chartBaseMarketSmall.width = am4core.percent(100);
+            chartBaseMarketSmall.height = am4core.percent(100);
+            chartBaseMarketSmall.layout = "horizontal";
+            
+
+            var columnChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.XYChart);
+        
+            columnChartBaseMarket.data = []
+
+            columnChartBaseMarket.legend = new am4charts.Legend();
+            columnChartBaseMarket.legend.position = "bottom";
+
+            // Create axes
+            var categoryAxisBaseMarket = columnChartBaseMarket.yAxes.push(new am4charts.CategoryAxis());
+            categoryAxisBaseMarket.dataFields.category = "cultivo";
+            categoryAxisBaseMarket.renderer.grid.template.opacity = 0;
+
+            var valueAxisBaseMarket = columnChartBaseMarket.xAxes.push(new am4charts.ValueAxis());
+            valueAxisBaseMarket.min = 0;
+            valueAxisBaseMarket.renderer.grid.template.opacity = 0;
+            valueAxisBaseMarket.renderer.ticks.template.strokeOpacity = 0.5;
+            valueAxisBaseMarket.renderer.ticks.template.stroke = am4core.color("#495C43");
+            valueAxisBaseMarket.renderer.ticks.template.length = 10;
+            valueAxisBaseMarket.renderer.line.strokeOpacity = 0.5;
+            valueAxisBaseMarket.renderer.baseGrid.disabled = true;
+
+            // Create series
+            function createSeriesxxxx(field, name, color) {
+                let series = columnChartBaseMarket.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueX = field;
+                series.dataFields.categoryY = "cultivo";
+                series.stacked = true;
+                series.name = name;
+                series.fill = color
+                series.stroke = color
+                series.columns.template.tooltipText = field + " ${valueX}";
+            }
+
+            ['insecticida', 'herbicida', 'fungicida', 'otro'].forEach((element, index) => {
+                let color = ["#ff0000", "#008000", "#800080", "#ffa500"]
+                createSeriesxxxx(element, element, color[index]);
+            });
+            
+
+            /**
+             * Pie chart
+             */
+            
+            // Create chart instance
+            var pieChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.PieChart);
+            pieChartBaseMarket.data = dataForModalBaseMarket;
+            pieChartBaseMarket.innerRadius = am4core.percent(50);
+            
+            
+            // Add and configure Series
+            var pieSeriesBaseMarket = pieChartBaseMarket.series.push(new am4charts.PieSeries());
+            pieSeriesBaseMarket.dataFields.value = "value";
+            pieSeriesBaseMarket.dataFields.category = "category";
+            pieSeriesBaseMarket.slices.template.propertyFields.fill = "color";
+            pieSeriesBaseMarket.labels.template.disabled = true;
+            
+            let asBaseChart = pieSeriesBaseMarket.slices.template.states.getKey("active");
+            asBaseChart.properties.shiftRadius = 0;
+            
+            // Set up labels
+            var label1BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
+            label1BaseMarket.text = "";
+            label1BaseMarket.horizontalCenter = "middle";
+            label1BaseMarket.fontSize = 35;
+            label1BaseMarket.fontWeight = 600;
+            label1BaseMarket.dy = -30;
+            
+            var label2BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
+            label2BaseMarket.text = "";
+            label2BaseMarket.horizontalCenter = "middle";
+            label2BaseMarket.fontSize = 20;
+            label2BaseMarket.dy = 20;
+            
+            // Auto-select first slice on load
+            pieChartBaseMarket.events.on("ready", function(ev) {
+                pieSeriesBaseMarket.slices.getIndex(0).isActive = true;
+            });
+            
+            // Set up toggling events
+            pieSeriesBaseMarket.slices.template.events.on("toggled", function(ev) {
+                if (ev.target.isActive) {
+                // Untoggle other slices
+                    pieSeriesBaseMarket.slices.each(function(slice) {
+                        if (slice != ev.target) {
+                        slice.isActive = false;
+                        }
+                    });
+                    
+                    // Update column chart
+                    valueAxisBaseMarket.max = ev.target.dataItem.dataContext.max;
+                    columnChartBaseMarket.data = ev.target.dataItem.dataContext.breakdown;
+                    valueAxisBaseMarket.strictMinMax = true;
+
+                    //Update labels
+                    label1BaseMarket.text = pieChartBaseMarket.numberFormatter.format(ev.target.dataItem.values.value.percent, "#.'%'");
+                    label1BaseMarket.fill = ev.target.fill;
+                    label2BaseMarket.text = ev.target.dataItem.category;
+                }
+            });
+        })
+
+        $('#modalBaseMarket').on('hide.bs.modal', function () {
+            $('#temporalBaseModal').remove()
+            $('#spinnerModalBase').removeClass('hidden')
+        })
+            
+            
+
+
+        
+        //-------------------------------------------------gradica de pie
         var chartPieMarket = am4core.create("marketFarmPie", am4charts.PieChart3D);
         chartPieMarket.innerRadius = am4core.percent(50);
 
@@ -3448,19 +3547,8 @@ $(document).ready(function () {
         marketPieSeries.slices.template.configField = "config"
 
         marketPieSeries.ticks.template.disabled = true;
-        //marketPieSeries.alignLabels = false;
         marketPieSeries.labels.template.text = "";
-    // marketPieSeries.labels.template.html = "{img}" 
-        //marketPieSeries.labels.template.radius = am4core.percent(-25);
-        //marketPieSeries.exportable = true
-        //marketPieSeries.exporting.menu = new am4core.ExportMenu();
-        //marketPieSeries.labels.template.fill = am4core.color("white");
 
-    // chartPieMarket.legend = new am4charts.Legend();
-        //chartPieMarket.legend.position = "left";
-
-        //marketPieSeries.labels.template.maxWidth = 500;
-        //marketPieSeries.labels.template.wrap = true;
 
         marketPieSeries.slices.template.tooltipText = "{category}: {value.value} HA"
 
@@ -3468,20 +3556,9 @@ $(document).ready(function () {
         marketPieSeries.slices.template.states.getKey("active").properties.shiftRadius = 0;
 
         let label = marketPieSeries.createChild(am4core.Label);
-        //label.horizontalCenter = "right";
-        //label.verticalCenter = "middle";
         label.textAlign = "middle"
-        //label.isMeasured = false;
         label.maxWidth = 150
-        //label.align = "center";
         label.y = -25;
-
-        // marketPieSeries.labels.template.adapter.add("radius", function(radius, target) {
-        //     if (target.dataItem && (target.dataItem.values.value.percent < 10)) {
-        //       return 0;
-        //     }
-        //     return radius;
-        // });
 
 
         $('#modalMarketPie').on('shown.bs.modal', function () {
@@ -4261,24 +4338,45 @@ $(document).ready(function () {
         
         //abrir modal del market
         $("#openModalPie").click(function(){
+            if(!stateAndFarmActives()) return
             $('#modalMarketPie').modal('show')
             $('a[href="#firstMarket"]').tab('show') 
         })
 
         $("#openModalMap").click(function(){
+            if(!stateAndFarmActives()) return
             $('#modalMarketPie').modal('show')
             $('a[href="#secondMarket"]').tab('show') 
         })
 
         $("#openModalPiramid").click(function(){
+            if(!stateAndFarmActives()) return
             $('#modalMarketPie').modal('show')
             $('a[href="#thirdMarket"]').tab('show') 
         })
 
         $("#openModalTree").click(function(){
+            if(!stateAndFarmActives()) return
             $('#modalMarketPie').modal('show')
             $('a[href="#fourthMarket"]').tab('show') 
         })
+
+        const stateAndFarmActives = () => {        
+            let activeFarms = []
+        
+            $('table > tbody  > tr > th').each(function(i, th) { 
+                const element = $(th)
+                if(element.attr('active') === "true" && !element.hasClass('ignore')){
+                    activeFarms.push(farm_products[element.attr('value')].adapterBase)
+                }
+            });
+
+            if(statesBaseMarket.length <= 0 || activeFarms.length <= 0){
+                return false
+            } 
+
+            return true
+        }
 })
 
 var formatter_1 = new Intl.NumberFormat('en-US', {
@@ -4300,11 +4398,6 @@ let productsByLt = []
 let ingredentsByProduct = {}
 let rowGeneraCountId = 0
 
-// var table22 = $('#${dinamyTableId}').DataTable( {
-//     "columnDefs": [
-//         { "width": "100px", "targets": 0 }
-//     ]
-// });
 
 const userCanSeePrice = $('#pricePermission').attr('permissiongranted')
 
@@ -5078,8 +5171,6 @@ $('#modalMarketFunnel').on('show.bs.modal', function (event) {
     series.labels.template.adapter.add("text", function(text, target) {
         let valueFormatter = formatComms(target.dataItem.label.dataItem.dataContext.value.toString())
 
-        console.log(valueFormatter)
-
         return target.dataItem.label.dataItem.dataContext.name.includes('Litros') ? `${text} \n $${valueFormatter}` : `${text} \n ${valueFormatter} HA`
     });
 
@@ -5528,108 +5619,8 @@ const buildRowsForAdvance = (farms, states, id) => {
 
 
 
-// create chart
-// var chart1111111111 = am4core.create("testiiing", am4plugins_sunburst.Sunburst);
-// chart1111111111.padding(0,0,0,0);
-// chart1111111111.radius = am4core.percent(98);
-
-// chart1111111111.data = [{
-//   name: "First",
-//   children: [
-//     { name: "A1", value: 100 },
-//     { name: "A2", value: 60 }
-//   ]
-// },
-// {
-//   name: "Second",
-//   children: [
-//     { name: "B1", value: 135 },
-//     { name: "B2", value: 98 }
-//   ]
-// },
-// {
-//   name: "Third",
-//   children: [
-//     {
-//       name: "C1",
-//       children: [
-//         { name: "EE1", value: 130 },
-//         { name: "EE2", value: 87 },
-//         { name: "EE3", value: 55 }
-//       ]
-//     },
-//     { name: "C2", value: 148 },
-//     {
-//       name: "C3", children: [
-//         { name: "CC1", value: 53 },
-//         { name: "CC2", value: 30 }
-//       ]
-//     },
-//     { name: "C4", value: 26 }
-//   ]
-// },
-// {
-//   name: "Fourth",
-//   children: [
-//     { name: "D1", value: 415 },
-//     { name: "D2", value: 148 },
-//     { name: "D3", value: 89 }
-//   ]
-// },
-// {
-//   name: "Fifth",
-//   children: [
-//     {
-//       name: "E1",
-//       children: [
-//         { name: "EE1", value: 33 },
-//         { name: "EE2", value: 40 },
-//         { name: "EE3", value: 89 }
-//       ]
-//     },
-//     {
-//       name: "E2",
-//       value: 148
-//     }
-//   ]
-// }];
-
-// chart1111111111.colors.step = 2;
-// chart1111111111.fontSize = 11;
-// chart1111111111.innerRadius = am4core.percent(10);
-
-// // define data fields
-// chart1111111111.dataFields.value = "value";
-// chart1111111111.dataFields.name = "name";
-// chart1111111111.dataFields.children = "children";
 
 
-// var level0SeriesTemplate111111111 = new am4plugins_sunburst.SunburstSeries();
-// level0SeriesTemplate111111111.hiddenInLegend = false;
-// chart1111111111.seriesTemplates.setKey("0", level0SeriesTemplate111111111)
 
-// // this makes labels to be hidden if they don't fit
-// level0SeriesTemplate111111111.labels.template.truncate = true;
-// level0SeriesTemplate111111111.labels.template.hideOversized = true;
-
-// level0SeriesTemplate111111111.labels.template.adapter.add("rotation", function(rotation, target) {
-//   target.maxWidth = target.dataItem.slice.radius - target.dataItem.slice.innerRadius - 10;
-//   target.maxHeight = Math.abs(target.dataItem.slice.arc * (target.dataItem.slice.innerRadius + target.dataItem.slice.radius) / 2 * am4core.math.RADIANS);
-
-//   return rotation;
-// })
-
-
-// var level1SeriesTemplate11111111 = level0SeriesTemplate111111111.clone();
-// chart1111111111.seriesTemplates.setKey("1", level1SeriesTemplate11111111)
-// level1SeriesTemplate11111111.fillOpacity = 0.75;
-// level1SeriesTemplate11111111.hiddenInLegend = true;
-
-// var level2SeriesTemplate11111111111 = level0SeriesTemplate111111111.clone();
-// chart1111111111.seriesTemplates.setKey("2", level2SeriesTemplate11111111111)
-// level2SeriesTemplate11111111111.fillOpacity = 0.5;
-// level2SeriesTemplate11111111111.hiddenInLegend = true;
-
-
-// $($.fn.dataTable.tables(true)).DataTable()
-//    .columns.adjust();
+$($.fn.dataTable.tables(true)).DataTable()
+   .columns.adjust();
