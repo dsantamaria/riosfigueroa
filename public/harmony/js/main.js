@@ -3190,7 +3190,7 @@ $(document).ready(function () {
             if(isActive){
                 $(event.currentTarget).attr('active', 'false')
                 $(event.currentTarget).removeClass('herbicida-product-market').addClass('default-color-product')
-                ('#herbicidaValue').text('$0')
+                $('#herbicidaValue').text('$0')
             }else{
                 $(event.currentTarget).attr('active', 'true')
                 $(event.currentTarget).removeClass('default-color-product').addClass('herbicida-product-market')
