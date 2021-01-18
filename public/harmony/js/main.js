@@ -3347,6 +3347,9 @@ $(document).ready(function () {
         //   let asBaseChart = pieSeriesBaseMarket.slices.template.states.getKey("active");
         //   asBaseChart.properties.shiftRadius = 0;
           
+          let hsMrket = pieSeriesBaseMarket.slices.template.states.getKey("hover");
+          hsMrket.properties.scale = 1;
+          
           // Set up labels
           var label1BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
           label1BaseMarket.text = "";
