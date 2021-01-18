@@ -36,23 +36,23 @@
                 <nav class="ts-sidebar">
                     <ul class="ts-sidebar-menu">
                         <li class="ts-label">Dashboard</li>
+                        @can('market')
+                            <li class="">
+                                <a href="#" class="parent parent-flex"><i class="fa fa-pie-chart"></i><div>MainFrame</div></a>
+                                <ul>
+                                    <li><a href="{{ route('market.index') }}">Análisis del Mercado</a></li>
+                                    @can('admin-role')
+                                        <li><a href="{{ route('market.farming') }}">Análisis por Cultivo</a></li>
+                                    @endcan
+                                </ul>
+                            </li>
+                        @endcan
                         @can('price')
                             <li>
                                 <a href="#" class="parent"><i class="fa fa-codepen"></i>Productos</a>
                                 <ul>
                                     <li><a href="{{ route('products.search') }}">Buscador de Productos</a></li>
                                     <li><a href="{{ route('products.index') }}">Listado Productos</a></li>
-                                </ul>
-                            </li>
-                        @endcan
-                        @can('market')
-                            <li class="">
-                                <a href="#" class="parent parent-flex"><i class="fa fa-pie-chart"></i><div>Análisis del Mercado Mexicano</div></a>
-                                <ul>
-                                    <li><a href="{{ route('market.index') }}">Análisis del Mercado</a></li>
-                                    @can('admin-role')
-                                        <li><a href="{{ route('market.farming') }}">Análisis del Mercado por Cultivo</a></li>
-                                    @endcan
                                 </ul>
                             </li>
                         @endcan

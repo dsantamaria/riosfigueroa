@@ -119,7 +119,6 @@ class MarketValueController extends Controller
             $farm_adapt = [];
             $farm_adapt_total = [];
             $total_superficie = 0;
-            $total_superficie_sembrada = 0;
 
             $state_adapt = [];
 
@@ -158,7 +157,7 @@ class MarketValueController extends Controller
                 $state_adapt[$state_trimmed][$farm] = $superficie_sembrada;
             }
 
-            return response()->json(array('farm_data' => $farm_adapt, 'total_state' => $farm_adapt_total, 'total_superficie' => $total_superficie, 'states_data' => $state_adapt, 'total_superficie_sembrada' => $total_superficie_sembrada))->setStatusCode(200);
+            return response()->json(array('farm_data' => $farm_adapt, 'total_state' => $farm_adapt_total, 'total_superficie' => $total_superficie, 'states_data' => $state_adapt))->setStatusCode(200);
             
         } catch (\Throwable $th) {
             Log::error($th->getMessage() . " in -> market_farming_values");

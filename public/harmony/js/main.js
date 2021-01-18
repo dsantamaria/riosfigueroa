@@ -18,7 +18,7 @@ const farm_products = {
     "CACAO": {'img': 'Cacao N.svg', 'imgB': 'Cacao color.svg', 'color': "#502d16ff" , "active": false, 'adapterBase': 'Cacao'},
     "CAF CEREZA": {'img': 'Café N.svg', 'imgB': 'Café color.svg', 'color': "#ac939dff" , "active": false, 'adapterBase': 'Café'},
     "CALABACITA": {'img': 'Calabacita N.svg', 'imgB': 'Calabacita color.svg', 'color': "#ffb380ff" , "active": false, 'adapterBase': 'Calabacita'},
-    "CAA DE AZUCAR": {'img': 'Caña de Azúcar N.svg', 'imgB': 'Caña de Azúcar color.svg', 'color': "#008000ff" , "active": false, 'adapterBase': 'Cana de Azúcar'},
+    "CAA DE AZUCAR": {'img': 'Caña de Azúcar N.svg', 'imgB': 'Caña de Azúcar color.svg', 'color': "#026f02ff" , "active": false, 'adapterBase': 'Cana de Azúcar'},
     
     "CEBOLLA": {'img': 'Cebolla N.svg', 'imgB': 'Cebolla color.svg', 'color': "#b3b3b3ff" , "active": false, 'adapterBase': 'Cebolla'},
     "CHILE VERDE": {'img': 'Chile Verde N.svg', 'imgB': 'Chile Verde color.svg', 'color': "#88aa00ff" , "active": false, 'adapterBase': 'Chile verde'},
@@ -26,7 +26,7 @@ const farm_products = {
     "CRISANTEMO (Gruesa)": {'img': 'Crisantemo N.svg', 'imgB': 'Crisantemo color.svg', 'color': "#37c8abff" , "active": false, 'adapterBase': 'Crisantemo'},
     "DURAZNO": {'img': 'Durazno N.svg', 'imgB': 'Durazno color.svg', 'color': "#ffccaaff" , "active": false, 'adapterBase': 'Durazno'},
     "ESPARRAGO": {'img': 'Esparrago N.svg', 'imgB': 'Esparrago color.svg', 'color': "#806600ff" , "active": false, 'adapterBase': 'Espárrago'},
-    "FRAMBUESA": {'img': 'Frambuesa N.svg', 'imgB': 'Frambuesa color.svg', 'color': "#800080ff" , "active": false, 'adapterBase': 'Frambuesa'},
+    "FRAMBUESA": {'img': 'Frambuesa N.svg', 'imgB': 'Frambuesa color.svg', 'color': "#750275ff" , "active": false, 'adapterBase': 'Frambuesa'},
     
     "FRESA": {'img': 'Fresa N.svg', 'imgB': 'Fresa color.svg', 'color': "#ffaaccff" , "active": false, 'adapterBase': 'Fresa'},
     "FRIJOL": {'img': 'Frijol N.svg', 'imgB': 'Frijol color.svg', 'color': "#d38d5fff" , "active": false, 'adapterBase': 'Frijol'},
@@ -65,9 +65,9 @@ const farm_products = {
 }
 
 const typeProductColors = {
-    'Insecticida' : "#ff0000",
-    'Herbicida' : "#008000",
-    'Fungicida' : "#800080",
+    'Insecticida' : "#c10000",
+    'Herbicida' : "#026f02",
+    'Fungicida' : "#750275",
     'Otro' : "#ffa500"
 }
 
@@ -2692,6 +2692,7 @@ $(document).ready(function () {
                                     counterString: (`${data["states_data"][state][farm].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} HA`).length
                                 }
                             }),
+                            collapsed: true
                         })
                     })
 
@@ -2767,7 +2768,6 @@ $(document).ready(function () {
                         name: `Total \n ${data["total_superficie"].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")} HA`,
                         children: farmForceTree,
                         collapsed: true,
-                        
                     }]
 
                     dataForModalForcedTree= [{
@@ -2776,9 +2776,7 @@ $(document).ready(function () {
                         collapsed: false,
                     }]
 
-                    label.text = "Total \n" + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " HA";
-                    label.x = -((total.toString().length * 5) + 130)
-                    label.fontSize =  22 - (total.toString().length * 1.2);
+                    label.text = "Total " + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " HA";
 
                     labelForModalPie = "Total \n" + total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") + " HA";
 
@@ -2810,6 +2808,11 @@ $(document).ready(function () {
 
             if(activesStates.length <= 0 || activeFarms.length <= 0){
                 pieChartBaseMarket.data = []
+                $('#insecticidaValue').text('$0')
+                $('#herbicidaValue').text('$0')
+                $('#fungicidaValue').text('$0')
+                $('#otrosValue').text('$0')
+                $('#totalValue').text('$0')
                 return
             }  
         
@@ -2837,7 +2840,7 @@ $(document).ready(function () {
                     $("#otros-product-market").attr('active') === "false" ? $('#otrosValue').text('$0') : $('#otrosValue').text('$' + formatPrice(otro.toString()))
                     $("#total-product-market").attr('active') === "false" ? $('#totalValue').text('$0') : $('#totalValue').text('$' + formatPrice(total.toString()))
 
-                    
+                    setTotalProductMarket()
 
                     dataForModalBaseMarket = activesStates.reduce((carry, state) => {
                         
@@ -3106,6 +3109,8 @@ $(document).ready(function () {
             let isActive = $(this).attr('active') === "true"
             $(this).attr('active', !isActive)
 
+            isActive ? $(this).html('Seleccionar Todos') : $(this).html('Remover Todos')
+
             mexicoIds.forEach(id => {
                 var us = polygonSeries.getPolygonById(id);
                 us.isActive = !isActive;
@@ -3317,7 +3322,7 @@ $(document).ready(function () {
         }
 
         ['insecticida', 'herbicida', 'fungicida', 'otro'].forEach((element, index) => {
-            let color = ["#ff0000", "#008000", "#800080", "#ffa500"]
+            let color = ["#c10000", "#026f02", "#750275", "#ffa500"]
             createSeriesxxxx(element, element, color[index]);
         });
         
@@ -3339,8 +3344,8 @@ $(document).ready(function () {
           pieSeriesBaseMarket.slices.template.propertyFields.fill = "color";
           pieSeriesBaseMarket.labels.template.disabled = true;
           
-          let asBaseChart = pieSeriesBaseMarket.slices.template.states.getKey("active");
-          asBaseChart.properties.shiftRadius = 0;
+        //   let asBaseChart = pieSeriesBaseMarket.slices.template.states.getKey("active");
+        //   asBaseChart.properties.shiftRadius = 0;
           
           // Set up labels
           var label1BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
@@ -3409,7 +3414,7 @@ $(document).ready(function () {
             $('#spinnerModalBase').addClass('hidden')
             $('#bodyBaseMarket').append(`
                 <div id="temporalBaseModal">
-                    <div style="font-size: 40px; font-weight: bold; text-align: center">Titulo opcional aqui</div>
+                    <div style="font-size: 40px; font-weight: bold; text-align: center">Resumen por cultivo</div>
                     <div id="baseModalChart" style="height: 85vh"></div>
                 </div>
             `)
@@ -3455,7 +3460,7 @@ $(document).ready(function () {
             }
 
             ['insecticida', 'herbicida', 'fungicida', 'otro'].forEach((element, index) => {
-                let color = ["#ff0000", "#008000", "#800080", "#ffa500"]
+                let color = ["#c10000", "#026f02", "#750275", "#ffa500"]
                 createSeriesxxxx(element, element, color[index]);
             });
             
@@ -3535,14 +3540,12 @@ $(document).ready(function () {
         var chartPieMarket = am4core.create("marketFarmPie", am4charts.PieChart3D);
         chartPieMarket.innerRadius = am4core.percent(50);
 
-
         // Add and configure Series
         let marketPieSeries = chartPieMarket.series.push(new am4charts.PieSeries3D());
         marketPieSeries.dataFields.value = "value";
         marketPieSeries.dataFields.category = "product";
         marketPieSeries.angle= 5;
         marketPieSeries.depth= 7;
-        marketPieSeries.dx = 45;
 
         marketPieSeries.slices.template.configField = "config"
 
@@ -3555,10 +3558,12 @@ $(document).ready(function () {
         marketPieSeries.slices.template.states.getKey("hover").properties.scale = 1;
         marketPieSeries.slices.template.states.getKey("active").properties.shiftRadius = 0;
 
-        let label = marketPieSeries.createChild(am4core.Label);
-        label.textAlign = "middle"
-        label.maxWidth = 150
-        label.y = -25;
+
+        var label = chartPieMarket.chartContainer.createChild(am4core.Label);
+        label.align = "center";
+        label.valign = "bottom"
+        label.fontSize = 15;
+        label.verticalCenter = "bottom"
 
 
         $('#modalMarketPie').on('shown.bs.modal', function () {
@@ -4485,9 +4490,9 @@ $('.addGeneralRowMarket').click(function(e){
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="13" rowspan="1" colspan="1">Costo&nbsp;por&nbsp;Ciclo&nbsp;por&nbsp;Ha</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="14" rowspan="1" colspan="1">Mercado&nbsp;Potencial&nbsp;Valor</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="15" rowspan="1" colspan="1">Mercado&nbsp;potencial&nbsp;en&nbsp;Ha&nbsp;Aplicadas</th>
-                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="16" rowspan="1" colspan="1">N°&nbsp;de&nbsp;aplicaciones&nbsp;deseadas</th>
-                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="17" rowspan="1" colspan="1">Mercado&nbsp;Deseado&nbsp;HA&nbsp;Aplicadas</th>
-                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="18" rowspan="1" colspan="1">Market&nbsp;Share&nbsp;Deseado</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="16" rowspan="1" colspan="1">N°&nbsp;de&nbsp;aplicaciones&nbsp;probables</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="17" rowspan="1" colspan="1">Mercado&nbsp;probable&nbsp;aplicado</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="18" rowspan="1" colspan="1">Objetivo</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="19" rowspan="1" colspan="1">MS&nbsp;Deseado&nbsp;en&nbsp;Ha</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="20" rowspan="1" colspan="1">Valor&nbsp;MS&nbsp;Deseado</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="21" rowspan="1" colspan="1">Litros&nbsp;equivalentes</th>
@@ -4802,7 +4807,7 @@ $('.panel-group').on("keyup", ".haTratadas", function(e){
 
     $(this).closest('.panel-default').find('.ApplicationsWish').each(function(){
         let ApplicationsWish = $(this).val()
-        let mulB = parseInt(ApplicationsWish) * parseInt(e.target.value.replace(/\D/g, ""))
+        let mulB = parseFloat(ApplicationsWish) * parseInt(e.target.value.replace(/\D/g, ""))
         let finalValueB = isNaN(mulB) ? "0" : formatComms(mulB.toString())
         $(this).closest('.marketTable').find('.wishMarketHaApplications').val(finalValueB)
         $(this).closest('.marketTable').find('.wishMarketHaApplications').change()
@@ -4822,11 +4827,15 @@ $('.panel-group').on("keyup", ".haTratadas", function(e){
 
 const getHaBystatesAndfarm = (states, farm, elem) => {
     let farms = [deleteAcentos(farm.toUpperCase())]
+
+    console.log(farm, states)
+
     $.ajax({
         type: "GET",
         url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms),
         success: function( data ) {
-            $(elem).val(formatComms(data["total_superficie_sembrada"].toString()))
+            console.log(data)
+            $(elem).val(formatComms(data["total_superficie"].toString()))
         },
         error: (e) => {
             console.log(e)
@@ -4965,7 +4974,7 @@ $('.panel-group').on("click", ".button-market-grahp", function(e){
 
         $.ajax({
             type: "GET",
-            url: '/market/getBaseValue/' + 'Tomate (Jitomate)' + '/' + JSON.stringify(states) + '/' + tipo,
+            url: '/market/getBaseValue/' + cultivoAdapt + '/' + JSON.stringify(states) + '/' + tipo,
             success: function( data ) {
                 let typevalue = data['typevalue'] > totalValue ? data['typevalue'] : data['typevalue'] + totalValue
 
@@ -5171,7 +5180,7 @@ $('#modalMarketFunnel').on('show.bs.modal', function (event) {
     series.labels.template.adapter.add("text", function(text, target) {
         let valueFormatter = formatComms(target.dataItem.label.dataItem.dataContext.value.toString())
 
-        return target.dataItem.label.dataItem.dataContext.name.includes('Litros') ? `${text} \n $${valueFormatter}` : `${text} \n ${valueFormatter} HA`
+        return target.dataItem.label.dataItem.dataContext.name.includes('Litros') ? `${text} \n ${valueFormatter}` : `${text} \n ${valueFormatter} HA`
     });
 
 
@@ -5345,7 +5354,7 @@ $('.panel-group').on("blur", ".pDistribuidor", function(e){
     let dosis = $(this).closest('.marketTable').find('.dosis').val()
 
     let pDistribuidorFloat = parseFloat(value.replace(/[$,]/gm, ""))
-    let dosisInt = parseInt(dosis)
+    let dosisInt = parseFloat(dosis)
     let priceHa = pDistribuidorFloat * dosisInt
     let finalValue = '$' + (isNaN(priceHa) ? "0.00" : formatPrice(priceHa.toFixed(2)))
     $(this).closest('.marketTable').find('.priceHa').val(finalValue)
@@ -5356,34 +5365,34 @@ $('.panel-group').on("blur", ".pDistribuidor", function(e){
     $(this).closest('.marketTable').find('.ltEquivalent').val(finalValueB)
 })
 
-$('.panel-group').on("keyup", ".pDistribuidor, .haTratadas, .MsPercent", function(e){
+$('.panel-group').on("keyup", ".pDistribuidor, .haTratadas, .MsPercent, .ApplicationsWish, .dosis, .numberApplications", function(e){
     if(e.keyCode===13){
         $(this).blur();
     }
 })
 
-$('.panel-group').on("keyup", ".dosis", function(e){
-    let value = e.target.value.replace(/\D/g, "")
+$('.panel-group').on("blur", ".dosis", function(e){
+    let value = formatPercent(e.target.value)
     $(this).val(value)
 
     let pDistribuidor = $(this).closest('.marketTable').find('.pDistribuidor').val()
 
     let pDistribuidorFloat = parseFloat(pDistribuidor.replace(/[$,]/gm, ""))
-    let dosisInt = parseInt(value)
+    let dosisInt = parseFloat(value)
     let priceHa = pDistribuidorFloat * dosisInt
     let finalValue = '$' + (isNaN(priceHa) ? "0.00" : formatPrice(priceHa.toFixed(2)))
     $(this).closest('.marketTable').find('.priceHa').val(finalValue)
     $(this).closest('.marketTable').find('.priceHa').change()
 })
 
-$('.panel-group').on("keyup", ".numberApplications", function(e){
-    let value = e.target.value.replace(/\D/g, "")
+$('.panel-group').on("blur", ".numberApplications", function(e){
+    let value = formatPercent(e.target.value)
     $(this).val(value)
     
     let priceHa = $(this).closest('.marketTable').find('.priceHa').val()
 
     let priceHaFloat = parseFloat(priceHa.replace(/[$,]/gm, ""))
-    let applicationInt = parseInt(value)
+    let applicationInt = parseFloat(value)
     let pricePerCicle = priceHaFloat * applicationInt
     $(this).closest('.marketTable').find('.pricePerCicle').val('$' + (isNaN(pricePerCicle) ? "0.00" : formatPrice(pricePerCicle.toFixed(2))))
     $(this).closest('.marketTable').find('.pricePerCicle').change()
@@ -5394,7 +5403,7 @@ $('.panel-group').on("keyup", ".numberApplications", function(e){
     $(this).closest('.marketTable').find('.potencialPriceHa').val(finalValue)
 
     
-    let wishApps = parseInt($(this).closest('.marketTable').find('.ApplicationsWish').val())
+    let wishApps = parseFloat($(this).closest('.marketTable').find('.ApplicationsWish').val())
 
     if(wishApps > applicationInt){
         $(this).closest('.marketTable').find('.ApplicationsWish').val(value)
@@ -5409,7 +5418,7 @@ $('.panel-group').on("change", ".priceHa", function(e){
     let priceHaFloat = parseFloat(value.replace(/[$,]/gm, ""))
 
     if(value.length > 0 &&  numberApplications.length > 0){
-        let applicationInt = parseInt(numberApplications)
+        let applicationInt = parseFloat(numberApplications)
         let pricePerCicle = priceHaFloat * applicationInt
         $(this).closest('.marketTable').find('.pricePerCicle').val('$' + formatPrice(pricePerCicle.toFixed(2)))
         $(this).closest('.marketTable').find('.pricePerCicle').change()
@@ -5430,12 +5439,12 @@ $('.panel-group').on("change", ".pricePerCicle", function(e){
     $(this).closest('.marketTable').find('.potencialPrice').val(finalValue)
 })
 
-$('.panel-group').on("keyup", ".ApplicationsWish", function(e){
-    let value = e.target.value.replace(/\D/g, "")
+$('.panel-group').on("blur", ".ApplicationsWish", function(e){
+    let value = formatPercent(e.target.value)
     $(this).val(value)
     
-    let applicationsValue =  parseInt($(this).closest('.marketTable').find('.numberApplications').val())
-    value = parseInt(value)
+    let applicationsValue =  parseFloat($(this).closest('.marketTable').find('.numberApplications').val())
+    value = parseFloat(value)
 
     if(value > applicationsValue){
         $(this).val(applicationsValue)
@@ -5487,7 +5496,7 @@ $('.panel-group').on("change", ".MsWishHa", function(e){
 $('.panel-group').on("change", ".MsWish", function(e){
     let MsWish = parseFloat(e.target.value.replace(/[$,]/gm, ""))
     let pDistribuidor = parseFloat(($(this).closest('.marketTable').find('.pDistribuidor').val()).replace(/[$,]/gm, ""))
-    let finalValue = isNaN((MsWish/pDistribuidor)) ? "$0.00" : '$' + formatComms((MsWish/pDistribuidor).toFixed(2))
+    let finalValue = isNaN((MsWish/pDistribuidor)) ? "0.00" : formatComms((MsWish/pDistribuidor).toFixed(2))
     $(this).closest('.marketTable').find('.ltEquivalent').val(finalValue)
 })
 

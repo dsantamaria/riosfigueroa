@@ -86,9 +86,9 @@
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="13" rowspan="1" colspan="1">Costo&nbsp;por&nbsp;Ciclo&nbsp;por&nbsp;Ha</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="14" rowspan="1" colspan="1">Mercado&nbsp;Potencial&nbsp;Valor</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="15" rowspan="1" colspan="1">Mercado&nbsp;potencial&nbsp;en&nbsp;Ha&nbsp;Aplicadas</th>
-                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="16" rowspan="1" colspan="1">N°&nbsp;de&nbsp;aplicaciones&nbsp;deseadas</th>
-                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="17" rowspan="1" colspan="1">Mercado&nbsp;Deseado&nbsp;HA&nbsp;Aplicadas</th>
-                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="18" rowspan="1" colspan="1">Market&nbsp;Share&nbsp;Deseado</th>
+                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="16" rowspan="1" colspan="1">N°&nbsp;de&nbsp;aplicaciones&nbsp;probables</th>
+                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="17" rowspan="1" colspan="1">Mercado&nbsp;probable&nbsp;aplicado</th>
+                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="18" rowspan="1" colspan="1">Objetivo</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="19" rowspan="1" colspan="1">MS&nbsp;Deseado&nbsp;en&nbsp;Ha</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="20" rowspan="1" colspan="1">Valor&nbsp;MS&nbsp;Deseado</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="21" rowspan="1" colspan="1">Litros&nbsp;equivalentes</th>
@@ -299,7 +299,7 @@
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CAF CEREZA" title="Café" product="cafe"><img src="/project_images/Café N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="COLIFLOR" title="Col (repollo)" product="coliflor"><img src="/project_images/Col (Repollo) N.svg" width="30px" height="30px"></th>
                         <th class="market-all ignore" active="false" data-toggle="tooltip" value="" title="" product=""><img src="/project_images/baseline_eco_black_48dp.png" width="30px" height="30px"></th>
-                        <th class="ignore" active="false" data-toggle="tooltip" value="" title="" product="" style="background-color: #0000008c"></th>
+                        <th class="ignore" active="false" data-toggle="tooltip" value="" title="" product="" style="background-color: white"></th>
                     </tr>
 
                     {{-- <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PASTOS Y PRADERAS" title="Pastos y praderas" product="pastos y praderas"><img src="/project_images/Pastos y Praderas N.svg" width="30px" height="30px"></th> --}}
@@ -342,11 +342,12 @@
     <div class="col-md-7">
         <div class="row">
             <div class="col-md-6">
-                <div id="mapMarket" style="width: 100%; height: 400px"></div>
-                <button id="selectFarmingAll" active="false">Seleccionar Todos</button>
-                {{-- <button id="removeFarmingAll">Remover Todos</button> --}}
-                <button id="selectFarmingRegion">Seleccionar Región</button>
-                <button id="saveRegion">Guardar Selección</button>
+                <div id="mapMarket" style="width: 80%; height: 400px; margin-left:10%"></div>
+                <div style="text-align: center">
+                    <button id="selectFarmingAll" active="false">Seleccionar Todos</button>
+                    <button id="selectFarmingRegion">Seleccionar Región</button>
+                    <button id="saveRegion">Guardar Selección</button>
+                </div>              
 
                 {{-- <div class="checkbox checkbox-primary row">
                     <div class="col-md-12" style="margin-bottom: 12px">
@@ -357,15 +358,16 @@
             </div>
             <div class="col-md-6">
                 <ul class="list-group">
-                    <li class="list-group-item list-group-item-danger" style="font-size: 24px; color: white;background-color: red;display: flex;justify-content: space-between;">Insecticida: <span id="insecticidaValue">$0</span></li>
-                    <li class="list-group-item list-group-item-success" style="font-size: 24px; color: white;background-color: green;display: flex;justify-content: space-between;">Herbicida: <span id="herbicidaValue">$0</span></li>
-                    <li class="list-group-item list-group-item-warning" style="font-size: 24px; color: white; background-color: purple;display: flex;justify-content: space-between;">Fungicida: <span id="fungicidaValue">$0</span></li>
+                    <li class="list-group-item list-group-item-danger" style="font-size: 24px; color: white;background-color:#c10000;display: flex;justify-content: space-between;">Insecticida: <span id="insecticidaValue">$0</span></li>
+                    <li class="list-group-item list-group-item-success" style="font-size: 24px; color: white;background-color:#026f02;display: flex;justify-content: space-between;">Herbicida: <span id="herbicidaValue">$0</span></li>
+                    <li class="list-group-item list-group-item-warning" style="font-size: 24px; color: white; background-color: #750275;display: flex;justify-content: space-between;">Fungicida: <span id="fungicidaValue">$0</span></li>
                     <li class="list-group-item list-group-item-warning" style="font-size: 24px; color: white;background-color: orange;display: flex;justify-content: space-between;">Otros: <span id="otrosValue">$0</span></li>
                     <li class="list-group-item list-group-item-info" style="font-size: 24px; color: white;background-color: darkblue;display: flex;justify-content: space-between;">Total: <span id="totalValue">$0</span></li>
                 </ul>
             </div>
 
             <div class="col-md-12">
+                <div style="text-align: center;padding-top: 10px;font-size: 15px;">Resumen por cultivo</div>
                 <div style="position: absolute;color: skyblue;top: 6px;right: 20px;z-index: 1" id="">
                     <i class="fa fa-asterisk fa-lg" aria-hidden="true"></i>
                 </div>
