@@ -3372,7 +3372,7 @@ $(document).ready(function () {
                 </div>
             `)
 
-            $('body').on("keyup", "#marketF5SuperficiePercent", function(e){
+            $('body').on("keyup", "#marketF5SuperficiePercent", function(e, obj){
                 let superficieTotal = parseInt($('#marketF5SuperficieSembrada').val().toString().replace(/,/g, ""))
                 let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
     
@@ -3388,9 +3388,7 @@ $(document).ready(function () {
                     $(this).val("")
                 }
 
-    
-                if(!firstLoadModalMarket){
-                    console.log('hola?')
+                if(obj == undefined){
                     $("#m5IncPercent").keyup()
                     $("#m5HerPercent").keyup()
                     $("#m5FunPercent").keyup()
@@ -3788,9 +3786,9 @@ $(document).ready(function () {
             label2BaseMarket1.text = '$' + formatComms(totalBase.toString())
             
             // // Auto-select first slice on load
-            pieChartBaseMarket1.events.on("ready", function(ev) {
-                firstLoadModalMarket = false
-            });
+            // pieChartBaseMarket1.events.on("ready", function(ev) {
+            //    firstLoadModalMarket = false
+            // });
 
 
             // Auto-select first slice on load
@@ -5149,7 +5147,8 @@ const getHaBystatesAndfarms = (states, farms, elem) => {
         url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms),
         success: function( data ) {
             $(elem).val(formatComms(data["total_superficie"].toString()))
-            $('#marketF5SuperficiePercent').keyup()
+            $('#marketF5SuperficiePercent').trigger('keyup', [{ extra : 'random string' }])
+            firstLoadModalMarket = false
         },
         error: (e) => {
             console.log(e)
