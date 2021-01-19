@@ -3362,15 +3362,15 @@ $(document).ready(function () {
 
         
         // let firstLoadModalMarket = true
-        // $('#modalBaseMarketConfig').on('shown.bs.modal', function () {
-        //     $('#spinnerModalBaseConfig').addClass('hidden')
-        //     $('#marketAdvanced').removeClass('hidden')
+        $('#modalBaseMarketConfig').on('shown.bs.modal', function () {
+            $('#spinnerModalBaseConfig').addClass('hidden')
+            $('#marketAdvanced').removeClass('hidden')
 
-        //     $('#bodyBaseMarketInnerConfig').html(`
-        //         <div id="temporalBaseModal" class="col-md-10" style="padding: 0px">
-        //             <div id="baseModalChart" style="height: 80vh"></div>
-        //         </div>
-        //     `)
+            $('#bodyBaseMarketInnerConfig').html(`
+                <div id="temporalBaseModal" class="col-md-10" style="padding: 0px">
+                    <div id="baseModalChart" style="height: 80vh"></div>
+                </div>
+            `)
 
         //     $('body').on("keyup", "#marketF5SuperficiePercent", function(e){
         //         let superficieTotal = parseInt($('#marketF5SuperficieSembrada').val().toString().replace(/,/g, ""))
@@ -3606,53 +3606,53 @@ $(document).ready(function () {
         //         getTotalValue()
         //     })
 
-            const getTotalValue = () => {
-                let removedStates = dataModalCopy.filter(val => {
-                    return activestates.includes(val.category) ? true : false
-                })
+            // const getTotalValue = () => {
+            //     let removedStates = dataModalCopy.filter(val => {
+            //         return activestates.includes(val.category) ? true : false
+            //     })
 
-                let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
+            //     let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
 
-                let total = removedStates.reduce((carry, val) => {
-                    val.breakdown.forEach(value => {
-                        if(adaptActiveFarms.includes(value.cultivo)){
-                            carry = carry + value.insecticida + value.fungicida + value.herbicida + value.otro
-                        }
-                    })
-                    return carry
-                }, 0)
+            //     let total = removedStates.reduce((carry, val) => {
+            //         val.breakdown.forEach(value => {
+            //             if(adaptActiveFarms.includes(value.cultivo)){
+            //                 carry = carry + value.insecticida + value.fungicida + value.herbicida + value.otro
+            //             }
+            //         })
+            //         return carry
+            //     }, 0)
 
-                label2BaseMarket.text = '$' + formatPrice(total.toString())
+            //     label2BaseMarket.text = '$' + formatPrice(total.toString())
                 
 
-                let initFarms = JSON.parse(JSON.stringify(dataModalCopy[0])).breakdown.filter(x => adaptActiveFarms.includes(x.cultivo)).map(val => {
-                    val.insecticida = 0
-                    val.herbicida = 0
-                    val.fungicida = 0
-                    val.otro = 0
-                    return val
-                })
+            //     let initFarms = JSON.parse(JSON.stringify(dataModalCopy[0])).breakdown.filter(x => adaptActiveFarms.includes(x.cultivo)).map(val => {
+            //         val.insecticida = 0
+            //         val.herbicida = 0
+            //         val.fungicida = 0
+            //         val.otro = 0
+            //         return val
+            //     })
 
-                columnData = removedStates.reduce((carry, val) => {
-                    val.breakdown.forEach(valBreak => {
-                        initFarms.forEach((carryVal, index) => {
-                            if(carryVal.cultivo === valBreak.cultivo){
-                                carry[index].insecticida = carry[index].insecticida + valBreak.insecticida
-                                carry[index].herbicida = carry[index].herbicida + valBreak.herbicida
-                                carry[index].fungicida = carry[index].fungicida + valBreak.fungicida
-                                carry[index].otro = carry[index].otro + valBreak.otro
-                            }
-                        })
-                    })
-                    return carry
-                }, initFarms)
+            //     columnData = removedStates.reduce((carry, val) => {
+            //         val.breakdown.forEach(valBreak => {
+            //             initFarms.forEach((carryVal, index) => {
+            //                 if(carryVal.cultivo === valBreak.cultivo){
+            //                     carry[index].insecticida = carry[index].insecticida + valBreak.insecticida
+            //                     carry[index].herbicida = carry[index].herbicida + valBreak.herbicida
+            //                     carry[index].fungicida = carry[index].fungicida + valBreak.fungicida
+            //                     carry[index].otro = carry[index].otro + valBreak.otro
+            //                 }
+            //             })
+            //         })
+            //         return carry
+            //     }, initFarms)
 
-                columnChartBaseMarket.data = columnData
-                //pieChartBaseMarket.data = dataModalCopy;
+            //     columnChartBaseMarket.data = columnData
+            //     //pieChartBaseMarket.data = dataModalCopy;
 
-                cleanForm()
+            //     cleanForm()
 
-            }
+            // }
 
             
             let dataModalCopy = dataForModalBaseMarket
