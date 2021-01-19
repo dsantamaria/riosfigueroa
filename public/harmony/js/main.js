@@ -3658,7 +3658,7 @@ $(document).ready(function () {
             let dataModalCopy = dataForModalBaseMarket
 
             let totalBase = dataModalCopy.reduce((carry, val) => {
-                carry = carry + val.value
+                carry = carry + parseFloat(val.value)
                 return carry
             }, 0)
 
@@ -3783,7 +3783,7 @@ $(document).ready(function () {
             label2BaseMarket1.horizontalCenter = "middle";
             label2BaseMarket1.fontSize = 20;
             label2BaseMarket1.dy = 20;
-            label2BaseMarket1.text = '$' + formatComms(totalBase.toString())
+            label2BaseMarket1.text = '$' + formatPrice(totalBase.toString())
             
             // // Auto-select first slice on load
             // pieChartBaseMarket1.events.on("ready", function(ev) {
