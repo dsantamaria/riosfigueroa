@@ -3387,8 +3387,10 @@ $(document).ready(function () {
                     $('#marketF5SuperficieVal').val("")
                     $(this).val("")
                 }
+
     
                 if(!firstLoadModalMarket){
+                    console.log('hola?')
                     $("#m5IncPercent").keyup()
                     $("#m5HerPercent").keyup()
                     $("#m5FunPercent").keyup()
@@ -3786,9 +3788,9 @@ $(document).ready(function () {
             label2BaseMarket1.text = '$' + formatComms(totalBase.toString())
             
             // // Auto-select first slice on load
-            // pieChartBaseMarket1.events.on("ready", function(ev) {
-            //    // pieSeriesBaseMarket1.slices.getIndex(0).isActive = true;
-            // });
+            pieChartBaseMarket1.events.on("ready", function(ev) {
+                firstLoadModalMarket = false
+            });
 
 
             // Auto-select first slice on load
@@ -5148,7 +5150,6 @@ const getHaBystatesAndfarms = (states, farms, elem) => {
         success: function( data ) {
             $(elem).val(formatComms(data["total_superficie"].toString()))
             $('#marketF5SuperficiePercent').keyup()
-            firstLoadModalMarket = false
         },
         error: (e) => {
             console.log(e)
