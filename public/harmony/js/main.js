@@ -3707,43 +3707,43 @@ $(document).ready(function () {
             
 
             // Create chart instance
-            let chartBaseMarketSmall = am4core.create("baseModalChart", am4core.Container);
-            chartBaseMarketSmall.width = am4core.percent(100);
-            chartBaseMarketSmall.height = am4core.percent(100);
-            chartBaseMarketSmall.layout = "horizontal";
+            let chartBaseMarketSmall1 = am4core.create("baseModalChart", am4core.Container);
+            chartBaseMarketSmall1.width = am4core.percent(100);
+            chartBaseMarketSmall1.height = am4core.percent(100);
+            chartBaseMarketSmall1.layout = "horizontal";
             
 
-            let columnChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.XYChart);
+            let columnChartBaseMarket1 = chartBaseMarketSmall1.createChild(am4charts.XYChart);
         
-            columnChartBaseMarket.data = columnData
+            columnChartBaseMarket1.data = columnData
 
-            columnChartBaseMarket.legend = new am4charts.Legend();
-            columnChartBaseMarket.legend.position = "bottom";
+            columnChartBaseMarket1.legend = new am4charts.Legend();
+            columnChartBaseMarket1.legend.position = "bottom";
 
             // Create axes
-            let categoryAxisBaseMarket = columnChartBaseMarket.yAxes.push(new am4charts.CategoryAxis());
-            categoryAxisBaseMarket.dataFields.category = "cultivo";
-            categoryAxisBaseMarket.renderer.grid.template.opacity = 0;
+            let categoryAxisBaseMarket1 = columnChartBaseMarket1.yAxes.push(new am4charts.CategoryAxis());
+            categoryAxisBaseMarket1.dataFields.category = "cultivo";
+            categoryAxisBaseMarket1.renderer.grid.template.opacity = 0;
 
-            let valueAxisBaseMarket = columnChartBaseMarket.xAxes.push(new am4charts.ValueAxis());
-            valueAxisBaseMarket.min = 0;
-            valueAxisBaseMarket.renderer.grid.template.opacity = 0;
-            valueAxisBaseMarket.renderer.ticks.template.strokeOpacity = 0.5;
-            valueAxisBaseMarket.renderer.ticks.template.stroke = am4core.color("#495C43");
-            valueAxisBaseMarket.renderer.ticks.template.length = 10;
-            valueAxisBaseMarket.renderer.line.strokeOpacity = 0.5;
-            valueAxisBaseMarket.renderer.baseGrid.disabled = true;
+            let valueAxisBaseMarket1 = columnChartBaseMarket1.xAxes.push(new am4charts.ValueAxis());
+            valueAxisBaseMarket1.min = 0;
+            valueAxisBaseMarket1.renderer.grid.template.opacity = 0;
+            valueAxisBaseMarket1.renderer.ticks.template.strokeOpacity = 0.5;
+            valueAxisBaseMarket1.renderer.ticks.template.stroke = am4core.color("#495C43");
+            valueAxisBaseMarket1.renderer.ticks.template.length = 10;
+            valueAxisBaseMarket1.renderer.line.strokeOpacity = 0.5;
+            valueAxisBaseMarket1.renderer.baseGrid.disabled = true;
 
             ['insecticida', 'herbicida', 'fungicida', 'otro'].forEach((element, index) => {
-                let color = ["#c10000", "#026f02", "#750275", "#ffa500"]
-                let series = columnChartBaseMarket.series.push(new am4charts.ColumnSeries());
-                series.dataFields.valueX = element;
-                series.dataFields.categoryY = "cultivo";
-                series.stacked = true;
-                series.name = element;
-                series.fill = color[index]
-                series.stroke = color[index]
-                series.columns.template.tooltipText = element + " ${valueX}";
+                let color1 = ["#c10000", "#026f02", "#750275", "#ffa500"]
+                let series1 = columnChartBaseMarket1.series.push(new am4charts.ColumnSeries());
+                series1.dataFields.valueX = element;
+                series1.dataFields.categoryY = "cultivo";
+                series1.stacked = true;
+                series1.name = element;
+                series1.fill = color1[index]
+                series1.stroke = color1[index]
+                series1.columns.template.tooltipText = element + " ${valueX}";
             });
             
 
@@ -3752,50 +3752,50 @@ $(document).ready(function () {
              */
             
             // Create chart instance
-            let pieChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.PieChart);
-            pieChartBaseMarket.data = dataForModalBaseMarket;
-            pieChartBaseMarket.innerRadius = am4core.percent(50);
+            let pieChartBaseMarket1 = chartBaseMarketSmall1.createChild(am4charts.PieChart);
+            pieChartBaseMarket1.data = dataForModalBaseMarket;
+            pieChartBaseMarket1.innerRadius = am4core.percent(50);
             
-            pieChartBaseMarket.legend = new am4charts.Legend();
+            pieChartBaseMarket1.legend = new am4charts.Legend();
             
             // Add and configure Series
-            let pieSeriesBaseMarket = pieChartBaseMarket.series.push(new am4charts.PieSeries());
-            pieSeriesBaseMarket.dataFields.value = "value";
-            pieSeriesBaseMarket.dataFields.category = "category";
-            pieSeriesBaseMarket.slices.template.propertyFields.fill = "color";
-            pieSeriesBaseMarket.labels.template.disabled = true;
+            let pieSeriesBaseMarket1 = pieChartBaseMarket1.series.push(new am4charts.PieSeries());
+            pieSeriesBaseMarket1.dataFields.value = "value";
+            pieSeriesBaseMarket1.dataFields.category = "category";
+            pieSeriesBaseMarket1.slices.template.propertyFields.fill = "color";
+            pieSeriesBaseMarket1.labels.template.disabled = true;
             
-            let asBaseChart = pieSeriesBaseMarket.slices.template.states.getKey("active");
-            asBaseChart.properties.shiftRadius = 0;
+            let asBaseChart1 = pieSeriesBaseMarket1.slices.template.states.getKey("active");
+            asBaseChart1.properties.shiftRadius = 0;
 
-            let hsMrket = pieSeriesBaseMarket.slices.template.states.getKey("hover");
-            hsMrket.properties.scale = 1;
+            let hsMrket1 = pieSeriesBaseMarket1.slices.template.states.getKey("hover");
+            hsMrket1.properties.scale = 1;
             
             // Set up labels
-            let label1BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
-            label1BaseMarket.text = "Total";
-            label1BaseMarket.horizontalCenter = "middle";
-            label1BaseMarket.fontSize = 35;
-            label1BaseMarket.fontWeight = 600;
-            label1BaseMarket.dy = -30;
+            let label1BaseMarket1 = pieChartBaseMarket1.seriesContainer.createChild(am4core.Label);
+            label1BaseMarket1.text = "Total";
+            label1BaseMarket1.horizontalCenter = "middle";
+            label1BaseMarket1.fontSize = 35;
+            label1BaseMarket1.fontWeight = 600;
+            label1BaseMarket1.dy = -30;
             
             
-            let label2BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
-            label2BaseMarket.horizontalCenter = "middle";
-            label2BaseMarket.fontSize = 20;
-            label2BaseMarket.dy = 20;
-            label2BaseMarket.text = '$' + formatComms(totalBase.toString())
+            let label2BaseMarket1 = pieChartBaseMarket1.seriesContainer.createChild(am4core.Label);
+            label2BaseMarket1.horizontalCenter = "middle";
+            label2BaseMarket1.fontSize = 20;
+            label2BaseMarket1.dy = 20;
+            label2BaseMarket1.text = '$' + formatComms(totalBase.toString())
             
             // // Auto-select first slice on load
-            // pieChartBaseMarket.events.on("ready", function(ev) {
-            //    // pieSeriesBaseMarket.slices.getIndex(0).isActive = true;
+            // pieChartBaseMarket1.events.on("ready", function(ev) {
+            //    // pieSeriesBaseMarket1.slices.getIndex(0).isActive = true;
             // });
 
 
             // Auto-select first slice on load
-            pieChartBaseMarket.legend.events.on("hit", function(ev) {
+            pieChartBaseMarket1.legend.events.on("hit", function(ev) {
                 activestates = []
-                pieChartBaseMarket.legend.children.each(function(s){
+                pieChartBaseMarket1.legend.children.each(function(s){
                     if(!s.isActive){
                         activestates.push(s.dataItem.dataContext.category)
                     }
