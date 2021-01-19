@@ -3616,7 +3616,7 @@ $(document).ready(function () {
                 let total = removedStates.reduce((carry, val) => {
                     val.breakdown.forEach(value => {
                         if(adaptActiveFarms.includes(value.cultivo)){
-                            carry = carry + value.insecticida + value.fungicida + value.herbicida + value.otro
+                            carry = carry + parseFloat(value.insecticida) + parseFloat(value.fungicida) + parseFloat(value.herbicida) + parseFloat(value.otro)
                         }
                     })
                     return carry
@@ -3637,10 +3637,10 @@ $(document).ready(function () {
                     val.breakdown.forEach(valBreak => {
                         initFarms.forEach((carryVal, index) => {
                             if(carryVal.cultivo === valBreak.cultivo){
-                                carry[index].insecticida = carry[index].insecticida + valBreak.insecticida
-                                carry[index].herbicida = carry[index].herbicida + valBreak.herbicida
-                                carry[index].fungicida = carry[index].fungicida + valBreak.fungicida
-                                carry[index].otro = carry[index].otro + valBreak.otro
+                                carry[index].insecticida = parseFloat(carry[index].insecticida) + parseFloat(valBreak.insecticida)
+                                carry[index].herbicida = parseFloat(carry[index].herbicida) + parseFloat(valBreak.herbicida)
+                                carry[index].fungicida = parseFloat(carry[index].fungicida) + parseFloat(valBreak.fungicida)
+                                carry[index].otro = parseFloat(carry[index].otro) + parseFloat(valBreak.otro)
                             }
                         })
                     })
