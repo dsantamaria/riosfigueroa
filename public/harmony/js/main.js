@@ -3590,69 +3590,69 @@ $(document).ready(function () {
         //         setNewValuesForPie(total)
         //     })
 
-        //     $('body').on('click', '#modalBaseFarms span', function(){
-        //         let isActive = $(this).attr('active') === 'true'
-        //         let val = $(this).attr('value')
-        //         isActive ? $(this).find('img').attr('src', '/project_images/' + farm_products[val].img) : $(this).find('img').attr('src', '/project_images/' + farm_products[val].imgB)
-        //         $(this).attr('active', !isActive)
+            $('body').on('click', '#modalBaseFarms span', function(){
+                let isActive = $(this).attr('active') === 'true'
+                let val = $(this).attr('value')
+                isActive ? $(this).find('img').attr('src', '/project_images/' + farm_products[val].img) : $(this).find('img').attr('src', '/project_images/' + farm_products[val].imgB)
+                $(this).attr('active', !isActive)
     
-        //         activeFarms = []
+                activeFarms = []
     
-        //         $('#modalBaseFarms span').each(function(){
-        //             let isActive = $(this).attr('active') === 'true'
-        //             isActive ? activeFarms.push($(this).attr('value')) : null
-        //         })
-        //         getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
-        //         getTotalValue()
-        //     })
+                $('#modalBaseFarms span').each(function(){
+                    let isActive = $(this).attr('active') === 'true'
+                    isActive ? activeFarms.push($(this).attr('value')) : null
+                })
+                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+                getTotalValue()
+            })
 
-            // const getTotalValue = () => {
-            //     let removedStates = dataModalCopy.filter(val => {
-            //         return activestates.includes(val.category) ? true : false
-            //     })
+            const getTotalValue = () => {
+                let removedStates = dataModalCopy.filter(val => {
+                    return activestates.includes(val.category) ? true : false
+                })
 
-            //     let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
+                let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
 
-            //     let total = removedStates.reduce((carry, val) => {
-            //         val.breakdown.forEach(value => {
-            //             if(adaptActiveFarms.includes(value.cultivo)){
-            //                 carry = carry + value.insecticida + value.fungicida + value.herbicida + value.otro
-            //             }
-            //         })
-            //         return carry
-            //     }, 0)
+                let total = removedStates.reduce((carry, val) => {
+                    val.breakdown.forEach(value => {
+                        if(adaptActiveFarms.includes(value.cultivo)){
+                            carry = carry + value.insecticida + value.fungicida + value.herbicida + value.otro
+                        }
+                    })
+                    return carry
+                }, 0)
 
-            //     label2BaseMarket.text = '$' + formatPrice(total.toString())
+                label2BaseMarket1.text = '$' + formatPrice(total.toString())
                 
 
-            //     let initFarms = JSON.parse(JSON.stringify(dataModalCopy[0])).breakdown.filter(x => adaptActiveFarms.includes(x.cultivo)).map(val => {
-            //         val.insecticida = 0
-            //         val.herbicida = 0
-            //         val.fungicida = 0
-            //         val.otro = 0
-            //         return val
-            //     })
+                let initFarms = JSON.parse(JSON.stringify(dataModalCopy[0])).breakdown.filter(x => adaptActiveFarms.includes(x.cultivo)).map(val => {
+                    val.insecticida = 0
+                    val.herbicida = 0
+                    val.fungicida = 0
+                    val.otro = 0
+                    return val
+                })
 
-            //     columnData = removedStates.reduce((carry, val) => {
-            //         val.breakdown.forEach(valBreak => {
-            //             initFarms.forEach((carryVal, index) => {
-            //                 if(carryVal.cultivo === valBreak.cultivo){
-            //                     carry[index].insecticida = carry[index].insecticida + valBreak.insecticida
-            //                     carry[index].herbicida = carry[index].herbicida + valBreak.herbicida
-            //                     carry[index].fungicida = carry[index].fungicida + valBreak.fungicida
-            //                     carry[index].otro = carry[index].otro + valBreak.otro
-            //                 }
-            //             })
-            //         })
-            //         return carry
-            //     }, initFarms)
+                columnData = removedStates.reduce((carry, val) => {
+                    val.breakdown.forEach(valBreak => {
+                        initFarms.forEach((carryVal, index) => {
+                            if(carryVal.cultivo === valBreak.cultivo){
+                                carry[index].insecticida = carry[index].insecticida + valBreak.insecticida
+                                carry[index].herbicida = carry[index].herbicida + valBreak.herbicida
+                                carry[index].fungicida = carry[index].fungicida + valBreak.fungicida
+                                carry[index].otro = carry[index].otro + valBreak.otro
+                            }
+                        })
+                    })
+                    return carry
+                }, initFarms)
 
-            //     columnChartBaseMarket.data = columnData
-            //     //pieChartBaseMarket.data = dataModalCopy;
+                columnChartBaseMarket1.data = columnData
+                //pieChartBaseMarket.data = dataModalCopy;
 
-            //     cleanForm()
+                cleanForm()
 
-            // }
+            }
 
             
             let dataModalCopy = dataForModalBaseMarket
@@ -3702,7 +3702,7 @@ $(document).ready(function () {
 
             /****** SETEO INICIAL DE VALORES CONFIG BASE */
             //$('#marketF5SuperficieSembrada').val(formatComms(dataForModalConfig['haSembradas'].toString()))
-            //getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+            getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
             
             
 
@@ -3801,8 +3801,8 @@ $(document).ready(function () {
                         activestates.push(s.dataItem.dataContext.category)
                     }
                 })
-                //getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
-                //getTotalValue() 
+                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+                getTotalValue() 
             });
             
         })
