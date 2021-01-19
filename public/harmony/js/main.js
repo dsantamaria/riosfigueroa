@@ -3743,7 +3743,7 @@ $(document).ready(function () {
                 series.name = element;
                 series.fill = color[index]
                 series.stroke = color[index]
-                series.columns.template.tooltipText = field + " ${valueX}";
+                series.columns.template.tooltipText = element + " ${valueX}";
             });
             
 
