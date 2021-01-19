@@ -3655,49 +3655,49 @@ $(document).ready(function () {
             // }
 
             
-            let dataModalCopy = dataForModalBaseMarket
+            // let dataModalCopy = dataForModalBaseMarket
 
-            let totalBase = dataModalCopy.reduce((carry, val) => {
-                carry = carry + val.value
-                return carry
-            }, 0)
+            // let totalBase = dataModalCopy.reduce((carry, val) => {
+            //     carry = carry + val.value
+            //     return carry
+            // }, 0)
 
-            let initFarms = JSON.parse(JSON.stringify(dataModalCopy[0])).breakdown.map(val => {
-                val.insecticida = 0
-                val.herbicida = 0
-                val.fungicida = 0
-                val.otro = 0
-                return val
-            })
+            // let initFarms = JSON.parse(JSON.stringify(dataModalCopy[0])).breakdown.map(val => {
+            //     val.insecticida = 0
+            //     val.herbicida = 0
+            //     val.fungicida = 0
+            //     val.otro = 0
+            //     return val
+            // })
 
-            let columnData = dataModalCopy.reduce((carry, val) => {
-                val.breakdown.forEach(valBreak => {
-                    initFarms.forEach((carryVal, index) => {
-                        if(carryVal.cultivo === valBreak.cultivo){
-                            carry[index].insecticida = carry[index].insecticida + valBreak.insecticida
-                            carry[index].herbicida = carry[index].herbicida + valBreak.herbicida
-                            carry[index].fungicida = carry[index].fungicida + valBreak.fungicida
-                            carry[index].otro = carry[index].otro + valBreak.otro
-                        }
-                    })
-                })
-                return carry
-            }, initFarms)
+            // let columnData = dataModalCopy.reduce((carry, val) => {
+            //     val.breakdown.forEach(valBreak => {
+            //         initFarms.forEach((carryVal, index) => {
+            //             if(carryVal.cultivo === valBreak.cultivo){
+            //                 carry[index].insecticida = carry[index].insecticida + valBreak.insecticida
+            //                 carry[index].herbicida = carry[index].herbicida + valBreak.herbicida
+            //                 carry[index].fungicida = carry[index].fungicida + valBreak.fungicida
+            //                 carry[index].otro = carry[index].otro + valBreak.otro
+            //             }
+            //         })
+            //     })
+            //     return carry
+            // }, initFarms)
 
             
-            let activestates = Object.values(states).filter(val => val.active === true ).map(val => val.name)
-            let activeFarms = []
+            // let activestates = Object.values(states).filter(val => val.active === true ).map(val => val.name)
+            // let activeFarms = []
         
-            $('table > tbody  > tr > th').each(function(i, th) { 
-                const element = $(th)
-                if(element.attr('active') === "true" && !element.hasClass('ignore')){
-                    activeFarms.push(element.attr('value'))
-                }
-            });
+            // $('table > tbody  > tr > th').each(function(i, th) { 
+            //     const element = $(th)
+            //     if(element.attr('active') === "true" && !element.hasClass('ignore')){
+            //         activeFarms.push(element.attr('value'))
+            //     }
+            // });
             
-            activeFarms.map(val => {
-                $('#modalBaseFarms').append(`<span data-toggle="tooltip" active="true" value="${val}" title="${farm_products[val].adapterBase}"><img src="${'/project_images/' + farm_products[val].imgB}" width="35px" height="35px"></span>`)
-            })
+            // activeFarms.map(val => {
+            //     $('#modalBaseFarms').append(`<span data-toggle="tooltip" active="true" value="${val}" title="${farm_products[val].adapterBase}"><img src="${'/project_images/' + farm_products[val].imgB}" width="35px" height="35px"></span>`)
+            // })
                 
 
             /****** SETEO INICIAL DE VALORES CONFIG BASE */
@@ -3715,7 +3715,7 @@ $(document).ready(function () {
 
             let columnChartBaseMarket1 = chartBaseMarketSmall1.createChild(am4charts.XYChart);
         
-            columnChartBaseMarket1.data = columnData
+            columnChartBaseMarket1.data = []
 
             columnChartBaseMarket1.legend = new am4charts.Legend();
             columnChartBaseMarket1.legend.position = "bottom";
