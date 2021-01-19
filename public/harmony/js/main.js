@@ -3734,22 +3734,17 @@ $(document).ready(function () {
             valueAxisBaseMarket.renderer.line.strokeOpacity = 0.5;
             valueAxisBaseMarket.renderer.baseGrid.disabled = true;
 
-            // Create series
-            // function createSeriesxxxx(field, name, color) {
-            //     let series = columnChartBaseMarket.series.push(new am4charts.ColumnSeries());
-            //     series.dataFields.valueX = field;
-            //     series.dataFields.categoryY = "cultivo";
-            //     series.stacked = true;
-            //     series.name = name;
-            //     series.fill = color
-            //     series.stroke = color
-            //     series.columns.template.tooltipText = field + " ${valueX}";
-            // }
-
-            // ['insecticida', 'herbicida', 'fungicida', 'otro'].forEach((element, index) => {
-            //     let color = ["#c10000", "#026f02", "#750275", "#ffa500"]
-            //     createSeriesxxxx(element, element, color[index]);
-            // });
+            ['insecticida', 'herbicida', 'fungicida', 'otro'].forEach((element, index) => {
+                let color = ["#c10000", "#026f02", "#750275", "#ffa500"]
+                let series = columnChartBaseMarket.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueX = element;
+                series.dataFields.categoryY = "cultivo";
+                series.stacked = true;
+                series.name = element;
+                series.fill = color[index]
+                series.stroke = color[index]
+                series.columns.template.tooltipText = field + " ${valueX}";
+            });
             
 
             /**
