@@ -3716,7 +3716,7 @@ $(document).ready(function () {
             let columnChartBaseMarket1 = chartBaseMarketSmall1.createChild(am4charts.XYChart);
         
             console.log(columnData)
-            columnChartBaseMarket1.data = []
+            columnChartBaseMarket1.data = columnData
 
             columnChartBaseMarket1.legend = new am4charts.Legend();
             columnChartBaseMarket1.legend.position = "bottom";
