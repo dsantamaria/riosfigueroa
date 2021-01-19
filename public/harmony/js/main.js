@@ -3702,7 +3702,7 @@ $(document).ready(function () {
 
             /****** SETEO INICIAL DE VALORES CONFIG BASE */
             //$('#marketF5SuperficieSembrada').val(formatComms(dataForModalConfig['haSembradas'].toString()))
-            getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+            //getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
             
             
 
@@ -3713,7 +3713,7 @@ $(document).ready(function () {
             chartBaseMarketSmall.layout = "horizontal";
             
 
-            var columnChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.XYChart);
+            let columnChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.XYChart);
         
             columnChartBaseMarket.data = columnData
 
@@ -3721,11 +3721,11 @@ $(document).ready(function () {
             columnChartBaseMarket.legend.position = "bottom";
 
             // Create axes
-            var categoryAxisBaseMarket = columnChartBaseMarket.yAxes.push(new am4charts.CategoryAxis());
+            let categoryAxisBaseMarket = columnChartBaseMarket.yAxes.push(new am4charts.CategoryAxis());
             categoryAxisBaseMarket.dataFields.category = "cultivo";
             categoryAxisBaseMarket.renderer.grid.template.opacity = 0;
 
-            var valueAxisBaseMarket = columnChartBaseMarket.xAxes.push(new am4charts.ValueAxis());
+            let valueAxisBaseMarket = columnChartBaseMarket.xAxes.push(new am4charts.ValueAxis());
             valueAxisBaseMarket.min = 0;
             valueAxisBaseMarket.renderer.grid.template.opacity = 0;
             valueAxisBaseMarket.renderer.ticks.template.strokeOpacity = 0.5;
@@ -3800,8 +3800,8 @@ $(document).ready(function () {
                         activestates.push(s.dataItem.dataContext.category)
                     }
                 })
-                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
-                getTotalValue() 
+                //getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+                //getTotalValue() 
             });
             
         })
