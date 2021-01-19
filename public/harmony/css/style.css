@@ -1405,12 +1405,13 @@ canvas{
   display: flex
 }
 
-#firstMarket, #secondMarket, #thirdMarket, #fourthMarket, #bodyBaseMarket{
+#firstMarket, #secondMarket, #thirdMarket, #fourthMarket{
   height: 85vh; 
 }
 
-#bodyBaseMarket{
+#bodyBaseMarket, #bodyBaseMarketConfig{
   height: 95vh; 
+  overflow: auto;
 }
 
 .modalCharttitle {
@@ -1618,4 +1619,15 @@ canvas{
 .center-td{
   vertical-align: middle !important;
   text-align: center !important;
+}
+
+.modalDownload{
+  position: absolute; 
+  top: 10px; 
+  right: 10px; 
+  cursor: pointer
+}
+
+.modalDownload:hover{
+  color: skyblue;
 }

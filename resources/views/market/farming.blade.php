@@ -368,7 +368,7 @@
 
             <div class="col-md-12">
                 <div style="text-align: center;padding-top: 10px;font-size: 15px;">Resumen por cultivo</div>
-                <div style="position: absolute;color: skyblue;top: 6px;right: 20px;z-index: 1" id="">
+                <div style="position: absolute;color: skyblue;top: 6px;right: 20px;z-index: 1;cursor: pointer" id="toggleModalBaseMarketConfig">
                     <i class="fa fa-asterisk fa-lg" aria-hidden="true"></i>
                 </div>
                 <div style="position: absolute;top: 8px;right: 45px;z-index: 1;cursor: pointer" id="toggleModalBaseMarket">
@@ -533,9 +533,93 @@
                 <h4 class="modal-title">Analisis de market share</h4>
             </div> --}}
             <div class="modal-body" id="bodyBaseMarket">
+                <div class="col-md-12">
+                    <div style="font-size: 40px; font-weight: bold; text-align: center">Resumen por cultivo</div>
+                    <div class="modalDownload"><i class="fa fa-download fa-2x" aria-hidden="true"></i></div>
+                </div>
                 <div class="spinner" id="spinnerModalBase">
                     <i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i>
                 </div>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modalBaseMarketConfig">
+        <div class="modal-dialog" role="document" style="width: 95%">
+          <div class="modal-content">
+            {{-- <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Analisis de market share</h4>
+            </div> --}}
+            <div class="modal-body" id="bodyBaseMarketConfig">
+                <div class="col-md-12">
+                    <div style="font-size: 40px; font-weight: bold; text-align: center">Resumen por cultivo</div>
+                    <div class="modalDownload"><i class="fa fa-download fa-2x" aria-hidden="true"></i></div>
+                </div>
+                
+                <div class="spinner" id="spinnerModalBaseConfig">
+                    <i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+                </div>
+
+                <div id="bodyBaseMarketInnerConfig">
+
+                </div>
+                
+                <div class="row hidden col-md-2" id="marketAdvanced" style="margin-top: 7vh; padding: 0px">
+                    <div class="col-md-12" style="font-size: 15px; font-weight: bold">Cultivos</div>
+                    <div id="modalBaseFarms" class="col-md-12" style="cursor: pointer;">
+                    </div>
+                    <div class="col-md-12" style="border-color: gray; height: 1px; background-color: gray; width: 100%; margin-top: 20px; margin-bottom: 20px"></div>
+                    <div>
+                        <div class="form-group col-md-12">
+                            <label>Superficie sembrada</label>
+                            <input type="text" class="form-control" disabled="disabled" placeholder="0" id="marketF5SuperficieSembrada" valueNum="0">
+                        </div>
+                        {{-- <div class="row" style="padding-left: 15px;padding-right: 15px;display: flex;align-items: center;"> --}}
+                            <div class="form-group col-md-12">
+                                <label for="marketF5SuperficiePercent">Superficie tratada %</label>
+                                <input type="text" class="form-control" id="marketF5SuperficiePercent" placeholder="0">
+                            </div>
+                            {{-- <div class="col-md-12" style="font-size: 40px;text-align: center;">=</div> --}}
+                            <div class="form-group col-md-12">
+                                <label for="marketF5SuperficieVal">Superficie tratada HA</label>
+                                <input type="text" class="form-control" id="marketF5SuperficieVal" placeholder="0">
+                            </div>
+                        {{-- </div> --}}
+                        
+                        <div class="form-group col-md-12">
+                            <label for="marketF5GastoTotal">Gasto total de agro por HA</label>
+                            <input type="text" class="form-control" id="marketF5GastoTotal" placeholder="$0">
+                        </div>
+                        <div class="form-group col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label for="marketF5Inc">Gasto en % por sector</label>
+                                </div>
+                
+                                <div class="col-md-12">
+                                    <input id="m5IncPercent" type="text" class="form-control" placeholder="Insecticida" style="border-color: red; margin-bottom: 5px">
+                                </div>
+                                <div class="col-md-12">
+                                    <input id="m5HerPercent" type="text" class="form-control" placeholder="Herbicida" style="border-color: green; margin-bottom: 5px">
+                                </div>
+                                <div class="col-md-12">
+                                    <input id="m5FunPercent" type="text" class="form-control" placeholder="Fungicida" style="border-color: purple; margin-bottom: 5px">
+                                </div>
+                                <div class="col-md-12">
+                                    <input id="m5OtrPercent" type="text" class="form-control" placeholder="Otros" style="border-color: orange; margin-bottom: 5px">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12" style="text-align: center;">
+                            <button class="btn btn-primary" style="font-size: 15px">Salvar</button>
+                        </div>
+                    </div>
+                </div>
+                
+                
             </div>
           </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

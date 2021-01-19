@@ -2618,8 +2618,6 @@ $(document).ready(function () {
     //----------------------------------------------------general
     AmCharts.ready(function () {
        
-        let farmProducts = []
-        let farmSector = []
         let labelForModalPie = ""
         let dataForModalPie = []
         let dataForModalTree = []
@@ -2627,6 +2625,7 @@ $(document).ready(function () {
         let dataForModalForcedTree = []
         let dataForModalBaseMarket = []
         let piramidMaxValue = 0
+        let dataForModalConfig = []
 
         const searchMarketFarmValues = () => {
             let activesStates = []
@@ -2669,16 +2668,21 @@ $(document).ready(function () {
                     let farmPiramid = []
                     let farmForceTree = [] 
                     let total = 0
-
+                    
+                    dataForModalConfig['haSembradas'] = data["total_superficie"]
+                    dataForModalConfig['dataPerState'] = data["states_data"]
+            
                     farmKeys.forEach(product => total = total + data["farm_data"][product])
 
                     stateKeys.forEach(state => {
+                        
                         const stateFarmKeys = Object.keys(data["states_data"][state])
 
                         let totalState = stateFarmKeys.reduce((carry, farm )=> {
                             carry = carry + data["states_data"][state][farm]
                             return carry
                         }, 0)
+
 
                         return farmForceTree.push({
                             name: state,
@@ -2875,192 +2879,6 @@ $(document).ready(function () {
                 }
             });
         }
-
-        $('#toggleAdvancedMarket').click(function() {
-            
-        })
-
-
-
-        /*$('body').on("keyup", "#marketF5SuperficiePercent", function(e){
-            let superficieTotal = $('#marketF5SuperficieSembrada').attr('valueNum')
-            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
-
-            if(value != ""){
-                let valueMax = parseInt(value.replace(/,/g, "")) >= 100 ? 100 : value
-                $(this).val(valueMax)
-
-                let valueForHa = (superficieTotal * parseFloat(valueMax))/100
-
-                $('#marketF5SuperficieVal').val(formatPrice(valueForHa.toString()))
-            }else{
-                $('#marketF5SuperficieVal').val("")
-                $(this).val("")
-            }
-
-            $("#m5IncPercent").keyup()
-            $("#m5HerPercent").keyup()
-            $("#m5FunPercent").keyup()
-            $("#m5OtrPercent").keyup()
-        })
-
-        $('body').on("keyup", "#marketF5SuperficieVal", function(e){
-            let superficieTotal = $('#marketF5SuperficieSembrada').attr('valueNum')
-            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
-
-
-            if(value != "" && superficieTotal > 0){
-                let valueMax = parseInt(value.replace(/,/g, "")) >= superficieTotal ? superficieTotal : value
-                $(this).val(valueMax)
-
-                let valueForPer = ((100 * parseFloat(valueMax.replace(/,/g, "")))/superficieTotal).toFixed(2)
-                $('#marketF5SuperficiePercent').val(valueForPer)
-            }else{
-                $('#marketF5SuperficiePercent').val("")
-                $(this).val("")
-            }
-
-            $("#m5IncPercent").keyup()
-            $("#m5HerPercent").keyup()
-            $("#m5FunPercent").keyup()
-            $("#m5OtrPercent").keyup()
-        })
-
-        $('body').on("keyup", "#marketF5GastoTotal", function(e){
-            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
-            $(this).val(value)
-
-            $("#m5IncPercent").keyup()
-            $("#m5HerPercent").keyup()
-            $("#m5FunPercent").keyup()
-            $("#m5OtrPercent").keyup()
-        })
-
-        $('body').on("keyup", "#m5IncPercent", function(e){
-            let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
-            let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
-            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
-            let incVal = 0
-
-            let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
-            let v3 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
-            let v4 = parseFloat($('#m5OtrPercent').val() ? $('#m5OtrPercent').val() : 0)
-
-            let maxValue = 100
-            let restValue = maxValue - (v2 + v3 + v4)
-
-            if(value == "" || parseFloat(value) <= restValue){
-                $(this).val(value)
-                if(value == "") value = 0
-                incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
-                let total = v2 + v3 + v4 + parseFloat(value)
-                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
-
-            }else{
-                $(this).val("")
-                let total = v2 + v3 + v4
-                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
-                incVal = 0
-                alert("La suma de los porcentajes no puede execeder el 100%")
-            }
-
-            $('#insecticidaValue').text('$' + formatEntryWithDot(incVal.toString()))
-        })
-
-        $('body').on("keyup", "#m5HerPercent", function(e){
-            let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
-            let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
-            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
-            let incVal = 0
-
-            let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
-            let v3 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
-            let v4 = parseFloat($('#m5OtrPercent').val() ? $('#m5OtrPercent').val() : 0)
-
-            let maxValue = 100
-            let restValue = maxValue - (v1 + v3 + v4)
-
-            if(value == "" || parseFloat(value) <= restValue){
-                $(this).val(value)
-                if(value == "") value = 0
-                incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
-                let total = v1 + v3 + v4 + parseFloat(value)
-                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
-            }else{
-                $(this).val(0)
-                let total = v1 + v3 + v4
-                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
-                incVal = 0
-                alert("La suma de los porcentajes no puede execeder el 100%")
-            }
-
-            $('#herbicidaValue').text('$' + formatEntryWithDot(incVal.toString()))
-            
-        })
-
-        $('body').on("keyup", "#m5FunPercent", function(e){
-            let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
-            let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
-            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
-            let incVal = 0
-
-            let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
-            let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
-            let v3 = parseFloat($('#m5OtrPercent').val() ? $('#m5OtrPercent').val() : 0)
-
-            let maxValue = 100
-            let restValue = maxValue - (v1 + v2 + v3)
-
-            if(value == "" || parseFloat(value) <= restValue){
-                $(this).val(value)
-                if(value == "") value = 0
-                incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
-                let total = v1 + v2 + v3 + parseFloat(value)
-                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
-            }else{
-                $(this).val(0)
-                let total = v2 + v2 + v3
-                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
-                incVal = 0
-                alert("La suma de los porcentajes no puede execeder el 100%")
-            }
-
-            $('#fungicidaValue').text('$' + formatEntryWithDot(incVal.toString()))
-            
-        })
-
-        $('body').on("keyup", "#m5OtrPercent", function(e){
-            let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
-            let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
-            let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
-            let incVal = 0
-
-            let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
-            let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
-            let v4 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
-
-            let maxValue = 100
-            let restValue = maxValue - (v1 + v2 + v4)
-
-            if(value == "" || parseFloat(value) <= restValue){
-                $(this).val(value)
-                if(value == "") value = 0
-                incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
-                let total = v1 + v2 + v4 + parseFloat(value)
-                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
-            }else{
-                $(this).val(0)
-                let total = v2 + v2 + v4
-                $('#totalValue').text('$' + formatEntryWithDot(((total * (superficieHa * gastoTotal))/100).toString()))
-                incVal = 0
-                alert("La suma de los porcentajes no puede execeder el 100%")
-            }
-
-            $('#otrosValue').text('$' + formatEntryWithDot(incVal.toString()))
-            
-        })*/
-
-
 
 
 
@@ -3273,12 +3091,6 @@ $(document).ready(function () {
         })
 
 
-        $("#toggleModalBaseMarket").click(function(){
-            if(!stateAndFarmActives()) return
-            $('#modalBaseMarket').modal('show')
-        })
-
-
         //---------------------------------------------------------grafica de baseMarketSmall
           
         // Create chart instance
@@ -3412,13 +3224,16 @@ $(document).ready(function () {
           });
 
 
+        $("#toggleModalBaseMarket").click(function(){
+            if(!stateAndFarmActives()) return
+            $('#modalBaseMarket').modal('show')
+        })
 
         $('#modalBaseMarket').on('shown.bs.modal', function () {
             $('#spinnerModalBase').addClass('hidden')
             $('#bodyBaseMarket').append(`
-                <div id="temporalBaseModal">
-                    <div style="font-size: 40px; font-weight: bold; text-align: center">Resumen por cultivo</div>
-                    <div id="baseModalChart" style="height: 85vh"></div>
+                <div id="temporalBaseModal" class="col-md-12" style="padding: 0px">
+                    <div id="baseModalChart" style="height: 80vh"></div>
                 </div>
             `)
 
@@ -3473,30 +3288,34 @@ $(document).ready(function () {
              */
             
             // Create chart instance
-            var pieChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.PieChart);
+            let pieChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.PieChart);
             pieChartBaseMarket.data = dataForModalBaseMarket;
             pieChartBaseMarket.innerRadius = am4core.percent(50);
             
+            pieChartBaseMarket.legend = new am4charts.Legend();
             
             // Add and configure Series
-            var pieSeriesBaseMarket = pieChartBaseMarket.series.push(new am4charts.PieSeries());
+            let pieSeriesBaseMarket = pieChartBaseMarket.series.push(new am4charts.PieSeries());
             pieSeriesBaseMarket.dataFields.value = "value";
             pieSeriesBaseMarket.dataFields.category = "category";
             pieSeriesBaseMarket.slices.template.propertyFields.fill = "color";
             pieSeriesBaseMarket.labels.template.disabled = true;
             
-            let asBaseChart = pieSeriesBaseMarket.slices.template.states.getKey("active");
-            asBaseChart.properties.shiftRadius = 0;
+            // let asBaseChart = pieSeriesBaseMarket.slices.template.states.getKey("active");
+            // asBaseChart.properties.shiftRadius = 0;
+
+            let hsMrket = pieSeriesBaseMarket.slices.template.states.getKey("hover");
+            hsMrket.properties.scale = 1;
             
             // Set up labels
-            var label1BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
+            let label1BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
             label1BaseMarket.text = "";
             label1BaseMarket.horizontalCenter = "middle";
             label1BaseMarket.fontSize = 35;
             label1BaseMarket.fontWeight = 600;
             label1BaseMarket.dy = -30;
             
-            var label2BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
+            let label2BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
             label2BaseMarket.text = "";
             label2BaseMarket.horizontalCenter = "middle";
             label2BaseMarket.fontSize = 20;
@@ -3533,6 +3352,483 @@ $(document).ready(function () {
         $('#modalBaseMarket').on('hide.bs.modal', function () {
             $('#temporalBaseModal').remove()
             $('#spinnerModalBase').removeClass('hidden')
+        })
+
+
+        $("#toggleModalBaseMarketConfig").click(function(){
+            if(!stateAndFarmActives()) return
+            $('#modalBaseMarketConfig').modal('show')
+        })
+
+        
+        let firstLoadModalMarket = true
+        $('#modalBaseMarketConfig').on('shown.bs.modal', function () {
+            $('#spinnerModalBaseConfig').addClass('hidden')
+            $('#marketAdvanced').removeClass('hidden')
+
+            $('#bodyBaseMarketInnerConfig').html(`
+                <div id="temporalBaseModal" class="col-md-10" style="padding: 0px">
+                    <div id="baseModalChart" style="height: 80vh"></div>
+                </div>
+            `)
+
+            $('body').on("keyup", "#marketF5SuperficiePercent", function(e){
+                let superficieTotal = parseInt($('#marketF5SuperficieSembrada').val().toString().replace(/,/g, ""))
+                let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
+    
+                if(value != ""){
+                    let valueMax = parseInt(value.replace(/,/g, "")) >= 100 ? 100 : value
+                    $(this).val(valueMax)
+    
+                    let valueForHa = (superficieTotal * parseFloat(valueMax))/100
+    
+                    $('#marketF5SuperficieVal').val(formatPrice(valueForHa.toString()))
+                }else{
+                    $('#marketF5SuperficieVal').val("")
+                    $(this).val("")
+                }
+    
+                if(!firstLoadModalMarket){
+                    $("#m5IncPercent").keyup()
+                    $("#m5HerPercent").keyup()
+                    $("#m5FunPercent").keyup()
+                    $("#m5OtrPercent").keyup()
+                }
+            })
+    
+            $('body').on("keyup", "#marketF5SuperficieVal", function(e){
+                let superficieTotal = parseInt($('#marketF5SuperficieSembrada').val().toString().replace(/,/g, ""))
+                let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
+    
+    
+                if(value != "" && superficieTotal > 0){
+                    let valueMax = parseInt(value.replace(/,/g, "")) >= superficieTotal ? superficieTotal : value
+                    $(this).val(valueMax)
+    
+                    let valueForPer = ((100 * parseFloat(valueMax.replace(/,/g, "")))/superficieTotal).toFixed(2)
+                    $('#marketF5SuperficiePercent').val(valueForPer)
+                }else{
+                    $('#marketF5SuperficiePercent').val("")
+                    $(this).val("")
+                }
+    
+                $("#m5IncPercent").keyup()
+                $("#m5HerPercent").keyup()
+                $("#m5FunPercent").keyup()
+                $("#m5OtrPercent").keyup()
+            })
+    
+            $('body').on("keyup", "#marketF5GastoTotal", function(e){
+                let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value)
+                $(this).val(value)
+    
+                $("#m5IncPercent").keyup()
+                $("#m5HerPercent").keyup()
+                $("#m5FunPercent").keyup()
+                $("#m5OtrPercent").keyup()
+            })
+
+            const setNewValuesForPie = (total) => {
+                let states = activestates.length
+                let stateVale = total/states
+                let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
+                let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+
+                let newValues = JSON.parse(JSON.stringify(dataModalCopy)).map(val => {
+                    val.value = activestates.includes(val.category) ? (stateVale * (superficieHa * gastoTotal))/100 : 0
+                    return val
+                })
+
+                pieChartBaseMarket.data = newValues
+            }
+    
+            $('body').on("keyup", "#m5IncPercent", function(e){
+                let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
+                let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+                let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
+                let incVal = 0
+    
+                let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
+                let v3 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
+                let v4 = parseFloat($('#m5OtrPercent').val() ? $('#m5OtrPercent').val() : 0)
+    
+                let maxValue = 100
+                let restValue = maxValue - (v2 + v3 + v4)
+                let total = 0
+    
+                if(value == "" || parseFloat(value) <= restValue){
+                    $(this).val(value)
+                    if(value == "") value = 0
+                    incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
+                    total = v2 + v3 + v4 + parseFloat(value)
+                }else{
+                    $(this).val("")
+                    total = v2 + v3 + v4
+                    incVal = 0
+                    alert("La suma de los porcentajes no puede execeder el 100%")
+                }
+
+                label2BaseMarket.text = '$' + formatPrice(((total * (superficieHa * gastoTotal))/100).toString())
+
+                columnData = columnData.map(val => {
+                    val.insecticida = incVal / activeFarms.length
+                    return val
+                })
+
+                columnChartBaseMarket.data = columnData
+                setNewValuesForPie(total)
+            })
+    
+            $('body').on("keyup", "#m5HerPercent", function(e){
+                let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
+                let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+                let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
+                let herVal = 0
+    
+                let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
+                let v3 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
+                let v4 = parseFloat($('#m5OtrPercent').val() ? $('#m5OtrPercent').val() : 0)
+    
+                let maxValue = 100
+                let restValue = maxValue - (v1 + v3 + v4)
+                let total = 0
+    
+                if(value == "" || parseFloat(value) <= restValue){
+                    $(this).val(value)
+                    if(value == "") value = 0
+                    herVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
+                    total = v1 + v3 + v4 + parseFloat(value)
+                }else{
+                    $(this).val(0)
+                    total = v1 + v3 + v4
+                    herVal = 0
+                    alert("La suma de los porcentajes no puede execeder el 100%")
+                }
+
+                label2BaseMarket.text = '$' + formatPrice(((total * (superficieHa * gastoTotal))/100).toString())
+    
+                columnData = columnData.map(val => {
+                    val.herbicida = herVal / activeFarms.length
+                    return val
+                })
+
+                columnChartBaseMarket.data = columnData
+                setNewValuesForPie(total)
+            })
+    
+            $('body').on("keyup", "#m5FunPercent", function(e){
+                let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
+                let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+                let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
+                let funVal = 0
+    
+                let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
+                let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
+                let v3 = parseFloat($('#m5OtrPercent').val() ? $('#m5OtrPercent').val() : 0)
+    
+                let maxValue = 100
+                let restValue = maxValue - (v1 + v2 + v3)
+                let total = 0
+    
+                if(value == "" || parseFloat(value) <= restValue){
+                    $(this).val(value)
+                    if(value == "") value = 0
+                    funVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
+                    total = v1 + v2 + v3 + parseFloat(value)
+                }else{
+                    $(this).val(0)
+                    total = v2 + v2 + v3
+                    funVal = 0
+                    alert("La suma de los porcentajes no puede execeder el 100%")
+                }
+
+                label2BaseMarket.text = '$' + formatPrice(((total * (superficieHa * gastoTotal))/100).toString())
+    
+                columnData = columnData.map(val => {
+                    val.fungicida = funVal / activeFarms.length
+                    return val
+                })
+
+                columnChartBaseMarket.data = columnData
+                setNewValuesForPie(total)
+            })
+    
+            $('body').on("keyup", "#m5OtrPercent", function(e){
+                let superficieHa = $('#marketF5SuperficieVal').val() ? parseFloat($('#marketF5SuperficieVal').val().replace(/,/g, "")) : 0
+                let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+                let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
+                let otr = 0
+    
+                let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
+                let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
+                let v4 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
+    
+                let maxValue = 100
+                let restValue = maxValue - (v1 + v2 + v4)
+                let total = 0
+    
+                if(value == "" || parseFloat(value) <= restValue){
+                    $(this).val(value)
+                    if(value == "") value = 0
+                    otr = (parseFloat(value) * (superficieHa * gastoTotal))/100
+                    total = v1 + v2 + v4 + parseFloat(value)
+                }else{
+                    $(this).val(0)
+                    total = v2 + v2 + v4
+                    otr = 0
+                    alert("La suma de los porcentajes no puede execeder el 100%")
+                }
+
+                label2BaseMarket.text = '$' + formatPrice(((total * (superficieHa * gastoTotal))/100).toString())
+    
+                columnData = columnData.map(val => {
+                    val.otro = otr / activeFarms.length
+                    return val
+                })
+
+                columnChartBaseMarket.data = columnData
+                setNewValuesForPie(total)
+            })
+
+            $('body').on('click', '#modalBaseFarms span', function(){
+                let isActive = $(this).attr('active') === 'true'
+                let val = $(this).attr('value')
+                isActive ? $(this).find('img').attr('src', '/project_images/' + farm_products[val].img) : $(this).find('img').attr('src', '/project_images/' + farm_products[val].imgB)
+                $(this).attr('active', !isActive)
+    
+                activeFarms = []
+    
+                $('#modalBaseFarms span').each(function(){
+                    let isActive = $(this).attr('active') === 'true'
+                    isActive ? activeFarms.push($(this).attr('value')) : null
+                })
+                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+                getTotalValue()
+            })
+
+            const getTotalValue = () => {
+                let removedStates = dataModalCopy.filter(val => {
+                    return activestates.includes(val.category) ? true : false
+                })
+
+                let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
+
+                let total = removedStates.reduce((carry, val) => {
+                    val.breakdown.forEach(value => {
+                        if(adaptActiveFarms.includes(value.cultivo)){
+                            carry = carry + value.insecticida + value.fungicida + value.herbicida + value.otro
+                        }
+                    })
+                    return carry
+                }, 0)
+
+                label2BaseMarket.text = '$' + formatPrice(total.toString())
+                
+
+                let initFarms = JSON.parse(JSON.stringify(dataModalCopy[0])).breakdown.filter(x => adaptActiveFarms.includes(x.cultivo)).map(val => {
+                    val.insecticida = 0
+                    val.herbicida = 0
+                    val.fungicida = 0
+                    val.otro = 0
+                    return val
+                })
+
+                columnData = removedStates.reduce((carry, val) => {
+                    val.breakdown.forEach(valBreak => {
+                        initFarms.forEach((carryVal, index) => {
+                            if(carryVal.cultivo === valBreak.cultivo){
+                                carry[index].insecticida = carry[index].insecticida + valBreak.insecticida
+                                carry[index].herbicida = carry[index].herbicida + valBreak.herbicida
+                                carry[index].fungicida = carry[index].fungicida + valBreak.fungicida
+                                carry[index].otro = carry[index].otro + valBreak.otro
+                            }
+                        })
+                    })
+                    return carry
+                }, initFarms)
+
+                columnChartBaseMarket.data = columnData
+                //pieChartBaseMarket.data = dataModalCopy;
+
+                cleanForm()
+
+            }
+
+            
+            let dataModalCopy = dataForModalBaseMarket
+
+            let totalBase = dataModalCopy.reduce((carry, val) => {
+                carry = carry + val.value
+                return carry
+            }, 0)
+
+            let initFarms = JSON.parse(JSON.stringify(dataModalCopy[0])).breakdown.map(val => {
+                val.insecticida = 0
+                val.herbicida = 0
+                val.fungicida = 0
+                val.otro = 0
+                return val
+            })
+
+            let columnData = dataModalCopy.reduce((carry, val) => {
+                val.breakdown.forEach(valBreak => {
+                    initFarms.forEach((carryVal, index) => {
+                        if(carryVal.cultivo === valBreak.cultivo){
+                            carry[index].insecticida = carry[index].insecticida + valBreak.insecticida
+                            carry[index].herbicida = carry[index].herbicida + valBreak.herbicida
+                            carry[index].fungicida = carry[index].fungicida + valBreak.fungicida
+                            carry[index].otro = carry[index].otro + valBreak.otro
+                        }
+                    })
+                })
+                return carry
+            }, initFarms)
+
+            
+            let activestates = Object.values(states).filter(val => val.active === true ).map(val => val.name)
+            let activeFarms = []
+        
+            $('table > tbody  > tr > th').each(function(i, th) { 
+                const element = $(th)
+                if(element.attr('active') === "true" && !element.hasClass('ignore')){
+                    activeFarms.push(element.attr('value'))
+                }
+            });
+            
+            activeFarms.map(val => {
+                $('#modalBaseFarms').append(`<span data-toggle="tooltip" active="true" value="${val}" title="${farm_products[val].adapterBase}"><img src="${'/project_images/' + farm_products[val].imgB}" width="35px" height="35px"></span>`)
+            })
+                
+
+            /****** SETEO INICIAL DE VALORES CONFIG BASE */
+            //$('#marketF5SuperficieSembrada').val(formatComms(dataForModalConfig['haSembradas'].toString()))
+            getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+            
+            
+
+            // Create chart instance
+            let chartBaseMarketSmall = am4core.create("baseModalChart", am4core.Container);
+            chartBaseMarketSmall.width = am4core.percent(100);
+            chartBaseMarketSmall.height = am4core.percent(100);
+            chartBaseMarketSmall.layout = "horizontal";
+            
+
+            var columnChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.XYChart);
+        
+            columnChartBaseMarket.data = columnData
+
+            columnChartBaseMarket.legend = new am4charts.Legend();
+            columnChartBaseMarket.legend.position = "bottom";
+
+            // Create axes
+            var categoryAxisBaseMarket = columnChartBaseMarket.yAxes.push(new am4charts.CategoryAxis());
+            categoryAxisBaseMarket.dataFields.category = "cultivo";
+            categoryAxisBaseMarket.renderer.grid.template.opacity = 0;
+
+            var valueAxisBaseMarket = columnChartBaseMarket.xAxes.push(new am4charts.ValueAxis());
+            valueAxisBaseMarket.min = 0;
+            valueAxisBaseMarket.renderer.grid.template.opacity = 0;
+            valueAxisBaseMarket.renderer.ticks.template.strokeOpacity = 0.5;
+            valueAxisBaseMarket.renderer.ticks.template.stroke = am4core.color("#495C43");
+            valueAxisBaseMarket.renderer.ticks.template.length = 10;
+            valueAxisBaseMarket.renderer.line.strokeOpacity = 0.5;
+            valueAxisBaseMarket.renderer.baseGrid.disabled = true;
+
+            // Create series
+            function createSeriesxxxx(field, name, color) {
+                let series = columnChartBaseMarket.series.push(new am4charts.ColumnSeries());
+                series.dataFields.valueX = field;
+                series.dataFields.categoryY = "cultivo";
+                series.stacked = true;
+                series.name = name;
+                series.fill = color
+                series.stroke = color
+                series.columns.template.tooltipText = field + " ${valueX}";
+            }
+
+            ['insecticida', 'herbicida', 'fungicida', 'otro'].forEach((element, index) => {
+                let color = ["#c10000", "#026f02", "#750275", "#ffa500"]
+                createSeriesxxxx(element, element, color[index]);
+            });
+            
+
+            /**
+             * Pie chart
+             */
+            
+            // Create chart instance
+            let pieChartBaseMarket = chartBaseMarketSmall.createChild(am4charts.PieChart);
+            pieChartBaseMarket.data = dataForModalBaseMarket;
+            pieChartBaseMarket.innerRadius = am4core.percent(50);
+            
+            pieChartBaseMarket.legend = new am4charts.Legend();
+            
+            // Add and configure Series
+            let pieSeriesBaseMarket = pieChartBaseMarket.series.push(new am4charts.PieSeries());
+            pieSeriesBaseMarket.dataFields.value = "value";
+            pieSeriesBaseMarket.dataFields.category = "category";
+            pieSeriesBaseMarket.slices.template.propertyFields.fill = "color";
+            pieSeriesBaseMarket.labels.template.disabled = true;
+            
+            let asBaseChart = pieSeriesBaseMarket.slices.template.states.getKey("active");
+            asBaseChart.properties.shiftRadius = 0;
+
+            let hsMrket = pieSeriesBaseMarket.slices.template.states.getKey("hover");
+            hsMrket.properties.scale = 1;
+            
+            // Set up labels
+            let label1BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
+            label1BaseMarket.text = "Total";
+            label1BaseMarket.horizontalCenter = "middle";
+            label1BaseMarket.fontSize = 35;
+            label1BaseMarket.fontWeight = 600;
+            label1BaseMarket.dy = -30;
+            
+            
+            let label2BaseMarket = pieChartBaseMarket.seriesContainer.createChild(am4core.Label);
+            label2BaseMarket.horizontalCenter = "middle";
+            label2BaseMarket.fontSize = 20;
+            label2BaseMarket.dy = 20;
+            label2BaseMarket.text = '$' + formatComms(totalBase.toString())
+            
+            // // Auto-select first slice on load
+            // pieChartBaseMarket.events.on("ready", function(ev) {
+            //    // pieSeriesBaseMarket.slices.getIndex(0).isActive = true;
+            // });
+
+
+            // Auto-select first slice on load
+            pieChartBaseMarket.legend.events.on("hit", function(ev) {
+                activestates = []
+                pieChartBaseMarket.legend.children.each(function(s){
+                    if(!s.isActive){
+                        activestates.push(s.dataItem.dataContext.category)
+                    }
+                })
+                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+                getTotalValue()
+            });
+            
+        })
+
+        const cleanForm = () => {
+            $('#m5IncPercent').val("")
+            $('#m5HerPercent').val("")
+            $('#m5FunPercent').val("")
+            $('#m5OtrPercent').val("")
+            $('#marketF5SuperficiePercent').val('')
+            $('#marketF5SuperficieVal').val('')
+            $('#marketF5GastoTotal').val('')
+        }
+
+        $('#modalBaseMarketConfig').on('hide.bs.modal', function () {
+            $('#temporalBaseModal').remove()
+            $('#spinnerModalBase').removeClass('hidden')
+            $('#marketAdvanced').addClass('hidden')
+            $('#modalBaseFarms').html('')
+            $('body').off('click', '#modalBaseFarms span')
+            firstLoadModalMarket = true
+            cleanForm()
         })
             
             
@@ -4831,14 +5127,27 @@ $('.panel-group').on("keyup", ".haTratadas", function(e){
 const getHaBystatesAndfarm = (states, farm, elem) => {
     let farms = [deleteAcentos(farm.toUpperCase())]
 
-    console.log(farm, states)
+    $.ajax({
+        type: "GET",
+        url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms),
+        success: function( data ) {
+            $(elem).val(formatComms(data["total_superficie"].toString()))
+        },
+        error: (e) => {
+            console.log(e)
+        }
+    });
+}
+
+const getHaBystatesAndfarms = (states, farms, elem) => {
 
     $.ajax({
         type: "GET",
         url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms),
         success: function( data ) {
-            console.log(data)
             $(elem).val(formatComms(data["total_superficie"].toString()))
+            $('#marketF5SuperficiePercent').keyup()
+            firstLoadModalMarket = false
         },
         error: (e) => {
             console.log(e)
