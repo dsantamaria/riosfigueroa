@@ -3702,7 +3702,7 @@ $(document).ready(function () {
 
             /****** SETEO INICIAL DE VALORES CONFIG BASE */
             //$('#marketF5SuperficieSembrada').val(formatComms(dataForModalConfig['haSembradas'].toString()))
-            getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+            //getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
             
             
 
@@ -3805,8 +3805,8 @@ $(document).ready(function () {
                         activestates.push(s.dataItem.dataContext.category)
                     }
                 })
-                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
-                getTotalValue()
+                //getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+                //getTotalValue()
             });
             
         })
