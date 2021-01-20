@@ -3432,7 +3432,7 @@ $(document).ready(function () {
 
             const setNewValuesForPie = (total) => {
                 let superficiePer = $('#marketF5SuperficiePercent').val() ? parseFloat($('#marketF5SuperficiePercent').val()) : 0
-                let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
+                let gastoTotal = $('#marketF5GastoTotal').val() ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
                 let v1 = parseFloat($('#m5IncPercent').val() ? $('#m5IncPercent').val() : 0)
                 let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
                 let v3 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
@@ -3443,7 +3443,7 @@ $(document).ready(function () {
 
                     if(activestates.includes(val.category)){
                         activeFarms.forEach(x => {
-                            totalState = dataForModalConfig[val.category][x] + totalState
+                            totalState = parseFloat(dataForModalConfig[val.category][x]) + totalState
                         })
                     }
 
@@ -3485,7 +3485,6 @@ $(document).ready(function () {
                 let superficiePer = $('#marketF5SuperficiePercent').val() ? parseFloat($('#marketF5SuperficiePercent').val()) : 0
                 let gastoTotal = parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) ? parseFloat($('#marketF5GastoTotal').val().replace(/,/g, "")) : 0
                 let value = e.target.value.length <= 0 ? "" : formatEntryWithDot(e.target.value).replace(/,/g, "")
-                let incVal = 0
     
                 let v2 = parseFloat($('#m5HerPercent').val() ? $('#m5HerPercent').val() : 0)
                 let v3 = parseFloat($('#m5FunPercent').val() ? $('#m5FunPercent').val() : 0)
@@ -3498,12 +3497,10 @@ $(document).ready(function () {
                 if(value == "" || parseFloat(value) <= restValue){
                     $(this).val(value)
                     if(value == "") value = 0
-                    incVal = (parseFloat(value) * (superficieHa * gastoTotal))/100
                     total = v2 + v3 + v4 + parseFloat(value)
                 }else{
                     $(this).val("")
                     total = v2 + v3 + v4
-                    incVal = 0
                     alert("La suma de los porcentajes no puede execeder el 100%")
                 }
 
