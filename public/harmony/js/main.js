@@ -3446,8 +3446,6 @@ $(document).ready(function () {
                             totalState = parseFloat(dataForModalConfig[val.category][x]) + totalState
                         })
                     }
-                    console.log(superficiePer, totalState, gastoTotal, v1, v2, v3, v4)
-                    console.log( ((((superficiePer * totalState) / 100) * gastoTotal) * (v1 + v2 + v3 + v4)) / 100 )
 
                     val.value = ((((superficiePer * totalState) / 100) * gastoTotal) * (v1 + v2 + v3 + v4)) / 100
 
@@ -3464,7 +3462,7 @@ $(document).ready(function () {
                 let farmsHa = dataStates.reduce((carry, state) => {
                     if(activestates.includes(state)){
                         if(Object.keys(carry).length > 0){
-                            Object.keys(carry).forEach(x => carry[x] = carry[x] + dataCopy[state][x])
+                            Object.keys(carry).forEach(x => carry[x] = parseFloat(carry[x]) + parseFloat(dataCopy[state][x]))
                         }else{
                             carry = dataCopy[state]
                         }
