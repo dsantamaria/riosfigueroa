@@ -2661,6 +2661,17 @@ $(document).ready(function () {
                 type: "GET",
                 url: '/market/farming/values/'+ JSON.stringify(activesStates) + "/" + JSON.stringify(activeFarms),
                 success: function( data ) {
+                    if(parseInt(data['total_superficie']) <= 0){
+                        chartPieMarket.data = []
+                        marketFarmTree.data = []
+                        totalFarmChart.data = []
+                        marketPiramidState.data = []
+                        chartForcedTree.data = []
+                        dataForModalPie = []
+                        label.text = "";
+                        labelForModalPie = "";
+                        return 
+                    }
                     const farmKeys = Object.keys(data["farm_data"])
                     const stateKeys = Object.keys(data["states_data"])
                     let farmsPie = []
