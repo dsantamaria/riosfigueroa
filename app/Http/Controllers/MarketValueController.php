@@ -216,9 +216,9 @@ class MarketValueController extends Controller
                 "Guerrero",
                 "Hidalgo",
                 "Jalisco",
+                "México",
                 "Michoacán",
                 "Morelos",
-                "México",
                 "Nayarit",
                 "Nuevo León",
 
@@ -245,6 +245,7 @@ class MarketValueController extends Controller
                 if($key < 2 || $key > 33) continue;
 
                 foreach ($sheet as $key => $row) {
+
                     $cultivo = $row[1];
                     if($cultivo === "" || $cultivo === "Cultivo" || $cultivo === " " || $cultivo === null) continue;
                     
@@ -256,8 +257,8 @@ class MarketValueController extends Controller
                     $state = $states[$stateCount];
 
                     $data['año'] = '2019';
-                    $data['cultivo'] = $cultivo;
-                    $data['estado'] = $state;
+                    $data['cultivo'] = trim($cultivo);
+                    $data['estado'] = trim($state);
                     $data['herbicida'] =  $herb == "" ? 0 : $herb;
                     $data['insecticida'] =  $inse == "" ? 0 : $inse;
                     $data['fungicida'] =  $fung == "" ? 0 : $fung;
@@ -271,6 +272,8 @@ class MarketValueController extends Controller
             }
         }
     }
+
+
     
     public function getBaseValue($farm, $states, $producType){
         $states = json_decode($states);

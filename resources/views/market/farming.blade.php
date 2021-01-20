@@ -298,7 +298,7 @@
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ZARZAMORA" title="Zarzamora" product="zarzamora"><img src="/project_images/Zarzamora N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CAF CEREZA" title="Café" product="cafe"><img src="/project_images/Café N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="COLIFLOR" title="Col (repollo)" product="coliflor"><img src="/project_images/Col (Repollo) N.svg" width="30px" height="30px"></th>
-                        <th class="market-all ignore" active="false" data-toggle="tooltip" value="" title="" product=""><img src="/project_images/baseline_eco_black_48dp.png" width="30px" height="30px"></th>
+                        <th class="market-all ignore" active="false" data-toggle="tooltip" value="" title="" product=""><img src="/project_images/none.png" width="30px" height="30px"></th>
                         <th class="ignore" active="false" data-toggle="tooltip" value="" title="" product="" style="background-color: white"></th>
                     </tr>
 
@@ -378,71 +378,6 @@
             </div>
         </div>
     </div>
-
-    {{-- <div class="col-md-8 col-md-offset-4" style="">
-
-        <div id="testiiing" style="height: 400px"></div>
-
-        {{-- <div style="padding-bottom: 5px;color: skyblue;cursor: pointer;font-weight: bold;" id="toggleAdvancedMarket">
-            <i class="fa fa-asterisk" aria-hidden="true"></i> Configuraciones avanzadas
-        </div> --}}
-
-        {{-- <div class="row hidden" id="marketAdvanced">
-            <div class="form-group col-md-12">
-                <label>Superficie sembrada</label>
-                <input type="text" class="form-control" disabled="disabled" placeholder="0" id="marketF5SuperficieSembrada" valueNum="0">
-            </div>
-            <div class="row" style="padding-left: 15px;padding-right: 15px;display: flex;align-items: center;">
-                <div class="form-group col-md-5">
-                    <label for="marketF5SuperficiePercent">Superficie tratada %</label>
-                    <input type="text" class="form-control" id="marketF5SuperficiePercent" placeholder="0">
-                </div>
-                <div class="col-md-2" style="font-size: 40px;text-align: center;">=</div>
-                <div class="form-group col-md-5">
-                    <label for="marketF5SuperficieVal">Superficie tratada HA</label>
-                    <input type="text" class="form-control" id="marketF5SuperficieVal" placeholder="0">
-                </div>
-            </div>
-            
-            <div class="form-group col-md-12">
-                <label for="marketF5GastoTotal">Gasto total de agro por HA</label>
-                <input type="text" class="form-control" id="marketF5GastoTotal" placeholder="$0">
-            </div>
-            <div class="form-group col-md-12">
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="marketF5Inc">Gasto en % por sector</label>
-                    </div>
-    
-                    <div class="col-md-3">
-                        <input id="m5IncPercent" type="text" class="form-control" placeholder="Inc..." style="border-color: red">
-                    </div>
-                    <div class="col-md-3">
-                        <input id="m5HerPercent" type="text" class="form-control" placeholder="Her..." style="border-color: green">
-                    </div>
-                    <div class="col-md-3">
-                        <input id="m5FunPercent" type="text" class="form-control" placeholder="Fun.." style="border-color: purple">
-                    </div>
-                    <div class="col-md-3">
-                        <input id="m5OtrPercent" type="text" class="form-control" placeholder="Otr..." style="border-color: orange">
-                    </div>
-                </div>
-            </div>
-        </div> --}}
-
-        {{-- <ul class="list-group">
-            <li class="list-group-item list-group-item-danger" style="font-size: 24px; color: white;background-color: red;display: flex;justify-content: space-between;">Insecticida: <span id="insecticidaValue">$0</span></li>
-            <li class="list-group-item list-group-item-success" style="font-size: 24px; color: white;background-color: green;display: flex;justify-content: space-between;">Herbicida: <span id="herbicidaValue">$0</span></li>
-            <li class="list-group-item list-group-item-warning" style="font-size: 24px; color: white; background-color: purple;display: flex;justify-content: space-between;">Fungicida: <span id="fungicidaValue">$0</span></li>
-            <li class="list-group-item list-group-item-warning" style="font-size: 24px; color: white;background-color: orange;display: flex;justify-content: space-between;">Otros: <span id="otrosValue">$0</span></li>
-            <li class="list-group-item list-group-item-info" style="font-size: 24px; color: white;background-color: darkblue;display: flex;justify-content: space-between;">Total: <span id="totalValue">$0</span></li>
-        </ul> --}}
-
-        {{-- <div style="text-align: right" class="hidden" id="save-advanced-market">
-            <button class="btn btn-primary" style="font-size: 16px" id="save-advanced-market-button">Guardar valores</button>
-        </div> 
-    </div> --}}
-
 
     <div class="modal fade" tabindex="-1" role="dialog" id="modalMarketPie">
         <div class="modal-dialog" role="document" style="width: 95%">
@@ -616,6 +551,41 @@
                         <div class="col-md-12" style="text-align: center;">
                             <button class="btn btn-primary" style="font-size: 15px">Salvar</button>
                         </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" style="position: absolute; bottom: -150px">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class=""></th>
+                                    <th><i class="fa fa-square fa-2x insecticida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Insecticida</span></th>
+                                    <th><i class="fa fa-square fa-2x herbicida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Herbicida</span></th>
+                                    <th><i class="fa fa-square fa-2x fungicida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Fungicida</span></th>
+                                    <th><i class="fa fa-square fa-2x otro-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Otro</span></th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tableMarketFarms">
+                                {{-- <tr>
+                                    <td class="cursor">
+                                        <div>Sandia</div>
+                                    </td>
+                                    <td class="cursor">
+                                        <div>$35.5784.8</div>
+                                    </td>
+                                    <td class="cursor">
+                                        <div>$35.5784.8</div>
+                                    </td>
+                                    <td class="cursor">
+                                        <div>$35.5784.8</div>
+                                    </td>
+                                    <td class="cursor">
+                                        <div>$35.5784.8</div>
+                                    </td>
+                                </tr> --}}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 

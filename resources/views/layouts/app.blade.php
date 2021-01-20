@@ -192,6 +192,8 @@
         {!! Html::script('harmony/js/amchart/mexicoHigh.js') !!}
         {!! Html::script('harmony/js/amchart/sunburst.js') !!}
 
+        {!! Html::script('harmony/js/html2canvas.min.js') !!}
+        {!! Html::script('harmony/js/FileSaver.min.js') !!}
         {!! Html::script('harmony/js/main.js') !!}
 
     </body>
