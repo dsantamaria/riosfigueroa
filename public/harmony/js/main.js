@@ -3446,6 +3446,8 @@ $(document).ready(function () {
                             totalState = parseFloat(dataForModalConfig[val.category][x]) + totalState
                         })
                     }
+                    console.log(superficiePer, totalState, gastoTotal, v1, v2, v3, v4)
+                    console.log( ((((superficiePer * totalState) / 100) * gastoTotal) * (v1 + v2 + v3 + v4)) / 100 )
 
                     val.value = ((((superficiePer * totalState) / 100) * gastoTotal) * (v1 + v2 + v3 + v4)) / 100
 
