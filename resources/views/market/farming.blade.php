@@ -498,9 +498,31 @@
                     <i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i>
                 </div>
 
-                <div id="bodyBaseMarketInnerConfig">
+                <div class="col-md-10" style="padding: 0px">
 
+                    <div class="col-md-12" >
+                        <div id="bodyBaseMarketInnerConfig"></div>
+                    </div>
+                    
+
+                    <div class="col-md-7 hidden" id="tableMarketFarmsWrapper">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class=""></th>
+                                    <th><i class="fa fa-square fa-2x insecticida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Insecticida</span></th>
+                                    <th><i class="fa fa-square fa-2x herbicida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Herbicida</span></th>
+                                    <th><i class="fa fa-square fa-2x fungicida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Fungicida</span></th>
+                                    <th><i class="fa fa-square fa-2x otro-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Otro</span></th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="tableMarketFarms">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+                
                 
                 <div class="row hidden col-md-2" id="marketAdvanced" style="margin-top: 7vh; padding: 0px">
                     <div class="col-md-12" style="font-size: 15px; font-weight: bold">Cultivos</div>
@@ -554,40 +576,6 @@
                     </div>
                 </div>
 
-                <div class="col-md-6" style="position: absolute; bottom: -150px">
-                        <table class="table table-bordered">
-                            <thead>
-                                <tr>
-                                    <th class=""></th>
-                                    <th><i class="fa fa-square fa-2x insecticida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Insecticida</span></th>
-                                    <th><i class="fa fa-square fa-2x herbicida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Herbicida</span></th>
-                                    <th><i class="fa fa-square fa-2x fungicida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Fungicida</span></th>
-                                    <th><i class="fa fa-square fa-2x otro-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Otro</span></th>
-                                </tr>
-                            </thead>
-
-                            <tbody id="tableMarketFarms">
-                                {{-- <tr>
-                                    <td class="cursor">
-                                        <div>Sandia</div>
-                                    </td>
-                                    <td class="cursor">
-                                        <div>$35.5784.8</div>
-                                    </td>
-                                    <td class="cursor">
-                                        <div>$35.5784.8</div>
-                                    </td>
-                                    <td class="cursor">
-                                        <div>$35.5784.8</div>
-                                    </td>
-                                    <td class="cursor">
-                                        <div>$35.5784.8</div>
-                                    </td>
-                                </tr> --}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
                 
                 
             </div>

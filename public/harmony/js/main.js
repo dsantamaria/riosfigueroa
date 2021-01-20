@@ -3363,13 +3363,13 @@ $(document).ready(function () {
         })
 
         
-        let firstLoadModalMarket = true
         $('#modalBaseMarketConfig').on('shown.bs.modal', function () {
             $('#spinnerModalBaseConfig').addClass('hidden')
             $('#marketAdvanced').removeClass('hidden')
+            $('#tableMarketFarmsWrapper').removeClass('hidden')
 
             $('#bodyBaseMarketInnerConfig').html(`
-                <div id="temporalBaseModal" class="col-md-10" style="padding: 0px">
+                <div id="temporalBaseModal">
                     <div id="baseModalChart" style="height: 80vh"></div>
                 </div>
             `)
@@ -3914,6 +3914,7 @@ $(document).ready(function () {
             $('#temporalBaseModal').remove()
             $('#spinnerModalBase').removeClass('hidden')
             $('#marketAdvanced').addClass('hidden')
+            $('#tableMarketFarmsWrapper').addClass('hidden')
             $('#modalBaseFarms').html('')
             $('body').off('click', '#modalBaseFarms span')
             $('body').off("keyup", "#m5IncPercent")
