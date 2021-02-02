@@ -13,9 +13,10 @@ class ToolsSeeder extends Seeder
     public function run()
     {
         $tools = [
-        	['name' => 'Importaciones', 'slug' => 'import', 'permissions' => 'import'],
-        	['name' => 'AnalisisPrecios', 'slug' => 'price', 'permissions' => 'price'],
-        	['name' => 'AnalisisMercado', 'slug' => 'market', 'permissions' => 'market']
+        	// ['name' => 'Importaciones', 'slug' => 'import', 'permissions' => 'import'],
+        	// ['name' => 'AnalisisPrecios', 'slug' => 'price', 'permissions' => 'price'],
+            // ['name' => 'AnalisisMercado', 'slug' => 'market', 'permissions' => 'market'],
+            ['name' => 'AnalisisCultivo', 'slug' => 'cultivo', 'permissions' => 'cultivo'],
         ];
 
         foreach ($tools as $tool) {

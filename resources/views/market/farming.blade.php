@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@can('market')
+@can('cultivo')
 <div class="col-md-12">
     <div id="pricePermission"  @can('price') permissiongranted="true" @endcan></div>
 
@@ -71,7 +71,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <button class="button-add-product btn btn-primary">Agregar producto</button>
-                                    <button class="button-market-grahp btn btn-info">Analisis market share</button>
+                                    <button class="button-market-grahp btn btn-info">Análisis market share</button>
                                     <table id="zctbFirst" class="display table table-striped table-bordered table-hover dataTable table-scroll" cellspacing="0" width="100%" role="grid" aria-describedby="zctb_info">
                                         <thead>
                                             <tr role="row">
@@ -92,7 +92,7 @@
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="19" rowspan="1" colspan="1">MS&nbsp;Deseado&nbsp;en&nbsp;Ha</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="20" rowspan="1" colspan="1">Valor&nbsp;MS&nbsp;Deseado</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="21" rowspan="1" colspan="1">Litros&nbsp;equivalentes</th>
-                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="22" rowspan="1" colspan="1">Analisis&nbsp;total</th>
+                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="22" rowspan="1" colspan="1">Análisis&nbsp;total</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="23" rowspan="1" colspan="1">Eliminar</th>
                                             </tr>
                                         </thead>
@@ -432,7 +432,7 @@
           <div class="modal-content">
             {{-- <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Analisis de market share</h4>
+                <h4 class="modal-title">Análisis de market share</h4>
             </div> --}}
             <div class="modal-body bodyMarketShare">  
                 <div id="marketSharePreChart"></div>
@@ -447,7 +447,7 @@
           <div class="modal-content">
             {{-- <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Analisis de market share</h4>
+                <h4 class="modal-title">Análisis de market share</h4>
             </div> --}}
             <div id="titleMarketShare"></div>
 
@@ -465,7 +465,7 @@
           <div class="modal-content">
             {{-- <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Analisis de market share</h4>
+                <h4 class="modal-title">Análisis de market share</h4>
             </div> --}}
             <div class="modal-body" id="bodyBaseMarket">
                 <div class="col-md-12">
@@ -474,6 +474,27 @@
                 </div>
                 <div class="spinner" id="spinnerModalBase">
                     <i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+                </div>
+
+                <div>
+                    <div id="bodyBaseMarketInner"></div>
+
+                    <div class="col-md-7 hidden" id="tableMarketFarmsWrapperNoConfig">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th class=""></th>
+                                    <th><i class="fa fa-square fa-2x insecticida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Insecticida</span></th>
+                                    <th><i class="fa fa-square fa-2x herbicida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Herbicida</span></th>
+                                    <th><i class="fa fa-square fa-2x fungicida-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Fungicida</span></th>
+                                    <th><i class="fa fa-square fa-2x otro-product-market" active="false" style="padding-right: 5px"></i> <span style="position: absolute; top: 15px">Otro</span></th>
+                                </tr>
+                            </thead>
+    
+                            <tbody id="tableMarketFarmsNoConfig">
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
           </div><!-- /.modal-content -->
@@ -486,7 +507,7 @@
           <div class="modal-content">
             {{-- <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Analisis de market share</h4>
+                <h4 class="modal-title">Análisis de market share</h4>
             </div> --}}
             <div class="modal-body" id="bodyBaseMarketConfig">
                 <div class="col-md-12">

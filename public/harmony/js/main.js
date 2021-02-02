@@ -623,6 +623,40 @@ $(document).ready(function () {
         });
     });
 
+    $('body').on('click', '.action-farm', function(){
+        var element = $(this);
+        var id = $(this).attr('id');
+        var user_email = $(this).closest('tr').find('#email').html();
+        var state = $(this).attr('state');
+        var message_state = state === '0' ? 'activo para utilizar sistema de análisis por cultivo' : 'inactivo para utilizar sistema de análisis por cultivo';
+        $.ajax({
+            type: "GET",
+            url: '/farmPermission/'+ id +'/'+ state,
+            success: function( data ) {
+                if(data['response'] === 1){
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-success col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Usuario '+ user_email + ' '+ message_state +' </strong>'+
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                    state === '0' ? element.removeClass('desactive-market').addClass('active-market').attr('state', 1).attr('title', 'Remover acceso al sistema de análisis por cultivo') : element.removeClass('active-market').addClass('desactive-market').attr('state', 0).attr('title', 'Dar acceso al sistema de análisis por cultivo');
+                }else{
+                    $('#messages').html(
+                        '<div class="row">'+
+                            '<div class="alert alert-dismissible alert-warning col-xs-10 col-xs-offset-1">'+
+                                '<button type="button" class="close" data-dismiss="alert"><i class="fa fa-remove"></i></button>'+
+                                '<strong>Ocurrio un error al intentar activar/desactivar análisis por cultivo al usuario '+ user_email +
+                            '</div>'+
+                        '</div>'
+                    ).fadeIn(1000);
+                }
+            }
+        });
+    });
+
     $('body').on('click', '.delete-user', function(){
         var id = $(this).attr('id');
         var row = $(this).closest('tr');
@@ -908,7 +942,7 @@ $(document).ready(function () {
                             "method": downLabel,
                         }
                     ];
-                    chartImport.titles[0].text = "Analisis Trimestral de Importaciones";
+                    chartImport.titles[0].text = "Análisis Trimestral de Importaciones";
                     chartImport.validateData();
                     chartImport.animateAgain();
                 }
@@ -1031,7 +1065,7 @@ $(document).ready(function () {
                             'labelPosition': 'left'
                         },
                     ];
-                    chartImport.titles[0].text = "Analisis Trimestral de Importaciones "+year.val()+ ' vs ' +year2.val();
+                    chartImport.titles[0].text = "Análisis Trimestral de Importaciones "+year.val()+ ' vs ' +year2.val();
                     chartImport.listeners = [{
                         "event": "drawn",
                         "method": downLabelVs,
@@ -2876,7 +2910,8 @@ $(document).ready(function () {
                             "category": state,
                             "value": statesValues[state]['value'],
                             'max': statesValues[state]['max'],
-                            "breakdown": breakdown
+                            "breakdown": breakdown,
+                            'edition': false
                         })
 
                         return carry
@@ -3244,11 +3279,13 @@ $(document).ready(function () {
 
         $('#modalBaseMarket').on('shown.bs.modal', function () {
             $('#spinnerModalBase').addClass('hidden')
-            $('#bodyBaseMarket').append(`
+            $('#tableMarketFarmsWrapperNoConfig').removeClass('hidden')
+            $('#bodyBaseMarketInner').append(`
                 <div id="temporalBaseModal" class="col-md-12" style="padding: 0px">
                     <div id="baseModalChart" style="height: 80vh"></div>
                 </div>
             `)
+
 
             // Create chart instance
             let chartBaseMarketSmall = am4core.create("baseModalChart", am4core.Container);
@@ -3261,8 +3298,8 @@ $(document).ready(function () {
         
             columnChartBaseMarket.data = []
 
-            columnChartBaseMarket.legend = new am4charts.Legend();
-            columnChartBaseMarket.legend.position = "bottom";
+            // columnChartBaseMarket.legend = new am4charts.Legend();
+            // columnChartBaseMarket.legend.position = "bottom";
 
             // Create axes
             var categoryAxisBaseMarket = columnChartBaseMarket.yAxes.push(new am4charts.CategoryAxis());
@@ -3354,6 +3391,10 @@ $(document).ready(function () {
                     columnChartBaseMarket.data = ev.target.dataItem.dataContext.breakdown;
                     valueAxisBaseMarket.strictMinMax = true;
 
+
+
+                    updateTableMarket(ev.target.dataItem.dataContext.breakdown, $('#tableMarketFarmsNoConfig'))
+
                     //Update labels
                     label1BaseMarket.text = pieChartBaseMarket.numberFormatter.format(ev.target.dataItem.values.value.percent, "#.'%'");
                     label1BaseMarket.fill = ev.target.fill;
@@ -3365,6 +3406,7 @@ $(document).ready(function () {
         $('#modalBaseMarket').on('hide.bs.modal', function () {
             $('#temporalBaseModal').remove()
             $('#spinnerModalBase').removeClass('hidden')
+            $('#tableMarketFarmsWrapperNoConfig').addClass('hidden')
         })
 
 
@@ -3459,6 +3501,7 @@ $(document).ready(function () {
                     }
 
                     val.value = ((((superficiePer * totalState) / 100) * gastoTotal) * (v1 + v2 + v3 + v4)) / 100
+                    val['edition'] = true
 
                     return val
                 })
@@ -3526,7 +3569,7 @@ $(document).ready(function () {
                 })
 
                 columnChartBaseMarket1.data = columnData
-                updateTableMarket(columnData)
+                updateTableMarket(columnData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
             })
     
@@ -3565,7 +3608,7 @@ $(document).ready(function () {
                 })
 
                 columnChartBaseMarket1.data = columnData
-                updateTableMarket(columnData)
+                updateTableMarket(columnData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
             })
     
@@ -3604,7 +3647,7 @@ $(document).ready(function () {
                 })
 
                 columnChartBaseMarket1.data = columnData
-                updateTableMarket(columnData)
+                updateTableMarket(columnData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
             })
     
@@ -3643,7 +3686,7 @@ $(document).ready(function () {
                 })
 
                 columnChartBaseMarket1.data = columnData
-                updateTableMarket(columnData)
+                updateTableMarket(columnData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
             })
 
@@ -3724,7 +3767,7 @@ $(document).ready(function () {
                     return carry
                 }, initFarms)
 
-                updateTableMarket(columnData)
+                updateTableMarket(columnData, $('#tableMarketFarms'))
 
                 columnChartBaseMarket1.data = columnData
                 //pieChartBaseMarket.data = dataModalCopy;
@@ -3732,31 +3775,6 @@ $(document).ready(function () {
                 cleanForm()
 
             }
-
-            const updateTableMarket = (columns) => {
-                
-                let rows = columns.map(val => {
-                    return `<tr>
-                        <td class="cursor">
-                            <div style="font-weight: bold">${val.cultivo}</div>
-                        </td>
-                        <td class="cursor">
-                            <div>$${formatPrice(val.insecticida.toString())}</div>
-                        </td>
-                        <td class="cursor">
-                            <div>$${formatPrice(val.herbicida.toString())}</div>
-                        </td>
-                        <td class="cursor">
-                            <div>$${formatPrice(val.fungicida.toString())}</div>
-                        </td>
-                        <td class="cursor">
-                            <div>$${formatPrice(val.otro.toString())}</div>
-                        </td>
-                    </tr>`
-                })
-                $('#tableMarketFarms').html(rows.join())
-            }
-
             
             let dataModalCopy = dataForModalBaseMarket
 
@@ -3799,11 +3817,11 @@ $(document).ready(function () {
             });
             
             activeFarms.map(val => {
-                $('#modalBaseFarms').append(`<span data-toggle="tooltip" active="true" value="${val}" title="${farm_products[val].adapterBase}"><img src="${'/project_images/' + farm_products[val].imgB}" width="35px" height="35px"></span>`)
+                $('#modalBaseFarms').append(`<span class="farmConfigAdvance" data-toggle="tooltip" active="true" value="${val}" title="${farm_products[val].adapterBase}"><img src="${'/project_images/' + farm_products[val].imgB}" width="35px" height="35px"></span>`)
             })
                 
 
-            updateTableMarket(columnData)
+            updateTableMarket(columnData, $('#tableMarketFarms'))
 
             /****** SETEO INICIAL DE VALORES CONFIG BASE */
             getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
@@ -3862,6 +3880,7 @@ $(document).ready(function () {
             pieChartBaseMarket1.innerRadius = am4core.percent(50);
             
             pieChartBaseMarket1.legend = new am4charts.Legend();
+            //pieChartBaseMarket1.legend.useDefaultMarker = true;
             
             // Add and configure Series
             let pieSeriesBaseMarket1 = pieChartBaseMarket1.series.push(new am4charts.PieSeries());
@@ -3896,8 +3915,18 @@ $(document).ready(function () {
             //    firstLoadModalMarket = false
             // });
 
+            // pieSeriesBaseMarket1.slices.template.adapter.add('fill', function(fill, target){
+            //     console.log(target.dataItem.dataContext.edition, target.dataItem.dataContext.value)
 
-            // Auto-select first slice on load
+            //     if(target.dataItem.dataContext.edition && target.dataItem.dataContext.value <= 0){
+            //         return "#ccc"
+            //     }
+            //     return fill
+            // })
+
+
+
+            //Auto-select first slice on load
             pieChartBaseMarket1.legend.events.on("hit", function(ev) {
                 activestates = []
                 pieChartBaseMarket1.legend.children.each(function(s){
@@ -3908,6 +3937,7 @@ $(document).ready(function () {
                 getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
                 getTotalValue() 
             });
+
             
         })
 
@@ -3938,25 +3968,60 @@ $(document).ready(function () {
             firstLoadModalMarket = true
             cleanForm()
         })
+
+        const updateTableMarket = (columns, elem) => {
+                
+            let rows = columns.map(val => {
+                return `<tr>
+                    <td class="cursor">
+                        <div style="font-weight: bold">${val.cultivo}</div>
+                    </td>
+                    <td class="cursor">
+                        <div>$${formatPrice(val.insecticida.toString())}</div>
+                    </td>
+                    <td class="cursor">
+                        <div>$${formatPrice(val.herbicida.toString())}</div>
+                    </td>
+                    <td class="cursor">
+                        <div>$${formatPrice(val.fungicida.toString())}</div>
+                    </td>
+                    <td class="cursor">
+                        <div>$${formatPrice(val.otro.toString())}</div>
+                    </td>
+                </tr>`
+            })
+            $(elem).html(rows.join())
+            // $('#tableMarketFarms').html(rows.join())
+        }
+        
             
             
         // $('.modalDownload').click(function(){
-        //     console.log('hey')
-        //     // html2canvas(document.querySelector("#modalBaseMarketConfig")).then(canvas => {
-        //     //     document.body.appendChild(canvas)
-        //     // });
-
-        //     html2canvas($("#modalBaseMarketConfig"), {
-        //         onrendered: function(canvas) {
-        //             theCanvas = canvas;
-    
-    
-        //             canvas.toBlob(function(blob) {
-        //                 saveAs(blob, "Dashboard.png"); 
-        //             });
-        //         }
-        //     });
+        //     $('.loader').removeClass('hidden')
+        //     goDownloadImage()
         // })
+
+        // function goDownloadImage(){
+        //     let element = $("#modalBaseMarket")[0]; // global variable
+
+        //     html2canvas(element, {
+        //         scrollY: -element.scrollTop,
+        //         scale: 2,
+        //         imageTimeout: 0
+        //     }).then(function(canvas) {
+        //         $("#previewImage").html(canvas);
+
+        //         var imageData = canvas.toDataURL("image/png");
+        //         var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
+
+        //         const a = document.createElement("a");
+        //         a.href = newData;
+        //         a.download = "test.png";
+        //         document.body.appendChild(a);
+        //         a.click();
+        //         document.body.removeChild(a);
+        //     }).then(() => $('.loader').addClass('hidden'));
+        // }
 
         
         //-------------------------------------------------gradica de pie
@@ -4902,7 +4967,7 @@ $('.addGeneralRowMarket').click(function(e){
                         <div class="row">
                             <div class="col-sm-12">
                                 <button class="button-add-product btn btn-primary">Agregar producto</button>
-                                <button class="button-market-grahp btn btn-info">Analisis market share</button>
+                                <button class="button-market-grahp btn btn-info">Análisis market share</button>
                                 <table id="${dinamyTableId}" class="display table table-striped table-bordered table-hover dataTable table-scroll" cellspacing="0" width="100%" role="grid" aria-describedby="zctb_info">
                                     <thead>
                                         <tr role="row">
@@ -4923,7 +4988,7 @@ $('.addGeneralRowMarket').click(function(e){
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="19" rowspan="1" colspan="1">MS&nbsp;Deseado&nbsp;en&nbsp;Ha</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="20" rowspan="1" colspan="1">Valor&nbsp;MS&nbsp;Deseado</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="21" rowspan="1" colspan="1">Litros&nbsp;equivalentes</th>
-                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="22" rowspan="1" colspan="1">Analisis&nbsp;total</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="22" rowspan="1" colspan="1">Análisis&nbsp;total</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="23" rowspan="1" colspan="1">Eliminar</th>
                                         </tr>
                                     </thead>
@@ -5462,7 +5527,7 @@ $('#modalMarketshare').on('show.bs.modal', function (event) {
 
     // Title
     let title = chart.titles.push(new am4core.Label());
-    title.text = "Analisis de market share";
+    title.text = "Análisis de market share";
     title.fontSize = 35;
     title.marginBottom = 15;
 

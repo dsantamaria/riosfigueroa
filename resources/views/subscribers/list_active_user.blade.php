@@ -72,6 +72,10 @@
                                                                 @if(!$user->tools->contains('permissions', 'market')) <div class="actions-btn action-market active-market" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Remover acceso al sistema de mercado"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
                                                                 @else <div class="actions-btn action-market desactive-market" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Dar acceso al sistema de mercado"><i class="fa fa-pie-chart" aria-hidden="true"></i></div>
                                                                 @endif
+
+                                                                @if(!$user->tools->contains('permissions', 'cultivo')) <div class="actions-btn action-farm active-market" id="{{ $user->id }}" state="1" data_toggle="tooltip" data-placement="bottom" title="Remover acceso al sistema de analissi por cultivos"><i class="fa fa-apple" aria-hidden="true"></i></div>
+                                                                @else <div class="actions-btn action-farm  desactive-market" id="{{ $user->id }}" state="0" data_toggle="tooltip" data-placement="bottom" title="Dar acceso al sistema de analissi por cultivos"><i class="fa fa-apple" aria-hidden="true"></i></i></div>
+                                                                @endif
                                                             </div>
                                                         @endif
 

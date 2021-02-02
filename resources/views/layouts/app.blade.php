@@ -20,6 +20,11 @@
     </head>
 
     <body oncopy='return false' oncut='return false' class="hidden-print" id="mainBody">
+        <div id="previewImage" class="hidden"></div>
+        <div class="loader hidden">
+            <i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i>
+        </div>
+        
         <div class="brand clearfix">
             <a href="/" class="logo fixlogo">Sistema de Información</a>
             <span class="menu-btn">
@@ -41,7 +46,7 @@
                                 <a href="#" class="parent parent-flex"><i class="fa fa-pie-chart"></i><div>MainFrame</div></a>
                                 <ul>
                                     <li><a href="{{ route('market.index') }}">Análisis del Mercado</a></li>
-                                    @can('admin-role')
+                                    @can('cultivo')
                                         <li><a href="{{ route('market.farming') }}">Análisis por Cultivo</a></li>
                                     @endcan
                                 </ul>

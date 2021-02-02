@@ -60,6 +60,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('pricePermission/{id}/{state}', ['as'=>'pricePermission', 'uses'=>'SubscribersController@price_permission'])->middleware('super-admin');
     Route::get('importPermission/{id}/{state}', ['as'=>'importPermission', 'uses'=>'SubscribersController@import_permission'])->middleware('super-admin');
     Route::get('marketPermission/{id}/{state}', ['as'=>'marketPermission', 'uses'=>'SubscribersController@market_permission'])->middleware('super-admin');
+    Route::get('farmPermission/{id}/{state}', ['as'=>'farmPermission', 'uses'=>'SubscribersController@farm_permission'])->middleware('super-admin');
     
     
     //************************* GraphicsController ******************//

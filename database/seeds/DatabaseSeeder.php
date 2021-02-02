@@ -18,8 +18,8 @@ class DatabaseSeeder extends Seeder
     //  $this->call(AddSpecialRoleSeeder::class);
     //   $this->call(RouteSeeder::class);
     //   $this->call(marketSeeder::class);
-      //$this->call(ToolsSeeder::class);
+      $this->call(ToolsSeeder::class);
       //$this->call(FarmsTableSeeder::class);
-      $this->call(MxStateTableSeeder::class);
+      //$this->call(MxStateTableSeeder::class);
     }
 }

@@ -61,6 +61,10 @@ class AuthServiceProvider extends ServiceProvider
            return !$user->hasToolAccess(['market']);
         });
 
+        $gate->define('cultivo', function ($user) {
+         return !$user->hasToolAccess(['cultivo']);
+        });
+
         $gate->define('priceImport', function ($user) {
            return !$user->hasToolAccess(['price']) || !$user->hasToolAccess(['import']);
         });

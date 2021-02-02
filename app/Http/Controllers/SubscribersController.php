@@ -223,4 +223,20 @@ class SubscribersController extends Controller
         }
     }
 
+    public function farm_permission($id, $state){
+        //state 1 = desactivar acceso global
+        //state 0 = activar acceso global
+        try{
+            $tool = Tool::where('permissions', 'cultivo')->get();
+
+            $state
+                ? DB::table('denied_tools_user')->insert(['user_id' => $id, 'tool_id' => $tool[0]->id])
+                : DB::table('denied_tools_user')->where(['user_id' => $id, 'tool_id' => $tool[0]->id])->delete();
+            return response()->json(['response' => 1]);
+
+        }catch (Exception $e) {
+            return response()->json(['response' => 0]);
+        }
+    }
+
 }
