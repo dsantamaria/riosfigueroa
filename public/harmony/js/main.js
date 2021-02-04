@@ -2911,7 +2911,7 @@ $(document).ready(function () {
                             "value": statesValues[state]['value'],
                             'max': statesValues[state]['max'],
                             "breakdown": breakdown,
-                            'edition': false
+                            'edition': false,
                         })
 
                         return carry
@@ -3500,8 +3500,11 @@ $(document).ready(function () {
                         })
                     }
 
-                    val.value = ((((superficiePer * totalState) / 100) * gastoTotal) * (v1 + v2 + v3 + v4)) / 100
+                    let value = ((((superficiePer * totalState) / 100) * gastoTotal) * (v1 + v2 + v3 + v4)) / 100
+
+                    val.value = value
                     val['edition'] = true
+                    val['hidden'] = value <= 0
 
                     return val
                 })
@@ -3560,6 +3563,8 @@ $(document).ready(function () {
 
                 label2BaseMarket1.text = '$' + formatPrice(((total * (superficieHa * gastoTotal))/100).toString())
 
+                
+
                 columnData = columnData.map(val => {
                     let farmsHaAdapt = getFarmsHaValues()
                     let haPer = (farmsHaAdapt[val.cultivo] * superficiePer) / 100
@@ -3568,8 +3573,10 @@ $(document).ready(function () {
                     return val
                 })
 
-                columnChartBaseMarket1.data = columnData
-                updateTableMarket(columnData, $('#tableMarketFarms'))
+                let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
+                let finalData = columnData.filter(x => adaptActiveFarms.includes(x.cultivo))
+                columnChartBaseMarket1.data = finalData
+                updateTableMarket(finalData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
             })
     
@@ -3607,8 +3614,10 @@ $(document).ready(function () {
                     return val
                 })
 
-                columnChartBaseMarket1.data = columnData
-                updateTableMarket(columnData, $('#tableMarketFarms'))
+                let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
+                let finalData = columnData.filter(x => adaptActiveFarms.includes(x.cultivo))
+                columnChartBaseMarket1.data = finalData
+                updateTableMarket(finalData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
             })
     
@@ -3646,8 +3655,10 @@ $(document).ready(function () {
                     return val
                 })
 
-                columnChartBaseMarket1.data = columnData
-                updateTableMarket(columnData, $('#tableMarketFarms'))
+                let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
+                let finalData = columnData.filter(x => adaptActiveFarms.includes(x.cultivo))
+                columnChartBaseMarket1.data = finalData
+                updateTableMarket(finalData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
             })
     
@@ -3685,8 +3696,10 @@ $(document).ready(function () {
                     return val
                 })
 
-                columnChartBaseMarket1.data = columnData
-                updateTableMarket(columnData, $('#tableMarketFarms'))
+                let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
+                let finalData = columnData.filter(x => adaptActiveFarms.includes(x.cultivo))
+                columnChartBaseMarket1.data = finalData
+                updateTableMarket(finalData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
             })
 
@@ -3702,8 +3715,8 @@ $(document).ready(function () {
                     let isActive = $(this).attr('active') === 'true'
                     isActive ? activeFarms.push($(this).attr('value')) : null
                 })
-                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
-                getTotalValue()
+                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada'), getTotalValue) 
+                
 
                 // let adaptActiveFarms = activeFarms.map(x => farm_products[x].adapterBase)
 
@@ -3726,6 +3739,10 @@ $(document).ready(function () {
 
             })
 
+            const formMarketConfigHasValues = () => {
+                return $('#m5IncPercent').val().length > 0 || $('#m5HerPercent').val().length > 0 || $('#m5FunPercent').val().length > 0 || $('#m5OtrPercent').val().length > 0 || $('#marketF5SuperficiePercent').val().length > 0 || $('#marketF5SuperficieVal').val().length > 0 || $('#marketF5GastoTotal').val().length > 0
+            }
+
             const getTotalValue = () => {
                 let removedStates = dataModalCopy.filter(val => {
                     return activestates.includes(val.category) ? true : false
@@ -3744,7 +3761,6 @@ $(document).ready(function () {
 
                 label2BaseMarket1.text = '$' + formatPrice(total.toString())
                 
-
                 let initFarms = JSON.parse(JSON.stringify(dataModalCopy[0])).breakdown.filter(x => adaptActiveFarms.includes(x.cultivo)).map(val => {
                     val.insecticida = 0
                     val.herbicida = 0
@@ -3767,12 +3783,33 @@ $(document).ready(function () {
                     return carry
                 }, initFarms)
 
-                updateTableMarket(columnData, $('#tableMarketFarms'))
+                if(formMarketConfigHasValues()){
+                    $('#marketF5GastoTotal').keyup()
+                }else{
+                    updateTableMarket(columnData, $('#tableMarketFarms'))
+                    columnChartBaseMarket1.data = columnData
 
-                columnChartBaseMarket1.data = columnData
-                //pieChartBaseMarket.data = dataModalCopy;
+                    
 
-                cleanForm()
+                    let newValues = JSON.parse(JSON.stringify(dataModalCopy)).map(val => {    
+                        let value = val.breakdown.reduce((carry, value) => {
+                            if(adaptActiveFarms.includes(value.cultivo)){
+                                carry = carry + parseFloat(value.max)
+                            }
+                            return carry
+                        }, 0)
+    
+                        val.value = value
+                        val['edition'] = false
+                        val['hidden'] = !activestates.includes(val.category)
+    
+                        return val
+                    })
+    
+                    pieChartBaseMarket1.data = newValues
+                }
+
+                //cleanForm()
 
             }
             
@@ -3824,7 +3861,7 @@ $(document).ready(function () {
             updateTableMarket(columnData, $('#tableMarketFarms'))
 
             /****** SETEO INICIAL DE VALORES CONFIG BASE */
-            getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
+            getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada'), getTotalValue) 
             
 
             // Create chart instance
@@ -3886,8 +3923,8 @@ $(document).ready(function () {
             let pieSeriesBaseMarket1 = pieChartBaseMarket1.series.push(new am4charts.PieSeries());
             pieSeriesBaseMarket1.dataFields.value = "value";
             pieSeriesBaseMarket1.dataFields.category = "category";
-            pieSeriesBaseMarket1.slices.template.propertyFields.fill = "color";
             pieSeriesBaseMarket1.labels.template.disabled = true;
+            pieSeriesBaseMarket1.dataFields.hidden = "hidden";
             
             let asBaseChart1 = pieSeriesBaseMarket1.slices.template.states.getKey("active");
             asBaseChart1.properties.shiftRadius = 0;
@@ -3924,8 +3961,6 @@ $(document).ready(function () {
             //     return fill
             // })
 
-
-
             //Auto-select first slice on load
             pieChartBaseMarket1.legend.events.on("hit", function(ev) {
                 activestates = []
@@ -3934,12 +3969,21 @@ $(document).ready(function () {
                         activestates.push(s.dataItem.dataContext.category)
                     }
                 })
-                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada')) 
-                getTotalValue() 
+                getHaBystatesAndfarms(activestates, activeFarms, $('#marketF5SuperficieSembrada'), getTotalValue) 
             });
 
-            
+            $('#resetAdvanceConfig').click(function(){
+                cleanForm()
+                getTotalValue()
+                // columnChartBaseMarket1.data = columnDataCopy
+                // pieChartBaseMarket1.data = dataForModalBaseMarket
+
+                // label2BaseMarket1.text = '$' + formatPrice(totalBase.toString())
+    
+            })
         })
+
+        
 
         const cleanForm = () => {
             $('#m5IncPercent').val("")
@@ -5332,7 +5376,9 @@ const getHaBystatesAndfarm = (states, farm, elem) => {
     });
 }
 
-const getHaBystatesAndfarms = (states, farms, elem) => {
+
+
+const getHaBystatesAndfarms = (states, farms, elem, getTotalValue) => {
 
     $.ajax({
         type: "GET",
@@ -5340,6 +5386,7 @@ const getHaBystatesAndfarms = (states, farms, elem) => {
         success: function( data ) {
             $(elem).val(formatComms(data["total_superficie"].toString()))
             $('#marketF5SuperficiePercent').trigger('keyup', [{ extra : 'random string' }])
+            getTotalValue() 
             firstLoadModalMarket = false
         },
         error: (e) => {

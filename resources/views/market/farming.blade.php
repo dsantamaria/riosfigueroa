@@ -592,6 +592,7 @@
                             </div>
                         </div>
                         <div class="col-md-12" style="text-align: center;">
+                            <button id="resetAdvanceConfig" class="btn btn-primary" style="font-size: 15px">Limpiar</button>
                             <button class="btn btn-primary" style="font-size: 15px">Salvar</button>
                         </div>
                     </div>
