@@ -5,61 +5,61 @@ var chartMarketSerial;
 var trigger_key = false;
 
 const farm_products = {
-    "AGAVE": {'img': 'Agave N.svg', 'imgB': 'Agave color.svg', 'color': "#550000ff", "active": false, 'adapterBase': 'Agave'},
-    "AGUACATE": {'img': 'Aguacate N.svg', 'imgB': 'Aguacate color.svg', 'color': "#00ff00ff", "active": false, 'adapterBase': 'Aguacate'},
-    "AJO": {'img': 'Ajo N.svg', 'imgB': 'Ajo color.svg', 'color': "#e3dbdbff", "active": false, 'adapterBase': 'Ajo'},
-    "ALFALFA VERDE": {'img': 'Alfalfa N.svg', 'imgB': 'Alfalfa color.svg', 'color': "#ff2a2aff", "active": false, 'adapterBase': 'Alfalfa (T)'},
-    "ALGODN HUESO": {'img': 'Algodón N.svg', 'imgB': 'Algodón color.svg', 'color': "#ff8080ff", "active": false, 'adapterBase': 'Algodón'},
-    "ARROZ PALAY": {'img': 'Arroz N.svg', 'imgB': 'Arroz color.svg', 'color': "#D7DBDD", "active": false, 'adapterBase': 'Arroz'},
+    "AGAVE": {'img': 'Agave N.svg', 'imgB': 'Agave color.svg', 'imgW': 'Agave B.svg', 'color': "#550000ff", "active": false, 'adapterBase': 'Agave'},
+    "AGUACATE": {'img': 'Aguacate N.svg', 'imgB': 'Aguacate color.svg', 'imgW': 'Aguacate B.svg','color': "#00ff00ff", "active": false, 'adapterBase': 'Aguacate'},
+    "AJO": {'img': 'Ajo N.svg', 'imgB': 'Ajo color.svg', 'imgW': 'Ajo B.svg','color': "#e3dbdbff", "active": false, 'adapterBase': 'Ajo'},
+    "ALFALFA VERDE": {'img': 'Alfalfa N.svg', 'imgB': 'Alfalfa color.svg', 'imgW': 'Alfalfa B.svg','color': "#ff2a2aff", "active": false, 'adapterBase': 'Alfalfa (T)'},
+    "ALGODN HUESO": {'img': 'Algodón N.svg', 'imgB': 'Algodón color.svg', 'imgW': 'Algodón B.svg','color': "#ff8080ff", "active": false, 'adapterBase': 'Algodón'},
+    "ARROZ PALAY": {'img': 'Arroz N.svg', 'imgB': 'Arroz color.svg', 'imgW': 'Arroz B.svg','color': "#D7DBDD", "active": false, 'adapterBase': 'Arroz'},
     
-    "AVENA GRANO": {'img': 'Avena Grano N.svg', 'imgB': 'Avena Grano color.svg', 'color': "#ffe680ff", "active": false, 'adapterBase': 'Avena Grano'},
-    "BERENJENA": {'img': 'Berenjena N.svg', 'imgB': 'Berenjena color.svg', 'color': "#bc5fd3ff" , "active": false, 'adapterBase': 'Berenjena'},
-    "BROCOLI": {'img': 'Brócoli N.svg', 'imgB': 'Brócoli color.svg', 'color': "#008080ff" , "active": false, 'adapterBase': 'Brócoli'},
-    "CACAO": {'img': 'Cacao N.svg', 'imgB': 'Cacao color.svg', 'color': "#502d16ff" , "active": false, 'adapterBase': 'Cacao'},
-    "CAF CEREZA": {'img': 'Café N.svg', 'imgB': 'Café color.svg', 'color': "#ac939dff" , "active": false, 'adapterBase': 'Café'},
-    "CALABACITA": {'img': 'Calabacita N.svg', 'imgB': 'Calabacita color.svg', 'color': "#ffb380ff" , "active": false, 'adapterBase': 'Calabacita'},
-    "CAA DE AZUCAR": {'img': 'Caña de Azúcar N.svg', 'imgB': 'Caña de Azúcar color.svg', 'color': "#026f02ff" , "active": false, 'adapterBase': 'Cana de Azúcar'},
+    "AVENA GRANO": {'img': 'Avena Grano N.svg', 'imgB': 'Avena Grano color.svg', 'imgW': 'Avena Grano B.svg','color': "#ffe680ff", "active": false, 'adapterBase': 'Avena Grano'},
+    "BERENJENA": {'img': 'Berenjena N.svg', 'imgB': 'Berenjena color.svg', 'imgW': 'Berenjena B.svg','color': "#bc5fd3ff" , "active": false, 'adapterBase': 'Berenjena'},
+    "BROCOLI": {'img': 'Brócoli N.svg', 'imgB': 'Brócoli color.svg', 'imgW': 'Brócoli B.svg','color': "#008080ff" , "active": false, 'adapterBase': 'Brócoli'},
+    "CACAO": {'img': 'Cacao N.svg', 'imgB': 'Cacao color.svg', 'imgW': 'Cacao B.svg','color': "#502d16ff" , "active": false, 'adapterBase': 'Cacao'},
+    "CAF CEREZA": {'img': 'Café N.svg', 'imgB': 'Café color.svg', 'imgW': 'Café B.svg','color': "#ac939dff" , "active": false, 'adapterBase': 'Café'},
+    "CALABACITA": {'img': 'Calabacita N.svg', 'imgB': 'Calabacita color.svg', 'imgW': 'Calabacita B.svg','color': "#ffb380ff" , "active": false, 'adapterBase': 'Calabacita'},
+    "CAA DE AZUCAR": {'img': 'Caña de Azúcar N.svg', 'imgB': 'Caña de Azúcar color.svg', 'imgW': 'Caña de Azúcar B.svg','color': "#026f02ff" , "active": false, 'adapterBase': 'Cana de Azúcar'},
     
-    "CEBOLLA": {'img': 'Cebolla N.svg', 'imgB': 'Cebolla color.svg', 'color': "#b3b3b3ff" , "active": false, 'adapterBase': 'Cebolla'},
-    "CHILE VERDE": {'img': 'Chile Verde N.svg', 'imgB': 'Chile Verde color.svg', 'color': "#88aa00ff" , "active": false, 'adapterBase': 'Chile verde'},
-    "COLIFLOR": {'img': 'Col (Repollo) N.svg', 'imgB': 'Col (Repollo) color.svg', 'color': "#aa0088ff" , "active": false, 'adapterBase': 'Col (repollo)'},
-    "CRISANTEMO (Gruesa)": {'img': 'Crisantemo N.svg', 'imgB': 'Crisantemo color.svg', 'color': "#37c8abff" , "active": false, 'adapterBase': 'Crisantemo'},
-    "DURAZNO": {'img': 'Durazno N.svg', 'imgB': 'Durazno color.svg', 'color': "#ffccaaff" , "active": false, 'adapterBase': 'Durazno'},
-    "ESPARRAGO": {'img': 'Esparrago N.svg', 'imgB': 'Esparrago color.svg', 'color': "#806600ff" , "active": false, 'adapterBase': 'Espárrago'},
-    "FRAMBUESA": {'img': 'Frambuesa N.svg', 'imgB': 'Frambuesa color.svg', 'color': "#750275ff" , "active": false, 'adapterBase': 'Frambuesa'},
+    "CEBOLLA": {'img': 'Cebolla N.svg', 'imgB': 'Cebolla color.svg', 'imgW': 'Cebolla B.svg','color': "#b3b3b3ff" , "active": false, 'adapterBase': 'Cebolla'},
+    "CHILE VERDE": {'img': 'Chile Verde N.svg', 'imgB': 'Chile Verde color.svg', 'imgW': 'Chile Verde B.svg','color': "#88aa00ff" , "active": false, 'adapterBase': 'Chile verde'},
+    "COLIFLOR": {'img': 'Col (Repollo) N.svg', 'imgB': 'Col (Repollo) color.svg', 'imgW': 'Col (Repollo) B.svg','color': "#aa0088ff" , "active": false, 'adapterBase': 'Col (repollo)'},
+    "CRISANTEMO (Gruesa)": {'img': 'Crisantemo N.svg', 'imgB': 'Crisantemo color.svg', 'imgW': 'Crisantemo B.svg','color': "#37c8abff" , "active": false, 'adapterBase': 'Crisantemo'},
+    "DURAZNO": {'img': 'Durazno N.svg', 'imgB': 'Durazno color.svg', 'imgW': 'Durazno B.svg','color': "#ffccaaff" , "active": false, 'adapterBase': 'Durazno'},
+    "ESPARRAGO": {'img': 'Esparrago N.svg', 'imgB': 'Esparrago color.svg', 'imgW': 'Esparrago B.svg','color': "#806600ff" , "active": false, 'adapterBase': 'Espárrago'},
+    "FRAMBUESA": {'img': 'Frambuesa N.svg', 'imgB': 'Frambuesa color.svg', 'imgW': 'Frambuesa B.svg','color': "#750275ff" , "active": false, 'adapterBase': 'Frambuesa'},
     
-    "FRESA": {'img': 'Fresa N.svg', 'imgB': 'Fresa color.svg', 'color': "#ffaaccff" , "active": false, 'adapterBase': 'Fresa'},
-    "FRIJOL": {'img': 'Frijol N.svg', 'imgB': 'Frijol color.svg', 'color': "#d38d5fff" , "active": false, 'adapterBase': 'Frijol'},
-    "GLADIOLA (Gruesa)": {'img': 'Gladiola N.svg', 'imgB': 'Gladiola color.svg', 'color': "#44aa00ff" , "active": false, 'adapterBase': 'Gladiola'},
-    "LECHUGA": {'img': 'Lechuga N.svg', 'imgB': 'Lechuga color.svg', 'color': "#2aff80ff" , "active": false, 'adapterBase': 'Lechuga'},
-    "LIMON": {'img': 'Limon N.svg', 'imgB': 'Limon color.svg', 'color': "#e9ddafff" , "active": false, 'adapterBase': 'Limón'},
-    "MAIZ GRANO": {'img': 'Maíz (Grano) N.svg', 'imgB': 'Maíz (Grano) color.svg', 'color': "#F9E79F" , "active": false, 'adapterBase': 'Maíz grano'},
+    "FRESA": {'img': 'Fresa N.svg', 'imgB': 'Fresa color.svg', 'imgW': 'Fresa B.svg','color': "#ffaaccff" , "active": false, 'adapterBase': 'Fresa'},
+    "FRIJOL": {'img': 'Frijol N.svg', 'imgB': 'Frijol color.svg', 'imgW': 'Frijol B.svg','color': "#d38d5fff" , "active": false, 'adapterBase': 'Frijol'},
+    "GLADIOLA (Gruesa)": {'img': 'Gladiola N.svg', 'imgB': 'Gladiola color.svg', 'imgW': 'Gladiola B.svg','color': "#44aa00ff" , "active": false, 'adapterBase': 'Gladiola'},
+    "LECHUGA": {'img': 'Lechuga N.svg', 'imgB': 'Lechuga color.svg', 'imgW': 'Lechuga B.svg','color': "#2aff80ff" , "active": false, 'adapterBase': 'Lechuga'},
+    "LIMON": {'img': 'Limon N.svg', 'imgB': 'Limon color.svg', 'imgW': 'Limon B.svg','color': "#e9ddafff" , "active": false, 'adapterBase': 'Limón'},
+    "MAIZ GRANO": {'img': 'Maíz (Grano) N.svg', 'imgB': 'Maíz (Grano) color.svg', 'imgW': 'Maíz (Grano) B.svg','color': "#F9E79F" , "active": false, 'adapterBase': 'Maíz grano'},
     
-    "MANGO": {'img': 'Mango N.svg', 'imgB': 'Mango color.svg', 'color': "#55ddffff" , "active": false, 'adapterBase': 'Mango'},
-    "MANZANA": {'img': 'Manzana N.svg', 'imgB': 'Manzana color.svg', 'color': "#782121ff" , "active": false, 'adapterBase': 'Manzana'},
-    "MELON": {'img': 'Melón N.svg', 'imgB': 'Melón color.svg', 'color': "#ff7f2aff" , "active": false, 'adapterBase': 'Melón'},
-    "NARANJA": {'img': 'Naranja N.svg', 'imgB': 'Naranja color.svg', 'color': "#aa4400ff" , "active": false, 'adapterBase': 'Naranja'},
-    "NUEZ": {'img': 'Nogal (Nuez) N.svg', 'imgB': 'Nogal (Nuez) color.svg', 'color': "#d38d5fff" , "active": false, 'adapterBase': 'Nogal (Nuez)'},
-    "PAPA": {'img': 'Papa N.svg', 'imgB': 'Papa color.svg', 'color': "#803300ff" , "active": false, 'adapterBase': 'Papa'},
+    "MANGO": {'img': 'Mango N.svg', 'imgB': 'Mango color.svg', 'imgW': 'Mango B.svg','color': "#55ddffff" , "active": false, 'adapterBase': 'Mango'},
+    "MANZANA": {'img': 'Manzana N.svg', 'imgB': 'Manzana color.svg', 'imgW': 'Manzana B.svg','color': "#782121ff" , "active": false, 'adapterBase': 'Manzana'},
+    "MELON": {'img': 'Melón N.svg', 'imgB': 'Melón color.svg', 'imgW': 'Melón B.svg','color': "#ff7f2aff" , "active": false, 'adapterBase': 'Melón'},
+    "NARANJA": {'img': 'Naranja N.svg', 'imgB': 'Naranja color.svg', 'imgW': 'Naranja B.svg','color': "#aa4400ff" , "active": false, 'adapterBase': 'Naranja'},
+    "NUEZ": {'img': 'Nogal (Nuez) N.svg', 'imgB': 'Nogal (Nuez) color.svg', 'imgW': 'Nogal (Nuez) B.svg','color': "#d38d5fff" , "active": false, 'adapterBase': 'Nogal (Nuez)'},
+    "PAPA": {'img': 'Papa N.svg', 'imgB': 'Papa color.svg', 'imgW': 'Papa B.svg','color': "#803300ff" , "active": false, 'adapterBase': 'Papa'},
     
-    "PAPAYA": {'img': 'Papaya N.svg', 'imgB': 'Papaya color.svg', 'color': "#80b3ffff" , "active": false, 'adapterBase': 'Papaya'},
-    "PEPINO": {'img': 'Pepino N.svg', 'imgB': 'Pepino color.svg', 'color': "#9dac93ff" , "active": false, 'adapterBase': 'Pepino'},
-    "PIA": {'img': 'Piña N.svg', 'imgB': 'Piña color.svg', 'color': "#ffdd55ff" , "active": false, 'adapterBase': 'Piña'},
-    "PLATANO": {'img': 'Plátano N.svg', 'imgB': 'Plátano color.svg', 'color': "#d3bc5fff" , "active": false, 'adapterBase': 'Plátano'},
-    "ROSA (Gruesa)": {'img': 'Rosas (Gruesa) N.svg', 'imgB': 'Rosas (Gruesa) color.svg', 'color': "#bcd35fff" , "active": false, 'adapterBase': 'Rosas (Gruesa)'},
-    "SANDIA": {'img': 'Sandía N.svg', 'imgB': 'Sandía color.svg', 'color': "#c83737ff" , "active": false, 'adapterBase': 'Sandía'},
+    "PAPAYA": {'img': 'Papaya N.svg', 'imgB': 'Papaya color.svg', 'imgW': 'Papaya B.svg','color': "#80b3ffff" , "active": false, 'adapterBase': 'Papaya'},
+    "PEPINO": {'img': 'Pepino N.svg', 'imgB': 'Pepino color.svg', 'imgW': 'Pepino B.svg','color': "#9dac93ff" , "active": false, 'adapterBase': 'Pepino'},
+    "PIA": {'img': 'Piña N.svg', 'imgB': 'Piña color.svg', 'imgW': 'Piña B.svg','color': "#ffdd55ff" , "active": false, 'adapterBase': 'Piña'},
+    "PLATANO": {'img': 'Plátano N.svg', 'imgB': 'Plátano color.svg', 'imgW': 'Plátano B.svg','color': "#d3bc5fff" , "active": false, 'adapterBase': 'Plátano'},
+    "ROSA (Gruesa)": {'img': 'Rosas (Gruesa) N.svg', 'imgB': 'Rosas (Gruesa) color.svg', 'imgW': 'Rosas (Gruesa) B.svg','color': "#bcd35fff" , "active": false, 'adapterBase': 'Rosas (Gruesa)'},
+    "SANDIA": {'img': 'Sandía N.svg', 'imgB': 'Sandía color.svg', 'imgW': 'Sandía B.svg','color': "#c83737ff" , "active": false, 'adapterBase': 'Sandía'},
     
-    "SORGO GRANO": {'img': 'Sorgo N.svg', 'imgB': 'Sorgo color.svg', 'color': "#5a2ca0ff" , "active": false, 'adapterBase': 'Sorgo Grano'},
-    "SOYA": {'img': 'Soya N.svg', 'imgB': 'Soya color.svg', 'color': "#6c535dff" , "active": false, 'adapterBase': 'Soya'},
-    "TABACO": {'img': 'Tabaco N.svg', 'imgB': 'Tabaco color.svg', 'color': "#ac9d93ff" , "active": false, 'adapterBase': 'Tabaco'},
-    "TOMATE ROJO (JITOMATE)": {'img': 'Jitomate (Tomate) N.svg', 'imgB': 'Jitomate (Tomate) color.svg', 'color': "#ff5555ff" , "active": false, 'adapterBase': 'Tomate (Jitomate)'},
-    "TOMATE VERDE": {'img':'Tomate Verde N.svg', 'imgB': 'Tomate Verde color.svg', 'color': "#ccff00ff" , "active": false, 'adapterBase': 'Tomate Verde'},
-    "TORONJA (POMELO)": {'img': 'Toronja (Pomelo) N.svg', 'imgB': 'Toronja (Pomelo) color.svg', 'color': "#ff2a7fff", "active": false, 'adapterBase': 'Toronja (pomelo)'},
+    "SORGO GRANO": {'img': 'Sorgo N.svg', 'imgB': 'Sorgo color.svg', 'imgW': 'Sorgo B.svg','color': "#5a2ca0ff" , "active": false, 'adapterBase': 'Sorgo Grano'},
+    "SOYA": {'img': 'Soya N.svg', 'imgB': 'Soya color.svg', 'imgW': 'Soya B.svg','color': "#6c535dff" , "active": false, 'adapterBase': 'Soya'},
+    "TABACO": {'img': 'Tabaco N.svg', 'imgB': 'Tabaco color.svg', 'imgW': 'Tabaco B.svg','color': "#ac9d93ff" , "active": false, 'adapterBase': 'Tabaco'},
+    "TOMATE ROJO (JITOMATE)": {'img': 'Jitomate (Tomate) N.svg', 'imgB': 'Jitomate (Tomate) color.svg', 'imgW': 'Jitomate (Tomate) B.svg','color': "#ff5555ff" , "active": false, 'adapterBase': 'Tomate (Jitomate)'},
+    "TOMATE VERDE": {'img':'Tomate Verde N.svg', 'imgB': 'Tomate Verde color.svg', 'imgW': 'Tomate Verde B.svg','color': "#ccff00ff" , "active": false, 'adapterBase': 'Tomate Verde'},
+    "TORONJA (POMELO)": {'img': 'Toronja (Pomelo) N.svg', 'imgB': 'Toronja (Pomelo) color.svg', 'imgW': 'Toronja (Pomelo) B.svg','color': "#ff2a7fff", "active": false, 'adapterBase': 'Toronja (pomelo)'},
     
-    "TRIGO GRANO": {'img': 'Trigo Grano N.svg', 'imgB': 'Trigo Grano color.svg', 'color': "#d4aa00ff", "active": false, 'adapterBase': 'Trigo Grano'},
-    "UVA": {'img': 'Uva N.svg', 'imgB': 'Uva color.svg', 'color': "#7f2affff", "active": false, 'adapterBase': 'Uva'},
-    "ZANAHORIA": {'img': 'Zanahoria N.svg', 'imgB': 'Zanahoria color.svg', 'color': "#d45500ff", "active": false, 'adapterBase': 'Zanahoria'},
-    "ZARZAMORA": {'img': 'Zarzamora N.svg', 'imgB': 'Zarzamora color.svg', 'color': "#0055d4ff", "active": false, 'adapterBase': 'Zarzamora'},
+    "TRIGO GRANO": {'img': 'Trigo Grano N.svg', 'imgB': 'Trigo Grano color.svg', 'imgW': 'Trigo Grano B.svg','color': "#d4aa00ff", "active": false, 'adapterBase': 'Trigo Grano'},
+    "UVA": {'img': 'Uva N.svg', 'imgB': 'Uva color.svg', 'imgW': 'Uva B.svg','color': "#7f2affff", "active": false, 'adapterBase': 'Uva'},
+    "ZANAHORIA": {'img': 'Zanahoria N.svg', 'imgB': 'Zanahoria color.svg', 'imgW': 'Zanahoria B.svg','color': "#d45500ff", "active": false, 'adapterBase': 'Zanahoria'},
+    "ZARZAMORA": {'img': 'Zarzamora N.svg', 'imgB': 'Zarzamora color.svg', 'imgW': 'Zarzamora B.svg','color': "#0055d4ff", "active": false, 'adapterBase': 'Zarzamora'},
     
     
 }
@@ -2660,6 +2660,8 @@ $(document).ready(function () {
         let dataForModalBaseMarket = []
         let piramidMaxValue = 0
         let dataForModalConfig = []
+        let prevStates = []
+        let prevFamrs = []
 
         const searchMarketFarmValues = () => {
             let activesStates = []
@@ -2689,6 +2691,32 @@ $(document).ready(function () {
                 label.text = "";
                 labelForModalPie = "";
                 return 
+            }
+
+            let newStates = activesStates.filter(state => !prevStates.includes(state))
+            let newFarms = activeFarms.filter(farm => !prevFamrs.includes(farm))
+            prevStates = activesStates
+            prevFamrs = activeFarms
+
+            if(newStates.length > 0){
+                $.ajax({
+                    type: "POST",
+                    url: '/market/firstFrameData',
+                    data: {
+                        'newStates': newStates,
+                        'newFarms': activeFarms
+                    },
+                }) 
+            }
+            else if(newFarms.length > 0){
+                $.ajax({
+                    type: "POST",
+                    url: '/market/firstFrameData',
+                    data: {
+                        'newStates': activesStates,
+                        'newFarms': newFarms
+                    },
+                }) 
             }
             
             $.ajax({
@@ -2783,6 +2811,7 @@ $(document).ready(function () {
                                 "active": true,
                                 "farmValue": data["farm_data"][product],
                                 "totalValue": data["total_state"][product],
+                                "percentFarm": ((data["farm_data"][product] * 100)/data["total_state"][product]).toFixed(2),
                                 "farmValueHA": data["farm_data"][product] + " HA",
                                 "totalValueHA": data["total_state"][product] +" HA",
                                 "config": {
@@ -3004,10 +3033,12 @@ $(document).ready(function () {
                     farm_products[farm].active = !isActive
 
                     if(isActive){
+                        $(this).css('background-color', 'white')
                         $(this).children("img").attr('src', `/project_images/${farm_products[farm].img}`)
                         $(this).removeClass('market-product-active').addClass('market-product-desactive')
                     }else{
-                        $(this).children("img").attr('src',`/project_images/${farm_products[farm].imgB}`)
+                        $(this).css('background-color', farm_products[farm].color)
+                        $(this).children("img").attr('src',`/project_images/${farm_products[farm].imgW}`)
                         $(this).removeClass('market-product-desactive').addClass('market-product-active')
                     }
                 } 
@@ -3028,10 +3059,12 @@ $(document).ready(function () {
             farm_products[farm].active = !isActive
 
             if(isActive){
+                $(event.currentTarget).css('background-color', 'white')
                 $(event.currentTarget).children("img").attr('src', `/project_images/${farm_products[farm].img}`)
                 $(event.currentTarget).removeClass('market-product-active').addClass('market-product-desactive')
             }else{
-                $(event.currentTarget).children("img").attr('src',`/project_images/${farm_products[farm].imgB}`)
+                $(event.currentTarget).css('background-color', farm_products[farm].color)
+                $(event.currentTarget).children("img").attr('src',`/project_images/${farm_products[farm].imgW}`)
                 $(event.currentTarget).removeClass('market-product-desactive').addClass('market-product-active')
             }
 
@@ -3449,6 +3482,7 @@ $(document).ready(function () {
                     $("#m5FunPercent").keyup()
                     $("#m5OtrPercent").keyup()
                 }
+                saveFrameSixValues()
             })
     
             $('body').on("keyup", "#marketF5SuperficieVal", function(e){
@@ -3471,6 +3505,7 @@ $(document).ready(function () {
                 $("#m5HerPercent").keyup()
                 $("#m5FunPercent").keyup()
                 $("#m5OtrPercent").keyup()
+                saveFrameSixValues()
             })
     
             $('body').on("keyup", "#marketF5GastoTotal", function(e){
@@ -3481,6 +3516,7 @@ $(document).ready(function () {
                 $("#m5HerPercent").keyup()
                 $("#m5FunPercent").keyup()
                 $("#m5OtrPercent").keyup()
+                saveFrameSixValues()
             })
 
             const setNewValuesForPie = (total) => {
@@ -3563,8 +3599,6 @@ $(document).ready(function () {
 
                 label2BaseMarket1.text = '$' + formatPrice(((total * (superficieHa * gastoTotal))/100).toString())
 
-                
-
                 columnData = columnData.map(val => {
                     let farmsHaAdapt = getFarmsHaValues()
                     let haPer = (farmsHaAdapt[val.cultivo] * superficiePer) / 100
@@ -3578,6 +3612,7 @@ $(document).ready(function () {
                 columnChartBaseMarket1.data = finalData
                 updateTableMarket(finalData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
+                saveFrameSixValues()
             })
     
             $('body').on("keyup", "#m5HerPercent", function(e){
@@ -3619,6 +3654,7 @@ $(document).ready(function () {
                 columnChartBaseMarket1.data = finalData
                 updateTableMarket(finalData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
+                saveFrameSixValues()
             })
     
             $('body').on("keyup", "#m5FunPercent", function(e){
@@ -3660,6 +3696,7 @@ $(document).ready(function () {
                 columnChartBaseMarket1.data = finalData
                 updateTableMarket(finalData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
+                saveFrameSixValues()
             })
     
             $('body').on("keyup", "#m5OtrPercent", function(e){
@@ -3701,6 +3738,7 @@ $(document).ready(function () {
                 columnChartBaseMarket1.data = finalData
                 updateTableMarket(finalData, $('#tableMarketFarms'))
                 setNewValuesForPie(total)
+                saveFrameSixValues()
             })
 
             $('body').on('click', '#modalBaseFarms span', function(){
@@ -3741,6 +3779,54 @@ $(document).ready(function () {
 
             const formMarketConfigHasValues = () => {
                 return $('#m5IncPercent').val().length > 0 || $('#m5HerPercent').val().length > 0 || $('#m5FunPercent').val().length > 0 || $('#m5OtrPercent').val().length > 0 || $('#marketF5SuperficiePercent').val().length > 0 || $('#marketF5SuperficieVal').val().length > 0 || $('#marketF5GastoTotal').val().length > 0
+            }
+
+            const formMarketConfigPercentsHasValues = () => {
+                return ($('#m5IncPercent').val().length > 0 || $('#m5HerPercent').val().length > 0 || $('#m5FunPercent').val().length > 0 || $('#m5OtrPercent').val().length > 0) && $('#marketF5SuperficieVal').val().length > 0 && $('#marketF5GastoTotal').val().length > 0
+            }
+
+            let oldFrameSixValues = ""
+
+            const saveFrameSixValues = () => {
+                if(formMarketConfigPercentsHasValues() && activeFarms.length > 0 && activestates.length > 0){
+                    let sembradaHa = $('#marketF5SuperficieSembrada').val().replace(/[$,]/gm, "")
+                    let superHa = $('#marketF5SuperficieVal').val().replace(/[$,]/gm, "")
+                    let gasto = parseFloat($('#marketF5GastoTotal').val().replace(/[$,]/gm, ""))
+                    let inc = $('#m5IncPercent').val().length > 0 ? $('#m5IncPercent').val()  : "0" 
+                    let her = $('#m5HerPercent').val().length > 0 ? $('#m5HerPercent').val() : "0"
+                    let fun = $('#m5FunPercent').val().length > 0 ? $('#m5FunPercent').val() : "0"
+                    let otr = $('#m5OtrPercent').val().length > 0 ? $('#m5OtrPercent').val() : "0"
+
+                    let newVales = JSON.stringify({
+                        superHa: superHa,
+                        gasto: gasto,
+                        inc: inc,
+                        her: her,
+                        fun: fun,
+                        otr: otr,
+                    })
+
+                    if(oldFrameSixValues === newVales) return 
+                    oldFrameSixValues = newVales
+
+                    console.log('yes')
+
+                    $.ajax({
+                        type: "POST",
+                        url: '/market/sixFrameData',
+                        data: {
+                            activestates: activestates.join(','),
+                            activeFarms: activeFarms.join(','),
+                            sembradaHa: sembradaHa,
+                            superHa: superHa,
+                            gasto: gasto,
+                            inc: inc,
+                            her: her,
+                            fun: fun,
+                            otr: otr,
+                        },
+                    })
+                }
             }
 
             const getTotalValue = () => {
@@ -3809,7 +3895,7 @@ $(document).ready(function () {
                     pieChartBaseMarket1.data = newValues
                 }
 
-                //cleanForm()
+                saveFrameSixValues()
 
             }
             
@@ -4441,15 +4527,14 @@ $(document).ready(function () {
             var valueLabelPyramidModal = stateFarmSeries2.bullets.push(new am4charts.LabelBullet());
             valueLabelPyramidModal.label.html = '';
             //valueLabelPyramidModal.label.horizontalCenter = "left";
-            valueLabelPyramidModal.label.dx = -30;
-        // valueLabelPyramidModal.label.hideOversized = false;
+            valueLabelPyramidModal.label.dx = -55;
+            // valueLabelPyramidModal.label.hideOversized = false;
             //valueLabelPyramidModal.label.truncate = false;
 
             valueLabelPyramidModal.label.adapter.add("html", function(html, target) {
                 let product = farm_products[(target.dataItem.dataContext.product).toUpperCase()].imgB
-                return `<div><img src="/project_images/${product}" width="35px" height="35px"><div/>`
+                return `<div><span style="font-size: 18px">${target.dataItem.dataContext.percentFarm}%</span> <img src="/project_images/${product}" width="35px" height="35px"><div/>`
             });
-
 
             var totalFarmChart2 = marketPiramidContainer2.createChild(am4charts.XYChart);
             totalFarmChart2.paddingLeft = 0;
@@ -4462,7 +4547,6 @@ $(document).ready(function () {
             totalFarmCategoryAxis2.renderer.grid.template.location = 0;
             totalFarmCategoryAxis2.renderer.minGridDistance = 15;
 
-
             var totalFarmValueAxis2 = totalFarmChart2.xAxes.push(new am4charts.ValueAxis());
             //totalFarmValueAxis2.numberFormatter = new am4core.NumberFormatter();
             totalFarmValueAxis2.numberFormatter.numberFormat = "#,###,###' HA'";
@@ -4470,8 +4554,7 @@ $(document).ready(function () {
 
             totalFarmValueAxis2.min = 0;
             totalFarmValueAxis2.max = dataForModalPyramid[0].totalValue;
-            totalFarmValueAxis2.strictMinMax = true;
-            
+            totalFarmValueAxis2.strictMinMax = true;        
 
             // Create series
             var totalFarmSeries2 = totalFarmChart2.series.push(new am4charts.ColumnSeries());
@@ -4485,78 +4568,12 @@ $(document).ready(function () {
             totalFarmSeries2.dataFields.categoryY = "totalValue";
             totalFarmSeries2.interpolationDuration = 1000;
 
-            // let legendData = dataForModalPyramid.map(value => {
-            //     return {
-            //         name: value.product,
-            //         fill: value.config.fill,
-            //         img: `/project_images/${farm_products[(value.product).toUpperCase()].imgB}`,
-            //     }
-            // })
-
-            // legendData.push({
-            //     name: "Total",
-            //     fill: "#000000b0",
-            //     img: "/project_images/baseline_eco_black_48dp.png",
-            // })
-
-            // let legendPyramid = new am4charts.Legend();
-            // legendPyramid.position = "left";
-            // legendPyramid.scrollable = true;
-            // legendPyramid.reverseOrder = true;
-
-            // marketPiramidState2.legend = legendPyramid;
-            // legendPyramid.data = legendData
-
-
-            // // Remove square from marker template
-            // var markerLegendPiramid = marketPiramidState2.legend.markers.template;
-            // markerLegendPiramid.disposeChildren();
-
-            // // Add custom image instead
-            // let piramidMarketLegendImage = markerLegendPiramid.createChild(am4core.Image);
-            // piramidMarketLegendImage.width = 20;
-            // piramidMarketLegendImage.height = 20;
-            // piramidMarketLegendImage.verticalCenter = "top";
-            // piramidMarketLegendImage.horizontalCenter = "left";
-            // piramidMarketLegendImage.togglable = true;
-
-
-            // // We're going to use an adapter to set href
-            // piramidMarketLegendImage.adapter.add("href", function(href, target) {
-            //     return target.dataItem.dataContext.img;  
-            // });
-
-
-            // legendPyramid.itemContainers.template.events.on("toggled", function(event){
-
-            //     dataForModalPyramid = dataForModalPyramid.map(x => {
-            //         if(x.product === event.target.dataItem.dataContext.name) {
-            //             x.active = !event.target.isActive
-
-            //             legendData = legendData.map(y => {
-            //                 let productUpper = y.name.toUpperCase()
-            //                 if(y.name === "Total") return y
-            //                 if(y.name === event.target.dataItem.dataContext.name){
-            //                     y.img = x.active ? `/project_images/${farm_products[productUpper].imgB}` : `/project_images/${farm_products[productUpper].img}`
-            //                 }
-                            
-            //                 return y
-            //             })
-                    
-            //         }
-
-            //         return x
-            //     })
-
-            //     let dataForModalPyramidCopy = dataForModalPyramid.filter(x => x.active)
-
-            //     marketPiramidState2.data = JSON.parse(JSON.stringify(dataForModalPyramidCopy));
-            //     stateFarmValueAxis2.max = dataForModalPyramidCopy.length > 0 ? dataForModalPyramidCopy[0].totalValue : 0;
-            //     totalFarmChart2.data = JSON.parse(JSON.stringify(dataForModalPyramidCopy));
-            //     totalFarmValueAxis2.max = dataForModalPyramidCopy.length > 0 ? dataForModalPyramidCopy[0].totalValue : 0;
-
-            //     marketPiramidState2.legend.reinit()
-            // })
+            var valueLabelPyramidModal2 = totalFarmSeries2.bullets.push(new am4charts.LabelBullet());
+            //valueLabelPyramidModal.label.horizontalCenter = "left";
+            valueLabelPyramidModal2.label.dx = 25;
+            // valueLabelPyramidModal2.label.hideOversized = true;
+            // valueLabelPyramidModal2.label.truncate = true;
+            valueLabelPyramidModal2.label.text = "[font-size: 18px]100%[/]"
 
 
 
@@ -4985,11 +5002,11 @@ $('.addGeneralRowMarket').click(function(e){
                 </div>
 
                 <div class="col-md-2">
-                    <span class="collapsedLabels">Hectareas Sembradas</span> <input type="text" class="form-control haSembradas" placeholder="Mosquitos" value="0" disabled="disabled">
+                    <span class="collapsedLabels">Hectáreas Sembradas</span> <input type="text" class="form-control haSembradas" placeholder="Mosquitos" value="0" disabled="disabled">
                 </div>
                 
                 <div class="col-md-2">
-                    <span class="collapsedLabels">Hectareas tratadas</span> <input type="text" class="form-control haTratadas" placeholder="0">
+                    <span class="collapsedLabels">Hectáreas tratadas</span> <input type="text" class="form-control haTratadas" placeholder="0">
                 </div>
 
                 <div class="col-md-2 collapsedButtons">
@@ -5497,6 +5514,9 @@ $('.panel-group').on("click", ".button-market-grahp", function(e){
 
     let classFromId = $(this).closest('.panel-collapse').attr('id')
     let cultivo = $('.'+classFromId).find('.CultivoAdded').find('div').attr('name')
+    let haSembradas = $('.'+classFromId).find('.haSembradas').val() === "" ? 0 : $('.'+classFromId).find('.haSembradas').val()
+    let haTratadas = $('.'+classFromId).find('.haTratadas').val() === "" ? 0 : $('.'+classFromId).find('.haTratadas').val()
+    let title = $('.'+classFromId).find('#marketProblem').val() != undefined ? $('.'+classFromId).find('#marketProblem').val() : ""
 
     let cultivoAdapt = farm_products[cultivo].adapterBase
 
@@ -5518,10 +5538,53 @@ $('.panel-group').on("click", ".button-market-grahp", function(e){
 
             totalValue = totalValue + value
 
-
             if(name != "Seleccionar"){
                 marketshareUser.push({ "value" : value , "name" : name })
             }
+
+            let productId = $(this).closest('tr').find('.dropbtnMarket div').attr('id')
+
+            if(productId != 0){
+                let potencialPriceValue = $(this).closest('tr').find('.potencialPrice').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.potencialPrice').val().replace(/[$,]/gm, ""))
+                let potencialPriceHaValue = $(this).closest('tr').find('.potencialPriceHa').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.potencialPriceHa').val().replace(/[$,]/gm, ""))
+                let wishMarketAppValue = $(this).closest('tr').find('.wishMarketHaApplications').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.wishMarketHaApplications').val().replace(/[$,]/gm, ""))
+                let msWishHa = $(this).closest('tr').find('.MsWishHa').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.MsWishHa').val().replace(/[$,]/gm, ""))
+                let ltEquivalent = $(this).closest('tr').find('.ltEquivalent').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.ltEquivalent').val().replace(/[$,]/gm, ""))
+                let pDistribuidor = $(this).closest('tr').find('.pDistribuidor').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.pDistribuidor').val().replace(/[$,]/gm, ""))
+                let dosis = $(this).closest('tr').find('.dosis').val() === "" ? 0 : $(this).closest('tr').find('.dosis').val()
+                let priceHa = $(this).closest('tr').find('.priceHa').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.priceHa').val().replace(/[$,]/gm, ""))
+                let numberApplications = $(this).closest('tr').find('.numberApplications').val() === "" ? 0 : $(this).closest('tr').find('.numberApplications').val()
+                let pricePerCicle = $(this).closest('tr').find('.pricePerCicle').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.pricePerCicle').val().replace(/[$,]/gm, ""))
+                let applicationsWish = $(this).closest('tr').find('.ApplicationsWish').val() === "" ? 0 : $(this).closest('tr').find('.ApplicationsWish').val()
+                let msPercent = $(this).closest('tr').find('.MsPercent').val() === "" ? 0 : $(this).closest('tr').find('.MsPercent').val()
+
+                $.ajax({
+                    type: "POST",
+                    url: '/market/forthFrameData',
+                    data: {
+                        farm: cultivo,
+                        states: states.join(','),
+                        problem: title,
+                        haSembradas: haSembradas,
+                        haTratadas: haTratadas,
+                        productId: parseInt(productId),
+                        pDistribuidor: pDistribuidor,
+                        dosis: dosis,
+                        priceHa: priceHa,
+                        numberApplications: numberApplications,
+                        pricePerCicle: pricePerCicle,
+                        potencialPriceValue: potencialPriceValue,
+                        potencialPriceHaValue: potencialPriceHaValue,
+                        applicationsWish: applicationsWish,
+                        wishMarketAppValue: wishMarketAppValue,
+                        msPercent: msPercent,
+                        msWishHa: msWishHa,
+                        msWish: value,
+                        ltEquivalent: ltEquivalent
+                    },
+                })
+            }
+            
         });
 
         $.ajax({
@@ -5666,6 +5729,7 @@ $('.panel-group').on("click", ".marketAllData", function(e){
     let msWish = $(this).closest('tr').find('.MsWish').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.MsWish').val().replace(/[$,]/gm, ""))
     let ltEquivalent = $(this).closest('tr').find('.ltEquivalent').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.ltEquivalent').val().replace(/[$,]/gm, ""))
 
+
     allDataMarketRow = [
         //{name: "Mercado Potencial Valor", value: potencialPriceValue},
         {name: "Mercado potencial en Ha Aplicadas", value: potencialPriceHaValue},
@@ -5698,6 +5762,54 @@ $('.panel-group').on("click", ".marketAllData", function(e){
     $('#titleMarketShare').text(`Resultados Mercado ${title}`)
 
     $('#modalMarketFunnel').modal('show')
+
+    let productId = $(this).closest('tr').find('.dropbtnMarket div').attr('id')
+    let farm = $('.'+classFromId).find('.CultivoAdded div').attr('name')
+    let states = [] 
+    
+    $('.'+classFromId).find('.StatedAdded div').each(function(){
+        states.push($(this).attr('name'))
+    })
+
+    if(productId != 0 && farm != undefined && states.length > 0){
+        let haSembradas = $('.'+classFromId).find('.haSembradas').val() === "" ? 0 : $('.'+classFromId).find('.haSembradas').val()
+        let haTratadas = $('.'+classFromId).find('.haTratadas').val() === "" ? 0 : $('.'+classFromId).find('.haTratadas').val()
+        
+
+        let pDistribuidor = $(this).closest('tr').find('.pDistribuidor').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.pDistribuidor').val().replace(/[$,]/gm, ""))
+        let dosis = $(this).closest('tr').find('.dosis').val() === "" ? 0 : $(this).closest('tr').find('.dosis').val()
+        let priceHa = $(this).closest('tr').find('.priceHa').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.priceHa').val().replace(/[$,]/gm, ""))
+        let numberApplications = $(this).closest('tr').find('.numberApplications').val() === "" ? 0 : $(this).closest('tr').find('.numberApplications').val()
+        let pricePerCicle = $(this).closest('tr').find('.pricePerCicle').val() === "" ? 0 : parseFloat($(this).closest('tr').find('.pricePerCicle').val().replace(/[$,]/gm, ""))
+        let applicationsWish = $(this).closest('tr').find('.ApplicationsWish').val() === "" ? 0 : $(this).closest('tr').find('.ApplicationsWish').val()
+        let msPercent = $(this).closest('tr').find('.MsPercent').val() === "" ? 0 : $(this).closest('tr').find('.MsPercent').val()
+
+        $.ajax({
+            type: "POST",
+            url: '/market/forthFrameData',
+            data: {
+                farm: farm,
+                states: states.join(','),
+                problem: title,
+                haSembradas: haSembradas,
+                haTratadas: haTratadas,
+                productId: parseInt(productId),
+                pDistribuidor: pDistribuidor,
+                dosis: dosis,
+                priceHa: priceHa,
+                numberApplications: numberApplications,
+                pricePerCicle: pricePerCicle,
+                potencialPriceValue: potencialPriceValue,
+                potencialPriceHaValue: potencialPriceHaValue,
+                applicationsWish: applicationsWish,
+                wishMarketAppValue: wishMarketAppValue,
+                msPercent: msPercent,
+                msWishHa: msWishHa,
+                msWish: msWish,
+                ltEquivalent: ltEquivalent
+            },
+        })
+    }
 })
 
 
@@ -5889,7 +6001,7 @@ $('body').on("click", ".searchedValue", function(e){
         let iActivo = ($(this).attr('iActivo')).replace(/\s/g, '&nbsp;')
         let tipo = $(this).attr('tipo')
         $(this).closest('.marketTable').find('.myDropdownProduct').removeClass('show')
-        $(this).closest('.marketTable').find('.selectedProduct').html(`<div categoryId="${categoryId}" tipo="${tipo}">${ name }</div>`)
+        $(this).closest('.marketTable').find('.selectedProduct').html(`<div categoryId="${categoryId}" tipo="${tipo}" id="${$(this).attr('id')}">${ name }</div>`)
         $(this).closest('.marketTable').find('.unit').html(`<div>${ $(this).attr('unit') }</div>`)
         $(this).closest('.marketTable').find('.priceProduct').html(`<div>${ $(this).attr('price') }</div>`)
         $(this).closest('.marketTable').find('.iActivo').html(`<div>${iActivo}</div>`)
@@ -6053,6 +6165,46 @@ $('.panel-group').on("change", ".MsWish", function(e){
 })
 
 
+
+$('#saveRegion').click(function(){
+    const statesKeys = Object.keys(states)
+    const activeStates = statesKeys.filter(key => states[key].active)
+    let name = prompt('Nombre de la region')
+
+    if(activeStates.length > 0 && name.length > 0){
+
+        $.ajax({
+            type: "POST",
+            url: '/market/saveRegions',
+            data: {
+                states: activeStates,
+                name: name,
+            },
+            success: response => {
+                alert('Región guardada con éxito');
+            },
+            error: response => {
+                alert('Algo salió mal, por favor intentelo nuevamente');
+            }
+        })
+
+    }else{
+        alert('Debe elegir estados y un nombre para la region')
+    }
+    
+})
+
+const getUserRegions = () => {
+    $.ajax({
+        type: "GET",
+        url: '/market/getUserRegions',
+        success: function( data ) {
+            console.log(data['userData'])
+        }
+    })
+}
+
+getUserRegions();
 
 
 

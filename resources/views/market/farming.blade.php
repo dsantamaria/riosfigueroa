@@ -239,65 +239,67 @@
                     </tr>
         
                     <tr>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CAF CEREZA" title="Café" product="cafe"><img src="/project_images/Café N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CALABACITA" title="Calabacita" product="calabacita"><img src="/project_images/Calabacita N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CAA DE AZUCAR" title="Caña de azucar" product="caña de azucar"><img src="/project_images/Caña de Azúcar N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CEBOLLA" title="Cebolla" product="cebolla"><img src="/project_images/Cebolla N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CHILE VERDE" title="Chile" product="chile"><img src="/project_images/Chile Verde N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CRISANTEMO (Gruesa)" title="Crisantemo" product="crisantemo"><img src="/project_images/Crisantemo N.svg" width="30px" height="30px"></th>
                     </tr>
         
                     <tr>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="COLIFLOR" title="Col (repollo)" product="coliflor"><img src="/project_images/Col (Repollo) N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CRISANTEMO (Gruesa)" title="Crisantemo" product="crisantemo"><img src="/project_images/Crisantemo N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="DURAZNO" title="Durazno" product="durazno"><img src="/project_images/Durazno N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ESPARRAGO" title="Esparrago" product="esparrago"><img src="/project_images/Esparrago N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="FRAMBUESA" title="Frambuesa" product="frambuesa"><img src="/project_images/Frambuesa N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="FRESA" title="Fresa" product="fresa"><img src="/project_images/Fresa N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="FRIJOL" title="Frijol" product="frijol"><img src="/project_images/Frijol N.svg" width="30px" height="30px"></th>
                     </tr>
 
                     <tr>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="FRESA" title="Fresa" product="fresa"><img src="/project_images/Fresa N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="FRIJOL" title="Frijol" product="frijol"><img src="/project_images/Frijol N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="GLADIOLA (Gruesa)" title="Gladiola" product="limon"><img src="/project_images/Gladiola N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="LECHUGA" title="Lechuga" product="lechuga"><img src="/project_images/Lechuga N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="LIMON" title="Limon" product="limon"><img src="/project_images/Limón N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="MAIZ GRANO" title="Maíz" product="maiz"><img src="/project_images/Maíz (Grano) N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="MANGO" title="Mango" product="mango"><img src="/project_images/Mango N.svg" width="30px" height="30px"></th>
                     </tr>
 
                     <tr>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="MAIZ GRANO" title="Maíz" product="maiz"><img src="/project_images/Maíz (Grano) N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="MANGO" title="Mango" product="mango"><img src="/project_images/Mango N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="MANZANA" title="Manzana" product="manzana"><img src="/project_images/Manzana N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="MELON" title="Melón" product="melon"><img src="/project_images/Melón N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="NARANJA" title="Naranja" product="naranaja"><img src="/project_images/Naranja N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="NUEZ" title="Nogal (Nuez)" product="nogal (nuez)"><img src="/project_images/Nogal (Nuez) N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PAPA" title="Papa" product="papa"><img src="/project_images/Papa N.svg" width="30px" height="30px"></th>
                     </tr>
                         
                     <tr>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="NUEZ" title="Nogal (Nuez)" product="nogal (nuez)"><img src="/project_images/Nogal (Nuez) N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PAPA" title="Papa" product="papa"><img src="/project_images/Papa N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PAPAYA" title="Papaya" product="papaya"><img src="/project_images/Papaya N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PEPINO" title="Pepino" product="pepino"><img src="/project_images/Pepino N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PIA" title="Piña" product="piña"><img src="/project_images/Piña N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PLATANO" title="Platano" product="platano"><img src="/project_images/Plátano N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ROSA (Gruesa)" title="Rosas (Gruesa)" product="rosas (gruesas)"><img src="/project_images/Rosas (Gruesa) N.svg" width="30px" height="30px"></th>
                     </tr>
 
                     <tr>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PLATANO" title="Platano" product="platano"><img src="/project_images/Plátano N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ROSA (Gruesa)" title="Rosas (Gruesa)" product="rosas (gruesas)"><img src="/project_images/Rosas (Gruesa) N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="SANDIA" title="Sandía" product="sandia"><img src="/project_images/Sandía N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="SORGO GRANO" title="Sorgo" product="sorgo"><img src="/project_images/Sorgo N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="SOYA" title="Soya" product="soya"><img src="/project_images/Soya N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="TABACO" title="Tabaco" product="tabaco"><img src="/project_images/Tabaco N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="TOMATE ROJO (JITOMATE)" title="Tomate" product="tomate"><img src="/project_images/Jitomate (Tomate) N.svg" width="30px" height="30px"></th>
+                        
                     </tr>
 
                     <tr>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="TABACO" title="Tabaco" product="tabaco"><img src="/project_images/Tabaco N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="TOMATE ROJO (JITOMATE)" title="Tomate" product="tomate"><img src="/project_images/Jitomate (Tomate) N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="TOMATE VERDE" title="Tomate Verde" product="tomate verde"><img src="/project_images/Tomate Verde N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="TORONJA (POMELO)" title="Toronja (Pomelo)" product="toronja (pomelo)"><img src="/project_images/Toronja (Pomelo) N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="TRIGO GRANO" title="Trigo" product="trigo"><img src="/project_images/Trigo Grano N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="UVA" title="Uva" product="uva"><img src="/project_images/Uva N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ZANAHORIA" title="Zanahoria" product="zanahoria"><img src="/project_images/Zanahoria N.svg" width="30px" height="30px"></th>
+                        
                     </tr>
 
                     <tr id="market-table-last-tr">
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="UVA" title="Uva" product="uva"><img src="/project_images/Uva N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ZANAHORIA" title="Zanahoria" product="zanahoria"><img src="/project_images/Zanahoria N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ZARZAMORA" title="Zarzamora" product="zarzamora"><img src="/project_images/Zarzamora N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CAF CEREZA" title="Café" product="cafe"><img src="/project_images/Café N.svg" width="30px" height="30px"></th>
-                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="COLIFLOR" title="Col (repollo)" product="coliflor"><img src="/project_images/Col (Repollo) N.svg" width="30px" height="30px"></th>
                         <th class="market-all ignore" active="false" data-toggle="tooltip" value="" title="" product=""><img src="/project_images/none.png" width="30px" height="30px"></th>
                         <th class="ignore" active="false" data-toggle="tooltip" value="" title="" product="" style="background-color: white"></th>
                     </tr>

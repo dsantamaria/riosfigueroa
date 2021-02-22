@@ -55,7 +55,7 @@ return [
     |
     */
 
-    'from' => ['address' => 'info@riosfigueroa.net', 'name' => 'Rios Figueroa'],
+    'from' => ['address' => 'listaprecios@riosfigueroa.net', 'name' => 'Rios Figueroa'],
 
 
     /*

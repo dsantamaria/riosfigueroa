@@ -25,6 +25,10 @@ class Products extends Model
         return $this->belongsTo('App\Categorias', 'categoria_id');
     }
 
+    public function marketForthFrameUsage(){
+        return $this->hasMany('App\Market_fourth_frame_usage');
+    }
+
     public static function searchByFields($search_data = array())
     {
         $products = null;

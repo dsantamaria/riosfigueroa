@@ -30,6 +30,22 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class, 'role_users');
     }
 
+    public function userRegion(){
+        return $this->hasMany('App\User_region');
+    }
+
+    public function marketFirstFrameUsage(){
+        return $this->hasMany('App\Market_first_frame_usage');
+    }
+
+    public function marketForthFrameUsage(){
+        return $this->hasMany('App\Market_fourth_frame_usage');
+    }
+
+    public function marketSixFrameUsage(){
+        return $this->hasMany('App\Market_six_frame_usage');
+    }
+
     public function tools(){
         return $this->belongsToMany(Tool::class, 'denied_tools_user');
     }

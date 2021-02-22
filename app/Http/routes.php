@@ -90,6 +90,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('market/final_base_import', ['as' => 'market.final_base_import', 'uses' => 'MarketValueController@final_base_import']);
     Route::get('market/getBaseValue/{farm}/{states}/{producType}', ['as' => 'market.getBaseValue', 'uses' => 'MarketValueController@getBaseValue']);
     Route::get('market/getBaseByStatesFarms/{states}/{farms}', ['as' => 'market.getBaseByStatesFarms', 'uses' => 'MarketValueController@getBaseByStatesFarms']);
+    Route::post('market/firstFrameData', ['as' => 'firstFrameData', 'uses' => 'MarketValueController@firstFrameData']);
+    Route::post('market/forthFrameData', ['as' => 'forthFrameData', 'uses' => 'MarketValueController@forthFrameData']);
+    Route::post('market/sixFrameData', ['as' => 'sixFrameData', 'uses' => 'MarketValueController@sixFrameData']);
+    Route::post('market/saveRegions', ['as' => 'saveRegions', 'uses' => 'MarketValueController@saveRegions']);
+    Route::get('market/getUserRegions', ['as' => 'market.getUserRegions', 'uses' => 'MarketValueController@getUserRegions']);
 
 
     //************************* UserActivityController *********************//

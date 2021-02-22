@@ -94,9 +94,9 @@ class SubscribersController extends Controller
 	            $m->to($email)->subject('Completa la suscripcion!');
 	        });
 
-            Log::debug('here');
 
     	}catch(\Exception $e){
+            Log::debug($e);
     		DB::rollback();
             if($reques_from_subscriber_panel) return response()->json(array('error' => 'Ocurrio un error al enviar el email a '. $email . '. Por favor intente de nuevo'));
     		return back()->with('warning','Ocurrio un error al enviar el email a '. $email . '. Por favor intente de nuevo');

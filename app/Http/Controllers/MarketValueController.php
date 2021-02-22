@@ -11,9 +11,15 @@ use App\Base_market;
 use App\Agricola_siap;
 use App\Farm;
 use App\MexicoState;
+use App\Market_first_frame_usage;
+use App\Market_fourth_frame_usage;
+use App\Market_six_frame_usage;
+use App\User_region;
+use App\Region_state;
 use Excel;
 use DB;
 use Log;
+use Auth;
 
 class MarketValueController extends Controller
 {
@@ -113,8 +119,9 @@ class MarketValueController extends Controller
             $farms = json_decode($farmProducts);
             $farmStates = json_decode($states);
             $farm_data = Agricola_siap::get_all_per_state_farm($farmStates, $farms);
-
             $farms_state_total = Agricola_siap::get_all_data_for_states($farms);
+
+            
 
             $farm_adapt = [];
             $farm_adapt_total = [];
@@ -343,5 +350,95 @@ class MarketValueController extends Controller
             "stateFarmsValues" => $stateFarmsValues, 
             'statesValues' => $statesValues)
         )->setStatusCode(200);
+    }
+
+    public function firstFrameData(Request $request){
+        $farms= $request['newFarms'];
+        $states = $request['newStates'];
+
+        foreach ($states as $state) {
+            foreach ($farms as $farm) {
+                Market_first_frame_usage::saveValues($farm, $state, Auth::user()->id);
+            }
+        }
+    }
+
+    public function forthFrameData(Request $request){
+        $farm = $request['farm'];
+        $states = $request['states'];
+        $problem = $request['problem'];
+        $sembradasHa = $request['haSembradas'];
+        $tratadasHa = $request['haTratadas'];
+        $product_id = $request['productId'];
+        $priceDis = $request['pDistribuidor'];
+        $dosisHa = $request['dosis'];
+        $priceHa = $request['priceHa'];
+        $cicloApp = $request['numberApplications'];
+        $priceApp = $request['pricePerCicle'];
+        $priceMarketPot = $request['potencialPriceValue'];
+        $marketPotencialApp = $request['potencialPriceHaValue'];
+        $probablyApp = $request['applicationsWish'];
+        $marketProbably = $request['wishMarketAppValue'];
+        $objective = $request['msPercent'];
+        $msHa = $request['msWishHa'];
+        $msWish = $request['msWish'];
+        $lt = $request['ltEquivalent'];
+
+        Market_fourth_frame_usage::saveValues($farm, $states, $problem, $sembradasHa, $tratadasHa, $product_id, $priceDis, $dosisHa, $priceHa, $cicloApp, $priceApp, $priceMarketPot, $marketPotencialApp, $probablyApp, $marketProbably, $objective, $msHa, $msWish, $lt, Auth::user()->id);
+
+    }
+
+    public function sixFrameData(Request $request){
+        $states = $request['activestates'];
+        $farms = $request['activeFarms'];
+        $sembradasHa = $request['sembradaHa'];
+        $tratadasHa = $request['superHa'];
+        $spend = $request['gasto'];
+        $percentIncecticida = $request['inc'];
+        $percentHerbicida = $request['her'];
+        $percentFungicida = $request['fun'];
+        $percentOtros = $request['otr'];
+
+        Market_six_frame_usage::saveValues($states, $farms, $sembradasHa, $tratadasHa, $spend, $percentIncecticida, $percentHerbicida, $percentFungicida, $percentOtros, Auth::user()->id);
+    }
+
+    public function saveRegions(Request $request){
+        $states = $request['states'];
+        $name = $request['name'];
+
+        try {
+            $userRegion = User_region::saveRegion($name, Auth::user()->id);
+            $userRegionId = $userRegion->id;
+
+            foreach ($states as $state) {
+                $stateId = MexicoState::getStateByAlias($state)->id;
+                Region_state::saveUserRegion($userRegionId, $stateId);
+            }
+            return response()->json(array('Sucessfuly' => 'ok'))->setStatusCode(200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage() . " in -> saveRegions");
+            return response()->json(array('error' => $e->getMessage()))->setStatusCode(500);
+        }        
+    }
+
+    public function getUserRegions(){
+        $user_id = Auth::user()->id;
+        $userDataRegion = User_region::getByUser($user_id);
+        $userData = [];
+        
+        foreach ($userDataRegion as $region) {
+            $states = [];
+
+            foreach ($region->regionStates as $regionState) {
+                array_push($states, $regionState->mexicoStates->alias);
+            }
+
+            array_push($userData, [
+                'name' => $region->name,
+                'states' => $states
+            ]);
+        }
+
+        return response()->json(array('userData' => $userData))->setStatusCode(200);
     }
 }
