@@ -1648,3 +1648,25 @@ canvas{
   height: 35px;
   display: inline-block;
 }
+
+.dropDownRegion{
+  background-color: #f6f6f6;
+  min-width: 230px;
+  overflow: auto;
+  border: 1px solid #ddd;
+  z-index: 130;
+  cursor: pointer;
+  position: absolute;
+  top: 50px;
+}
+
+.dropDownItem{
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+.itemRegion{
+  flex: 1;
+  text-align: initial;
+}

@@ -110,7 +110,25 @@ class MarketValueController extends Controller
 
     public function market_farming()
     {
-    	return view('market.farming');
+        $user_id = Auth::user()->id;
+        $userDataRegion = User_region::getByUser($user_id);
+        $userData = [];
+        
+        foreach ($userDataRegion as $region) {
+            $states = [];
+
+            foreach ($region->regionStates as $regionState) {
+                array_push($states, $regionState->mexicoStates->alias);
+            }
+
+            array_push($userData, [
+                'id' => $region->id,
+                'name' => $region->name,
+                'states' => implode(',', $states)
+            ]);
+        }
+
+    	return view('market.farming')->with(['data' => $userData]);
     }
     
     public function market_farming_values($states, $farmProducts)
@@ -414,7 +432,7 @@ class MarketValueController extends Controller
                 $stateId = MexicoState::getStateByAlias($state)->id;
                 Region_state::saveUserRegion($userRegionId, $stateId);
             }
-            return response()->json(array('Sucessfuly' => 'ok'))->setStatusCode(200);
+            return response()->json(array('id' => $userRegionId))->setStatusCode(200);
         } catch (\Exception $e) {
             Log::error($e->getMessage() . " in -> saveRegions");
             return response()->json(array('error' => $e->getMessage()))->setStatusCode(500);
@@ -440,5 +458,17 @@ class MarketValueController extends Controller
         }
 
         return response()->json(array('userData' => $userData))->setStatusCode(200);
+    }
+
+    public function deletRegion(Request $request){
+        $id = $request['id'];
+
+        try {
+            User_region::deleteRegion($id);
+            return response()->json(array('ok' => 'ok'))->setStatusCode(200);
+        } catch (\Exception $e) {
+            Log::error($e->getMessage() . " in -> deletRegion");
+            return response()->json(array('error' => $e->getMessage()))->setStatusCode(500);
+        }
     }
 }

@@ -95,6 +95,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('market/sixFrameData', ['as' => 'sixFrameData', 'uses' => 'MarketValueController@sixFrameData']);
     Route::post('market/saveRegions', ['as' => 'saveRegions', 'uses' => 'MarketValueController@saveRegions']);
     Route::get('market/getUserRegions', ['as' => 'market.getUserRegions', 'uses' => 'MarketValueController@getUserRegions']);
+    Route::post('market/deletRegion', ['as' => 'market.deletRegion', 'uses' => 'MarketValueController@deletRegion']);
 
 
     //************************* UserActivityController *********************//

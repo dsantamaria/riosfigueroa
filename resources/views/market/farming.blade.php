@@ -346,17 +346,31 @@
             <div class="col-md-6">
                 <div id="mapMarket" style="width: 80%; height: 400px; margin-left:10%"></div>
                 <div style="text-align: center">
-                    <button id="selectFarmingAll" active="false">Seleccionar Todos</button>
-                    <button id="selectFarmingRegion">Seleccionar Región</button>
-                    <button id="saveRegion">Guardar Selección</button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" id="selectFarmingAll">Seleccionar Todos</button>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" id="openDropDownRegion" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Seleccionar Región <span class="caret"></span>
+                        </button>
+                        <div class="dropDownRegion hidden">
+                           
+                            <div class="dropDownItem  @if(!empty($data)) hidden @endif" id="emptyRegion">No hay regiones guardadas</div>
+                            
+                            @foreach($data as $region)
+                                <div class="dropDownItem"><span states="{{$region['states']}}" class="itemRegion">{{$region['name']}}</span> <span id="{{$region['id']}}" class="deleteRegion"><i class="fa fa-times" aria-hidden="true"></i></span></div>
+                            @endforeach
+                        </div>
+                    </div>
+
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" id="saveRegion">Guardar Selección</button>
+                    </div>
+
                 </div>              
 
-                {{-- <div class="checkbox checkbox-primary row">
-                    <div class="col-md-12" style="margin-bottom: 12px">
-                        <input type="checkbox" id="market-advance-farms-states">
-                        <label for="market-advance-farms">Visualizar valores personalizados</label>
-                    </div>
-                </div> --}}
+                
+
             </div>
             <div class="col-md-6">
                 <ul class="list-group">

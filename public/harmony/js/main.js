@@ -2865,6 +2865,53 @@ $(document).ready(function () {
             });
         }
 
+        $('body').on("click", ".itemRegion", function(e){
+            const statesRegion = $(this).attr('states').split(',')
+            statesBaseMarket = []
+
+            statesRegion.map(state => {
+                states[state].active = true
+                statesBaseMarket.push(states[state].name)
+            })
+
+            mexicoIds.forEach(id => {
+                var us = polygonSeries.getPolygonById(id);
+                console.log(us.dataItem.dataContext.id)
+                us.isActive = statesRegion.includes(us.dataItem.dataContext.id) ? true : false
+            })
+
+            $('.dropDownRegion').addClass('hidden')
+
+            searchMarketFarmValues()
+            searchMarketBaseValues()
+
+            $('#selectFarmingAll').html('Seleccionar Todos')
+            $('#selectFarmingAll').attr('active', 'false')
+        })
+
+        $('#openDropDownRegion').on('click', function(){
+            $('.dropDownRegion').hasClass('hidden') ? $('.dropDownRegion').removeClass('hidden') : $('.dropDownRegion').addClass('hidden')
+        })
+
+        $('body').on("click", ".deleteRegion", function(e){
+            let id = $(this).attr('id')
+
+            $.ajax({
+                type: "POST",
+                url: '/market/deletRegion',
+                data: {
+                    id: id,
+                },
+                success: response => {
+                    if($('.dropDownItem').length <= 2) $('#emptyRegion').removeClass('hidden')
+                    $(this).closest('div').remove()
+                },
+                error: response => {
+                    alert('Algo salió mal, por favor intentelo nuevamente');
+                }
+            })
+        })
+
 
         const searchMarketBaseValues = () => {
             let activesStates = []
@@ -4533,7 +4580,7 @@ $(document).ready(function () {
 
             valueLabelPyramidModal.label.adapter.add("html", function(html, target) {
                 let product = farm_products[(target.dataItem.dataContext.product).toUpperCase()].imgB
-                return `<div><span style="font-size: 18px">${target.dataItem.dataContext.percentFarm}%</span> <img src="/project_images/${product}" width="35px" height="35px"><div/>`
+                return `<div><span style="font-size: 18px; position: relative; top: 4px">${target.dataItem.dataContext.percentFarm}%</span> <img src="/project_images/${product}" width="35px" height="35px"><div/>`
             });
 
             var totalFarmChart2 = marketPiramidContainer2.createChild(am4charts.XYChart);
@@ -6181,7 +6228,13 @@ $('#saveRegion').click(function(){
                 name: name,
             },
             success: response => {
-                alert('Región guardada con éxito');
+                $('#emptyRegion').hasClass('hidden') ? null : $('#emptyRegion').addClass('hidden')
+                $('.dropDownRegion').append(`
+                    <div class="dropDownItem">
+                        <span states="${activeStates.join(',')}" class="itemRegion">${name}</span> 
+                        <span id="${response.id}" class="deleteRegion"><i class="fa fa-times" aria-hidden="true"></i></span>
+                    </div>
+                `)
             },
             error: response => {
                 alert('Algo salió mal, por favor intentelo nuevamente');
@@ -6205,7 +6258,6 @@ const getUserRegions = () => {
 }
 
 getUserRegions();
-
 
 
 const getProductsLt = () => {

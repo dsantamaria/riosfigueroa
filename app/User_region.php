@@ -30,4 +30,8 @@ class User_region extends Model
     public static function getByUser($user_id){
         return self::where('user_id', $user_id)->get();
     }
+
+    public static function deleteRegion($id){
+        self::destroy($id);
+    }
 }
