@@ -89,9 +89,9 @@
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="16" rowspan="1" colspan="1">N°&nbsp;de&nbsp;aplicaciones&nbsp;probables</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="17" rowspan="1" colspan="1">Mercado&nbsp;probable&nbsp;aplicado</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="18" rowspan="1" colspan="1">Objetivo</th>
-                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="19" rowspan="1" colspan="1">MS&nbsp;Deseado&nbsp;en&nbsp;Ha</th>
-                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="20" rowspan="1" colspan="1">Valor&nbsp;MS&nbsp;Deseado</th>
-                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="21" rowspan="1" colspan="1">Litros&nbsp;equivalentes</th>
+                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="19" rowspan="1" colspan="1">Objetivo&nbsp;en&nbsp;Ha</th>
+                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="20" rowspan="1" colspan="1">Objetivo&nbsp;en&nbsp;Valor</th>
+                                                <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="21" rowspan="1" colspan="1">Objetivo&nbsp;en&nbsp;Litros</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="22" rowspan="1" colspan="1">Análisis&nbsp;total</th>
                                                 <th class=""  aria-controls="zctbFirst"  aria-label="Name:" tabindex="23" rowspan="1" colspan="1">Eliminar</th>
                                             </tr>
@@ -195,7 +195,7 @@
             <div class="external-chart" id="openModalMap">
                 <i class="fa fa-external-link fa-lg" data-toggle="modal"></i>
             </div>
-            <div style="position: absolute;width: 100%;text-align: center;top: 0;left: 0;font-size: 12px;">Cantidad de Hectáreas (Ha) por cultivo</div>
+            <div style="position: absolute;width: 100%;text-align: center;top: 0;left: 0;font-size: 12px;">Cultivo por Estado</div>
         </div>
 
         <div class="col-md-6" style="border-right: solid 1px #6f6fec; border-top: solid 1px #6f6fec;">
@@ -203,7 +203,7 @@
             <div class="external-chart" id="openModalPiramid">
                 <i class="fa fa-external-link fa-lg" data-toggle="modal"></i>
             </div>
-            <div style="position: absolute;width: 100%;text-align: center;top: 0;left: 0;font-size: 12px;">Superficie Cultivo vs Siembra Cultivo Nacional</div>
+            <div style="position: absolute;width: 100%;text-align: center;top: 0;left: 0;font-size: 12px;">Selección v.s Nacional</div>
         </div>
 
         <div class="col-md-6" style="border-top: solid 1px #6f6fec;">
@@ -212,7 +212,7 @@
             <div class="external-chart" id="openModalTree">
                 <i class="fa fa-external-link fa-lg" data-toggle="modal"></i>
             </div>
-            <div style="position: absolute;width: 100%;text-align: center;top: 0;left: 0;font-size: 12px;">Superficie seleccionada vs Superficie sembrada</div>
+            <div style="position: absolute;width: 100%;text-align: center;top: 0;left: 0;font-size: 12px;">Superficie por Estado</div>
         </div>
         
 
@@ -405,9 +405,9 @@
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs" role="tablist">
                       <li role="presentation" class="active"><a href="#firstMarket" aria-controls="firstMarket" role="tab" data-toggle="tab" class="tabs-modal-farmMarket">Porcentaje de Hectáreas (Ha)</a></li>
-                      <li role="presentation"><a href="#secondMarket" aria-controls="secondMarket" role="tab" data-toggle="tab" class="tabs-modal-farmMarket">Cantidad de Hectáreas (Ha) por cultivo</a></li>
-                      <li role="presentation"><a href="#thirdMarket" aria-controls="thirdMarket" role="tab" data-toggle="tab" class="tabs-modal-farmMarket"> Análisis de Superficie por Cultivo vs Siembra del Cultivo a nivel Nacional</a></li>
-                      <li role="presentation"><a href="#fourthMarket" aria-controls="fourthMarket" role="tab" data-toggle="tab" class="tabs-modal-farmMarket">Análisis de superficie seleccionada vs superficie sembrada por Estado</a></li>
+                      <li role="presentation"><a href="#secondMarket" aria-controls="secondMarket" role="tab" data-toggle="tab" class="tabs-modal-farmMarket">Cultivo por Estado</a></li>
+                      <li role="presentation"><a href="#thirdMarket" aria-controls="thirdMarket" role="tab" data-toggle="tab" class="tabs-modal-farmMarket"> Selección v.s Nacional</a></li>
+                      <li role="presentation"><a href="#fourthMarket" aria-controls="fourthMarket" role="tab" data-toggle="tab" class="tabs-modal-farmMarket">Superficie por Estado</a></li>
                     </ul>
                   
                     <!-- Tab panes -->
@@ -420,16 +420,17 @@
                           <div style="width: 80%; float: left;" id="modalBodyMarket"></div>
                         </div>
                       <div role="tabpanel" class="tab-pane" id="secondMarket">
-                            <div class="modalCharttitle">Cantidad de Hectáreas (Ha) por cultivo</div>
+                            <div class="modalCharttitle">Cultivo por Estado</div>
                           <div id="modalBodyTree"></div>
                         </div>
                       <div role="tabpanel" class="tab-pane" id="thirdMarket">
-                            <div class="modalCharttitle">Análisis de Superficie por Cultivo vs Siembra del Cultivo a nivel Nacional</div>
+                            <div class="modalCharttitle">Selección v.s Nacional</div>
                             <div id="modalBodyPyramid"></div>
                         </div>
                       <div role="tabpanel" class="tab-pane" id="fourthMarket">
-                        <div class="modalCharttitle">Análisis de superficie seleccionada vs superficie sembrada por Estado</div>
+                        <div class="modalCharttitle">Superficie por Estado</div>
                           <div id="modalBodyForcedTree"></div>
+                          <div id="legenddiv"></div>
                         </div>
                     </div>
                   

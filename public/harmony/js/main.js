@@ -2735,7 +2735,7 @@ $(document).ready(function () {
                         return 
                     }
                     const farmKeys = Object.keys(data["farm_data"])
-                    const stateKeys = Object.keys(data["states_data"])
+                    const stateKeys = Object.keys(data["states_data"]).reverse()
                     let farmsPie = []
                     let farmTree = []
                     let farmPiramid = []
@@ -2772,9 +2772,9 @@ $(document).ready(function () {
                             collapsed: true
                         })
                     })
-
+                    
                     farmKeys.forEach(product => {
-                        let productAdapt = product.toLowerCase().charAt(0).toUpperCase() + product.toLowerCase().slice(1)
+                        let productAdapt = product
                         let percent = ((data["farm_data"][product] * 100) / total).toFixed(1)
                         let index = 0
 
@@ -4335,7 +4335,7 @@ $(document).ready(function () {
 
                 dataForModalPie = dataForModalPie.map(x => {
                     if(event.target.dataItem.dataContext.category === x.product) {
-                        let productUpper = x.product.toUpperCase()
+                        let productUpper = x.product
                         x.img = x.active ? `/project_images/${farm_products[productUpper].imgB}` : `/project_images/${farm_products[productUpper].img}`
                     }
                     return x
@@ -4500,7 +4500,7 @@ $(document).ready(function () {
                 dataForModalTree = dataForModalTree.map(x => {
                     if(event.target.dataItem.name === x.name) {
                         x.active = !x.active
-                        let productUpper = x.name.toUpperCase()
+                        let productUpper = x.name
                         x.img = x.active ? `/project_images/${farm_products[productUpper].imgB}` : `/project_images/${farm_products[productUpper].img}`
                         x.children[0].img = x.active ? `/project_images/${farm_products[productUpper].imgB}` : `/project_images/${farm_products[productUpper].img}`
                     }
@@ -4579,7 +4579,7 @@ $(document).ready(function () {
             //valueLabelPyramidModal.label.truncate = false;
 
             valueLabelPyramidModal.label.adapter.add("html", function(html, target) {
-                let product = farm_products[(target.dataItem.dataContext.product).toUpperCase()].imgB
+                let product = farm_products[(target.dataItem.dataContext.product)].imgB
                 return `<div><span style="font-size: 18px; position: relative; top: 4px">${target.dataItem.dataContext.percentFarm}%</span> <img src="/project_images/${product}" width="35px" height="35px"><div/>`
             });
 
@@ -4688,20 +4688,35 @@ $(document).ready(function () {
             });
 
             chartForecedTreeSeries2.nodes.template.label.adapter.add("text", function(text, target) {
-                return (/^[0-9]/).test(target.dataItem.dataContext.name) ? (formatComms(target.dataItem.dataContext.name.toString()) + " HA") : text
+                return (/^[0-9]/).test(target.dataItem.dataContext.name) ? (formatComms(target.dataItem.dataContext.name.toString()) + " \n HA") : text
             });
 
             chartForcedTree2.legend = new am4charts.Legend();
             chartForcedTree2.legend.valueLabels.template.text = "[bold]{value}[/]";
-            chartForcedTree2.legend.position = "bottom";
+            //chartForcedTree2.legend.position = "right";
             chartForcedTree2.legend.fontSize = 20
+
+            // chartForcedTree2.legend.height = "100%"
+            // chartForcedTree2.legend.scrollable =true
+            // chartForcedTree2.legend.contentValign = "top"
+            // chartForcedTree2.legend.width = "100%"
+
+
+            var legendContainer = am4core.create("legenddiv", am4core.Container);
+            legendContainer.width = am4core.percent(100);
+            legendContainer.height = am4core.percent(100);
+            chartForcedTree2.legend.parent = legendContainer;
+            chartForcedTree2.legend.scrollable = true;
+
             
 
             let legendDataTree = dataForModalPyramid.map(value => {
+                console.log(farm_products)
+                console.log(value.product)
                 return {
                     fill: value.config.fill,
                     name: value.product,
-                    img: `/project_images/${farm_products[(value.product).toUpperCase()].imgB}`,
+                    img: `/project_images/${farm_products[value.product].imgB}`,
                 }
             })
 
@@ -5093,9 +5108,9 @@ $('.addGeneralRowMarket').click(function(e){
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="16" rowspan="1" colspan="1">N°&nbsp;de&nbsp;aplicaciones&nbsp;probables</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="17" rowspan="1" colspan="1">Mercado&nbsp;probable&nbsp;aplicado</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="18" rowspan="1" colspan="1">Objetivo</th>
-                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="19" rowspan="1" colspan="1">MS&nbsp;Deseado&nbsp;en&nbsp;Ha</th>
-                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="20" rowspan="1" colspan="1">Valor&nbsp;MS&nbsp;Deseado</th>
-                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="21" rowspan="1" colspan="1">Litros&nbsp;equivalentes</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="19" rowspan="1" colspan="1">Objetivo&nbsp;en&nbsp;Ha</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="20" rowspan="1" colspan="1">Objetivo&nbsp;en&nbsp;Valor</th>
+                                            <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="21" rowspan="1" colspan="1">Objetivo&nbsp;en&nbsp;Litros</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="22" rowspan="1" colspan="1">Análisis&nbsp;total</th>
                                             <th class=""  aria-controls="${dinamyTableId}"  aria-label="Name:" tabindex="23" rowspan="1" colspan="1">Eliminar</th>
                                         </tr>
@@ -5661,10 +5676,11 @@ $('.panel-group').on("click", ".button-market-grahp", function(e){
 
                 seriesForMarket = marketshareUser.map((x, index) => {
                     light = light + 0.2
-                    return [x.name, x.name + ` - $${formatPrice(x.value.toString())}`, negativeColor[index]]
+                    let percent = ((x.value * 100) / typevalue).toFixed(1).toString()
+                    return [x.name, `${x.name} \n $${formatPrice(x.value.toString())} [font-size: 15px](${percent}%)[/]`, negativeColor[index]]
                 })
 
-                seriesForMarket.push( [tipo, tipo + ` - $${formatPrice(typevalue.toString())}`, positiveColor])
+                seriesForMarket.push( [tipo, tipo + ` \n $${formatPrice(typevalue.toString())} [font-size: 15px](100%)[/]`, positiveColor])
 
                 marketShareTotal = data['total']
 
@@ -5717,13 +5733,8 @@ $('#modalMarketshare').on('show.bs.modal', function (event) {
     // Legend
     chart.legend = new am4charts.Legend();
     chart.legend.position = "bottom";
-    chart.legend.minWidth = 250
     chart.legend.fontSize = 20
-    chart.legend.verticalCente = "center"
-    chart.legend.contentValign = "center"
 
-
-    chart.legend.valueLabels.template.text = "{valueX}";
 
     // Use only absolute numbers
     chart.numberFormatter.numberFormat = "#.#s";
@@ -5754,13 +5765,13 @@ $('#modalMarketshare').on('show.bs.modal', function (event) {
     })
 
 
-    chart.legend.events.on("layoutvalidated", function(event){
-    chart.legend.itemContainers.each((container)=>{
-        if(container.dataItem.dataContext.name == "Herbi"){
-            container.toBack();
-            }
-        })
-    })
+    // chart.legend.events.on("layoutvalidated", function(event){
+    // chart.legend.itemContainers.each((container)=>{
+    //     if(container.dataItem.dataContext.name == "Herbi"){
+    //         container.toBack();
+    //         }
+    //     })
+    // })
 })
 
 
@@ -5781,9 +5792,9 @@ $('.panel-group').on("click", ".marketAllData", function(e){
         //{name: "Mercado Potencial Valor", value: potencialPriceValue},
         {name: "Mercado potencial en Ha Aplicadas", value: potencialPriceHaValue},
         {name: "Mercado  Deseado HA Aplicadas", value: wishMarketAppValue},
-        {name: "MS Deseado en Ha", value: msWishHa},
+        {name: "Objetivo en Ha", value: msWishHa},
        // {name: "Valor  MS Deseado", value: msWish},
-        {name: "Litros equivalentes", value: ltEquivalent},
+        {name: "Objetivo en Litros", value: ltEquivalent},
     ]
 
     let percentWish = (msWish*100)/potencialPriceValue ? ((msWish*100)/potencialPriceValue).toFixed(2).toString() + '%' : "0%"
@@ -5962,7 +5973,7 @@ $('#modalMarketFunnel').on('show.bs.modal', function (event) {
         },
         {
             fill: "#f47c3c",
-            name: "Valor  MS Deseado",
+            name: "Objetivo en Valor",
         }
     ]
     
