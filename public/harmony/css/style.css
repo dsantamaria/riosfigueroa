@@ -1371,8 +1371,25 @@ canvas{
   z-index: 120;
 }
 
-.modalBodyMarket, .modalBodyTree, .modalBodyPyramid, .modalBodyForcedTree, .modalBodyMap{
+.modalBodyMarket, .modalBodyTree, .modalBodyPyramid, .modalBodyMap{
   height: 80vh;
+}
+
+.modalBodyForcedTree{
+  height: 65vh;
+}
+
+#chartdiv, #legenddiv {
+  width: 100%;
+  margin: 1em 0;
+}
+
+#legenddiv {
+  height: 15vh;
+}
+
+#legenddiv {
+  max-height: 10vh;
 }
 
 .modalBodyMap{
