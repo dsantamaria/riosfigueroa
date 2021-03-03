@@ -14,6 +14,10 @@ class Market_entity extends Model
 
     public function marketData()
     {
-        return $this->hasMany('App\Market_data', 'entidadId');
+        return $this->hasMany('App\Market_data', 'entidadid');
+    }
+
+    public static function getByName($name){
+        return self::where('nombre', $name)->first();
     }
 }

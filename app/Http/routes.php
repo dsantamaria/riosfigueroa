@@ -84,18 +84,23 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('market_year_update', ['as' => 'market_year_update', 'uses' => 'MarketValueController@market_year_update']);
     Route::post('market_import', ['as' => 'market_import', 'uses' => 'MarketValueController@market_import'])->middleware('admin');
     Route::get('market/farming', ['as' => 'market.farming', 'uses' => 'MarketValueController@market_farming'])->middleware('saveRoute:analisis_del_mercado');;
-    Route::get('market/farming/values/{states}/{farmProducts}', ['as' => 'market.farming.values', 'uses' => 'MarketValueController@market_farming_values'])->middleware('saveRoute:analisis_del_mercado');;
+    Route::get('market/farming/values/{states}/{farmProducts}/{year}', ['as' => 'market.farming.values', 'uses' => 'MarketValueController@market_farming_values'])->middleware('saveRoute:analisis_del_mercado');;
     Route::get('farms', ['as' => 'market.farms', 'uses' => 'MarketValueController@farms'])->middleware('saveRoute:analisis_del_mercado');
     Route::get('mxStates', ['as' => 'market.mxStates', 'uses' => 'MarketValueController@mxStates'])->middleware('saveRoute:analisis_del_mercado');
-    Route::get('market/final_base_import', ['as' => 'market.final_base_import', 'uses' => 'MarketValueController@final_base_import']);
-    Route::get('market/getBaseValue/{farm}/{states}/{producType}', ['as' => 'market.getBaseValue', 'uses' => 'MarketValueController@getBaseValue']);
-    Route::get('market/getBaseByStatesFarms/{states}/{farms}', ['as' => 'market.getBaseByStatesFarms', 'uses' => 'MarketValueController@getBaseByStatesFarms']);
+    Route::get('market/getBaseValue/{farm}/{states}/{producType}/{year}', ['as' => 'market.getBaseValue', 'uses' => 'MarketValueController@getBaseValue']);
+    Route::get('market/getBaseByStatesFarms/{states}/{farms}/{year}', ['as' => 'market.getBaseByStatesFarms', 'uses' => 'MarketValueController@getBaseByStatesFarms']);
     Route::post('market/firstFrameData', ['as' => 'firstFrameData', 'uses' => 'MarketValueController@firstFrameData']);
     Route::post('market/forthFrameData', ['as' => 'forthFrameData', 'uses' => 'MarketValueController@forthFrameData']);
     Route::post('market/sixFrameData', ['as' => 'sixFrameData', 'uses' => 'MarketValueController@sixFrameData']);
     Route::post('market/saveRegions', ['as' => 'saveRegions', 'uses' => 'MarketValueController@saveRegions']);
     Route::get('market/getUserRegions', ['as' => 'market.getUserRegions', 'uses' => 'MarketValueController@getUserRegions']);
     Route::post('market/deletRegion', ['as' => 'market.deletRegion', 'uses' => 'MarketValueController@deletRegion']);
+
+
+    //imports for base
+    Route::get('market/final_base_import', ['as' => 'market.final_base_import', 'uses' => 'MarketValueController@final_base_import']);
+    Route::get('market/final_base_factor_import', ['as' => 'market.final_base_factor_import', 'uses' => 'MarketValueController@final_base_factor_import']);
+    Route::get('market/update_base_marquet', ['as' => 'market.update_base_marquet', 'uses' => 'MarketValueController@update_base_marquet']);
 
 
     //************************* UserActivityController *********************//

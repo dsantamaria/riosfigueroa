@@ -10,11 +10,15 @@ const farm_products = {
     "AJO": {'img': 'Ajo N.svg', 'imgB': 'Ajo color.svg', 'imgW': 'Ajo B.svg','color': "#e3dbdbff", "active": false, 'adapterBase': 'Ajo'},
     "ALFALFA VERDE": {'img': 'Alfalfa N.svg', 'imgB': 'Alfalfa color.svg', 'imgW': 'Alfalfa B.svg','color': "#ff2a2aff", "active": false, 'adapterBase': 'Alfalfa (T)'},
     "ALGODN HUESO": {'img': 'Algodón N.svg', 'imgB': 'Algodón color.svg', 'imgW': 'Algodón B.svg','color': "#ff8080ff", "active": false, 'adapterBase': 'Algodón'},
+    "ARANDANO": {'img': 'Arándano N.svg', 'imgB': 'Arándano color.svg', 'imgW': 'Arándano B.svg','color': "#D7DBDD", "active": false, 'adapterBase': 'Arándanos'},
+
     "ARROZ PALAY": {'img': 'Arroz N.svg', 'imgB': 'Arroz color.svg', 'imgW': 'Arroz B.svg','color': "#D7DBDD", "active": false, 'adapterBase': 'Arroz'},
-    
     "AVENA GRANO": {'img': 'Avena Grano N.svg', 'imgB': 'Avena Grano color.svg', 'imgW': 'Avena Grano B.svg','color': "#ffe680ff", "active": false, 'adapterBase': 'Avena Grano'},
     "BERENJENA": {'img': 'Berenjena N.svg', 'imgB': 'Berenjena color.svg', 'imgW': 'Berenjena B.svg','color': "#bc5fd3ff" , "active": false, 'adapterBase': 'Berenjena'},
     "BROCOLI": {'img': 'Brócoli N.svg', 'imgB': 'Brócoli color.svg', 'imgW': 'Brócoli B.svg','color': "#008080ff" , "active": false, 'adapterBase': 'Brócoli'},
+   
+    "CACAHUETE": {'img': 'Cacahuate N.svg', 'imgB': 'Cacahuate color.svg', 'imgW': 'Cacahuate B.svg','color': "#483e37ff" , "active": false, 'adapterBase': 'Cacahuate'},
+   
     "CACAO": {'img': 'Cacao N.svg', 'imgB': 'Cacao color.svg', 'imgW': 'Cacao B.svg','color': "#502d16ff" , "active": false, 'adapterBase': 'Cacao'},
     "CAF CEREZA": {'img': 'Café N.svg', 'imgB': 'Café color.svg', 'imgW': 'Café B.svg','color': "#ac939dff" , "active": false, 'adapterBase': 'Café'},
     "CALABACITA": {'img': 'Calabacita N.svg', 'imgB': 'Calabacita color.svg', 'imgW': 'Calabacita B.svg','color': "#ffb380ff" , "active": false, 'adapterBase': 'Calabacita'},
@@ -22,7 +26,10 @@ const farm_products = {
     
     "CEBOLLA": {'img': 'Cebolla N.svg', 'imgB': 'Cebolla color.svg', 'imgW': 'Cebolla B.svg','color': "#b3b3b3ff" , "active": false, 'adapterBase': 'Cebolla'},
     "CHILE VERDE": {'img': 'Chile Verde N.svg', 'imgB': 'Chile Verde color.svg', 'imgW': 'Chile Verde B.svg','color': "#88aa00ff" , "active": false, 'adapterBase': 'Chile verde'},
+    "CHICHARO": {'img': 'Chícharo N.svg', 'imgB': 'Chícharo color.svg', 'imgW': 'Chícharo B.svg','color': "#37c837ff" , "active": false, 'adapterBase': 'Chícharo'},
+
     "COLIFLOR": {'img': 'Col (Repollo) N.svg', 'imgB': 'Col (Repollo) color.svg', 'imgW': 'Col (Repollo) B.svg','color': "#aa0088ff" , "active": false, 'adapterBase': 'Col (repollo)'},
+    "CLAVEL": {'img': 'Clavel N.svg', 'imgB': 'Clavel color.svg', 'imgW': 'Clavel B.svg','color': "#decd87ff" , "active": false, 'adapterBase': 'Clavel'},
     "CRISANTEMO (Gruesa)": {'img': 'Crisantemo N.svg', 'imgB': 'Crisantemo color.svg', 'imgW': 'Crisantemo B.svg','color': "#37c8abff" , "active": false, 'adapterBase': 'Crisantemo'},
     "DURAZNO": {'img': 'Durazno N.svg', 'imgB': 'Durazno color.svg', 'imgW': 'Durazno B.svg','color': "#ffccaaff" , "active": false, 'adapterBase': 'Durazno'},
     "ESPARRAGO": {'img': 'Esparrago N.svg', 'imgB': 'Esparrago color.svg', 'imgW': 'Esparrago B.svg','color': "#806600ff" , "active": false, 'adapterBase': 'Espárrago'},
@@ -40,9 +47,12 @@ const farm_products = {
     "MELON": {'img': 'Melón N.svg', 'imgB': 'Melón color.svg', 'imgW': 'Melón B.svg','color': "#ff7f2aff" , "active": false, 'adapterBase': 'Melón'},
     "NARANJA": {'img': 'Naranja N.svg', 'imgB': 'Naranja color.svg', 'imgW': 'Naranja B.svg','color': "#aa4400ff" , "active": false, 'adapterBase': 'Naranja'},
     "NUEZ": {'img': 'Nogal (Nuez) N.svg', 'imgB': 'Nogal (Nuez) color.svg', 'imgW': 'Nogal (Nuez) B.svg','color': "#d38d5fff" , "active": false, 'adapterBase': 'Nogal (Nuez)'},
+
+    "PALMA DE ACEITE": {'img': 'Palma de Aceite N.svg', 'imgB': 'Palma de Aceite color.svg', 'imgW': 'Palma de Aceite B.svg','color': "#beb7c8ff" , "active": false, 'adapterBase': 'Palma de aceite'},
     "PAPA": {'img': 'Papa N.svg', 'imgB': 'Papa color.svg', 'imgW': 'Papa B.svg','color': "#803300ff" , "active": false, 'adapterBase': 'Papa'},
-    
     "PAPAYA": {'img': 'Papaya N.svg', 'imgB': 'Papaya color.svg', 'imgW': 'Papaya B.svg','color': "#80b3ffff" , "active": false, 'adapterBase': 'Papaya'},
+    "PASTOS Y PRADERAS": {'img': 'Pastos y Praderas N.svg', 'imgB': 'Pastos y Praderas color.svg', 'imgW': 'Pastos y Praderas B.svg','color': "#2ca089ff" , "active": false, 'adapterBase': 'Pastos y Praderas'},
+
     "PEPINO": {'img': 'Pepino N.svg', 'imgB': 'Pepino color.svg', 'imgW': 'Pepino B.svg','color': "#9dac93ff" , "active": false, 'adapterBase': 'Pepino'},
     "PIA": {'img': 'Piña N.svg', 'imgB': 'Piña color.svg', 'imgW': 'Piña B.svg','color': "#ffdd55ff" , "active": false, 'adapterBase': 'Piña'},
     "PLATANO": {'img': 'Plátano N.svg', 'imgB': 'Plátano color.svg', 'imgW': 'Plátano B.svg','color': "#d3bc5fff" , "active": false, 'adapterBase': 'Plátano'},
@@ -2698,13 +2708,15 @@ $(document).ready(function () {
             prevStates = activesStates
             prevFamrs = activeFarms
 
+            let year = $('#market_year').val();
+
             if(newStates.length > 0){
                 $.ajax({
                     type: "POST",
                     url: '/market/firstFrameData',
                     data: {
                         'newStates': newStates,
-                        'newFarms': activeFarms
+                        'newFarms': activeFarms,
                     },
                 }) 
             }
@@ -2721,7 +2733,7 @@ $(document).ready(function () {
             
             $.ajax({
                 type: "GET",
-                url: '/market/farming/values/'+ JSON.stringify(activesStates) + "/" + JSON.stringify(activeFarms),
+                url: '/market/farming/values/'+ JSON.stringify(activesStates) + "/" + JSON.stringify(activeFarms) + "/" + year,
                 success: function( data ) {
                     if(parseInt(data['total_superficie']) <= 0){
                         chartPieMarket.data = []
@@ -2865,6 +2877,11 @@ $(document).ready(function () {
             });
         }
 
+        $('body').on("change", "#market_year", function(e){
+            searchMarketFarmValues()
+            searchMarketBaseValues()
+        })
+
         $('body').on("click", ".itemRegion", function(e){
             const statesRegion = $(this).attr('states').split(',')
             statesBaseMarket = []
@@ -2881,9 +2898,6 @@ $(document).ready(function () {
             })
 
             $('.dropDownRegion').addClass('hidden')
-
-            searchMarketFarmValues()
-            searchMarketBaseValues()
 
             $('#selectFarmingAll').html('Seleccionar Todos')
             $('#selectFarmingAll').attr('active', 'false')
@@ -2940,10 +2954,12 @@ $(document).ready(function () {
                 $('#totalValue').text('$0')
                 return
             }  
+
+            let year = $('#market_year').val();
         
             $.ajax({
                 type: "GET",
-                url: '/market/getBaseByStatesFarms/'+ JSON.stringify(activesStates) + "/" + JSON.stringify(activeFarms),
+                url: '/market/getBaseByStatesFarms/'+ JSON.stringify(activesStates) + "/" + JSON.stringify(activeFarms) + '/' + year ,
                 success: function( data ) {
                     const herbicida = data['herbicida']
                     const insecticida = data['insecticida']
@@ -3423,6 +3439,14 @@ $(document).ready(function () {
             pieChartBaseMarket.innerRadius = am4core.percent(50);
             
             pieChartBaseMarket.legend = new am4charts.Legend();
+            pieChartBaseMarket.legend.position = "bottom";
+            pieChartBaseMarket.legend.valueLabels.template.text = "[bold]{value.percent.formatNumber('#.00')} %[/]  \n [font-size: 12px]{value} HA[/]";
+            pieChartBaseMarket.legend.valueLabels.template.dy = 8
+            pieChartBaseMarket.legend.valueLabels.template.marginTop = 6
+
+            pieChartBaseMarket.legend.contentValign = "top"
+            pieChartBaseMarket.legend.name = "[bold]{product}[/]"
+
             
             // Add and configure Series
             let pieSeriesBaseMarket = pieChartBaseMarket.series.push(new am4charts.PieSeries());
@@ -3489,12 +3513,19 @@ $(document).ready(function () {
             $('#tableMarketFarmsWrapperNoConfig').addClass('hidden')
         })
 
+        $('#closeModalBaseMarket').click(function(){
+            $('#modalBaseMarket').modal('hide')
+        })
+
+        $('#closeModalBaseMarketConfig').click(function(){
+            $('#modalBaseMarketConfig').modal('hide')
+        })
+
 
         $("#toggleModalBaseMarketConfig").click(function(){
             if(!stateAndFarmActives()) return
             $('#modalBaseMarketConfig').modal('show')
         })
-
         
         $('#modalBaseMarketConfig').on('shown.bs.modal', function () {
             $('#spinnerModalBaseConfig').addClass('hidden')
@@ -4050,7 +4081,13 @@ $(document).ready(function () {
             pieChartBaseMarket1.innerRadius = am4core.percent(50);
             
             pieChartBaseMarket1.legend = new am4charts.Legend();
-            //pieChartBaseMarket1.legend.useDefaultMarker = true;
+            pieChartBaseMarket1.legend.position = "bottom";
+            pieChartBaseMarket1.legend.valueLabels.template.text = "[bold]{value.percent.formatNumber('#.00')} %[/]  \n [font-size: 12px]{value} HA[/]";
+            pieChartBaseMarket1.legend.valueLabels.template.dy = 8
+            pieChartBaseMarket1.legend.valueLabels.template.marginTop = 6
+
+            pieChartBaseMarket1.legend.contentValign = "top"
+            pieChartBaseMarket1.legend.name = "[bold]{product}[/]"
             
             // Add and configure Series
             let pieSeriesBaseMarket1 = pieChartBaseMarket1.series.push(new am4charts.PieSeries());
@@ -4171,35 +4208,6 @@ $(document).ready(function () {
             // $('#tableMarketFarms').html(rows.join())
         }
         
-            
-            
-        // $('.modalDownload').click(function(){
-        //     $('.loader').removeClass('hidden')
-        //     goDownloadImage()
-        // })
-
-        // function goDownloadImage(){
-        //     let element = $("#modalBaseMarket")[0]; // global variable
-
-        //     html2canvas(element, {
-        //         scrollY: -element.scrollTop,
-        //         scale: 2,
-        //         imageTimeout: 0
-        //     }).then(function(canvas) {
-        //         $("#previewImage").html(canvas);
-
-        //         var imageData = canvas.toDataURL("image/png");
-        //         var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
-
-        //         const a = document.createElement("a");
-        //         a.href = newData;
-        //         a.download = "test.png";
-        //         document.body.appendChild(a);
-        //         a.click();
-        //         document.body.removeChild(a);
-        //     }).then(() => $('.loader').addClass('hidden'));
-        // }
-
         
         //-------------------------------------------------gradica de pie
         var chartPieMarket = am4core.create("marketFarmPie", am4charts.PieChart3D);
@@ -5649,9 +5657,11 @@ $('.panel-group').on("click", ".button-market-grahp", function(e){
             
         });
 
+        let year = $('#market_year').val();
+
         $.ajax({
             type: "GET",
-            url: '/market/getBaseValue/' + cultivoAdapt + '/' + JSON.stringify(states) + '/' + tipo,
+            url: '/market/getBaseValue/' + cultivoAdapt + '/' + JSON.stringify(states) + '/' + tipo + '/' + year,
             success: function( data ) {
                 let typevalue = data['typevalue'] > totalValue ? data['typevalue'] : data['typevalue'] + totalValue
 
@@ -6391,6 +6401,34 @@ const buildRowsForAdvance = (farms, states, id) => {
 
     return row
 }
+
+
+// $('.modalDownload').click(function(){
+//     $('.loader').removeClass('hidden')
+//     goDownloadImage()
+// })
+
+// function goDownloadImage(){
+//     let element = $("#modalBaseMarket")[0]; // global variable
+
+//     html2canvas(element, {
+//         scrollY: -element.scrollTop,
+//         scale: 2,
+//         imageTimeout: 0
+//     }).then(function(canvas) {
+//         $("#previewImage").html(canvas);
+
+//         var imageData = canvas.toDataURL("image/png");
+//         var newData = imageData.replace(/^data:image\/png/, "data:application/octet-stream");
+
+//         const a = document.createElement("a");
+//         a.href = newData;
+//         a.download = "test.png";
+//         document.body.appendChild(a);
+//         a.click();
+//         document.body.removeChild(a);
+//     }).then(() => $('.loader').addClass('hidden'));
+// }
 
 
 

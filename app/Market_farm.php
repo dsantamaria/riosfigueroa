@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Market_farm extends Model
 {
-    protected $table = 'market_farm';
+    protected $table = 'market_farms';
 
     public $timestamps = true;
 
@@ -15,5 +15,9 @@ class Market_farm extends Model
     public function marketData()
     {
         return $this->hasMany('App\Market_data', 'cultivoid');
+    }
+
+    public static function getByName($name){
+        return self::where('nombre', $name)->first();
     }
 }

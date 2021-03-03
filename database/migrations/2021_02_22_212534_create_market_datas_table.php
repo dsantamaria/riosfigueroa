@@ -14,10 +14,10 @@ class CreateMarketDatasTable extends Migration
     {
         Schema::create('market_datas', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedInteger('entidadId');
-            $table->foreign('entidadId')->references('id')->on('market_entity')->onDelete('cascade');
-            $table->unsignedInteger('cicloId');
-            $table->foreign('cicloId')->references('id')->on('market_cicle')->onDelete('cascade');
+            $table->unsignedInteger('entidadid');
+            $table->foreign('entidadid')->references('id')->on('market_entity')->onDelete('cascade');
+            $table->unsignedInteger('cicloid');
+            $table->foreign('cicloid')->references('id')->on('market_cicle')->onDelete('cascade');
             $table->unsignedInteger('tecnologiaid');
             $table->foreign('tecnologiaid')->references('id')->on('market_technology')->onDelete('cascade');
             $table->integer('ano');

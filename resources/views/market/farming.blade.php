@@ -7,10 +7,19 @@
     <div id="expand-all" active="false">
         <i class="fa fa-plus-square-o fa-2x" aria-hidden="true" style="position: absolute;top: -15px;right:10px;cursor: pointer;z-index: 100;"></i>
     </div>
+    <div id="market_year_div" class="hidden">
+        <select name="years" id="market_year">
+            <option value="2020">2020</option>
+            <option value="2019">2019</option>
+        </select>
+    </div>
 
     <div class="col-md-12">
 
-        <div class="col-md-12" style="font-size: 25px; font-weight: bold">Valor del mercado <span class="addGeneralRowMarket">Agregar +</span></div>
+        <div class="col-md-12" style="font-size: 25px; font-weight: bold">
+            Valor del mercado 
+            <span class="addGeneralRowMarket">Agregar +</span>
+        </div>
 
         <div class="panel-group col-md-12 marketValueSection" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default overflow-visible collapseFirst">
@@ -296,6 +305,15 @@
                         
                     </tr>
 
+                    {{-- <tr>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CHICHARO" title="Chicharo" product="chicharo"><img src="/project_images/Chícharo N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CLAVEL" title="Clavel" product="clavel"><img src="/project_images/Clavel N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PALMA DE ACEITE" title="Palma de aceite" product="palma de aceite"><img src="/project_images/Palma de Aceite N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="PASTOS Y PRADERAS" title="Pastos y praderas" product="pastos y praderas"><img src="/project_images/Pastos y Praderas N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ARANDANO" title="Arándanos" product="arándanos"><img src="/project_images/Arándano N.svg" width="30px" height="30px"></th>
+                        <th class="market-product-desactive" active="false" data-toggle="tooltip" value="CACAHUETE" title="Cacahuete" product="cacahuete"><img src="/project_images/Cacahuate N.svg" width="30px" height="30px"></th>
+                    </tr> --}}
+
                     <tr id="market-table-last-tr">
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="UVA" title="Uva" product="uva"><img src="/project_images/Uva N.svg" width="30px" height="30px"></th>
                         <th class="market-product-desactive" active="false" data-toggle="tooltip" value="ZANAHORIA" title="Zanahoria" product="zanahoria"><img src="/project_images/Zanahoria N.svg" width="30px" height="30px"></th>
@@ -484,10 +502,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Análisis de market share</h4>
             </div> --}}
+            <div class="modalDownload"><i class="fa fa-download fa-2x" aria-hidden="true"></i></div>
             <div class="modal-body" id="bodyBaseMarket">
+                
                 <div class="col-md-12">
+                    <div class="closeModal" id="closeModalBaseMarket"><i class="fa fa-times fa-lg" aria-hidden="true"></i></div>
                     <div style="font-size: 40px; font-weight: bold; text-align: center">Resumen por cultivo</div>
-                    <div class="modalDownload"><i class="fa fa-download fa-2x" aria-hidden="true"></i></div>
                 </div>
                 <div class="spinner" id="spinnerModalBase">
                     <i class="fa fa-spinner fa-spin fa-3x fa-fw" aria-hidden="true"></i>
@@ -495,7 +515,6 @@
 
                 <div>
                     <div id="bodyBaseMarketInner"></div>
-
                     <div class="col-md-7 hidden" id="tableMarketFarmsWrapperNoConfig">
                         <table class="table table-bordered">
                             <thead>
@@ -526,10 +545,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title">Análisis de market share</h4>
             </div> --}}
+            <div class="modalDownload"><i class="fa fa-download fa-2x" aria-hidden="true"></i></div>
+            
             <div class="modal-body" id="bodyBaseMarketConfig">
                 <div class="col-md-12">
+                    <div class="closeModal" id="closeModalBaseMarketConfig"><i class="fa fa-times fa-lg" aria-hidden="true"></i></div>
                     <div style="font-size: 40px; font-weight: bold; text-align: center">Resumen por cultivo</div>
-                    <div class="modalDownload"><i class="fa fa-download fa-2x" aria-hidden="true"></i></div>
                 </div>
                 
                 <div class="spinner" id="spinnerModalBaseConfig">

@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Log;
 
 class Agricola_siap extends Model
 {
@@ -32,5 +33,4 @@ class Agricola_siap extends Model
         
         return $data;
     }
-
 }
