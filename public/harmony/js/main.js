@@ -4082,7 +4082,7 @@ $(document).ready(function () {
             
             pieChartBaseMarket1.legend = new am4charts.Legend();
             pieChartBaseMarket1.legend.position = "bottom";
-            pieChartBaseMarket1.legend.valueLabels.template.text = "[bold]{value.percent.formatNumber('#.00')} %[/]  \n [font-size: 12px]{value} HA[/]";
+            pieChartBaseMarket1.legend.valueLabels.template.text = "[bold]{value.percent.formatNumber('#.00')} %[/]  \n [font-size: 12px]${value}[/]";
             pieChartBaseMarket1.legend.valueLabels.template.dy = 8
             pieChartBaseMarket1.legend.valueLabels.template.marginTop = 6
 
@@ -5450,10 +5450,11 @@ $('.panel-group').on("keyup", ".haTratadas", function(e){
 
 const getHaBystatesAndfarm = (states, farm, elem) => {
     let farms = [deleteAcentos(farm.toUpperCase())]
+    let year = $('#market_year').val();
 
     $.ajax({
         type: "GET",
-        url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms),
+        url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms) + '/' + year,
         success: function( data ) {
             $(elem).val(formatComms(data["total_superficie"].toString()))
         },
@@ -5466,10 +5467,11 @@ const getHaBystatesAndfarm = (states, farm, elem) => {
 
 
 const getHaBystatesAndfarms = (states, farms, elem, getTotalValue) => {
-
+    let year = $('#market_year').val();
+    
     $.ajax({
         type: "GET",
-        url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms),
+        url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms) + '/' + year,
         success: function( data ) {
             $(elem).val(formatComms(data["total_superficie"].toString()))
             $('#marketF5SuperficiePercent').trigger('keyup', [{ extra : 'random string' }])
