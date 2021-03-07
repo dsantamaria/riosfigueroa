@@ -5468,7 +5468,7 @@ const getHaBystatesAndfarm = (states, farm, elem) => {
 
 const getHaBystatesAndfarms = (states, farms, elem, getTotalValue) => {
     let year = $('#market_year').val();
-    
+
     $.ajax({
         type: "GET",
         url: '/market/farming/values/'+ JSON.stringify(states) + "/" + JSON.stringify(farms) + '/' + year,
@@ -6052,11 +6052,12 @@ $('body').on("click", ".searchedValue", function(e){
 
     $(this).closest('tbody').find('tr').each(function(){
         let currentCategory = $(this).closest('.marketTable').find('.selectedProduct').find('div').attr('categoryId')
-        if (currentCategory != undefined) categorySelected = currentCategory
+        if(currentCategory != undefined && (currentCategory != 1 && currentCategory != 4 && currentCategory != 5 )) categorySelected = 0
+        else if (currentCategory != undefined) categorySelected = currentCategory
     })
  
 
-    if(categoryId != 1 && categoryId != 4 && categoryId != 5 ) categoryId = 4
+    if(categoryId != 1 && categoryId != 4 && categoryId != 5 ) categoryId = 0
 
     if(rows <= 1 || categorySelected === categoryId) {
         isValid = true

@@ -13,7 +13,7 @@ class CreateMarketCyclesTable extends Migration
     public function up()
     {
         Schema::create('market_cycles', function (Blueprint $table) {
-            $table->increments('id');
+            $table->integer('id');
             $table->string('nombre');
             $table->timestamps();
         });

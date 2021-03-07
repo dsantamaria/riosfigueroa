@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateMarketModalitiesTable extends Migration
+class CreateMarketMeasuresTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateMarketModalitiesTable extends Migration
      */
     public function up()
     {
-        Schema::create('market_modalities', function (Blueprint $table) {
+        Schema::create('market_measures', function (Blueprint $table) {
             $table->integer('id');
             $table->string('nombre');
             $table->timestamps();
@@ -26,6 +26,6 @@ class CreateMarketModalitiesTable extends Migration
      */
     public function down()
     {
-        Schema::drop('market_modalities');
+        Schema::drop('market_measures');
     }
 }

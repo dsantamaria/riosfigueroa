@@ -32,6 +32,7 @@ class CreateMarketDatasTable extends Migration
             $table->foreign('modalidadid')->references('id')->on('market_modality')->onDelete('cascade');
             $table->unsignedInteger('cultivoid');
             $table->foreign('cultivoid')->references('id')->on('market_farm')->onDelete('cascade');
+            $table->integer('medidaid');
             $table->timestamps();
         });
     }

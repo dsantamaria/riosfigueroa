@@ -10,7 +10,7 @@ class Market_data extends Model
 
     public $timestamps = true;
 
-    protected $fillable = ['entidadid', 'cicloid', 'tecnologiaid', 'ano', 'supsembrada', 'supcocechada', 'supsiniestrada', 'produccion', 'rendimiento', 'pmr', 'valorpesos', 'modalidadid', 'cultivoid'];
+    protected $fillable = ['entidadid', 'cicloid', 'tecnologiaid', 'ano', 'supsembrada', 'supcocechada', 'supsiniestrada', 'produccion', 'rendimiento', 'pmr', 'valorpesos', 'modalidadid', 'cultivoid', 'medidaid'];
 
     public function marketCycle()
     {
