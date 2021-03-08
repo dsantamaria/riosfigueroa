@@ -199,7 +199,7 @@
 
         {!! Html::script('harmony/js/html2canvas.min.js') !!}
         {!! Html::script('harmony/js/FileSaver.min.js') !!}
-        {!! Html::script('harmony/js/main.js?version=0.0.1') !!}
+        {!! Html::script('harmony/js/main.js?version=0.0.2') !!}
 
     </body>
 </html>

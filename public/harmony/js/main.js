@@ -2759,6 +2759,7 @@ $(document).ready(function () {
             
                     farmKeys.forEach(product => total = total + data["farm_data"][product])
 
+
                     stateKeys.forEach(state => {
                         
                         const stateFarmKeys = Object.keys(data["states_data"][state])

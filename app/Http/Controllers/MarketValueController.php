@@ -160,7 +160,7 @@ class MarketValueController extends Controller
     
                 $summary_values = Market_data::get_all_per_state_farm($farmsIds, $stateIds);
                 $summary_values_total = Market_data::get_all_data_for_states($farmsIds);
-    
+
                 foreach ($farmsIds as $id) {
                     $farm_name = $this->getFarmNameById($farmsMarket, $id);
                     $farm_adapt[$farm_name] = 0;
@@ -177,7 +177,7 @@ class MarketValueController extends Controller
     
                 foreach ($summary_values as $data) {
                     $farm = $this->marketSummaryFarmAdapter($data->marketFarm->nombre, true);
-                    $superficie_sembrada = $data['supsembrada'];
+                    $superficie_sembrada = (int) $data['supsembrada'];
                     if($superficie_sembrada < 0) continue;
     
                     $farm_adapt[$farm] = $farm_adapt[$farm] + $superficie_sembrada;
@@ -185,7 +185,7 @@ class MarketValueController extends Controller
     
                 foreach ($summary_values_total as $data) {
                     $farm = $this->marketSummaryFarmAdapter($data->marketFarm->nombre ,true);;
-                    $superficie_sembrada = $data['supsembrada'];
+                    $superficie_sembrada = (int) $data['supsembrada'];
                     if($superficie_sembrada < 0) continue;
                     $farm_adapt_total[$farm] = $farm_adapt_total[$farm] + $superficie_sembrada;
                 }
@@ -194,7 +194,7 @@ class MarketValueController extends Controller
                     $farm = $this->marketSummaryFarmAdapter($data->marketFarm->nombre ,true);
                     $state = $data->marketEntity->nombre;
     
-                    $superficie_sembrada = $data['supsembrada'];
+                    $superficie_sembrada = (int) $data['supsembrada'];
                     if($superficie_sembrada < 0) continue;
                     $total_superficie = $total_superficie + $superficie_sembrada;
                     $state_adapt[$state][$farm] = $superficie_sembrada;

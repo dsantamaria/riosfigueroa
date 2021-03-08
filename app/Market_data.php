@@ -40,6 +40,7 @@ class Market_data extends Model
     public static function get_all_per_state_farm($farmsIds, $stateIds){
         return self::where('ano', 2019)
             ->where('tecnologiaid', 0)
+            ->whereIn('medidaid', [200201, 200203])
             ->whereIn('cicloid', [3, 4])
             ->where('modalidadid', 3)
             ->whereIn('entidadId', $stateIds)
@@ -50,6 +51,7 @@ class Market_data extends Model
     public static function get_all_data_for_states($farmsIds){
         return self::where('ano', 2019)
             ->where('tecnologiaid', 0)
+            ->whereIn('medidaid', [200201, 200203])
             ->whereIn('cicloid', [3, 4])
             ->where('modalidadid', 3)
             ->whereIn('cultivoid', $farmsIds)

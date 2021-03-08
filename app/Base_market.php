@@ -10,7 +10,7 @@ class Base_market extends Model
 
     public static function getByFarmStateType($farm, $states, $year){
         $baseDate = self::where('cultivo', '=', $farm)
-            ->where('año', 2019)
+            ->where('año', $year)
             ->whereIn('estado', $states)
             ->get();
 
@@ -19,7 +19,7 @@ class Base_market extends Model
 
     public static function getByFarmStateTypeArray($farms, $states, $year){
         $baseDate = self::whereIn('cultivo', $farms)
-            ->where('año', 2019)
+            ->where('año', $year)
             ->whereIn('estado', $states)
             ->get();
 
